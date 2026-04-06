@@ -1,4 +1,4 @@
-﻿<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CheckDependencyPaths">
+<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CheckDependencyPaths">
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>true</ImplicitUsings>
@@ -75,7 +75,7 @@
         </Reference>
     </ItemGroup>
 
-    <ItemGroup Condition="False"> <!--Allows private/protected field references but may cause errors.-->
+    <ItemGroup Condition="True"> <!--Allows private/protected field references but may cause errors.-->
         <Publicize Include="sts2" IncludeVirtualMembers="false" IncludeCompilerGeneratedMembers="false"/>
     </ItemGroup>
 
@@ -83,6 +83,7 @@
         <PackageReference Include="Alchyr.Sts2.BaseLib" Version="*" PrivateAssets="All"/>
         <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="All"/>
         <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="*"/>
+        <PackageReference Include="BSchneppe.StS2.PckPacker" Version="0.1.1" PrivateAssets="All" />
         <AdditionalFiles Include="Runesmith2/localization/**/*.json"/> <!-- Used by analyzer -->
     </ItemGroup>
 
@@ -91,6 +92,7 @@
         <Compile Remove="materials/**"/>
         <Compile Remove="shaders/**"/>
         <Compile Remove="images/**"/>
+        <Compile Remove="packages/**/*.uid"/>
         <EmbeddedResource Remove="Runesmith2/**"/>
         <EmbeddedResource Remove="materials/**"/>
         <EmbeddedResource Remove="shaders/**"/>
@@ -105,6 +107,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Runesmith2\images\cardui\" />
         <Folder Include="Runesmith2\images\card_portraits\big\"/>
         <Folder Include="Runesmith2\images\powers\big\"/>
         <Folder Include="Runesmith2\images\relics\big\"/>

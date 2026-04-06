@@ -1,3 +1,4 @@
 {
-  
+  "RUNESMITH2-FORTIFY.description": "Gain {Block:diff()} Block. \n[gold]Enhance[/gold] 1 card{IfUpgraded:show:| at random}.",
+  "RUNESMITH2-FORTIFY.title": "Fortify"
 }

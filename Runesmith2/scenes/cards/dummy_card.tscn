@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6dv7qiiek2i4"]
+
+[ext_resource type="Texture2D" uid="uid://ckj0ck2oqo8ew" path="res://Runesmith2/images/atlases/ui_atlas_0.png" id="1_ngwd0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7s1y2"]
+atlas = ExtResource("1_ngwd0")
+region = Rect2(1320, 83, 598, 844)
+
+[node name="DummyCard" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="DummyCardContainer" type="Control" parent="."]
+anchors_preset = 0
+
+[node name="DummyFrame" type="TextureRect" parent="DummyCardContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -211.0
+offset_right = 150.0
+offset_bottom = 211.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_7s1y2")
+expand_mode = 4
+stretch_mode = 4

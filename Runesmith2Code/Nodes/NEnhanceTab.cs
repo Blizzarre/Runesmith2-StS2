@@ -1,0 +1,83 @@
+﻿using BaseLib.Extensions;
+using Godot;
+using MegaCrit.Sts2.addons.mega_text;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+using Runesmith2.Runesmith2Code.Extensions;
+using Runesmith2.Runesmith2Code.HoverTips;
+
+namespace Runesmith2.Runesmith2Code.Nodes;
+
+[GlobalClass]
+public partial class NEnhanceTab : TextureRect
+{
+    private static readonly Font FontOverride = ResourceLoader.Load<Font>("res://themes/kreon_regular_glyph_space_one.tres");
+    private static readonly Color FontColor = new("f4e8c7");
+    private static readonly Color FontShadowColor = new("00000030");
+    private static readonly Color FontOutlineColor = new("554c36");
+    
+    private MegaLabel? _enhanceLabel;
+    
+    public NCard? NCard { get; private set; }
+
+    public NEnhanceTab WithData(NCard nCard)
+    {
+        NCard = nCard;
+
+        return this;
+    }
+
+    public override void _Ready()
+    {
+        if (_enhanceLabel != null) return;
+        _enhanceLabel = new MegaLabel();
+        _enhanceLabel.MaxFontSize = 17;
+        _enhanceLabel.AutoSizeEnabled = true;
+        _enhanceLabel.HorizontalAlignment = HorizontalAlignment.Center;
+        _enhanceLabel.VerticalAlignment = VerticalAlignment.Center;
+        _enhanceLabel.Size = new Vector2(140, 26);
+        _enhanceLabel.Position = new Vector2(11, 10);
+        _enhanceLabel.AddThemeColorOverride("font_color", FontColor);
+        _enhanceLabel.AddThemeColorOverride("font_shadow_color", FontShadowColor);
+        _enhanceLabel.AddThemeColorOverride("font_outline_color", FontOutlineColor);
+        _enhanceLabel.AddThemeConstantOverride("shadow_offset_x", 1);
+        _enhanceLabel.AddThemeConstantOverride("shadow_offset_y", 1);
+        _enhanceLabel.AddThemeConstantOverride("outline_size", 9);
+        _enhanceLabel.AddThemeConstantOverride("shadow_outline_size", 9);
+        _enhanceLabel.AddThemeFontOverride("font", FontOverride);
+        _enhanceLabel.Text = "";
+        
+        AddChild(_enhanceLabel);
+    }
+
+    public void OnEnhanceChanged()
+    {
+        UpdateEnhanceVisuals();
+    }
+
+    public void UpdateEnhanceVisuals()
+    {
+        // TODO vfx
+        if (NCard?._model != null)
+        {
+            var modifier = NCard._model.GetCardModelModifier();
+            if (modifier.Enhanced > 0)
+            {
+                if (!Visible) Visible = true;
+                var locString = RunesmithHoverTipFactory.StaticBanner(RunesmithHoverTip.Enhanced,
+                    new DynamicVar("Amount", modifier.Enhanced));
+                if (_enhanceLabel != null) _enhanceLabel.Text = locString.GetFormattedText();
+                return;
+            }
+        }
+
+        Visible = false;
+        if (_enhanceLabel != null) _enhanceLabel.Text = "";
+    }
+
+    public void OnStasisChanged()
+    {
+        // TODO
+    }
+}

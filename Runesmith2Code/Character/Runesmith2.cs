@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Relics;
+using Runesmith2.Runesmith2Code.Cards.Basic;
 
 namespace Runesmith2.Runesmith2Code.Character;
 
@@ -15,7 +16,7 @@ public class Runesmith2 : PlaceholderCharacterModel
     public static readonly Color Color = new("ffffff");
 
     public override Color NameColor => Color;
-    public override CharacterGender Gender => CharacterGender.Neutral;
+    public override CharacterGender Gender => CharacterGender.Feminine;
     public override int StartingHp => 70;
     
     public override IEnumerable<CardModel> StartingDeck => [
@@ -28,7 +29,7 @@ public class Runesmith2 : PlaceholderCharacterModel
         ModelDb.Card<DefendIronclad>(),
         ModelDb.Card<DefendIronclad>(),
         ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>()
+        ModelDb.Card<Fortify>()
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>

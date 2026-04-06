@@ -7,10 +7,10 @@
   "RUNESMITH2-RUNESMITH2.description": "Character Selection\nScreen Description",
   "RUNESMITH2-RUNESMITH2.eventDeathPrevention": "Co-op survival line",
   "RUNESMITH2-RUNESMITH2.goldMonologue": "Line spoken when obtaining a large amount of gold",
-  "RUNESMITH2-RUNESMITH2.possessiveAdjective": "his/her/its",
-  "RUNESMITH2-RUNESMITH2.pronounObject": "him/her/it",
-  "RUNESMITH2-RUNESMITH2.pronounPossessive": "his/hers/its",
-  "RUNESMITH2-RUNESMITH2.pronounSubject": "he/she/it",
-  "RUNESMITH2-RUNESMITH2.title": "The Runesmith2",
-  "RUNESMITH2-RUNESMITH2.titleObject": "The Runesmith2"
+  "RUNESMITH2-RUNESMITH2.possessiveAdjective": "her",
+  "RUNESMITH2-RUNESMITH2.pronounObject": "her",
+  "RUNESMITH2-RUNESMITH2.pronounPossessive": "hers",
+  "RUNESMITH2-RUNESMITH2.pronounSubject": "she",
+  "RUNESMITH2-RUNESMITH2.title": "The Runesmith",
+  "RUNESMITH2-RUNESMITH2.titleObject": "The Runesmith"
 }

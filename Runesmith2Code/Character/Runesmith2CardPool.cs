@@ -21,6 +21,7 @@ public class Runesmith2CardPool : CustomCardPoolModel
     public override float V => 1f; //Brightness
     
     //Alternatively, leave these values at 1 and provide a custom frame image.
+    // TODO Load separate card frames depending on card type
     /*public override Texture2D CustomFrame(CustomCardModel card)
     {
         //This will attempt to load Runesmith2/images/cards/frame.png
