@@ -1,5 +1,4 @@
 ﻿using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.Field;
@@ -83,6 +82,17 @@ public static class CardModelExtension
                 StasisChanged?.Invoke();
             }
         }
+
+        public RunesmithCardModelModifier Clone()
+        {
+            return (RunesmithCardModelModifier)MemberwiseClone();
+        }
+
+        public void ClearFlags()
+        {
+            _justEnhanced = false;
+            _justStasis = false;
+        }
         
         public event Action? EnhanceChanged;
         public event Action? StasisChanged;
@@ -96,6 +106,7 @@ public static class CardModelExtension
 
     public static void AddEnhance(this CardModel cardModel, int amount)
     {
+        if (!cardModel.IsMutable) return;
         cardModel.GetCardModelModifier().Enhanced += amount;
     }
 
@@ -109,13 +120,17 @@ public static class CardModelExtension
         return cardModel.GetCardModelModifier().Enhanced;
     }
     
+    // TODO Create method for getting enhance with all modifying hooks applied
+    
     public static void ClearEnhance(this CardModel cardModel)
     {
+        if (!cardModel.IsMutable) return;
         cardModel.GetCardModelModifier().Enhanced = 0;
     }
 
     public static void SetStasis(this CardModel cardModel, bool stasis)
     {
+        if (!cardModel.IsMutable) return;
         cardModel.GetCardModelModifier().Stasis = stasis;
     }
     

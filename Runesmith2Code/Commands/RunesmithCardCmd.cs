@@ -19,7 +19,7 @@ public static class RunesmithCardCmd
             var combatState = card.CombatState ?? card.Owner.Creature.CombatState;
             // TODO Consider adding history for cards enhanced.
             
-            // TODO modify enhanceAmount based on active powers... maybe use hooks to modify the value?
+            // TODO modify enhanceAmount based on active powers... use hooks to modify the value
             card.AddEnhance(enhanceAmount);
             // TODO Enhance vfx
             // trigger the flash in nhandcardholder via subscriber

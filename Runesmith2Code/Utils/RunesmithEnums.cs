@@ -1,13 +1,10 @@
 ﻿using BaseLib.Patches.Content;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models;
 
-namespace Runesmith2.Runesmith2Code;
+namespace Runesmith2.Runesmith2Code.Utils;
 
-public static class RunesmithKeywords
+public static class RunesmithEnums
 {
-    // todo put this somewhere else, maybe?
     [CustomEnum] public static CardTag Hammer;
     [CustomEnum] public static CardTag Chisel;
     

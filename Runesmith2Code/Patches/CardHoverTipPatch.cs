@@ -11,7 +11,7 @@ namespace Runesmith2.Runesmith2Code.Patches;
 class CardHoverTipPatch
 {
     [HarmonyPostfix]
-    static IEnumerable<IHoverTip> RunesmithHoverTipPostfix(
+    static IEnumerable<IHoverTip> Postfix(
         IEnumerable<IHoverTip> values, CardModel __instance
     )
     {

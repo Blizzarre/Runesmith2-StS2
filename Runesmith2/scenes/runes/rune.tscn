@@ -1,0 +1,427 @@
+[gd_scene load_steps=15 format=3 uid="uid://u6rmmebgqgn4"]
+
+[ext_resource type="Script" uid="uid://drpc72q26igbs" path="res://Runesmith2Code/Nodes/Runes/NRune.cs" id="1_t7qk0"]
+[ext_resource type="Texture2D" uid="uid://cttidcqqysyq3" path="res://Runesmith2/images/runes/rune_border1.png" id="3_indiw"]
+[ext_resource type="Texture2D" uid="uid://cre260t6gxr8g" path="res://Runesmith2/images/runes/rune_border2.png" id="3_nsk21"]
+
+[sub_resource type="Shader" id="Shader_indiw"]
+code = "shader_type canvas_item;
+
+uniform float circle_r : hint_range(0.0, 100.0, 0.1) = 10.0;
+uniform float circle_thickness : hint_range(0.0, 10.0, 0.1) = 1.0;
+uniform float feather : hint_range(0.0, 0.1, 0.001) = 0.005;
+uniform vec4 color : source_color = vec4(1.0);
+uniform vec2 circle1;
+uniform vec2 circle2;
+uniform float control_scale;
+
+varying vec2 tex_size;
+
+void vertex() {
+	VERTEX += (UV * 2.0 - 1.0) * circle_r * control_scale;
+}
+
+float circle(vec2 position, float radius)
+{
+	return smoothstep(radius, radius + feather, length(position));
+}
+
+void fragment() {
+	vec2 uv = UV;
+	uv -= vec2(0.5);
+	uv *= (1.0 + TEXTURE_PIXEL_SIZE * circle_r * 2.0);
+	uv += vec2(0.5);
+	vec4 sprite_color = texture(TEXTURE, uv);
+	
+	COLOR.a = max((1.0 - circle(uv - circle1 * TEXTURE_PIXEL_SIZE, circle_r * TEXTURE_PIXEL_SIZE.x)), (1.0 - circle(uv - circle2 * TEXTURE_PIXEL_SIZE, circle_r * TEXTURE_PIXEL_SIZE.x)));;
+	COLOR.a = max(sprite_color.a, COLOR.a);
+	COLOR.a *= (circle(uv - circle1 * TEXTURE_PIXEL_SIZE, (circle_r - circle_thickness) * TEXTURE_PIXEL_SIZE.x));
+	COLOR.a *= (circle(uv - circle2 * TEXTURE_PIXEL_SIZE, (circle_r - circle_thickness) * TEXTURE_PIXEL_SIZE.x));
+	COLOR.a *= color.a;
+	COLOR.rgb = color.rgb;
+}
+
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4jgxs"]
+resource_local_to_scene = true
+shader = SubResource("Shader_indiw")
+shader_parameter/circle_r = 20.000000298024
+shader_parameter/circle_thickness = 6.0000000894072
+shader_parameter/feather = 0.010000000475
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/circle1 = Vector2(5, 5)
+shader_parameter/circle2 = Vector2(95, 95)
+shader_parameter/control_scale = 0.6
+
+[sub_resource type="Animation" id="Animation_rginm"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/circle1:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(5, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/circle1:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(5, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/circle2:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(95, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:material:shader_parameter/circle2:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(95, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../Inner:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-6.2831855, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_qi0js"]
+resource_name = "loop"
+length = 8.0
+loop_mode = 1
+step = 1.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/circle1:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(5, -0.5, 0, 0.5, 0, 95, -0.5, 0, 0.5, 0, 95, -0.5, 0, 0.5, 0, 5, -0.5, 0, 0.5, 0, 5, -0.5, 0, 0.5, 0),
+"times": PackedFloat32Array(1.1085536e-07, 2, 4, 6, 8)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/circle1:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(5, -0.5, 0, 0.5, 0, 5, -0.5, 0, 0.5, 0, 95, -0.5, 0, 0.5, 0, 95, -0.5, 0, 0.5, 0, 5, -0.5, 0, 0.5, 0),
+"times": PackedFloat32Array(1.1085536e-07, 2, 4, 6, 8)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/circle2:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(95, -0.5, 0, 0.5, 0, 5, -0.5, 0, 0.5, 0, 5, -0.5, 0, 0.5, 0, 95, -0.5, 0, 0.5, 0, 95, -0.5, 0, 0.5, 0),
+"times": PackedFloat32Array(1.1085536e-07, 2, 4, 6, 8)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:material:shader_parameter/circle2:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(95, -0.5, 0, 0.5, 0, 95, -0.5, 0, 0.5, 0, 5, -0.5, 0, 0.5, 0, 5, -0.5, 0, 0.5, 0, 95, -0.5, 0, 0.5, 0),
+"times": PackedFloat32Array(1.1085536e-07, 2, 4, 6, 8)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(3, 3, 3, 3),
+"points": PackedFloat32Array(0, -0.47364554, -1.8913386, 0.47364554, 1.8913386, -0.4072492, -1.0035987, 4.9858456, 1.0035987, -4.9858456, -4.0176888, -0.72857666, -0.9742458, 0.72857666, 0.9742458, 6.283, -0.39895725, -1.7826549, 0.39895725, 1.7826549),
+"times": PackedFloat32Array(1.1085536e-07, 2.750362, 5.1169276, 8)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../Inner:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 3, 0),
+"points": PackedFloat32Array(3.927, 0, 0, 0, 0, 0.09156602, -2, -14.951956, 2, 14.951956, -3.927, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 4, 8)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ec5yh"]
+_data = {
+&"RESET": SubResource("Animation_rginm"),
+&"loop": SubResource("Animation_qi0js")
+}
+
+[sub_resource type="Curve" id="Curve_nsk21"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 2.2818847, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_indiw"]
+offsets = PackedFloat32Array(0, 0.35930735, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nsk21"]
+bg_color = Color(0.9529412, 0.8156863, 0.6156863, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.69411767, 0.5568628, 0.37254903, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_indiw"]
+color = Color(0.69411767, 0.5568628, 0.37254903, 1)
+grow_begin = -2.0
+grow_end = -2.0
+thickness = 3
+vertical = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4jgxs"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_qi0js"]
+color = Color(0.13177085, 0.11391939, 0.104266144, 1)
+grow_begin = 2.0
+grow_end = 2.0
+thickness = 5
+
+[node name="Rune" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = -576.0
+offset_bottom = -324.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+script = ExtResource("1_t7qk0")
+
+[node name="OutlineGroup" type="CanvasGroup" parent="."]
+unique_name_in_owner = true
+self_modulate = Color(0.92, 0.92, 0.92, 0.4)
+fit_margin = 40.0
+
+[node name="Outline" type="TextureRect" parent="OutlineGroup"]
+material = SubResource("ShaderMaterial_4jgxs")
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+pivot_offset = Vector2(30, 30.05)
+texture = ExtResource("3_indiw")
+expand_mode = 1
+
+[node name="Inner" type="TextureRect" parent="OutlineGroup"]
+self_modulate = Color(1, 1, 1, 0.8156863)
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.000019
+offset_bottom = 14.0
+rotation = -6.2831855
+pivot_offset = Vector2(14, 14)
+texture = ExtResource("3_nsk21")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="OutlineGroup"]
+unique_name_in_owner = true
+root_node = NodePath("../Outline")
+libraries = {
+&"": SubResource("AnimationLibrary_ec5yh")
+}
+speed_scale = 0.75
+
+[node name="VisualContainer" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+
+[node name="LabelContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 7.0
+offset_top = -26.0
+offset_right = 31.0
+offset_bottom = 32.0
+mouse_filter = 2
+theme_override_constants/separation = -8
+alignment = 2
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = -34.0
+offset_top = -34.0
+offset_right = 34.0
+offset_bottom = 34.0
+mouse_filter = 1
+
+[node name="Flash" type="CPUParticles2D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 2
+texture = ExtResource("3_indiw")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.5
+local_coords = true
+gravity = Vector2(0, 0)
+angle_min = 45.0
+angle_max = 45.0
+scale_amount_curve = SubResource("Curve_nsk21")
+color_ramp = SubResource("Gradient_indiw")
+
+[node name="ChargePanel" type="Panel" parent="."]
+unique_name_in_owner = true
+clip_children = 2
+layout_mode = 0
+offset_left = -50.0
+offset_top = 34.0
+offset_right = 50.0
+offset_bottom = 53.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nsk21")
+
+[node name="ChargeHBox" type="HBoxContainer" parent="ChargePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Begin" type="Control" parent="ChargePanel/ChargeHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="Separator1" type="VSeparator" parent="ChargePanel/ChargeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_indiw")
+
+[node name="Separator2" type="VSeparator" parent="ChargePanel/ChargeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_indiw")
+
+[node name="Separator3" type="VSeparator" parent="ChargePanel/ChargeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_indiw")
+
+[node name="Separator4" type="VSeparator" parent="ChargePanel/ChargeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_indiw")
+
+[node name="Separator5" type="VSeparator" parent="ChargePanel/ChargeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_indiw")
+
+[node name="Separator6" type="VSeparator" parent="ChargePanel/ChargeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_indiw")
+
+[node name="Separator7" type="VSeparator" parent="ChargePanel/ChargeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_indiw")
+
+[node name="Separator8" type="VSeparator" parent="ChargePanel/ChargeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_indiw")
+
+[node name="End" type="Control" parent="ChargePanel/ChargeHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="ChargeCross" type="HSeparator" parent="ChargePanel"]
+unique_name_in_owner = true
+material = SubResource("CanvasItemMaterial_4jgxs")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_qi0js")

@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using BaseLib.Extensions;
-using BaseLib.Utils.Patching;
+﻿using BaseLib.Utils.Patching;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
@@ -10,6 +8,7 @@ using Runesmith2.Runesmith2Code.Extensions;
 
 namespace Runesmith2.Runesmith2Code.Patches;
 
+// Patch to trigger card flash on card being enhanced or stasis
 [HarmonyPatch(typeof(NHandCardHolder), nameof(NHandCardHolder.SubscribeToEvents))]
 class NHandCardHolderSubscribePatch
 {
@@ -64,12 +63,13 @@ class NHandCardHolderFlashPatch
         }
     }
 
+    [HarmonyTranspiler]
     static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return new InstructionPatcher(instructions).Match(new InstructionMatcher()
             .ldarg_0()
-            .ldfld(typeof(NHandCardHolder), nameof(NHandCardHolder._flashTween))
-            .dup()
+            .call(typeof(NHandCardHolder), "get_ShouldGlowGold")
+            .brfalse_s()
         ).Step(-3).Insert([
             CodeInstruction.LoadArgument(0), 
             CodeInstruction.Call((NHandCardHolder instance) => ShouldGlowBeige(instance))

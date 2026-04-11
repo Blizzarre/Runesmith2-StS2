@@ -5,12 +5,13 @@ using Godot;
 using Runesmith2.Runesmith2Code.Character;
 using Runesmith2.Runesmith2Code.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using Runesmith2.Runesmith2Code.HoverTips;
 
 namespace Runesmith2.Runesmith2Code.Cards;
 
 [Pool(typeof(Runesmith2CardPool))]
 public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity, TargetType target) :
-    CustomCardModel(cost, type, rarity, target)
+    ConstructedCardModel(cost, type, rarity, target)
 {
     //Image size:
     //Normal art: 1000x760 (Using 500x380 should also work, it will simply be scaled.)
@@ -44,5 +45,10 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
             var path = $"beta/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
             return ResourceLoader.Exists(path) ? path : "beta/card.png".CardImagePath();
         }
+    }
+
+    protected void WithTip(RunesmithHoverTip runesmithTip)
+    {
+        WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.Static(runesmithTip)));
     }
 }

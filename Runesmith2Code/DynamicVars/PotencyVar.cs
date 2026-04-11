@@ -1,4 +1,5 @@
-﻿using MegaCrit.Sts2.Core.Localization.DynamicVars;
+﻿using BaseLib.Extensions;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace Runesmith2.Runesmith2Code.DynamicVars;
 
@@ -14,5 +15,6 @@ public class PotencyVar : DynamicVar
     public PotencyVar(string name, int potency)
         : base(name, potency)
     {
+        this.WithTooltip("RUNESMITH2-POTENCY");
     }
 }

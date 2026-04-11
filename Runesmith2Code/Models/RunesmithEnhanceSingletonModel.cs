@@ -1,5 +1,6 @@
 ﻿using BaseLib.Abstracts;
 using BaseLib.Extensions;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -27,6 +28,8 @@ public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false
         {
             return 1;
         }
+        
+        // modify enhance multiplier here
 
         return 1 + 0.5m * cardSource.GetEnhance();
     }

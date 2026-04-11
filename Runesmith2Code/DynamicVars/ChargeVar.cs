@@ -15,5 +15,6 @@ public class ChargeVar : DynamicVar
     public ChargeVar(string name, int charge)
         : base(name, charge)
     {
+        this.WithTooltip("RUNESMITH2-CHARGE");
     }
 }

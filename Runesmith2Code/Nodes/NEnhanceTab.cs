@@ -6,16 +6,14 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.HoverTips;
+using Runesmith2.Runesmith2Code.Utils;
 
 namespace Runesmith2.Runesmith2Code.Nodes;
 
 [GlobalClass]
 public partial class NEnhanceTab : TextureRect
 {
-    private static readonly Font FontOverride = ResourceLoader.Load<Font>("res://themes/kreon_regular_glyph_space_one.tres");
-    private static readonly Color FontColor = new("f4e8c7");
-    private static readonly Color FontShadowColor = new("00000030");
-    private static readonly Color FontOutlineColor = new("554c36");
+    private static readonly (Color, Color, Color) FontColor = (new Color("f4e8c7"), new Color("00000030"), new Color("554c36"));
     
     private MegaLabel? _enhanceLabel;
     
@@ -38,14 +36,14 @@ public partial class NEnhanceTab : TextureRect
         _enhanceLabel.VerticalAlignment = VerticalAlignment.Center;
         _enhanceLabel.Size = new Vector2(140, 26);
         _enhanceLabel.Position = new Vector2(11, 10);
-        _enhanceLabel.AddThemeColorOverride("font_color", FontColor);
-        _enhanceLabel.AddThemeColorOverride("font_shadow_color", FontShadowColor);
-        _enhanceLabel.AddThemeColorOverride("font_outline_color", FontOutlineColor);
+        _enhanceLabel.AddThemeColorOverride("font_color", FontColor.Item1);
+        _enhanceLabel.AddThemeColorOverride("font_shadow_color", FontColor.Item2);
+        _enhanceLabel.AddThemeColorOverride("font_outline_color", FontColor.Item3);
         _enhanceLabel.AddThemeConstantOverride("shadow_offset_x", 1);
         _enhanceLabel.AddThemeConstantOverride("shadow_offset_y", 1);
         _enhanceLabel.AddThemeConstantOverride("outline_size", 9);
         _enhanceLabel.AddThemeConstantOverride("shadow_outline_size", 9);
-        _enhanceLabel.AddThemeFontOverride("font", FontOverride);
+        _enhanceLabel.AddThemeFontOverride("font", BaseResourceIndex.FontKreonRegularSpaceOne);
         _enhanceLabel.Text = "";
         
         AddChild(_enhanceLabel);
@@ -67,7 +65,7 @@ public partial class NEnhanceTab : TextureRect
                 if (!Visible) Visible = true;
                 var locString = RunesmithHoverTipFactory.StaticBanner(RunesmithHoverTip.Enhanced,
                     new DynamicVar("Amount", modifier.Enhanced));
-                if (_enhanceLabel != null) _enhanceLabel.Text = locString.GetFormattedText();
+                _enhanceLabel?.SetTextAutoSize(locString.GetFormattedText());
                 return;
             }
         }
