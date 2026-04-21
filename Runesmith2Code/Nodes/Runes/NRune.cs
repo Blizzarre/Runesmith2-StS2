@@ -99,6 +99,9 @@ public partial class NRune : NClickableControl
         {
             _chargeSeparators.Add(GetNode<VSeparator>($"%Separator{i}"));
         }
+
+        _chargePanel.Position = new Vector2(0, _chargePanel.Position.Y);
+        _chargePanel.Size = new Vector2(0 , _chargePanel.Size.Y);
         
         _bounds = GetNode<Control>("%Bounds");
         
@@ -109,14 +112,15 @@ public partial class NRune : NClickableControl
         _bottomBreakLabel = CreateLabel(Model?.BottomBreakColor ?? DefaultFontColor);
         _chargeLabel = CreateLabel(ChargeFontColor); 
         
-        _selectionReticle = RunesmithResource.SelectionReticleScene.Instantiate<NSelectionReticle>();
+        _selectionReticle = BaseSceneIndex.SelectionReticleScene.Instantiate<NSelectionReticle>();
         
         _labelContainer.AddChildSafely(_topLabel);
         _labelContainer.AddChildSafely(_topBreakLabel);
         _labelContainer.AddChildSafely(_bottomLabel);
         _labelContainer.AddChildSafely(_bottomBreakLabel);
-        _labelContainer.AddChildSafely(_chargeLabel);
-        _chargeLabel.Position = new Vector2(-12, 36);
+        
+        this.AddChildSafely(_chargeLabel);
+        _chargeLabel.Position = new Vector2(-12, 28);
         _chargeLabel.Size = new Vector2(24, 31);
         
         this.AddChildSafely(_selectionReticle);
@@ -151,6 +155,7 @@ public partial class NRune : NClickableControl
         label.AddThemeConstantOverride("outline_size", 13);
         label.AddThemeConstantOverride("shadow_outline_size", 0);
         label.AddThemeFontOverride("font", BaseResourceIndex.FontKreonRegularSpaceOne);
+        label.AddThemeFontSizeOverride("font_size", 24);
         label.Text = "";
         
         return label;
@@ -245,35 +250,39 @@ public partial class NRune : NClickableControl
         UpdateChargeDisplay(Model.ChargeVal);
     }
 
-    private static readonly int[] ChargeSizeSequence = [40, 60, 75, 80, 85, 90, 95, 98, 100];
+    private static readonly int[] ChargeSizeSequence = [24, 40, 60, 75, 80, 85, 90, 95, 98, 99];
 
     private void UpdateChargeDisplay(int charge)
     {
-        
+        var tween = GetTree().CreateTween();
+        tween.SetParallel();
+
+        Color modulateColor;
         switch (charge)
         {
             case <= 0:
                 _chargeLabel.Visible = false;
-                _chargePanel.SelfModulate = NoChargeModulateColor;
+                modulateColor = NoChargeModulateColor;
                 _chargeCross.Visible = false;
                 break;
             case > 9:
-                charge = 9;
                 _chargeLabel.Visible = true;
                 _chargeLabel.SetTextAutoSize(charge.ToString());
-                _chargePanel.SelfModulate = OverChargeModulateColor;
+                modulateColor = OverChargeModulateColor;
                 _chargeCross.Visible = true;
                 break;
             default:
                 _chargeLabel.Visible = false;
-                _chargePanel.SelfModulate = Colors.White;
+                modulateColor = Colors.White;
                 _chargeCross.Visible = true;
                 break;
         }
         
-        var panelWidth = ChargeSizeSequence[charge - 1];
-
-        var tween = GetTree().CreateTween();
+        tween.TweenProperty(_chargePanel, "modulate", modulateColor, 0.25).FromCurrent()
+            .FromCurrent().SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
+        
+        var panelWidth = ChargeSizeSequence[Math.Clamp(charge, 0, 9)];
+        
         tween.TweenProperty(_chargePanel, "size:x", panelWidth, 0.25)
             .FromCurrent().SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
         tween.Parallel().TweenProperty(_chargePanel, "position:x", -panelWidth/2, 0.25)
@@ -293,8 +302,6 @@ public partial class NRune : NClickableControl
     
     // TODO create and call trigger animation for Runes
     
-    
-    // TODO refactor this to be easier to read
     protected override void OnFocus()
     {
         if (Model != null || _isLocal)

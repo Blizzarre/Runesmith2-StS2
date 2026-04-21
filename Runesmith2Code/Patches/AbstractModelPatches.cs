@@ -1,7 +1,6 @@
 using BaseLib.Utils.Patching;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using Runesmith2.Runesmith2Code.Field;
 
 namespace Runesmith2.Runesmith2Code.Patches;

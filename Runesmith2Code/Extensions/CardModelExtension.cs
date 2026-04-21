@@ -1,5 +1,6 @@
 ﻿using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
+using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.Field;
 
@@ -19,9 +20,8 @@ public static class CardModelExtension
         {
             return true;
         }
-
-        // TODO: Rename vars for better compatibility (RunesmithPotencyVar)
-        if (cardModel.DynamicVars.ContainsKey(PotencyVar.defaultName) && cardModel.DynamicVars[nameof(PotencyVar)].BaseValue > 0)
+        
+        if (cardModel.DynamicVars.ContainsKey(PotencyVar.defaultName) && cardModel.DynamicVars[PotencyVar.defaultName].BaseValue > 0)
         {
             return true;
         }
@@ -118,6 +118,16 @@ public static class CardModelExtension
     public static int GetEnhance(this CardModel cardModel)
     {
         return cardModel.GetCardModelModifier().Enhanced;
+    }
+
+    public static decimal GetEnhanceMultiplier(this CardModel cardModel)
+    {
+        if (cardModel is Runesmith2Card runesmith2Card)
+        {
+            return 0.5m * cardModel.GetCardModelModifier().Enhanced * runesmith2Card.EnhanceMultiplier;
+        }
+
+        return 0.5m * cardModel.GetCardModelModifier().Enhanced;
     }
     
     // TODO Create method for getting enhance with all modifying hooks applied

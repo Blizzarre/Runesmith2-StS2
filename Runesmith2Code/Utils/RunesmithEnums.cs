@@ -12,3 +12,19 @@ public static class RunesmithEnums
     //  also patch other stuff needed for custom card type
     [CustomEnum] public static CardType Recipe;
 }
+
+public enum ElementType
+{
+    None,
+    Ignis,
+    Terra,
+    Aqua,
+    All
+}
+
+public enum ChargeDepletionType
+{
+    None,
+    StartTurn,
+    EndTurn
+}

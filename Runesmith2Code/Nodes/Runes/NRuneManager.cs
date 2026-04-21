@@ -87,7 +87,8 @@ public partial class NRuneManager : Control
     
     private void OnCombatSetup(CombatState _)
     {
-        if (Player.Creature.IsAlive && Player.PlayerCombatState != null)
+        if (!Player.Creature.IsAlive || Player.PlayerCombatState == null) return;
+        if (Player.PlayerCombatState.AllCards.Any(c => c is Runesmith2RecipeCard))
         {
             AddSlotAnim();
         }
@@ -116,21 +117,32 @@ public partial class NRuneManager : Control
         UpdateControllerNavigation();
     }
 
-    private void AddRuneAnim()
+    public void AddRuneAnim()
     {
         if (Player.PlayerCombatState == null) return;
-        var queue = RunesmithField.RuneQueue[Player.PlayerCombatState];
+        var queue = RunesmithField.RunesmithCombatState[Player.PlayerCombatState]?.RuneQueue;
         if (queue == null) return;
         var runeModel = queue.Runes.Count > 0 ? queue.Runes[^1] : null; // Get last (should be the newly added one)
+        if (_runes.Count >= RuneQueue.MaxCapacity) return; // cannot add rune to full RuneQueue TODO add warning
         var emptyRune = _runes.FirstOrDefault(n => n.Model == null);
-        if (emptyRune == null) return; // cannot add rune to full RuneQueue TODO add warning
         var newRune = NRune.Create(LocalContext.IsMe(Player), runeModel);
-        emptyRune.AddSibling(newRune);
-        _runes.Insert(_runes.IndexOf(emptyRune), newRune);
-        newRune.Position = emptyRune.Position;
-        _runeContainer.RemoveChildSafely(emptyRune);
-        _runes.Remove(emptyRune);
-        emptyRune.QueueFreeSafely();
+        if (emptyRune == null)
+        {
+            // No need to replace the empty slot. Just add the Rune at the proper position.
+            var position = GetRunePosition(_runes.Count);
+            this.AddChildSafely(newRune);
+            _runes.Add(newRune);
+            newRune.Position = position;
+        }
+        else
+        {
+            emptyRune.AddSibling(newRune);
+            _runes.Insert(_runes.IndexOf(emptyRune), newRune);
+            newRune.Position = emptyRune.Position;
+            _runeContainer.RemoveChildSafely(emptyRune);
+            _runes.Remove(emptyRune);
+            emptyRune.QueueFreeSafely();
+        }
         
         AddSlotAnim();
         
@@ -138,7 +150,7 @@ public partial class NRuneManager : Control
         UpdateControllerNavigation();
     }
 
-    private void BreakRuneAnim(RuneModel rune)
+    public void BreakRuneAnim(RuneModel rune)
     {
         var breakRune = _runes.Last(n => n.Model == rune);
         var tween = CreateTween();
@@ -205,7 +217,7 @@ public partial class NRuneManager : Control
             radius *= 0.75f;
         }
         const float angleStep = FanAngle / (RuneQueue.MaxCapacity - 1);
-        var angle = float.DegreesToRadians(-angleStep * index - AngleOffset);
+        var angle = float.DegreesToRadians(-angleStep * index - AngleOffset); // neg angle is counter-clockwise
         return new Vector2(radius, 0f).Rotated(angle) + CenterOffset;
     }
     

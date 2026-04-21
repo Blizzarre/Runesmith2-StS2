@@ -1,4 +1,5 @@
 ﻿using BaseLib.Abstracts;
+using BaseLib.Extensions;
 using Godot;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
@@ -9,12 +10,15 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.HoverTips;
+using Runesmith2.Runesmith2Code.Models.Runes;
 using Runesmith2.Runesmith2Code.Nodes.Runes;
+using Runesmith2.Runesmith2Code.Utils;
 
 namespace Runesmith2.Runesmith2Code.Models;
 
@@ -24,18 +28,20 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public const string LocTable = "runes";
 
     private static readonly ModelId[] _validRunes = [
-    //TODO
+        ModelDb.GetId<FlammaRune>()
     ];
     
     private RuneModel _canonicalInstance;
 
     private Player? _owner;
 
-    public abstract decimal PassiveVal { get; }
-    
+    public virtual decimal PassiveVal { get; set; }
+
     public virtual decimal BreakVal => PassiveVal * 2;
     
-    public abstract int ChargeVal { get; }
+    public virtual int ChargeVal { get; set; }
+    
+    public abstract ChargeDepletionType ChargeDepletion { get; }
     
     public bool HasBeenRemovedFromState { get; private set; }
 
@@ -96,6 +102,14 @@ public abstract class RuneModel : AbstractModel, ICustomModel
                 smartDescription.Add("Break", BreakVal);
                 smartDescription.Add("Charge", ChargeVal);
                 list.Add(RunesmithHoverTipFactory.CreateRuneHoverTip(this, smartDescription));
+                var chargeLocKey = ChargeDepletion switch
+                {
+                    ChargeDepletionType.None => "RUNESMITH2-CHARGE-NONE",
+                    ChargeDepletionType.StartTurn => "RUNESMITH2-CHARGE-TURN-START",
+                    ChargeDepletionType.EndTurn => "RUNESMITH2-CHARGE-TURN-END",
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+                list.Add(RunesmithHoverTipFactory.Static(chargeLocKey, new DynamicVar("Charge", ChargeVal)));
             }
             else
             {
@@ -106,13 +120,13 @@ public abstract class RuneModel : AbstractModel, ICustomModel
         }    
     }
     
-    private string IconPath => Id.Entry.ToLowerInvariant().RuneImagePath();
+    private string IconPath => Id.Entry.RemovePrefix().ToLowerInvariant().RuneImagePath();
     
-    private string SpritePath => Id.Entry.ToLowerInvariant().RuneScenePath();
+    private string SpritePath => Id.Entry.RemovePrefix().ToLowerInvariant().RuneScenePath();
 
     public CompressedTexture2D Icon => PreloadManager.Cache.GetCompressedTexture2D(IconPath);
-    
-    public abstract Color DarkenedColor { get; }
+
+    public virtual Color DarkenedColor => new("a0a0a0");
     
     private RuneModel CanonicalInstance
     {
@@ -156,7 +170,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
         }
     }
 
-    protected void PlayEvokeSfx()
+    protected void PlayBreakSfx()
     {
         if (BreakSfx != "")
         {
@@ -164,7 +178,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
         }
     }
 
-    public void PlayChannelSfx()
+    public void PlayCraftedSfx()
     {
         if (CraftSfx != "")
         {
@@ -175,7 +189,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public Node2D CreateSprite()
     { 
         Node2D node2D = PreloadManager.Cache.GetScene(SpritePath).Instantiate<Node2D>();
-        new MegaSprite(node2D.GetNode("SpineSkeleton")).GetAnimationState().SetAnimation("idle_loop");
+        // new MegaSprite(node2D.GetNode("SpineSkeleton")).GetAnimationState().SetAnimation("idle_loop");
         return node2D;
     }
     
@@ -197,7 +211,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
         return Task.CompletedTask;
     }
     
-    public virtual Task AfterTurnStartOrbTrigger(PlayerChoiceContext choiceContext)
+    public virtual Task AfterTurnStartRuneTrigger(PlayerChoiceContext choiceContext)
     {
         return Task.CompletedTask;
     }
@@ -212,7 +226,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
         return Task.CompletedTask;
     }
 
-    // Note: Rune value shouldn't get modified after craft but using this just in case
+    // Note: Rune value shouldn't get modified after craft but having this just in case
     protected decimal ModifyRuneValue(decimal result)
     {
         return RunesmithHook.ModifyRuneValue(Owner.Creature.CombatState, Owner, result);
@@ -227,5 +241,15 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public void RemoveInternal()
     {
         HasBeenRemovedFromState = true;
+    }
+
+    public void UseCharge()
+    {
+        ModifyCharge(-1);
+    }
+    
+    public void ModifyCharge(int amount)
+    {
+        ChargeVal = Math.Max(0, ChargeVal + amount);
     }
 }

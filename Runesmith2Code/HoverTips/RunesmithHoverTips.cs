@@ -5,5 +5,10 @@ public enum RunesmithHoverTip
     None,
     Enhance,
     Enhanced,
-    Stasis
+    Stasis,
+    Recipe,
+    Craft,
+    Charge,
+    Potency,
+    Elements
 }

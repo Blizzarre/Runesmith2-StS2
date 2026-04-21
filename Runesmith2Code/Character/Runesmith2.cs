@@ -29,7 +29,8 @@ public class Runesmith2 : PlaceholderCharacterModel
         ModelDb.Card<DefendIronclad>(),
         ModelDb.Card<DefendIronclad>(),
         ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<Fortify>()
+        ModelDb.Card<Fortify>(),
+        ModelDb.Card<Flamma>()
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>

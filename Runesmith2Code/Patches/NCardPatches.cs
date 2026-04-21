@@ -17,13 +17,22 @@ namespace Runesmith2.Runesmith2Code.Patches;
 class NCardEnterTreePatch
 {
     [HarmonyPrefix]
-    static void Prefix(
-        NCard __instance
-    )
+    static void Prefix(NCard __instance)
     {
         if (RunesmithField.NEnhanceTab[__instance] != null) return;
         var enhanceTab = PreloadManager.Cache.GetScene(RunesmithResource.NEnhanceTabPath).Instantiate<NEnhanceTab>().WithData(__instance);
         RunesmithField.NEnhanceTab[__instance] = enhanceTab;
+    }
+}
+
+[HarmonyPatch(typeof(NCard), nameof(NCard._Ready))]
+class NCardReadyPatch
+{
+    [HarmonyPostfix]
+    static void Postfix(NCard __instance)
+    {
+        var enhanceTab = RunesmithField.NEnhanceTab[__instance];
+        if (enhanceTab == null) return;
         var cardContainer = __instance.GetChild(0);
         if (cardContainer == null) return;
         cardContainer.AddChildSafely(enhanceTab);
@@ -33,6 +42,7 @@ class NCardEnterTreePatch
         cardContainer.MoveChild(enhanceTab, cardContainer.GetNode("TitleBanner").GetIndex());
     }
 }
+
 
 [HarmonyPatch(typeof(NCard), nameof(NCard.SubscribeToModel))]
 class NCardSubscribePatch

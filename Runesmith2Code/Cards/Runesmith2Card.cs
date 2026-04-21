@@ -5,7 +5,11 @@ using Godot;
 using Runesmith2.Runesmith2Code.Character;
 using Runesmith2.Runesmith2Code.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using Runesmith2.Runesmith2Code.Field;
+using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.HoverTips;
+using Runesmith2.Runesmith2Code.Models;
+using Runesmith2.Runesmith2Code.Structs;
 
 namespace Runesmith2.Runesmith2Code.Cards;
 
@@ -51,4 +55,137 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
     {
         WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.Static(runesmithTip)));
     }
+
+    protected void WithRuneTip<T>() where T : RuneModel
+    {
+        WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.FromRune<T>()));
+    }
+
+    public virtual decimal EnhanceMultiplier => 1m;
+    
+    public event Action? ElementsCostChanged;
+
+    public void InvokeElementsCostChanged()
+    {
+        ElementsCostChanged?.Invoke();
+    }
+    
+    private bool _elementsCostSet;
+
+    public virtual Elements CanonicalElementsCost => new(-1, -1, -1);
+
+    public List<TemporaryCardCost> _temporaryElementsCosts = [];
+    
+    public TemporaryCardCost? TemporaryElementsCost => _temporaryElementsCosts.LastOrDefault();
+
+    public Elements BaseElementsCost
+    {
+        get
+        {
+            if (!IsMutable)
+            {
+                return CanonicalElementsCost;
+            }
+
+            if (_elementsCostSet) return field;
+            
+            field = CanonicalElementsCost;
+            _elementsCostSet = true;
+            return field;
+        }
+        private set
+        {
+            AssertMutable();
+            field = value;
+            _elementsCostSet = true;
+        }
+    }
+    
+    public virtual Elements CurrentElementsCost
+    {
+        get
+        {
+            var tempCost = TemporaryElementsCost?.Cost;
+            if (!tempCost.HasValue || tempCost == 0 && BaseElementsCost.Total < 0) return BaseElementsCost;
+            return new Elements(tempCost.Value);
+        }
+    }
+    
+    // DeepCloneFields
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _temporaryElementsCosts = _temporaryElementsCosts.ToList();
+    }
+
+    // AfterCloned
+    protected override void AfterCloned()
+    {
+        base.AfterCloned();
+        ElementsCostChanged = null;
+    }
+
+    // SetToFreeThisTurn - patch done
+    // SetToFreeThisCombat - patch done
+    // SetStarCostUntilPlayed - unused
+    
+    // SetStarCostThisTurn
+    public void SetElementsCostThisTurn(int cost)
+    {
+        AddTemporaryElementsCost(TemporaryCardCost.ThisTurn(cost));
+    }
+    
+    // SetStarCostThisCombat
+    public void SetElementsCostThisCombat(int cost)
+    {
+        AddTemporaryElementsCost(TemporaryCardCost.ThisCombat(cost));
+    }
+    
+    // GetStarCostThisCombat - unused
+    
+    // AddTemporaryStarCost
+    private void AddTemporaryElementsCost(TemporaryCardCost cost)
+    {
+        AssertMutable();
+        _temporaryElementsCosts.Add(cost);
+        ElementsCostChanged?.Invoke();
+    }
+    
+    // UpgradeStarCostBy - unused
+    
+    // GetStarCostWithModifiers - todo patch usages
+    public Elements GetElementsCostWithModifiers()
+    {
+        if (Pile != null && Pile.IsCombatPile && CombatState != null)
+        {
+            return RunesmithHook.ModifyElementsCost(CombatState, this, CurrentElementsCost);
+        }
+        return CurrentElementsCost;
+    }
+    
+    // CostsEnergyOrStars - patch done
+    
+    // EndOfTurnCleanup - patch done
+    
+    // SpendResources - patch done
+    
+    // SpendStars
+    public async Task SpendElements(Elements amount)
+    {
+        if (amount.Total > 0 && Owner.PlayerCombatState != null)
+        {
+            var runesmithCombatState = RunesmithField.RunesmithCombatState[Owner.PlayerCombatState];
+            if (runesmithCombatState != null)
+            {
+                runesmithCombatState.LoseElements(amount);
+                await RunesmithHook.AfterElementsSpent(Owner.Creature.CombatState, amount, Owner);
+            }
+        } 
+    }
+    
+    // OnPlayWrapper - patch done
+    
+    // DowngradeInternal - patch set base cost (not really needed)
+    
+    // todo patch has enough resource for play
 }

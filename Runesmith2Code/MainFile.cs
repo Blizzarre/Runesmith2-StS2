@@ -1,7 +1,9 @@
 using System.Reflection;
+using BaseLib.Extensions;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
+using MegaCrit.Sts2.Core.Models;
 
 namespace Runesmith2.Runesmith2Code;
 

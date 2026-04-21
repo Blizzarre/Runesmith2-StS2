@@ -5,8 +5,9 @@ using Runesmith2.Runesmith2Code.Field;
 
 namespace Runesmith2.Runesmith2Code.Patches;
 
+// TODO check double calls for async method
+
 // Ties the RuneQueue start and end turn triggers to the OrbQueue's triggers
-// TODO this might fail (async patching)
 [HarmonyPatch(typeof(OrbQueue), nameof(OrbQueue.AfterTurnStart))]
 class OrbQueueAfterTurnStartPatch
 {
@@ -14,10 +15,9 @@ class OrbQueueAfterTurnStartPatch
     static async Task Postfix(Task results, PlayerChoiceContext choiceContext, OrbQueue __instance)
     {
         await results;
-        // TODO this might not be fool proof? this assumes that the Player.PlayerCombatState.OrbQueue is the same as OrbQueue._owner
         var playerCombatState = __instance._owner.PlayerCombatState;
         if (playerCombatState == null) return;
-        var runeQueue = RunesmithField.RuneQueue[playerCombatState];
+        var runeQueue = RunesmithField.RunesmithCombatState[playerCombatState]?.RuneQueue;
         if (runeQueue == null) return;
 
         await runeQueue.AfterTurnStart(choiceContext);
@@ -31,10 +31,9 @@ class OrbQueueBeforeTurnEndPatch
     static async Task Postfix(Task results, PlayerChoiceContext choiceContext, OrbQueue __instance)
     {
         await results;
-        // TODO this might not be fool proof? this assumes that the Player.PlayerCombatState.OrbQueue is the same as OrbQueue._owner
         var playerCombatState = __instance._owner.PlayerCombatState;
         if (playerCombatState == null) return;
-        var runeQueue = RunesmithField.RuneQueue[playerCombatState];
+        var runeQueue = RunesmithField.RunesmithCombatState[playerCombatState]?.RuneQueue;
         if (runeQueue == null) return;
 
         await runeQueue.BeforeTurnEnd(choiceContext);

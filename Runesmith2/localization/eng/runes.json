@@ -1,4 +1,7 @@
 {
   "RUNESMITH2-EMPTY_SLOT.title" : "Rune Slot",
-  "RUNESMITH2-EMPTY_SLOT.description" : "Rune can be Crafted into this slot. You can have no more than [blue]7[/blue] Runes."
+  "RUNESMITH2-EMPTY_SLOT.description" : "Rune can be [gold]Crafted[/gold] into this slot. You can have no more than [blue]7[/blue] Runes.",
+  "RUNESMITH2-FLAMMA_RUNE.title" : "Flamma",
+  "RUNESMITH2-FLAMMA_RUNE.description" : "Rune: Deals damage to random enemies.",
+  "RUNESMITH2-FLAMMA_RUNE.smartDescription" : "[gold]Passive:[/gold] At the end of turn, deal [blue]{Passive}[/blue] damage to a random enemy.\n[gold]Break:[/gold] Deal [blue]{Break}[/blue] damage to a random enemy."
 }

@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Models;
 
 namespace Runesmith2.Runesmith2Code.HoverTips;
@@ -12,8 +13,13 @@ public static class RunesmithHoverTipFactory
     public static IHoverTip Static(RunesmithHoverTip tip, params DynamicVar[] vars)
     {
         var text = tip.GetType().GetPrefix() + StringHelper.Slugify(tip.ToString());
-        var locString = L10NStatic(text + ".title");
-        var locString2 = L10NStatic(text + ".description");
+        return Static(text, vars);
+    }
+    
+    public static IHoverTip Static(string entry, params DynamicVar[] vars)
+    {
+        var locString = L10NStatic(entry + ".title");
+        var locString2 = L10NStatic(entry + ".description");
         foreach (var dynamicVar in vars)
         {
             locString.Add(dynamicVar);
@@ -36,6 +42,11 @@ public static class RunesmithHoverTipFactory
     private static LocString L10NStatic(string entry)
     {
         return new LocString("static_hover_tips", entry);
+    }
+
+    public static IHoverTip FromRune<T>() where T : RuneModel
+    {
+        return ModelDb.Get<T>().DumbHoverTip;
     }
 
     public static HoverTip CreateRuneHoverTip(RuneModel rune, LocString description)

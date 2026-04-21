@@ -1,4 +1,6 @@
 ﻿using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Extensions;
@@ -8,22 +10,21 @@ namespace Runesmith2.Runesmith2Code.Commands;
 
 public static class RunesmithCardCmd
 {
-    public static async Task Enhance(PlayerChoiceContext choiceContext, CardModel card, int enhanceAmount, bool skipVisuals = false)
+    public static async Task Enhance(PlayerChoiceContext choiceContext, Player player, CardModel targetCard, CardPlay? cardPlay, int enhanceAmount, bool skipVisuals = false)
     {
         if (!CombatManager.Instance.IsOverOrEnding)
         {
-            if (!card.IsEnhanceable())
+            if (!targetCard.IsEnhanceable())
             {
-                throw new InvalidOperationException($"Cannot enhance {card.Id}.");
+                throw new InvalidOperationException($"Cannot enhance {targetCard.Id}.");
             }
-            var combatState = card.CombatState ?? card.Owner.Creature.CombatState;
+            var combatState = targetCard.CombatState ?? targetCard.Owner.Creature.CombatState;
             // TODO Consider adding history for cards enhanced.
-            
-            // TODO modify enhanceAmount based on active powers... use hooks to modify the value
-            card.AddEnhance(enhanceAmount);
+            var modifiedEnhance = RunesmithHook.ModifyEnhanceAmount(combatState, player, enhanceAmount, out var modifiers);
+            await RunesmithHook.AfterModifyingEnhanceAmount(combatState, modifiedEnhance, cardPlay?.Card, cardPlay, modifiers);
+            targetCard.AddEnhance(enhanceAmount);
             // TODO Enhance vfx
-            // trigger the flash in nhandcardholder via subscriber
-            await RunesmithHook.AfterCardEnhanced(combatState, choiceContext, card, enhanceAmount);
+            await RunesmithHook.AfterCardEnhanced(combatState, choiceContext, targetCard, enhanceAmount);
         }
     }
 }

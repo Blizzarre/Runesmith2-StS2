@@ -1,8 +1,14 @@
 {
   "RUNESMITH2-BREAK.description": "Destroy a Rune and activate its passive effect twice. Power-based effects will be removed before the start of your next turn.",
   "RUNESMITH2-BREAK.title": "Break",
-  "RUNESMITH2-CHARGE.description": "Runes need Charge to activate their passive effects. Charge is reduced by [blue]1[/blue] when the Rune's passive effect is triggerred.",
+  "RUNESMITH2-CHARGE.description": "Runes consume [blue]1[/blue] Charge to activate their passive effects.",
   "RUNESMITH2-CHARGE.title": "Charge",
+  "RUNESMITH2-CHARGE-TURN-START.description": "Current Charge: [blue]{Charge:diff()}[/blue]\nAt the start of turn, [blue]1[/blue] Charge will be consumed to trigger the Passive effect.",
+  "RUNESMITH2-CHARGE-TURN-START.title": "Charge",
+  "RUNESMITH2-CHARGE-TURN-END.description": "Current Charge: [blue]{Charge:diff()}[/blue]\nAt the end of turn, [blue]1[/blue] Charge will be consumed to trigger the Passive effect.",
+  "RUNESMITH2-CHARGE-TURN-END.title": "Charge",
+  "RUNESMITH2-CHARGE-NONE.description": "Current Charge: [blue]{Charge:diff()}[/blue]\nCharge will not consumed.",
+  "RUNESMITH2-CHARGE-NONE.title": "Charge",
   "RUNESMITH2-CRAFT.description": "Create a Rune using [gold]Elements[/gold]. You can have no more than [blue]7[/blue] active Runes.",
   "RUNESMITH2-CRAFT.title": "Craft",
   "RUNESMITH2-ELEMENTS.description": "Elements (Ignis, Terra and Aqua) are spent to [gold]Craft[/gold] Runes and are used for other utilities.",
@@ -14,10 +20,8 @@
   "RUNESMITH2-ENHANCED.title": "Enhanced",
   "RUNESMITH2-POTENCY.description": "Potency is the power of a Rune when it is [gold]Crafted[/gold].",
   "RUNESMITH2-POTENCY.title": "Potency",
-  "RUNESMITH2-RECIPE.description": "Recipe cards are drawn from the Recipe Draw Pile at the start of each turn.",
+  "RUNESMITH2-RECIPE.description": "Whenever a Recipe card is drawn, draw [blue]1[/blue] card.",
   "RUNESMITH2-RECIPE.title": "Recipe",
-  "RUNESMITH2-RECIPE_DRAW_PILE.description": "At the start of each turn,\n[blue]2[/blue] [gold]Recipe[/gold] cards are drawn from here.\n\nClick to view the cards in your [gold]Recipe[/gold] draw pile (shuffled).",
-  "RUNESMITH2-RECIPE_DRAW_PILE.title": "Recipe Draw Pile",
   "RUNESMITH2-STASIS.description": "Prevent a card from losing [gold]Enhance[/gold] when played.",
   "RUNESMITH2-STASIS.title": "Stasis"
 }

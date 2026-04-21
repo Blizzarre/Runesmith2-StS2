@@ -10,10 +10,5 @@ public static class RunesmithResource
     public const string NRuneManagerPath = "res://Runesmith2/scenes/runes/rune_manager.tscn";
     public const string NRunePath = "res://Runesmith2/scenes/runes/rune.tscn";
     
-    // TODO paths to 
-    
     public static readonly IEnumerable<string> AssetPaths = [NEnhanceTabPath, NRuneManagerPath, NRunePath];
-    
-    // For base game scenes
-    public static readonly PackedScene SelectionReticleScene = SceneHelper.Load("ui/selection_reticle");
 }

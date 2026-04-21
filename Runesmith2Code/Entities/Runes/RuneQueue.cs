@@ -64,13 +64,13 @@ public class RuneQueue
         {
             if (_owner.Creature.CombatState == null) return;
 
-            int triggerCount =
+            var triggerCount =
                 RunesmithHook.ModifyingRunePassiveTriggerCount(_owner.Creature.CombatState, rune, 1,
                     out var modifyingModels);
             await RunesmithHook.AfterModifyingRunePassiveTriggerCount(_owner.Creature.CombatState, rune,
                 modifyingModels);
             if (_owner.Creature.CombatState == null) return;
-            for (int i = 0; i < triggerCount; i++)
+            for (var i = 0; i < triggerCount; i++)
             {
                 await rune.BeforeTurnEndRuneTrigger(choiceContext);
                 await SmallWait();
@@ -84,15 +84,15 @@ public class RuneQueue
         {
             if (_owner.Creature.CombatState == null) return;
 
-            int triggerCount =
+            var triggerCount =
                 RunesmithHook.ModifyingRunePassiveTriggerCount(_owner.Creature.CombatState, rune, 1,
                     out var modifyingModels);
             await RunesmithHook.AfterModifyingRunePassiveTriggerCount(_owner.Creature.CombatState, rune,
                 modifyingModels);
             if (_owner.Creature.CombatState == null) return;
-            for (int i = 0; i < triggerCount; i++)
+            for (var i = 0; i < triggerCount; i++)
             {
-                await rune.AfterTurnStartOrbTrigger(choiceContext);
+                await rune.AfterTurnStartRuneTrigger(choiceContext);
                 await SmallWait();
             }
         }

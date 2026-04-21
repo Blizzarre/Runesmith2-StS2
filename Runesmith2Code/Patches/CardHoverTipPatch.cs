@@ -18,8 +18,7 @@ class CardHoverTipPatch
         List<IHoverTip> list = values.ToList();
         if (__instance.IsEnhanced())
         {
-            // TODO Consider better way to calculate this (maybe there are other models that affect enhance effectiveness)
-            list.Add(RunesmithHoverTipFactory.Static(RunesmithHoverTip.Enhanced, new DynamicVar("Amount", __instance.GetEnhance() * 50)));
+            list.Add(RunesmithHoverTipFactory.Static(RunesmithHoverTip.Enhanced, new DynamicVar("Amount", __instance.GetEnhanceMultiplier() * 100)));
         }
 
         if (__instance.IsStasis())

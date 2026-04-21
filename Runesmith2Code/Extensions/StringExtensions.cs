@@ -44,11 +44,11 @@ public static class StringExtensions
 
     public static string RuneImagePath(this string path)
     {
-        return Path.Join(MainFile.ModId, "images", "runes", path);
+        return Path.Join(MainFile.ModId, "images", "runes", "icons", path + ".png");
     }
 
     public static string RuneScenePath(this string path)
     {
-        return Path.Join(MainFile.ModId, "scenes", "runes", path + ".tscn");
+        return Path.Join(MainFile.ModId, "scenes", "runes", "rune_visuals", path + ".tscn");
     }
 }
