@@ -32,6 +32,7 @@ public static class RunesmithPlayerCmd
         {
             return Task.CompletedTask;
         }
+
         var runesmithCombatState = RunesmithField.RunesmithCombatState[player.PlayerCombatState];
         runesmithCombatState.LoseElements(amount);
         return Task.CompletedTask;

@@ -13,12 +13,14 @@ namespace Runesmith2.Runesmith2Code.Commands;
 
 public static class RuneCmd
 {
-    public static async Task Craft<T>(PlayerChoiceContext choiceContext, Player player, CardPlay? cardPlay, decimal charge, decimal potency = 0) where T : RuneModel
+    public static async Task Craft<T>(PlayerChoiceContext choiceContext, Player player, CardPlay? cardPlay,
+        decimal charge, decimal potency = 0) where T : RuneModel
     {
         await Craft(choiceContext, ModelDb.Get<T>().ToMutable(), player, cardPlay, charge, potency);
     }
 
-    public static async Task Craft(PlayerChoiceContext choiceContext, RuneModel rune, Player player, CardPlay? cardPlay, decimal charge, decimal potency = 0)
+    public static async Task Craft(PlayerChoiceContext choiceContext, RuneModel rune, Player player, CardPlay? cardPlay,
+        decimal charge, decimal potency = 0)
     {
         if (!CombatManager.Instance.IsOverOrEnding)
         {
@@ -26,13 +28,13 @@ public static class RuneCmd
             var runesmithCombatState = RunesmithField.RunesmithCombatState[player.PlayerCombatState];
             var runeQueue = runesmithCombatState.RuneQueue;
             rune.AssertMutable();
-            
+
             // TODO Modify rune charge and potency
             decimal modifiedPotency = potency;
             modifiedPotency = RunesmithHook.ModifyPotency(combatState, player, modifiedPotency, ValueProp.Move,
                 cardPlay.Card, cardPlay, out _);
             // TODO after modifying charge/potency
-            
+
             rune.ChargeVal = (int)Math.Max(0, charge);
             rune.PassiveVal = (int)Math.Max(0, modifiedPotency);
             rune.Owner = player;

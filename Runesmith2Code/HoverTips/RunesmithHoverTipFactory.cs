@@ -18,10 +18,11 @@ public static class RunesmithHoverTipFactory
         const RunesmithHoverTip tip = RunesmithHoverTip.Elements;
         var text = tip.GetType().GetPrefix() + StringHelper.Slugify(tip.ToString());
 
-        return Static(text, RunesmithResource.ElementsIcon, Runesmith2Card.IgnisIconVar, Runesmith2Card.TerraIconVar,
-            Runesmith2Card.AquaIconVar);
+        return Static(text, RunesmithResource.ElementsIcon, RunesmithVarIndex.IgnisIconVar,
+            RunesmithVarIndex.TerraIconVar,
+            RunesmithVarIndex.AquaIconVar);
     }
-    
+
     public static IHoverTip Static(RunesmithHoverTip tip, params DynamicVar[] vars)
     {
         var text = tip.GetType().GetPrefix() + StringHelper.Slugify(tip.ToString());
@@ -32,7 +33,7 @@ public static class RunesmithHoverTipFactory
     {
         return Static(entry, null, vars);
     }
-    
+
     public static IHoverTip Static(string entry, Texture2D? icon, params DynamicVar[] vars)
     {
         var locString = L10NStatic(entry + ".title");
@@ -42,9 +43,10 @@ public static class RunesmithHoverTipFactory
             locString.Add(dynamicVar);
             locString2.Add(dynamicVar);
         }
+
         return new HoverTip(locString, locString2, icon);
     }
-    
+
     public static LocString StaticBanner(RunesmithHoverTip tip, params DynamicVar[] vars)
     {
         var text = tip.GetType().GetPrefix() + StringHelper.Slugify(tip.ToString());
@@ -53,9 +55,10 @@ public static class RunesmithHoverTipFactory
         {
             locString.Add(dynamicVar);
         }
+
         return locString;
     }
-    
+
     private static LocString L10NStatic(string entry)
     {
         return new LocString("static_hover_tips", entry);

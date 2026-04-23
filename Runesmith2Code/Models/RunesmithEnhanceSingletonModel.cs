@@ -12,13 +12,14 @@ namespace Runesmith2.Runesmith2Code.Models;
 
 public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false), IRunesmithModel
 {
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
+        Creature? dealer, CardModel? cardSource)
     {
         if (cardSource == null)
         {
             return 1;
         }
-        
+
         if (!props.IsPoweredAttack_())
         {
             return 1;
@@ -28,17 +29,18 @@ public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false
         {
             return 1;
         }
-        
+
         return 1 + cardSource.GetEnhanceMultiplier();
     }
 
-    public override decimal ModifyBlockMultiplicative(Creature target, decimal block, ValueProp props, CardModel? cardSource, CardPlay? cardPlay)
+    public override decimal ModifyBlockMultiplicative(Creature target, decimal block, ValueProp props,
+        CardModel? cardSource, CardPlay? cardPlay)
     {
         if (cardSource == null)
         {
             return 1;
         }
-        
+
         if (!props.IsPoweredCardOrMonsterMoveBlock_())
         {
             return 1;
@@ -59,6 +61,7 @@ public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false
         {
             cardPlay.Card.ClearEnhance();
         }
+
         return Task.CompletedTask;
     }
 
@@ -69,7 +72,7 @@ public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false
         {
             return 1;
         }
-        
+
         if (!props.IsPoweredCardOrMonsterMoveBlock_())
         {
             return 1;

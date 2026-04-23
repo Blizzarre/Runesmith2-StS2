@@ -19,19 +19,20 @@ public static class CardModelExtension
         {
             return true;
         }
-        
-        if (cardModel.DynamicVars.ContainsKey(PotencyVar.defaultName) && cardModel.DynamicVars[PotencyVar.defaultName].BaseValue > 0)
+
+        if (cardModel.DynamicVars.ContainsKey(PotencyVar.defaultName) &&
+            cardModel.DynamicVars[PotencyVar.defaultName].BaseValue > 0)
         {
             return true;
         }
-        
+
         return false;
     }
-    
-    public class RunesmithCardModelModifier(CardModel cardModel)
+
+    public class RunesmithCardModelModifier
     {
         private bool _justEnhanced;
-        
+
         public bool JustEnhanced
         {
             get
@@ -42,7 +43,7 @@ public static class CardModelExtension
             }
             private set => _justEnhanced = value;
         }
-        
+
         private bool _justStasis;
 
         public bool JustStasis
@@ -55,36 +56,46 @@ public static class CardModelExtension
             }
             private set => _justStasis = value;
         }
-        
+
         private int _enhanced;
+
         public int Enhanced
         {
             get => _enhanced;
             set
             {
-                cardModel.AssertMutable();
+                CardModel.AssertMutable();
                 _enhanced = Math.Clamp(value, 0, 999);
                 if (_enhanced > 0) JustEnhanced = true;
                 EnhanceChanged?.Invoke();
             }
         }
-        
+
         private bool _isStasis;
+        public CardModel CardModel { get; set; }
+
+        public RunesmithCardModelModifier(CardModel cardModel)
+        {
+            CardModel = cardModel;
+        }
+
         public bool Stasis
         {
             get => _isStasis;
             set
             {
-                cardModel.AssertMutable();
+                CardModel.AssertMutable();
                 _isStasis = value;
                 if (_isStasis) JustStasis = true;
                 StasisChanged?.Invoke();
             }
         }
 
-        public RunesmithCardModelModifier Clone()
+        public RunesmithCardModelModifier Clone(CardModel cardModel)
         {
-            return (RunesmithCardModelModifier)MemberwiseClone();
+            var ret = (RunesmithCardModelModifier)MemberwiseClone();
+            ret.CardModel = cardModel;
+            return ret;
         }
 
         public void ClearFlags()
@@ -92,14 +103,15 @@ public static class CardModelExtension
             _justEnhanced = false;
             _justStasis = false;
         }
-        
+
         public event Action? EnhanceChanged;
         public event Action? StasisChanged;
     }
 
     public static RunesmithCardModelModifier GetCardModelModifier(this CardModel cardModel)
     {
-        if (RunesmithField.Modifier[cardModel] == null) return RunesmithField.Modifier[cardModel] = new RunesmithCardModelModifier(cardModel);
+        if (RunesmithField.Modifier[cardModel] == null)
+            return RunesmithField.Modifier[cardModel] = new RunesmithCardModelModifier(cardModel);
         return RunesmithField.Modifier[cardModel]!;
     }
 
@@ -113,7 +125,7 @@ public static class CardModelExtension
     {
         return cardModel.GetCardModelModifier().Enhanced > 0;
     }
-    
+
     public static int GetEnhance(this CardModel cardModel)
     {
         return cardModel.GetCardModelModifier().Enhanced;
@@ -128,7 +140,7 @@ public static class CardModelExtension
 
         return 0.5m * cardModel.GetCardModelModifier().Enhanced;
     }
-    
+
     public static void ClearEnhance(this CardModel cardModel)
     {
         if (!cardModel.IsMutable) return;
@@ -140,7 +152,7 @@ public static class CardModelExtension
         if (!cardModel.IsMutable) return;
         cardModel.GetCardModelModifier().Stasis = stasis;
     }
-    
+
     public static bool IsStasis(this CardModel cardModel)
     {
         return cardModel.GetCardModelModifier().Stasis;

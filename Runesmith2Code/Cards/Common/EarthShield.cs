@@ -18,7 +18,7 @@ public class EarthShield : Runesmith2Card
         WithElementsVar(new TerraVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Elements);
     }
-    
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
@@ -26,5 +26,4 @@ public class EarthShield : Runesmith2Card
         await CommonActions.CardBlock(this, play);
         await RunesmithPlayerCmd.GainElements(Elements.WithTerra(DynamicVars[TerraVar.defaultName].IntValue), Owner);
     }
-
 }

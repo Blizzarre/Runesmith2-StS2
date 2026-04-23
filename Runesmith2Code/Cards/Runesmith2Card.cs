@@ -12,6 +12,7 @@ using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Models;
 using Runesmith2.Runesmith2Code.Structs;
+using Runesmith2.Runesmith2Code.Utils;
 
 namespace Runesmith2.Runesmith2Code.Cards;
 
@@ -19,18 +20,6 @@ namespace Runesmith2.Runesmith2Code.Cards;
 public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity, TargetType target) :
     ConstructedCardModel(cost, type, rarity, target)
 {
-    public static readonly StringVar IgnisIconVar =
-        new("IgnisIcon", "[img]res://Runesmith2/images/charui/elements_ignis_icon.png[/img]");
-    
-    public static readonly StringVar TerraIconVar =
-        new("TerraIcon", "[img]res://Runesmith2/images/charui/elements_terra_icon.png[/img]");
-    
-    public static readonly StringVar AquaIconVar =
-        new("AquaIcon", "[img]res://Runesmith2/images/charui/elements_aqua_icon.png[/img]");
-    
-    public static readonly StringVar ElementsIconVar =
-        new("ElementsIcon", "[img]res://Runesmith2/images/charui/elements_all_icon.png[/img]");
-    
     //Image size:
     //Normal art: 1000x760 (Using 500x380 should also work, it will simply be scaled.)
     //Full art: 606x852
@@ -38,15 +27,15 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
     {
         get
         {
-            var path = $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigCardImagePath();
-            return ResourceLoader.Exists(path) ? path : "card.png".BigCardImagePath();
+            var path = $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
+            return ResourceLoader.Exists(path) ? path : "card.png".CardImagePath();
         }
     }
-    
+
     //Smaller variants of card images for efficiency:
     //Smaller variant of fullart: 250x350
     //Smaller variant of normalart: 250x190
-    
+
     //Uses card_portraits/card_name.png as image path. These should be smaller images.
     public override string PortraitPath
     {
@@ -56,6 +45,7 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
             return ResourceLoader.Exists(path) ? path : "card.png".CardImagePath();
         }
     }
+
     public override string BetaPortraitPath
     {
         get
@@ -88,35 +78,35 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
         switch (var)
         {
             case IgnisVar ignisVar:
-                WithVars(ignisVar, IgnisIconVar);
+                WithVars(ignisVar, RunesmithVarIndex.IgnisIconVar);
                 break;
             case TerraVar terraVar:
-                WithVars(terraVar, TerraIconVar);
+                WithVars(terraVar, RunesmithVarIndex.TerraIconVar);
                 break;
             case AquaVar aquaVar:
-                WithVars(aquaVar, AquaIconVar);
+                WithVars(aquaVar, RunesmithVarIndex.AquaIconVar);
                 break;
             case ElementsVar elementsVar:
-                WithVars(elementsVar, ElementsIconVar);
+                WithVars(elementsVar, RunesmithVarIndex.ElementsIconVar);
                 break;
         }
     }
 
     public virtual decimal EnhanceMultiplier => 1m;
-    
+
     public event Action? ElementsCostChanged;
 
     public void InvokeElementsCostChanged()
     {
         ElementsCostChanged?.Invoke();
     }
-    
+
     private bool _elementsCostSet;
 
     public virtual Elements CanonicalElementsCost => new(-1, -1, -1);
 
     public List<TemporaryCardCost> _temporaryElementsCosts = [];
-    
+
     public TemporaryCardCost? TemporaryElementsCost => _temporaryElementsCosts.LastOrDefault();
 
     public Elements BaseElementsCost
@@ -129,7 +119,7 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
             }
 
             if (_elementsCostSet) return field;
-            
+
             field = CanonicalElementsCost;
             _elementsCostSet = true;
             return field;
@@ -141,7 +131,7 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
             _elementsCostSet = true;
         }
     }
-    
+
     public virtual Elements CurrentElementsCost
     {
         get
@@ -151,7 +141,7 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
             return new Elements(tempCost.Value);
         }
     }
-    
+
     // DeepCloneFields
     protected override void DeepCloneFields()
     {
@@ -169,21 +159,21 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
     // SetToFreeThisTurn - patch done
     // SetToFreeThisCombat - patch done
     // SetStarCostUntilPlayed - unused
-    
+
     // SetStarCostThisTurn
     public void SetElementsCostThisTurn(int cost)
     {
         AddTemporaryElementsCost(TemporaryCardCost.ThisTurn(cost));
     }
-    
+
     // SetStarCostThisCombat
     public void SetElementsCostThisCombat(int cost)
     {
         AddTemporaryElementsCost(TemporaryCardCost.ThisCombat(cost));
     }
-    
+
     // GetStarCostThisCombat - unused
-    
+
     // AddTemporaryStarCost
     private void AddTemporaryElementsCost(TemporaryCardCost cost)
     {
@@ -191,9 +181,9 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
         _temporaryElementsCosts.Add(cost);
         ElementsCostChanged?.Invoke();
     }
-    
+
     // UpgradeStarCostBy - unused
-    
+
     // GetStarCostWithModifiers - todo patch usages
     public Elements GetElementsCostWithModifiers()
     {
@@ -201,15 +191,16 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
         {
             return RunesmithHook.ModifyElementsCost(CombatState, this, CurrentElementsCost);
         }
+
         return CurrentElementsCost;
     }
-    
+
     // CostsEnergyOrStars - patch done
-    
+
     // EndOfTurnCleanup - patch done
-    
+
     // SpendResources - patch done
-    
+
     // SpendStars
     public async Task SpendElements(Elements amount)
     {
@@ -221,12 +212,12 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
                 runesmithCombatState.LoseElements(amount);
                 await RunesmithHook.AfterElementsSpent(Owner.Creature.CombatState, amount, Owner);
             }
-        } 
+        }
     }
-    
+
     // OnPlayWrapper - patch done
-    
+
     // DowngradeInternal - patch set base cost (not really needed)
-    
+
     // todo patch has enough resource for play
 }

@@ -16,44 +16,47 @@ public partial class NElementsCounter : Control
 
     private static readonly StringName _s = new("s");
 
-    public static readonly (Color, Color, Color) RedFontColor = (new Color("ffe3e3"), new Color("00000030"), new Color("541111"));
-    
-    public static readonly (Color, Color, Color) GreenFontColor = (new Color("e3ffe3"), new Color("00000030"), new Color("115411"));
-    
-    private static readonly (Color, Color, Color) BlueFontColor = (new Color("e3e3ff"), new Color("00000030"), new Color("111154"));
-    
+    public static readonly (Color, Color, Color) RedFontColor = (new Color("ffe3e3"), new Color("00000030"),
+        new Color("541111"));
+
+    public static readonly (Color, Color, Color) GreenFontColor = (new Color("e3ffe3"), new Color("00000030"),
+        new Color("115411"));
+
+    public static readonly (Color, Color, Color) BlueFontColor = (new Color("e3e3ff"), new Color("00000030"),
+        new Color("111154"));
+
     // TODO VFX for gaining elements
-    
+
     private Player? _player;
-    
+
     private Control _rotationLayers;
-    
+
     private TextureRect _icon;
-    
+
     private ShaderMaterial _hsv;
 
     private float _lerpingIgnisCount;
-    
+
     private float _lerpingTerraCount;
-    
+
     private float _lerpingAquaCount;
 
     private float _velocity1;
-    
+
     private float _velocity2;
-    
+
     private float _velocity3;
-    
+
     private Elements _displayedElementsCount = new();
-    
-    private List<MegaLabel> _labels;
-    
+
+    private MegaLabel[] _labels;
+
     private Tween? _hsvTween;
 
     private bool _isListeningToCombatState;
-    
+
     private HoverTip _hoverTip;
-    
+
     public void Initialize(Player player)
     {
         _player = player;
@@ -80,13 +83,14 @@ public partial class NElementsCounter : Control
         locString.Add("IgnisIcon", "[img]res://Runesmith2/images/charui/elements_ignis_icon.png[/img]");
         locString.Add("TerraIcon", "[img]res://Runesmith2/images/charui/elements_terra_icon.png[/img]");
         locString.Add("AquaIcon", "[img]res://Runesmith2/images/charui/elements_aqua_icon.png[/img]");
-        _hoverTip = new HoverTip(new LocString("static_hover_tips", "RUNESMITH2-ELEMENTS_COUNT.title"), locString, RunesmithResource.ElementsIcon);
+        _hoverTip = new HoverTip(new LocString("static_hover_tips", "RUNESMITH2-ELEMENTS_COUNT.title"), locString,
+            RunesmithResource.ElementsIcon);
         Connect(Control.SignalName.MouseEntered, Callable.From(OnHovered));
         Connect(Control.SignalName.MouseExited, Callable.From(OnUnhovered));
         SetElementsCountText(new Elements(0), true);
         Visible = false;
     }
-    
+
     private static MegaLabel CreateLabel((Color, Color, Color) fontColor)
     {
         var label = new MegaLabel();
@@ -104,7 +108,7 @@ public partial class NElementsCounter : Control
         label.AddThemeFontOverride("font", BaseResourceIndex.FontKreonBoldSpaceTwo);
         label.AddThemeFontSizeOverride("font_size", 28);
         label.Text = "0";
-        
+
         return label;
     }
 
@@ -124,7 +128,7 @@ public partial class NElementsCounter : Control
             _isListeningToCombatState = false;
         }
     }
-    
+
     private void ConnectElementsChangedSignal()
     {
         if (_player != null && !_isListeningToCombatState)
@@ -134,7 +138,7 @@ public partial class NElementsCounter : Control
             _isListeningToCombatState = true;
         }
     }
-    
+
     private void OnHovered()
     {
         var nHoverTipSet = NHoverTipSet.CreateAndShow(this, _hoverTip);
@@ -156,15 +160,19 @@ public partial class NElementsCounter : Control
     {
         if (_player == null) return;
         var elements = GetPlayerElements(_player);
-        var rotSpeed = elements.Total == 0 ? 10f : 60f;
+        var rotSpeed = elements.Total == 0 ? 10f : 40f;
         for (var i = 0; i < _rotationLayers.GetChildCount(); i++)
         {
             _rotationLayers.GetChild<Control>(i).RotationDegrees += (float)delta * rotSpeed * (i + 1);
         }
-        _lerpingIgnisCount = MathHelper.SmoothDamp(_lerpingIgnisCount, elements.Ignis, ref _velocity1, 0.1f, (float)delta);
-        _lerpingTerraCount = MathHelper.SmoothDamp(_lerpingTerraCount, elements.Terra, ref _velocity2, 0.1f, (float)delta);
+
+        _lerpingIgnisCount =
+            MathHelper.SmoothDamp(_lerpingIgnisCount, elements.Ignis, ref _velocity1, 0.1f, (float)delta);
+        _lerpingTerraCount =
+            MathHelper.SmoothDamp(_lerpingTerraCount, elements.Terra, ref _velocity2, 0.1f, (float)delta);
         _lerpingAquaCount = MathHelper.SmoothDamp(_lerpingAquaCount, elements.Aqua, ref _velocity3, 0.1f, (float)delta);
-        SetElementsCountText(new Elements(Mathf.RoundToInt(_lerpingIgnisCount), Mathf.RoundToInt(_lerpingTerraCount),  Mathf.RoundToInt(_lerpingAquaCount)));
+        SetElementsCountText(new Elements(Mathf.RoundToInt(_lerpingIgnisCount), Mathf.RoundToInt(_lerpingTerraCount),
+            Mathf.RoundToInt(_lerpingAquaCount)));
     }
 
     private static Elements GetPlayerElements(Player player)
@@ -185,7 +193,8 @@ public partial class NElementsCounter : Control
             _lerpingTerraCount = newCount.Terra;
             _lerpingAquaCount = newCount.Aqua;
             SetElementsCountText(newCount);
-        } else if (newCount.Total > oldCount.Total)
+        }
+        else if (newCount.Total > oldCount.Total)
         {
             _hsvTween?.Kill();
             _hsvTween = CreateTween();
@@ -199,16 +208,10 @@ public partial class NElementsCounter : Control
         if (initSetup || _displayedElementsCount != elements)
         {
             _displayedElementsCount = elements;
-            for(var i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
                 var label = _labels[i];
-                var elemValue = i switch
-                {
-                    0 => elements.Ignis,
-                    1 => elements.Terra,
-                    2 => elements.Aqua,
-                    _ => 0
-                };
+                var elemValue = elements.ByIndex(i);
                 var fontColor = i switch
                 {
                     0 => RedFontColor.Item1,
@@ -216,7 +219,7 @@ public partial class NElementsCounter : Control
                     2 => BlueFontColor.Item1,
                     _ => throw new ArgumentOutOfRangeException()
                 };
-                
+
                 label.AddThemeColorOverride(ThemeConstants.Label.FontColor, elemValue == 0 ? StsColors.red : fontColor);
                 label.Text = elemValue.ToString();
             }
@@ -233,12 +236,12 @@ public partial class NElementsCounter : Control
             }
         }
     }
-    
+
     private void UpdateShaderV(float value)
     {
         _hsv.SetShaderParameter(_v, value);
     }
-    
+
     private void RefreshVisibility()
     {
         if (_player == null)
@@ -246,11 +249,11 @@ public partial class NElementsCounter : Control
             Visible = false;
             return;
         }
-        var elements =  GetPlayerElements(_player);
+
+        var elements = GetPlayerElements(_player);
 
         var shouldAlwaysShowElements = _player.Character is Runesmith2.Runesmith2Code.Character.Runesmith2;
 
         Visible = Visible || shouldAlwaysShowElements || elements.Total > 0;
     }
 }
-    

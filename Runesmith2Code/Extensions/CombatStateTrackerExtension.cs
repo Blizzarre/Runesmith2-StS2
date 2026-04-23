@@ -15,7 +15,7 @@ public static class CombatStateTrackerExtension
     {
         combatState.ElementsChanged += tracker.OnElementsChanged;
     }
-    
+
     public static void UnsubscribeElements(this CombatStateTracker tracker, RunesmithCombatState combatState)
     {
         combatState.ElementsChanged -= tracker.OnElementsChanged;

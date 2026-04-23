@@ -13,10 +13,11 @@ namespace Runesmith2.Runesmith2Code.Nodes;
 [GlobalClass]
 public partial class NEnhanceTab : TextureRect
 {
-    private static readonly (Color, Color, Color) FontColor = (new Color("f4e8c7"), new Color("00000030"), new Color("554c36"));
-    
+    private static readonly (Color, Color, Color) FontColor = (new Color("f4e8c7"), new Color("00000030"),
+        new Color("554c36"));
+
     private MegaLabel? _enhanceLabel;
-    
+
     public NCard? NCard { get; private set; }
 
     public NEnhanceTab WithData(NCard nCard)
@@ -28,6 +29,10 @@ public partial class NEnhanceTab : TextureRect
 
     public override void _Ready()
     {
+        SetAnchorsPreset(LayoutPreset.Center, true);
+        Size = new Vector2(162, 40);
+        Position = new Vector2(-81, -171);
+
         if (_enhanceLabel != null) return;
         _enhanceLabel = new MegaLabel();
         _enhanceLabel.MaxFontSize = 17;
@@ -45,7 +50,7 @@ public partial class NEnhanceTab : TextureRect
         _enhanceLabel.AddThemeConstantOverride("shadow_outline_size", 9);
         _enhanceLabel.AddThemeFontOverride("font", BaseResourceIndex.FontKreonRegularSpaceOne);
         _enhanceLabel.Text = "";
-        
+
         AddChild(_enhanceLabel);
     }
 

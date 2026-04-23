@@ -18,6 +18,7 @@ public class UnplayableReasonExtensionsGetPlayerDialogueLinePatch
             __result = new LocString("combat_messages", "RUNESMITH2-NOT_ENOUGH_ELEMENTS");
             return false;
         }
+
         return true;
     }
 }

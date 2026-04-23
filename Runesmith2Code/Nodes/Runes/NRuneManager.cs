@@ -21,27 +21,27 @@ public partial class NRuneManager : Control
     private Control _runeContainer;
 
     private readonly List<NRune> _runes = new();
-    
+
     private NCreature _creatureNode;
 
     private const float Radius = 330f;
-    
+
     private const float FanAngle = 100f;
 
     private const float AngleOffset = 10f;
-    
+
     private const float TweenFadeDuration = 0.45f;
-    
+
     private Tween? _curTween;
 
     private static readonly Vector2 CenterOffset = new(-100f, -70f);
-    
+
     private static string ScenePath => RunesmithResource.NRuneManagerPath;
-    
+
     public bool IsLocal { get; private set; }
-    
+
     private Player Player => _creatureNode.Entity.Player;
-    
+
     public Control DefaultFocusOwner
     {
         get
@@ -50,6 +50,7 @@ public partial class NRuneManager : Control
             {
                 return _creatureNode.Hitbox;
             }
+
             return _runes.First();
         }
     }
@@ -58,33 +59,34 @@ public partial class NRuneManager : Control
     {
         _runeContainer = GetNode<Control>("%Runes");
     }
-    
+
     public override void _EnterTree()
     {
         base._EnterTree();
         CombatManager.Instance.StateTracker.CombatStateChanged += OnCombatStateChanged;
         CombatManager.Instance.CombatSetUp += OnCombatSetup;
     }
-    
+
     public override void _ExitTree()
     {
         base._ExitTree();
         CombatManager.Instance.StateTracker.CombatStateChanged -= OnCombatStateChanged;
         CombatManager.Instance.CombatSetUp -= OnCombatSetup;
     }
-    
+
     public static NRuneManager Create(NCreature creature, bool isLocal)
     {
         if (creature.Entity.Player == null)
         {
             throw new InvalidOperationException("NRuneManager can only be applied to player creatures");
         }
+
         var nRuneManager = PreloadManager.Cache.GetScene(ScenePath).Instantiate<NRuneManager>();
         nRuneManager._creatureNode = creature;
         nRuneManager.IsLocal = isLocal;
         return nRuneManager;
     }
-    
+
     private void OnCombatSetup(CombatState _)
     {
         if (!Player.Creature.IsAlive || Player.PlayerCombatState == null) return;
@@ -93,7 +95,7 @@ public partial class NRuneManager : Control
             AddSlotAnim();
         }
     }
-    
+
     private void OnCombatStateChanged(CombatState _)
     {
         UpdateVisuals(RuneBreakType.None);
@@ -103,10 +105,10 @@ public partial class NRuneManager : Control
     {
         var emptyRune = _runes.FirstOrDefault(n => n.Model == null);
         if (emptyRune != null) return; // There's empty slot already
-        
+
         var nonEmptyCount = _runes.Count(n => n.Model != null);
         if (nonEmptyCount >= RuneQueue.MaxCapacity) return; // Full of non-empty slot already
-        
+
         var nRune = NRune.Create(LocalContext.IsMe(Player));
         var count = _runes.Count;
         _runeContainer.AddChildSafely(nRune);
@@ -143,9 +145,9 @@ public partial class NRuneManager : Control
             _runes.Remove(emptyRune);
             emptyRune.QueueFreeSafely();
         }
-        
+
         AddSlotAnim();
-        
+
         TweenLayout();
         UpdateControllerNavigation();
     }
@@ -155,7 +157,7 @@ public partial class NRuneManager : Control
         var breakRune = _runes.Last(n => n.Model == rune);
         var tween = CreateTween();
         _runes.Remove(breakRune);
-        
+
         var emptyRune = _runes.FirstOrDefault(n => n.Model == null);
         if (emptyRune != null)
         {
@@ -170,7 +172,7 @@ public partial class NRuneManager : Control
             tween.TweenProperty(breakRune, "modulate:a", 0, TweenFadeDuration);
             tween.Chain().TweenCallback(Callable.From(breakRune.QueueFreeSafely));
         }
-        
+
         var newEmptyRune = NRune.Create(LocalContext.IsMe(Player));
         _runeContainer.AddChildSafely(newEmptyRune);
         var position = GetRunePosition(_runes.Count);
@@ -180,6 +182,7 @@ public partial class NRuneManager : Control
         {
             _creatureNode.Hitbox.TryGrabFocus();
         }
+
         TweenLayout();
         UpdateControllerNavigation();
     }
@@ -195,6 +198,7 @@ public partial class NRuneManager : Control
             _runes[i].FocusNeighborTop = _runes[i].GetPath();
             _runes[i].FocusNeighborBottom = _creatureNode.Hitbox.GetPath();
         }
+
         _creatureNode.UpdateNavigation();
     }
 
@@ -205,10 +209,11 @@ public partial class NRuneManager : Control
         for (var i = 0; i < _runes.Count; i++)
         {
             var position = GetRunePosition(i);
-            _curTween.TweenProperty(_runes[i], "position", position, 0.5).SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Sine);
+            _curTween.TweenProperty(_runes[i], "position", position, 0.5).SetEase(Tween.EaseType.InOut)
+                .SetTrans(Tween.TransitionType.Sine);
         }
     }
-    
+
     private Vector2 GetRunePosition(int index)
     {
         var radius = Radius;
@@ -216,17 +221,19 @@ public partial class NRuneManager : Control
         {
             radius *= 0.75f;
         }
+
         const float angleStep = FanAngle / (RuneQueue.MaxCapacity - 1);
         var angle = float.DegreesToRadians(-angleStep * index - AngleOffset); // neg angle is counter-clockwise
         return new Vector2(radius, 0f).Rotated(angle) + CenterOffset;
     }
-    
+
     public void UpdateVisuals(RuneBreakType breakType)
     {
         foreach (var rune in _runes)
         {
             rune.UpdateVisuals(false);
         }
+
         switch (breakType)
         {
             case RuneBreakType.Oldest:
@@ -241,6 +248,7 @@ public partial class NRuneManager : Control
                 {
                     rune2.UpdateVisuals(true);
                 }
+
                 break;
             }
             case RuneBreakType.None:
@@ -263,10 +271,12 @@ public partial class NRuneManager : Control
                 .SetTrans(Tween.TransitionType.Sine);
             _curTween.Parallel().TweenProperty(rune, "modulate:a", 0, 0.25);
         }
+
         foreach (var rune2 in _runes)
         {
             _curTween.Chain().TweenCallback(Callable.From(rune2.QueueFreeSafely));
         }
+
         _runes.Clear();
     }
 }

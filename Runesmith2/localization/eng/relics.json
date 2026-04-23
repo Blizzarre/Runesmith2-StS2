@@ -1,3 +1,5 @@
 {
-  
+  "RUNESMITH2-BROKEN_RUBY.description": "At the start of each combat, gain [blue]{Ignis:diff()}[/blue] [gold]Ignis[/gold] {IgnisIcon} and [gold]Enhance[/gold] [blue]{Amount:diff()}[/blue] card{Amount:plural:|s} in your [gold]Hand[/gold] at random.",
+  "RUNESMITH2-BROKEN_RUBY.flavor": "",
+  "RUNESMITH2-BROKEN_RUBY.title": "Broken Ruby"
 }

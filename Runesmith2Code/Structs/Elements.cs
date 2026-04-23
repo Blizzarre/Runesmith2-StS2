@@ -7,7 +7,7 @@ public struct Elements(int ignis, int terra, int aqua) : IEquatable<Elements>
     public Elements() : this(0, 0, 0)
     {
     }
-    
+
     public Elements(int cost) : this(cost, cost, cost)
     {
     }
@@ -16,15 +16,26 @@ public struct Elements(int ignis, int terra, int aqua) : IEquatable<Elements>
     {
         return new Elements(cost, 0, 0);
     }
-    
+
     public static Elements WithTerra(int cost)
     {
         return new Elements(0, cost, 0);
     }
-    
+
     public static Elements WithAqua(int cost)
     {
         return new Elements(0, 0, cost);
+    }
+
+    public int ByIndex(int index)
+    {
+        return index switch
+        {
+            0 => Ignis,
+            1 => Terra,
+            2 => Aqua,
+            _ => 0
+        };
     }
 
     public int Ignis { get; set; } = ignis;
@@ -49,12 +60,12 @@ public struct Elements(int ignis, int terra, int aqua) : IEquatable<Elements>
     {
         return new Elements(a.Ignis + b.Ignis, a.Terra + b.Terra, a.Aqua + b.Aqua);
     }
-    
+
     public static Elements operator -(Elements a, Elements b)
     {
         return new Elements(a.Ignis - b.Ignis, a.Terra - b.Terra, a.Aqua - b.Aqua);
     }
-    
+
     public static bool operator ==(Elements a, Elements b)
     {
         return a.Equals(b);

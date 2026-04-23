@@ -18,14 +18,15 @@ class CardHoverTipPatch
         List<IHoverTip> list = values.ToList();
         if (__instance.IsEnhanced())
         {
-            list.Add(RunesmithHoverTipFactory.Static(RunesmithHoverTip.Enhanced, new DynamicVar("Amount", __instance.GetEnhanceMultiplier() * 100)));
+            list.Add(RunesmithHoverTipFactory.Static(RunesmithHoverTip.Enhanced,
+                new DynamicVar("Amount", __instance.GetEnhanceMultiplier() * 100)));
         }
 
         if (__instance.IsStasis())
         {
             list.Add(RunesmithHoverTipFactory.Static(RunesmithHoverTip.Stasis));
         }
-        
+
         return list.Distinct();
     }
 }

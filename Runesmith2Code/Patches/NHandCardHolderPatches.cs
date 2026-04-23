@@ -71,7 +71,7 @@ class NHandCardHolderFlashPatch
             .call(typeof(NHandCardHolder), "get_ShouldGlowGold")
             .brfalse_s()
         ).Step(-3).Insert([
-            CodeInstruction.LoadArgument(0), 
+            CodeInstruction.LoadArgument(0),
             CodeInstruction.Call((NHandCardHolder instance) => ShouldGlowBeige(instance))
         ]);
     }

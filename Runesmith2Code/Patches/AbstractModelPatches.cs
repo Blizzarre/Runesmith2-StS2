@@ -13,9 +13,9 @@ class AbstractModelMutableClonePatch
         if (src is not CardModel srcModel || dest is not CardModel destModel) return;
         var modifier = RunesmithField.Modifier[srcModel];
         if (modifier == null) return;
-        RunesmithField.Modifier[destModel] = modifier.Clone();
+        RunesmithField.Modifier[destModel] = modifier.Clone(destModel);
     }
-    
+
     [HarmonyTranspiler]
     static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
@@ -25,8 +25,8 @@ class AbstractModelMutableClonePatch
             .callvirt(typeof(AbstractModel), "set_IsMutable", [typeof(bool)])
         ).Step(-3).Insert([
             CodeInstruction.LoadArgument(0),
-            CodeInstruction.LoadLocal(0), 
-            CodeInstruction.Call((AbstractModel src, AbstractModel dest) => CloneSpireField(src, dest))
+            CodeInstruction.LoadLocal(0),
+            CodeInstruction.Call(typeof(AbstractModelMutableClonePatch), nameof(CloneSpireField))
         ]);
     }
 }

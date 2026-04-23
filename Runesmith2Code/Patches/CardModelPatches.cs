@@ -12,7 +12,6 @@ using Runesmith2.Runesmith2Code.Field;
 
 namespace Runesmith2.Runesmith2Code.Patches;
 
-
 [HarmonyPatch(typeof(CardModel), "AfterCloned")]
 class CardModelAfterClonedPatch
 {
@@ -75,7 +74,7 @@ class CardModelSpendResourcesPatch
         await results;
         if (__instance is not Runesmith2Card card) return;
         MainFile.Logger.Info("Spending Resources");
-        var elementsToSpend = card.GetElementsCostWithModifiers().ClampZero(); 
+        var elementsToSpend = card.GetElementsCostWithModifiers().ClampZero();
         await card.SpendElements(elementsToSpend);
     }
 }
@@ -119,11 +118,13 @@ class CardModelCostsEnergyOrStarPatch
         {
             if (card.GetElementsCostWithModifiers().Total > 0) __result = true;
         }
+
         if (card.CurrentElementsCost.Total > 0) __result = true;
     }
 }
 
-[HarmonyPatch(typeof(CardModel), nameof(CardModel.CanPlay), [typeof(UnplayableReason), typeof(AbstractModel)], [ArgumentType.Out, ArgumentType.Out])]
+[HarmonyPatch(typeof(CardModel), nameof(CardModel.CanPlay), [typeof(UnplayableReason), typeof(AbstractModel)],
+    [ArgumentType.Out, ArgumentType.Out])]
 class CardModelCanPlayPatch
 {
     [HarmonyTranspiler]

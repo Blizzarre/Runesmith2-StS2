@@ -22,7 +22,7 @@ static class ListLocalizationFilesPatch
 static class LoadTablePatch
 {
     private static readonly string[] ExtraTables = ["runes.json"];
-    
+
     static bool Prefix(string path, ref Dictionary<string, string> __result)
     {
         if (Godot.FileAccess.FileExists(path)) return true;

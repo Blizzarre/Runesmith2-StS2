@@ -1,10 +1,14 @@
 {
   "RUNESMITH2-CHISEL_STAB.description": "Deal {Damage:diff()} damage.\nGain {Ignis:diff()} [gold]Ignis[/gold] {IgnisIcon}.",
   "RUNESMITH2-CHISEL_STAB.title": "Chisel Stab",
+  "RUNESMITH2-DEFEND_RUNESMITH.description": "Gain {Block:diff()} [gold]Block[/gold].",
+  "RUNESMITH2-DEFEND_RUNESMITH.title": "Defend",
   "RUNESMITH2-EARTH_SHIELD.description": "Gain {Block:diff()} [gold]Block[/gold]. \nGain {Terra:diff()} [gold]Terra[/gold] {TerraIcon}.",
   "RUNESMITH2-EARTH_SHIELD.title": "Earth Shield",
   "RUNESMITH2-FLAMMA.description": "[gold]Recipe[/gold].\n[gold]Craft[/gold] a [gold]Flamma Rune[/gold] with {Potency:diff()} [gold]Potency[/gold] and {Charge:diff} [gold]Charge{Charge:plural:|s}[/gold].",
   "RUNESMITH2-FLAMMA.title": "Flamma",
   "RUNESMITH2-FORTIFY.description": "Gain {Block:diff()} [gold]Block[/gold].\n[gold]Enhance[/gold] 1 card{EnhanceBy:plural:| by {}}.",
-  "RUNESMITH2-FORTIFY.title": "Fortify"
+  "RUNESMITH2-FORTIFY.title": "Fortify",
+  "RUNESMITH2-STRIKE_RUNESMITH.description": "Deal {Damage:diff()} damage.",
+  "RUNESMITH2-STRIKE_RUNESMITH.title": "Strike"
 }

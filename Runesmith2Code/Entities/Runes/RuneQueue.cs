@@ -12,11 +12,11 @@ namespace Runesmith2.Runesmith2Code.Entities.Runes;
 public class RuneQueue
 {
     public const int MaxCapacity = 7;
-    
+
     private readonly Player _owner;
-    
+
     private readonly List<RuneModel> _runes = new();
-    
+
     public IReadOnlyList<RuneModel> Runes => _runes;
 
     public int Capacity => MaxCapacity;
@@ -39,6 +39,7 @@ public class RuneQueue
         {
             throw new InvalidOperationException("RuneQueue is full");
         }
+
         _runes.Add(rune);
         await SmallWait();
         return true;
@@ -55,9 +56,10 @@ public class RuneQueue
         {
             throw new InvalidOperationException("idx cannot be greater than capacity");
         }
+
         _runes.Insert(idx, rune);
     }
-    
+
     public async Task BeforeTurnEnd(PlayerChoiceContext choiceContext)
     {
         foreach (var rune in Runes.ToList())
@@ -77,7 +79,7 @@ public class RuneQueue
             }
         }
     }
-    
+
     public async Task AfterTurnStart(PlayerChoiceContext choiceContext)
     {
         foreach (var rune in Runes.ToList())
@@ -97,7 +99,7 @@ public class RuneQueue
             }
         }
     }
-    
+
     private async Task SmallWait()
     {
         if (LocalContext.IsMe(_owner))

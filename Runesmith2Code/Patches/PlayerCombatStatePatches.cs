@@ -22,11 +22,11 @@ class PlayerCombatStateConstructorPatch
     {
         var runeQueue = new RuneQueue(player);
         runeQueue.Clear();
-        
+
         var runesmithCombatState = new PlayerCombatStateExtension.RunesmithCombatState(__instance, runeQueue);
-        
+
         RunesmithField.RunesmithCombatState[__instance] = runesmithCombatState;
-        
+
         CombatManager.Instance.StateTracker.SubscribeElements(runesmithCombatState);
     }
 }

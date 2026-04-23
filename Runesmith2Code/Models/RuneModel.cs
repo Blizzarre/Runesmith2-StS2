@@ -24,13 +24,13 @@ namespace Runesmith2.Runesmith2Code.Models;
 
 public abstract class RuneModel : AbstractModel, ICustomModel
 {
-
     public const string LocTable = "runes";
 
-    private static readonly ModelId[] _validRunes = [
+    private static readonly ModelId[] _validRunes =
+    [
         ModelDb.GetId<FlammaRune>()
     ];
-    
+
     private RuneModel _canonicalInstance;
 
     private Player? _owner;
@@ -38,11 +38,11 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public virtual decimal PassiveVal { get; set; }
 
     public virtual decimal BreakVal => PassiveVal * 2;
-    
+
     public virtual int ChargeVal { get; set; }
-    
+
     public abstract ChargeDepletionType ChargeDepletion { get; }
-    
+
     public bool HasBeenRemovedFromState { get; private set; }
 
     public virtual int RemainingCharge => ChargeVal;
@@ -54,23 +54,24 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public bool HasSmartDescription => LocString.Exists(LocTable, SmartDescriptionLocKey);
 
     private string SmartDescriptionLocKey => Id.Entry + ".smartDescription";
-    
-    public LocString SmartDescription => !HasSmartDescription ? Description : new LocString(LocTable, Id.Entry + ".smartDescription");
-    
+
+    public LocString SmartDescription =>
+        !HasSmartDescription ? Description : new LocString(LocTable, Id.Entry + ".smartDescription");
+
     public abstract (bool, bool) ShowTopLabel { get; }
-    
+
     public abstract (decimal, decimal) TopValue { get; }
 
     public virtual (Color, Color, Color) TopLabelColor => NRune.DefaultFontColor;
-    
+
     public virtual (Color, Color, Color) TopLabelBreakColor => NRune.BreakFontColor;
-    
+
     public abstract (bool, bool) ShowBottomLabel { get; }
-    
+
     public abstract (decimal, decimal) BottomValue { get; }
-    
+
     public virtual (Color, Color, Color) BottomLabelColor => NRune.DefaultFontColor;
-    
+
     public virtual (Color, Color, Color) BottomBreakColor => NRune.BreakFontColor;
 
     protected virtual string PassiveSfx => "";
@@ -83,12 +84,12 @@ public abstract class RuneModel : AbstractModel, ICustomModel
         new LocString("runes", "RUNESMITH2-EMPTY_SLOT.description"));
 
     public HoverTip DumbHoverTip => RunesmithHoverTipFactory.CreateRuneHoverTip(this, Description);
-    
+
     // Return the Recipe card that crafts this Rune.
     public abstract Runesmith2RecipeCard RecipeCard { get; }
-    
+
     protected virtual IEnumerable<IHoverTip> ExtraHoverTips => [];
-    
+
     public IEnumerable<IHoverTip> HoverTips
     {
         get
@@ -117,17 +118,17 @@ public abstract class RuneModel : AbstractModel, ICustomModel
             }
 
             return list;
-        }    
+        }
     }
-    
+
     private string IconPath => Id.Entry.RemovePrefix().ToLowerInvariant().RuneImagePath();
-    
+
     private string SpritePath => Id.Entry.RemovePrefix().ToLowerInvariant().RuneScenePath();
 
     public CompressedTexture2D Icon => PreloadManager.Cache.GetCompressedTexture2D(IconPath);
 
     public virtual Color DarkenedColor => new("a0a0a0");
-    
+
     private RuneModel CanonicalInstance
     {
         get => !IsMutable ? this : _canonicalInstance;
@@ -137,7 +138,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
             _canonicalInstance = value;
         }
     }
-    
+
     public Player Owner
     {
         get
@@ -152,6 +153,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
             {
                 throw new InvalidOperationException("Rune " + Id.Entry + " already has an owner.");
             }
+
             _owner = value;
         }
     }
@@ -159,9 +161,9 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public CombatState CombatState => Owner.Creature.CombatState;
 
     public override bool ShouldReceiveCombatHooks => true;
-    
+
     public event Action? Triggered;
-    
+
     protected void PlayPassiveSfx()
     {
         if (PassiveSfx != "")
@@ -185,14 +187,14 @@ public abstract class RuneModel : AbstractModel, ICustomModel
             SfxCmd.Play(CraftSfx);
         }
     }
-    
+
     public Node2D CreateSprite()
-    { 
+    {
         Node2D node2D = PreloadManager.Cache.GetScene(SpritePath).Instantiate<Node2D>();
         // new MegaSprite(node2D.GetNode("SpineSkeleton")).GetAnimationState().SetAnimation("idle_loop");
         return node2D;
     }
-    
+
     public RuneModel ToMutable(int initialAmount = 0)
     {
         AssertCanonical();
@@ -200,17 +202,17 @@ public abstract class RuneModel : AbstractModel, ICustomModel
         orbModel.CanonicalInstance = this;
         return orbModel;
     }
-    
+
     public void Trigger()
     {
         this.Triggered?.Invoke();
     }
-    
+
     public virtual Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
     {
         return Task.CompletedTask;
     }
-    
+
     public virtual Task AfterTurnStartRuneTrigger(PlayerChoiceContext choiceContext)
     {
         return Task.CompletedTask;
@@ -220,7 +222,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     {
         return Task.CompletedTask;
     }
-    
+
     public virtual Task Break(PlayerChoiceContext choiceContext)
     {
         return Task.CompletedTask;
@@ -247,7 +249,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     {
         ModifyCharge(-1);
     }
-    
+
     public void ModifyCharge(int amount)
     {
         ChargeVal = Math.Max(0, ChargeVal + amount);

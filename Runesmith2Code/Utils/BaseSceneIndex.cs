@@ -5,5 +5,5 @@ namespace Runesmith2.Runesmith2Code.Utils;
 
 public static class BaseSceneIndex
 {
-    public static readonly PackedScene SelectionReticleScene = SceneHelper.Load("ui/selection_reticle");
+    public static PackedScene SelectionReticleScene => SceneHelper.Load("ui/selection_reticle");
 }

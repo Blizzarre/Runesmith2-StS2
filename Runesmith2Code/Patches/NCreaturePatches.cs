@@ -20,7 +20,7 @@ class NCreatureReadyPatch
             __instance.Hitbox.FocusNeighborTop = runeManager.DefaultFocusOwner.GetPath();
         }
     }
-    
+
     [HarmonyPrefix]
     static void Prefix(NCreature __instance)
     {
@@ -36,15 +36,15 @@ class NCreatureReadyPatch
 class NCreatureAnimDiePatch
 {
     [HarmonyPostfix]
-     static async Task Postfix(Task results, NCreature __instance)
-     {
-         await results;
-         if (!RunManager.Instance.IsSinglePlayerOrFakeMultiplayer)
-         {
-             var runeManager = RunesmithNode.NRuneManager[__instance];
-             runeManager?.ClearRunes();
-         }
-     }
+    static async Task Postfix(Task results, NCreature __instance)
+    {
+        await results;
+        if (!RunManager.Instance.IsSinglePlayerOrFakeMultiplayer)
+        {
+            var runeManager = RunesmithNode.NRuneManager[__instance];
+            runeManager?.ClearRunes();
+        }
+    }
 }
 
 [HarmonyPatch(typeof(NCreature), "OnCombatEnded")]

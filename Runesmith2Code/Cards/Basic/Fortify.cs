@@ -29,7 +29,7 @@ public class Fortify : Runesmith2Card
         CardPlay play)
     {
         await CommonActions.CardBlock(this, play);
-        
+
         // TODO create custom selection screen (like upgrade) to show enhanced value
         var card = (await CardSelectCmd.FromHand(
             choiceContext,
@@ -40,7 +40,8 @@ public class Fortify : Runesmith2Card
         )).FirstOrDefault();
         if (card != null)
         {
-            await RunesmithCardCmd.Enhance(choiceContext, Owner, card, play, DynamicVars[EnhanceByVar.defaultName].IntValue);
+            await RunesmithCardCmd.Enhance(choiceContext, Owner, card, play,
+                DynamicVars[EnhanceByVar.defaultName].IntValue);
         }
     }
 }

@@ -5,7 +5,7 @@ using Runesmith2.Runesmith2Code.Utils;
 
 namespace Runesmith2.Runesmith2Code.Patches;
 
-// Add custom UI scenes to preload list
+// Add custom resources to preload list
 [HarmonyPatch(typeof(AssetSets), nameof(AssetSets.CommonAssets), MethodType.Getter)]
 static class AssetSetsCommonAssetPatch
 {

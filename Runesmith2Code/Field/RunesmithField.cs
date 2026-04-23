@@ -10,6 +10,6 @@ public static class RunesmithField
 {
     public static readonly SpireField<CardModel, CardModelExtension.RunesmithCardModelModifier> Modifier =
         new(() => null);
-    
+
     public static readonly SpireField<PlayerCombatState, RunesmithCombatState> RunesmithCombatState = new(() => null);
 }

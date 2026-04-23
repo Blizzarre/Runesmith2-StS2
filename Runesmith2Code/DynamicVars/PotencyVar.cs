@@ -23,13 +23,15 @@ public class PotencyVar : DynamicVar
         this.WithTooltip("RUNESMITH2-POTENCY");
     }
 
-    public override void UpdateCardPreview(CardModel card, CardPreviewMode previewMode, Creature? target, bool runGlobalHooks)
+    public override void UpdateCardPreview(CardModel card, CardPreviewMode previewMode, Creature? target,
+        bool runGlobalHooks)
     {
         var modifiedValue = BaseValue;
         //TODO add enchantment modification here if it's implemented
         if (runGlobalHooks)
         {
-            modifiedValue = RunesmithHook.ModifyPotency(card.CombatState, card.Owner, BaseValue, ValueProp.Move, card, null, out _);
+            modifiedValue = RunesmithHook.ModifyPotency(card.CombatState, card.Owner, BaseValue, ValueProp.Move, card,
+                null, out _);
         }
 
         PreviewValue = modifiedValue;

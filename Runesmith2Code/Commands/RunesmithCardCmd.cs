@@ -10,7 +10,8 @@ namespace Runesmith2.Runesmith2Code.Commands;
 
 public static class RunesmithCardCmd
 {
-    public static async Task Enhance(PlayerChoiceContext choiceContext, Player player, CardModel targetCard, CardPlay? cardPlay, int enhanceAmount, bool skipVisuals = false)
+    public static async Task Enhance(PlayerChoiceContext choiceContext, Player player, CardModel targetCard,
+        CardPlay? cardPlay, int enhanceAmount, bool skipVisuals = false)
     {
         if (!CombatManager.Instance.IsOverOrEnding)
         {
@@ -18,10 +19,13 @@ public static class RunesmithCardCmd
             {
                 throw new InvalidOperationException($"Cannot enhance {targetCard.Id}.");
             }
+
             var combatState = targetCard.CombatState ?? targetCard.Owner.Creature.CombatState;
             // TODO Consider adding history for cards enhanced.
-            var modifiedEnhance = RunesmithHook.ModifyEnhanceAmount(combatState, player, enhanceAmount, out var modifiers);
-            await RunesmithHook.AfterModifyingEnhanceAmount(combatState, modifiedEnhance, cardPlay?.Card, cardPlay, modifiers);
+            var modifiedEnhance =
+                RunesmithHook.ModifyEnhanceAmount(combatState, player, enhanceAmount, out var modifiers);
+            await RunesmithHook.AfterModifyingEnhanceAmount(combatState, modifiedEnhance, cardPlay?.Card, cardPlay,
+                modifiers);
             targetCard.AddEnhance(enhanceAmount);
             // TODO Enhance vfx
             await RunesmithHook.AfterCardEnhanced(combatState, choiceContext, targetCard, enhanceAmount);

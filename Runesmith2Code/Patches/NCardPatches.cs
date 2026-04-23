@@ -1,9 +1,12 @@
-﻿using Godot;
+﻿using BaseLib.Utils.Patching;
+using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Assets;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
+using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Nodes;
@@ -12,7 +15,7 @@ using Runesmith2.Runesmith2Code.Utils;
 namespace Runesmith2.Runesmith2Code.Patches;
 
 // Patch to add enhance and stasis visuals to card display
-// Need to instantiate NEnhanceTab before it get accessed during Ready call
+// Need to instantiate NEnhanceTab before it get accessed during Ready call because of SubscribeToModel
 [HarmonyPatch(typeof(NCard), nameof(NCard._EnterTree))]
 class NCardEnterTreePatch
 {
@@ -20,7 +23,8 @@ class NCardEnterTreePatch
     static void Prefix(NCard __instance)
     {
         if (RunesmithNode.NEnhanceTab[__instance] != null) return;
-        var enhanceTab = PreloadManager.Cache.GetScene(RunesmithResource.NEnhanceTabPath).Instantiate<NEnhanceTab>().WithData(__instance);
+        var enhanceTab = PreloadManager.Cache.GetScene(RunesmithResource.NEnhanceTabPath).Instantiate<NEnhanceTab>()
+            .WithData(__instance);
         RunesmithNode.NEnhanceTab[__instance] = enhanceTab;
     }
 }
@@ -36,13 +40,9 @@ class NCardReadyPatch
         var cardContainer = __instance.GetChild(0);
         if (cardContainer == null) return;
         cardContainer.AddChildSafely(enhanceTab);
-        enhanceTab.SetAnchorsPreset(Control.LayoutPreset.Center, true);
-        enhanceTab.Size = new Vector2(162, 40);
-        enhanceTab.Position = new Vector2(-81, -171);
-        cardContainer.MoveChild(enhanceTab, cardContainer.GetNode("TitleBanner").GetIndex());
+        cardContainer.MoveChild(enhanceTab, cardContainer.GetNode("%TitleBanner").GetIndex());
     }
 }
-
 
 [HarmonyPatch(typeof(NCard), nameof(NCard.SubscribeToModel))]
 class NCardSubscribePatch
@@ -78,15 +78,54 @@ class NCardUnsubscribePatch
 }
 
 // TODO Implement check for forceUnpoweredPreview?
+
 [HarmonyPatch(typeof(NCard), nameof(NCard.UpdateVisuals))]
 class NCardUpdateVisualsPatch
 {
-    [HarmonyPrefix]
-    static void Prefix(NCard __instance)
+    [HarmonyTranspiler]
+    static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-        if (!__instance.IsNodeReady()) return;
-        if (__instance.Model == null) return;
-        var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
+        return new InstructionPatcher(instructions).Match(new InstructionMatcher()
+            .ldarg_0()
+            .ldarg_1()
+            .call(typeof(NCard), nameof(NCard.UpdateStarCostVisuals), [typeof(PileType)])
+        ).Insert([
+            CodeInstruction.LoadArgument(0),
+            CodeInstruction.LoadArgument(1),
+            CodeInstruction.Call(typeof(NCardUpdateVisualsPatch), nameof(UpdateRunesmithVisuals))
+        ]);
+    }
+
+    static void UpdateRunesmithVisuals(NCard instance, PileType pileType)
+    {
+        var enhanceTab = RunesmithNode.NEnhanceTab[instance];
         enhanceTab?.UpdateEnhanceVisuals();
+
+        var elementsIcon = RunesmithNode.NElementsIcon[instance];
+        elementsIcon?.UpdateElementsCostVisuals(pileType);
+    }
+}
+
+[HarmonyPatch(typeof(NCard), nameof(NCard.SetPretendCardCanBePlayed))]
+class NCardSetPretendCardCanBePlayedPatch
+{
+    [HarmonyPostfix]
+    static void Postfix(NCard __instance)
+    {
+        var elementsIcon = RunesmithNode.NElementsIcon[__instance];
+        elementsIcon?.UpdateElementsCostVisuals(__instance.DisplayingPile);
+    }
+}
+
+[HarmonyPatch(typeof(NCard), nameof(NCard.UpdateEnchantmentVisuals))]
+class NCardUpdateEnchantmentVisualsPatch
+{
+    [HarmonyPostfix]
+    static void Postfix(NCard __instance)
+    {
+        if (__instance.Model is Runesmith2Card { BaseElementsCost.Total: >= 0 })
+        {
+            __instance._enchantmentTab.Position = __instance._defaultEnchantmentPosition + Vector2.Down * 20f;
+        }
     }
 }

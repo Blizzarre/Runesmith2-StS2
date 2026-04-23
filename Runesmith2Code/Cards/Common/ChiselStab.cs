@@ -9,7 +9,6 @@ using Runesmith2.Runesmith2Code.Structs;
 
 namespace Runesmith2.Runesmith2Code.Cards.Common;
 
-
 public class ChiselStab : Runesmith2Card
 {
     public ChiselStab() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
@@ -18,7 +17,7 @@ public class ChiselStab : Runesmith2Card
         WithElementsVar(new IgnisVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Elements);
     }
-    
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
@@ -29,5 +28,4 @@ public class ChiselStab : Runesmith2Card
             .Execute(choiceContext);
         await RunesmithPlayerCmd.GainElements(new Elements(DynamicVars[IgnisVar.defaultName].IntValue, 0, 0), Owner);
     }
-
 }

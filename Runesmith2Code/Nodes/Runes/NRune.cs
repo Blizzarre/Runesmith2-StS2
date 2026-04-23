@@ -17,22 +17,25 @@ namespace Runesmith2.Runesmith2Code.Nodes.Runes;
 [GlobalClass]
 public partial class NRune : NClickableControl
 {
-    public static readonly (Color, Color, Color) DefaultFontColor = (new Color("fff6e2"), new Color("00000040"), new Color("333333e6"));
-    
-    public static readonly (Color, Color, Color) BreakFontColor = (new Color("5effff"), new Color("00000040"), new Color("143652e6"));
-    
-    private static readonly (Color, Color, Color) ChargeFontColor = (new Color("f4e8c7"), new Color("00000030"), new Color("554c36"));
-    
-    private static readonly Color NoChargeModulateColor =  new("756b4c");
-    
-    private static readonly Color OverChargeModulateColor =  new(1.164f, 1.164f, 1.164f);
-    
+    public static readonly (Color, Color, Color) DefaultFontColor =
+        (new Color("fff6e2"), new Color("00000040"), new Color("333333e6"));
+
+    public static readonly (Color, Color, Color) BreakFontColor = (new Color("5effff"), new Color("00000040"),
+        new Color("143652e6"));
+
+    private static readonly (Color, Color, Color) ChargeFontColor =
+        (new Color("f4e8c7"), new Color("00000030"), new Color("554c36"));
+
+    private static readonly Color NoChargeModulateColor = new("756b4c");
+
+    private static readonly Color OverChargeModulateColor = new(1.164f, 1.164f, 1.164f);
+
     private CanvasGroup _outlineGroup; // empty slot outline
 
     private AnimationPlayer _animationPlayer;
-    
+
     private Panel _chargePanel;
-    
+
     private HSeparator _chargeCross;
 
     private Control _visualContainer;
@@ -40,33 +43,33 @@ public partial class NRune : NClickableControl
     private Control _labelContainer;
 
     private MegaLabel _topLabel;
-    
+
     private MegaLabel _topBreakLabel;
-    
+
     private MegaLabel _bottomLabel;
-    
+
     private MegaLabel _bottomBreakLabel;
 
     private MegaLabel _chargeLabel;
-    
+
     private List<VSeparator> _chargeSeparators = new();
 
     private Control _bounds;
-    
+
     private CpuParticles2D _flashParticle;
-    
+
     private NSelectionReticle _selectionReticle;
-    
+
     private bool _isLocal;
 
     private Node2D? _sprite;
 
     private Tween? _curTween;
-    
+
     public RuneModel? Model { get; private set; }
 
     private static string ScenePath => RunesmithResource.NRunePath;
-    
+
     public static NRune Create(bool isLocal)
     {
         var nRune = PreloadManager.Cache.GetScene(ScenePath).Instantiate<NRune>();
@@ -78,7 +81,7 @@ public partial class NRune : NClickableControl
     {
         var nRune = Create(isLocal);
         nRune.Model = model;
-        
+
         return nRune;
     }
 
@@ -88,7 +91,7 @@ public partial class NRune : NClickableControl
         _animationPlayer = GetNode<AnimationPlayer>("%AnimationPlayer");
         _animationPlayer.Play("loop");
         _animationPlayer.Advance(GD.RandRange(0, _animationPlayer.CurrentAnimationLength));
-        
+
         _outlineGroup = GetNode<CanvasGroup>("%OutlineGroup");
         _visualContainer = GetNode<Control>("%VisualContainer");
         _labelContainer = GetNode<Control>("%LabelContainer");
@@ -101,37 +104,38 @@ public partial class NRune : NClickableControl
         }
 
         _chargePanel.Position = new Vector2(0, _chargePanel.Position.Y);
-        _chargePanel.Size = new Vector2(0 , _chargePanel.Size.Y);
-        
+        _chargePanel.Size = new Vector2(0, _chargePanel.Size.Y);
+
         _bounds = GetNode<Control>("%Bounds");
-        
+
         // Create base game's nodes and scenes
         _topLabel = CreateLabel(Model?.TopLabelColor ?? DefaultFontColor);
         _topBreakLabel = CreateLabel(Model?.TopLabelBreakColor ?? DefaultFontColor);
         _bottomLabel = CreateLabel(Model?.BottomLabelColor ?? DefaultFontColor);
         _bottomBreakLabel = CreateLabel(Model?.BottomBreakColor ?? DefaultFontColor);
-        _chargeLabel = CreateLabel(ChargeFontColor); 
-        
+        _chargeLabel = CreateLabel(ChargeFontColor);
+
         _selectionReticle = BaseSceneIndex.SelectionReticleScene.Instantiate<NSelectionReticle>();
-        
+
         _labelContainer.AddChildSafely(_topLabel);
         _labelContainer.AddChildSafely(_topBreakLabel);
         _labelContainer.AddChildSafely(_bottomLabel);
         _labelContainer.AddChildSafely(_bottomBreakLabel);
-        
+
         this.AddChildSafely(_chargeLabel);
         _chargeLabel.Position = new Vector2(-12, 28);
         _chargeLabel.Size = new Vector2(24, 31);
-        
+
         this.AddChildSafely(_selectionReticle);
         _selectionReticle.Size = new Vector2(90, 90);
-        _selectionReticle.Position = new Vector2(-45, -45); 
+        _selectionReticle.Position = new Vector2(-45, -45);
         _selectionReticle.PivotOffset = new Vector2(45, 45);
 
         if (Model == null)
         {
             CreateTween().TweenProperty(_outlineGroup, "scale", Vector2.One, 0.25).From(Vector2.Zero);
         }
+
         if (_isLocal)
         {
             Scale *= 0.85f;
@@ -157,10 +161,10 @@ public partial class NRune : NClickableControl
         label.AddThemeFontOverride("font", BaseResourceIndex.FontKreonRegularSpaceOne);
         label.AddThemeFontSizeOverride("font_size", 24);
         label.Text = "";
-        
+
         return label;
     }
-    
+
     public override void _EnterTree()
     {
         base._EnterTree();
@@ -178,7 +182,7 @@ public partial class NRune : NClickableControl
             // Model.Triggered -= Flash;
         }
     }
-    
+
     public void ReplaceRune(RuneModel? model)
     {
         _sprite?.QueueFreeSafely();
@@ -186,14 +190,15 @@ public partial class NRune : NClickableControl
         Model = model;
         UpdateVisuals(false);
     }
-    
-    
+
+
     public void UpdateVisuals(bool isBreaking)
     {
         if (!IsNodeReady() || !CombatManager.Instance.IsInProgress)
         {
             return;
         }
+
         if (Model == null)
         {
             _sprite?.QueueFreeSafely();
@@ -206,6 +211,7 @@ public partial class NRune : NClickableControl
             _flashParticle.Visible = false;
             return;
         }
+
         if (_sprite == null)
         {
             _sprite = Model.CreateSprite();
@@ -213,9 +219,11 @@ public partial class NRune : NClickableControl
             _sprite.Position = Vector2.Zero;
             _curTween?.Kill();
             _curTween = CreateTween();
-            _curTween.TweenProperty(_sprite, "scale", Vector2.One, 0.5).From(Vector2.Zero).SetTrans(Tween.TransitionType.Back)
+            _curTween.TweenProperty(_sprite, "scale", Vector2.One, 0.5).From(Vector2.Zero)
+                .SetTrans(Tween.TransitionType.Back)
                 .SetEase(Tween.EaseType.Out);
         }
+
         _outlineGroup.Visible = false;
         _chargePanel.Visible = _isLocal;
         _labelContainer.Visible = _isLocal;
@@ -223,14 +231,14 @@ public partial class NRune : NClickableControl
         {
             Modulate = Model.DarkenedColor;
         }
-        
+
         if (!isBreaking)
         {
             _topLabel.Visible = Model.ShowTopLabel.Item1;
             _topLabel.SetTextAutoSize(Model.TopValue.Item1.ToString("0"));
             _bottomLabel.Visible = Model.ShowBottomLabel.Item1;
             _bottomLabel.SetTextAutoSize(Model.BottomValue.Item1.ToString("0"));
-            
+
             _topBreakLabel.Visible = false;
             _bottomBreakLabel.Visible = false;
         }
@@ -240,13 +248,13 @@ public partial class NRune : NClickableControl
             _topBreakLabel.SetTextAutoSize(Model.TopValue.Item2.ToString("0"));
             _bottomBreakLabel.Visible = Model.ShowBottomLabel.Item2;
             _bottomBreakLabel.SetTextAutoSize(Model.BottomValue.Item2.ToString("0"));
-            
+
             _topLabel.Visible = false;
             _bottomLabel.Visible = false;
         }
 
         _sprite.Modulate = Model.ChargeVal <= 0 ? Model.DarkenedColor : Colors.White;
-        
+
         UpdateChargeDisplay(Model.ChargeVal);
     }
 
@@ -277,15 +285,15 @@ public partial class NRune : NClickableControl
                 _chargeCross.Visible = true;
                 break;
         }
-        
+
         tween.TweenProperty(_chargePanel, "modulate", modulateColor, 0.25).FromCurrent()
             .FromCurrent().SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        
+
         var panelWidth = ChargeSizeSequence[Math.Clamp(charge, 0, 9)];
-        
+
         tween.TweenProperty(_chargePanel, "size:x", panelWidth, 0.25)
             .FromCurrent().SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        tween.Parallel().TweenProperty(_chargePanel, "position:x", -panelWidth/2, 0.25)
+        tween.Parallel().TweenProperty(_chargePanel, "position:x", -panelWidth / 2, 0.25)
             .FromCurrent().SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
 
         for (var i = 1; i < 9; i++)
@@ -293,20 +301,22 @@ public partial class NRune : NClickableControl
             _chargeSeparators[i - 1].Visible = i < charge;
         }
     }
-    
+
     // NOTE: Only use flash to show the next empty Rune slot after the number of active Runes changed.
     private void FlashEmpty()
     {
         _flashParticle.Emitting = true;
     }
-    
+
     // TODO create and call trigger animation for Runes
-    
+
     protected override void OnFocus()
     {
         if (Model != null || _isLocal)
         {
-            var hoverTips = Model != null ? Model.HoverTips : new List<IHoverTip> { RuneModel.EmptySlotHoverTipHoverTip };
+            var hoverTips = Model != null
+                ? Model.HoverTips
+                : new List<IHoverTip> { RuneModel.EmptySlotHoverTipHoverTip };
             var nHoverTipSet = NHoverTipSet.CreateAndShow(_bounds, hoverTips, HoverTip.GetHoverTipAlignment(_bounds));
             nHoverTipSet.SetFollowOwner();
             _labelContainer.Visible = true;
@@ -325,6 +335,7 @@ public partial class NRune : NClickableControl
         {
             Modulate = (_isLocal ? Colors.White : Model.DarkenedColor);
         }
+
         NHoverTipSet.Remove(_bounds);
         _selectionReticle.OnDeselect();
     }

@@ -16,7 +16,7 @@ public static class RunesmithHook
     {
         var modifyingModels = new List<AbstractModel>();
         var modifiedEnhance = originalAmount;
-        
+
         foreach (AbstractModel model in combatState.IterateHookListeners())
         {
             var runesmithModel = model as IRunesmithModel;
@@ -28,11 +28,13 @@ public static class RunesmithHook
                 modifyingModels.Add(model);
             }
         }
+
         modifiers = modifyingModels;
         return modifiedEnhance;
     }
 
-    public static async Task AfterModifyingEnhanceAmount(CombatState combatState, int modifiedEnhance, CardModel? cardSource, CardPlay? cardPlay, IEnumerable<AbstractModel> modifiers)
+    public static async Task AfterModifyingEnhanceAmount(CombatState combatState, int modifiedEnhance,
+        CardModel? cardSource, CardPlay? cardPlay, IEnumerable<AbstractModel> modifiers)
     {
         var abstractModels = modifiers.ToHashSet();
         foreach (var modifier in combatState.IterateHookListeners())
@@ -43,8 +45,9 @@ public static class RunesmithHook
             modifier.InvokeExecutionFinished();
         }
     }
-    
-    public static async Task AfterCardEnhanced(CombatState combatState, PlayerChoiceContext choiceContext, CardModel card, int enhanceAmount)
+
+    public static async Task AfterCardEnhanced(CombatState combatState, PlayerChoiceContext choiceContext,
+        CardModel card, int enhanceAmount)
     {
         foreach (var model in combatState.IterateHookListeners())
         {
@@ -71,6 +74,7 @@ public static class RunesmithHook
                 modifyingModels.Add(model);
             }
         }
+
         return currCount;
     }
 
@@ -86,15 +90,16 @@ public static class RunesmithHook
             modifier.InvokeExecutionFinished();
         }
     }
-    
+
     public static decimal ModifyRuneValue(CombatState combatState, Player player, decimal amount)
     {
         var num = amount;
         foreach (var model in combatState.IterateHookListeners())
         {
-            if(model is not IRunesmithModel runesmithModel) continue;
+            if (model is not IRunesmithModel runesmithModel) continue;
             num = runesmithModel.ModifyRuneValue(player, num);
         }
+
         return num;
     }
 
@@ -105,7 +110,7 @@ public static class RunesmithHook
         var modifyingModels = new List<AbstractModel>();
         foreach (var model in combatState.IterateHookListeners())
         {
-            if(model is not IRunesmithModel runesmithModel) continue;
+            if (model is not IRunesmithModel runesmithModel) continue;
             modifiedAmount = runesmithModel.ModifyElementsGain(player, modifiedAmount);
         }
 
@@ -126,6 +131,7 @@ public static class RunesmithHook
             var runesmithModel = model as IRunesmithModel;
             runesmithModel?.TryModifyElementsCost(card, modifiedCost, out modifiedCost);
         }
+
         return modifiedCost;
     }
 
@@ -134,7 +140,7 @@ public static class RunesmithHook
         foreach (var model in combatState.IterateHookListeners())
         {
             var runesmithModel = model as IRunesmithModel;
-            if  (runesmithModel != null) await runesmithModel.AfterElementsSpent(amount, spender);
+            if (runesmithModel != null) await runesmithModel.AfterElementsSpent(amount, spender);
         }
     }
 
@@ -159,9 +165,9 @@ public static class RunesmithHook
     {
         var modifyingModels = new List<AbstractModel>();
         var modifiedPotency = potency;
-        
+
         //TODO add enchantment modification here if it's implemented
-        
+
         foreach (AbstractModel model in combatState.IterateHookListeners())
         {
             var runesmithModel = model as IRunesmithModel;
@@ -173,17 +179,20 @@ public static class RunesmithHook
                 modifyingModels.Add(model);
             }
         }
+
         foreach (AbstractModel model in combatState.IterateHookListeners())
         {
             var runesmithModel = model as IRunesmithModel;
             if (runesmithModel == null) continue;
-            var addPotency = runesmithModel.ModifyPotencyMultiplicative(player, modifiedPotency, props, cardSource, cardPlay);
+            var addPotency =
+                runesmithModel.ModifyPotencyMultiplicative(player, modifiedPotency, props, cardSource, cardPlay);
             modifiedPotency *= addPotency;
             if (addPotency != 1)
             {
                 modifyingModels.Add(model);
             }
         }
+
         modifiers = modifyingModels;
         return Math.Max(0, modifiedPotency);
     }

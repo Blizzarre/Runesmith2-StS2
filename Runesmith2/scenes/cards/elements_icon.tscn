@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4pj7vamxd52r"]
+
+[ext_resource type="Texture2D" uid="uid://dig4qhdelx8gr" path="res://Runesmith2/images/cardui/elements_cost.png" id="1_ydu4q"]
+[ext_resource type="Script" uid="uid://wdjgkbit5o1t" path="res://Runesmith2Code/Nodes/NElementsIcon.cs" id="2_e566m"]
+
+[node name="ElementsIcon" type="TextureRect"]
+offset_left = -182.0
+offset_top = -190.0
+offset_right = -86.0
+offset_bottom = -94.0
+texture = ExtResource("1_ydu4q")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_e566m")

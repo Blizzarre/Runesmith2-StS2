@@ -15,6 +15,7 @@ shader_parameter/v = 1.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pd0k2"]
 blend_mode = 1
+light_mode = 1
 
 [node name="ElementsCounter" type="Control"]
 layout_mode = 3
@@ -49,6 +50,17 @@ expand_mode = 1
 stretch_mode = 5
 metadata/_edit_lock_ = true
 
+[node name="Layer1" type="TextureRect" parent="Icon"]
+use_parent_material = true
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+mouse_filter = 2
+texture = ExtResource("5_4s1ho")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_lock_ = true
+
 [node name="RotationLayers" type="Control" parent="Icon"]
 unique_name_in_owner = true
 layout_mode = 1
@@ -59,7 +71,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Layer3" type="TextureRect" parent="Icon/RotationLayers"]
+[node name="Layer2" type="TextureRect" parent="Icon/RotationLayers"]
 self_modulate = Color(0.6057292, 0.6057292, 0.6057292, 1)
 material = SubResource("CanvasItemMaterial_pd0k2")
 layout_mode = 0
@@ -70,17 +82,6 @@ mouse_filter = 2
 texture = ExtResource("4_g8ifq")
 expand_mode = 1
 stretch_mode = 5
-
-[node name="Layer4" type="TextureRect" parent="Icon"]
-use_parent_material = true
-layout_mode = 0
-offset_right = 128.0
-offset_bottom = 128.0
-mouse_filter = 2
-texture = ExtResource("5_4s1ho")
-expand_mode = 1
-stretch_mode = 5
-metadata/_edit_lock_ = true
 
 [node name="MarginContainer1" type="MarginContainer" parent="."]
 unique_name_in_owner = true
