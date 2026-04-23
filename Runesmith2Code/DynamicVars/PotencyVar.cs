@@ -1,7 +1,6 @@
 ﻿using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -11,7 +10,7 @@ namespace Runesmith2.Runesmith2Code.DynamicVars;
 
 public class PotencyVar : DynamicVar
 {
-    public const string defaultName = "RunesmithPotency";
+    public const string defaultName = "Potency";
 
     public PotencyVar(int potency)
         : this(defaultName, potency)

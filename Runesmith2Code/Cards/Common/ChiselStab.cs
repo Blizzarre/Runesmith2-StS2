@@ -15,7 +15,7 @@ public class ChiselStab : Runesmith2Card
     public ChiselStab() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
         WithDamage(5, 2);
-        WithVar(new IgnisVar(2).WithUpgrade(1));
+        WithElementsVar(new IgnisVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Elements);
     }
     
@@ -27,7 +27,7 @@ public class ChiselStab : Runesmith2Card
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        await RunesmithPlayerCmd.GainElements(new Elements(DynamicVars[IgnisVar.defaultName].IntValue), Owner);
+        await RunesmithPlayerCmd.GainElements(new Elements(DynamicVars[IgnisVar.defaultName].IntValue, 0, 0), Owner);
     }
 
 }

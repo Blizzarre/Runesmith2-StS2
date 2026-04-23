@@ -16,9 +16,9 @@ public class Runesmith2CardPool : CustomCardPoolModel
     They are applied as a shader onto an already colored image,
     so it may take some experimentation to find a color you like.
     Generally they should be values between 0 and 1. */
-    public override float H => 1f; //Hue; changes the color.
-    public override float S => 1f; //Saturation
-    public override float V => 1f; //Brightness
+    public override float H => 0.102f; //Hue; changes the color.
+    public override float S => 0.273f; //Saturation
+    public override float V => 1.3f; //Brightness
     
     //Alternatively, leave these values at 1 and provide a custom frame image.
     // TODO Load separate card frames depending on card type
@@ -29,7 +29,9 @@ public class Runesmith2CardPool : CustomCardPoolModel
     }*/
 
     //Color of small card icons
-    public override Color DeckEntryCardColor => new("ffffff");
-    
+    public override Color DeckEntryCardColor => new("97815e");
+
+    public override Color EnergyOutlineColor => new("5b4a31");
+
     public override bool IsColorless => false;
 }

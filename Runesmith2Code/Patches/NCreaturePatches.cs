@@ -14,7 +14,7 @@ class NCreatureReadyPatch
 {
     static void UpdateRuneNavigation(NCreature __instance)
     {
-        var runeManager = RunesmithField.NRuneManager[__instance];
+        var runeManager = RunesmithNode.NRuneManager[__instance];
         if (runeManager != null)
         {
             __instance.Hitbox.FocusNeighborTop = runeManager.DefaultFocusOwner.GetPath();
@@ -28,7 +28,7 @@ class NCreatureReadyPatch
         var runeManager = NRuneManager.Create(__instance, LocalContext.IsMe(__instance.Entity));
         __instance.AddChildSafely(runeManager);
         runeManager.Position = Vector2.Zero;
-        RunesmithField.NRuneManager[__instance] = runeManager;
+        RunesmithNode.NRuneManager[__instance] = runeManager;
     }
 }
 
@@ -41,7 +41,7 @@ class NCreatureAnimDiePatch
          await results;
          if (!RunManager.Instance.IsSinglePlayerOrFakeMultiplayer)
          {
-             var runeManager = RunesmithField.NRuneManager[__instance];
+             var runeManager = RunesmithNode.NRuneManager[__instance];
              runeManager?.ClearRunes();
          }
      }
@@ -53,7 +53,7 @@ class NCreatureOnCombatEndedPatch
     [HarmonyPrefix]
     static void Prefix(NCreature __instance)
     {
-        var runeManager = RunesmithField.NRuneManager[__instance];
+        var runeManager = RunesmithNode.NRuneManager[__instance];
         runeManager?.ClearRunes();
     }
 }

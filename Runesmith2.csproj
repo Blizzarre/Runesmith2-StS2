@@ -85,7 +85,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.0.7" PrivateAssets="All" />
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.0.8" PrivateAssets="All" />
         <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="All"/>
         <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="*"/>
         <AdditionalFiles Include="Runesmith2/localization/**/*.json"/> <!-- Used by analyzer -->
@@ -117,6 +117,12 @@
         <Folder Include="Runesmith2\images\powers\big\"/>
         <Folder Include="Runesmith2\images\relics\big\"/>
         <Folder Include="Runesmith2\scenes\runes\rune_visuals\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="cardloc-presets.json" />
+      <Content Include="LICENSE" />
+      <Content Include="readme.md" />
     </ItemGroup>
 
     <Target Name="CheckDependencyPaths">

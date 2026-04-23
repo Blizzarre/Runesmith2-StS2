@@ -24,7 +24,6 @@ public class Runesmith2 : PlaceholderCharacterModel
         ModelDb.Card<StrikeIronclad>(),
         ModelDb.Card<StrikeIronclad>(),
         ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
         ModelDb.Card<DefendIronclad>(),
         ModelDb.Card<DefendIronclad>(),
         ModelDb.Card<DefendIronclad>(),
@@ -50,4 +49,9 @@ public class Runesmith2 : PlaceholderCharacterModel
     public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
     public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
     public override string CustomMapMarkerPath => "map_marker_char_name.png".CharacterUiPath();
+
+    public override string CustomEnergyCounterPath =>
+        "res://Runesmith2/scenes/combat/energy_counters/runesmith_energy_counter.tscn";
+
+    public override Color EnergyLabelOutlineColor => new("5b4a31");
 }

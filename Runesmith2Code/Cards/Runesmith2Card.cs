@@ -5,6 +5,8 @@ using Godot;
 using Runesmith2.Runesmith2Code.Character;
 using Runesmith2.Runesmith2Code.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.HoverTips;
@@ -17,6 +19,18 @@ namespace Runesmith2.Runesmith2Code.Cards;
 public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity, TargetType target) :
     ConstructedCardModel(cost, type, rarity, target)
 {
+    public static readonly StringVar IgnisIconVar =
+        new("IgnisIcon", "[img]res://Runesmith2/images/charui/elements_ignis_icon.png[/img]");
+    
+    public static readonly StringVar TerraIconVar =
+        new("TerraIcon", "[img]res://Runesmith2/images/charui/elements_terra_icon.png[/img]");
+    
+    public static readonly StringVar AquaIconVar =
+        new("AquaIcon", "[img]res://Runesmith2/images/charui/elements_aqua_icon.png[/img]");
+    
+    public static readonly StringVar ElementsIconVar =
+        new("ElementsIcon", "[img]res://Runesmith2/images/charui/elements_all_icon.png[/img]");
+    
     //Image size:
     //Normal art: 1000x760 (Using 500x380 should also work, it will simply be scaled.)
     //Full art: 606x852
@@ -53,12 +67,39 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
 
     protected void WithTip(RunesmithHoverTip runesmithTip)
     {
-        WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.Static(runesmithTip)));
+        switch (runesmithTip)
+        {
+            case RunesmithHoverTip.Elements:
+                WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.CreateElementsHoverTip()));
+                break;
+            default:
+                WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.Static(runesmithTip)));
+                break;
+        }
     }
 
     protected void WithRuneTip<T>() where T : RuneModel
     {
         WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.FromRune<T>()));
+    }
+
+    protected void WithElementsVar(DynamicVar var)
+    {
+        switch (var)
+        {
+            case IgnisVar ignisVar:
+                WithVars(ignisVar, IgnisIconVar);
+                break;
+            case TerraVar terraVar:
+                WithVars(terraVar, TerraIconVar);
+                break;
+            case AquaVar aquaVar:
+                WithVars(aquaVar, AquaIconVar);
+                break;
+            case ElementsVar elementsVar:
+                WithVars(elementsVar, ElementsIconVar);
+                break;
+        }
     }
 
     public virtual decimal EnhanceMultiplier => 1m;

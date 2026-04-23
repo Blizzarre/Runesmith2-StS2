@@ -1,22 +1,39 @@
 ﻿using BaseLib.Extensions;
+using Godot;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Models;
+using Runesmith2.Runesmith2Code.Utils;
 
 namespace Runesmith2.Runesmith2Code.HoverTips;
 
 public static class RunesmithHoverTipFactory
 {
+    public static IHoverTip CreateElementsHoverTip()
+    {
+        const RunesmithHoverTip tip = RunesmithHoverTip.Elements;
+        var text = tip.GetType().GetPrefix() + StringHelper.Slugify(tip.ToString());
+
+        return Static(text, RunesmithResource.ElementsIcon, Runesmith2Card.IgnisIconVar, Runesmith2Card.TerraIconVar,
+            Runesmith2Card.AquaIconVar);
+    }
+    
     public static IHoverTip Static(RunesmithHoverTip tip, params DynamicVar[] vars)
     {
         var text = tip.GetType().GetPrefix() + StringHelper.Slugify(tip.ToString());
-        return Static(text, vars);
+        return Static(text, null, vars);
+    }
+
+    public static IHoverTip Static(string entry, params DynamicVar[] vars)
+    {
+        return Static(entry, null, vars);
     }
     
-    public static IHoverTip Static(string entry, params DynamicVar[] vars)
+    public static IHoverTip Static(string entry, Texture2D? icon, params DynamicVar[] vars)
     {
         var locString = L10NStatic(entry + ".title");
         var locString2 = L10NStatic(entry + ".description");
@@ -25,7 +42,7 @@ public static class RunesmithHoverTipFactory
             locString.Add(dynamicVar);
             locString2.Add(dynamicVar);
         }
-        return new HoverTip(locString, locString2);
+        return new HoverTip(locString, locString2, icon);
     }
     
     public static LocString StaticBanner(RunesmithHoverTip tip, params DynamicVar[] vars)

@@ -1,0 +1,24 @@
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Assets;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using Runesmith2.Runesmith2Code.Nodes;
+using Runesmith2.Runesmith2Code.Nodes.Runes;
+using Runesmith2.Runesmith2Code.Utils;
+
+namespace Runesmith2.Runesmith2Code.Field;
+
+public static class RunesmithNode
+{
+    public static readonly AddedNode<NCombatUi, NElementsCounter> NElementsCounter = new(ui =>
+    {
+        var elementsCounter = PreloadManager.Cache.GetScene(RunesmithResource.NElementsCounterPath).Instantiate<NElementsCounter>();
+        ui.AddChildSafely(elementsCounter);
+        return elementsCounter;
+    });
+
+    public static readonly SpireField<NCard, NEnhanceTab> NEnhanceTab = new(() => null);
+    
+    public static readonly SpireField<NCreature, NRuneManager> NRuneManager = new(() => null);
+}

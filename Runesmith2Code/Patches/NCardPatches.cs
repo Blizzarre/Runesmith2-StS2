@@ -19,9 +19,9 @@ class NCardEnterTreePatch
     [HarmonyPrefix]
     static void Prefix(NCard __instance)
     {
-        if (RunesmithField.NEnhanceTab[__instance] != null) return;
+        if (RunesmithNode.NEnhanceTab[__instance] != null) return;
         var enhanceTab = PreloadManager.Cache.GetScene(RunesmithResource.NEnhanceTabPath).Instantiate<NEnhanceTab>().WithData(__instance);
-        RunesmithField.NEnhanceTab[__instance] = enhanceTab;
+        RunesmithNode.NEnhanceTab[__instance] = enhanceTab;
     }
 }
 
@@ -31,7 +31,7 @@ class NCardReadyPatch
     [HarmonyPostfix]
     static void Postfix(NCard __instance)
     {
-        var enhanceTab = RunesmithField.NEnhanceTab[__instance];
+        var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
         if (enhanceTab == null) return;
         var cardContainer = __instance.GetChild(0);
         if (cardContainer == null) return;
@@ -52,7 +52,7 @@ class NCardSubscribePatch
         NCard __instance, CardModel? model
     )
     {
-        var enhanceTab = RunesmithField.NEnhanceTab[__instance];
+        var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
         if (model == null || enhanceTab == null) return;
         var modifier = model.GetCardModelModifier();
         modifier.EnhanceChanged += enhanceTab.OnEnhanceChanged;
@@ -68,7 +68,7 @@ class NCardUnsubscribePatch
         NCard __instance, CardModel? model
     )
     {
-        var enhanceTab = RunesmithField.NEnhanceTab[__instance];
+        var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
         if (model == null || enhanceTab == null) return;
         var modifier = model.GetCardModelModifier();
         modifier.ClearFlags();
@@ -86,7 +86,7 @@ class NCardUpdateVisualsPatch
     {
         if (!__instance.IsNodeReady()) return;
         if (__instance.Model == null) return;
-        var enhanceTab = RunesmithField.NEnhanceTab[__instance];
+        var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
         enhanceTab?.UpdateEnhanceVisuals();
     }
 }

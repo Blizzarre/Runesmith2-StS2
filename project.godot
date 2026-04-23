@@ -21,3 +21,4 @@ project/assembly_name="Runesmith2"
 [rendering]
 
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.09411765, 0.12156863, 0.11764706, 1)

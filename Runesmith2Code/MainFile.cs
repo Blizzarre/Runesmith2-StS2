@@ -1,9 +1,7 @@
 using System.Reflection;
-using BaseLib.Extensions;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
-using MegaCrit.Sts2.Core.Models;
 
 namespace Runesmith2.Runesmith2Code;
 
@@ -21,5 +19,8 @@ public partial class MainFile : Node
         harmony.PatchAll();
         
         Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(Assembly.GetExecutingAssembly());
+        //
+        // NodeFactory.RegisterSceneType<NParticlesContainer>("res://Runesmith2/scenes/combat/energy_counters/runesmith_energy_vfx_back.tscn"); 
+        // NodeFactory.RegisterSceneType<NParticlesContainer>("res://Runesmith2/scenes/combat/energy_counters/runesmith_energy_vfx_front.tscn");
     }
 }

@@ -1,0 +1,110 @@
+[gd_scene load_steps=9 format=3 uid="uid://c0y5t0kmik87k"]
+
+[ext_resource type="Script" uid="uid://d2fxfi3h8yv04" path="res://Runesmith2Code/Nodes/NElementsCounter.cs" id="1_7dpe4"]
+[ext_resource type="Texture2D" uid="uid://camj6ubsj82bx" path="res://Runesmith2/images/combatui/energy_counters/elements_orb_layer_1.png" id="2_nw2bt"]
+[ext_resource type="Texture2D" uid="uid://bx5jjry648ktu" path="res://Runesmith2/images/combatui/energy_counters/elements_orb_layer_2.png" id="3_lna63"]
+[ext_resource type="Shader" uid="uid://badwhyucvwyha" path="res://Runesmith2/shaders/hsv.gdshader" id="3_nw2bt"]
+[ext_resource type="Texture2D" uid="uid://cap1ykobwpsi1" path="res://Runesmith2/images/combatui/energy_counters/elements_orb_layer_3.png" id="4_g8ifq"]
+[ext_resource type="Texture2D" uid="uid://c5i71urq0ieur" path="res://Runesmith2/images/combatui/energy_counters/elements_orb_layer_4.png" id="5_4s1ho"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lna63"]
+shader = ExtResource("3_nw2bt")
+shader_parameter/h = 1.0
+shader_parameter/s = 1.0
+shader_parameter/v = 1.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pd0k2"]
+blend_mode = 1
+
+[node name="ElementsCounter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1024.0
+offset_bottom = -520.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7dpe4")
+
+[node name="Base" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+mouse_filter = 2
+texture = ExtResource("2_nw2bt")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_lock_ = true
+
+[node name="Icon" type="TextureRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_lna63")
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+mouse_filter = 2
+texture = ExtResource("3_lna63")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_lock_ = true
+
+[node name="RotationLayers" type="Control" parent="Icon"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Layer3" type="TextureRect" parent="Icon/RotationLayers"]
+self_modulate = Color(0.6057292, 0.6057292, 0.6057292, 1)
+material = SubResource("CanvasItemMaterial_pd0k2")
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+pivot_offset = Vector2(64, 72)
+mouse_filter = 2
+texture = ExtResource("4_g8ifq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Layer4" type="TextureRect" parent="Icon"]
+use_parent_material = true
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+mouse_filter = 2
+texture = ExtResource("5_4s1ho")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_lock_ = true
+
+[node name="MarginContainer1" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 44.0
+offset_top = 24.0
+offset_right = 84.0
+offset_bottom = 64.0
+mouse_filter = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 71.0
+offset_top = 68.0
+offset_right = 111.0
+offset_bottom = 108.0
+mouse_filter = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 17.0
+offset_top = 68.0
+offset_right = 57.0
+offset_bottom = 108.0
+mouse_filter = 2

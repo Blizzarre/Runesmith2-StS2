@@ -7,10 +7,6 @@ public static class RunesmithEnums
 {
     [CustomEnum] public static CardTag Hammer;
     [CustomEnum] public static CardTag Chisel;
-    
-    // todo patch card type extensions for Recipe type
-    //  also patch other stuff needed for custom card type
-    [CustomEnum] public static CardType Recipe;
 }
 
 public enum ElementType

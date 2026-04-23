@@ -1,0 +1,52 @@
+[gd_scene load_steps=12 format=3 uid="uid://boum8xi7r4lme"]
+
+[ext_resource type="Shader" uid="uid://8ejgpughm3t6" path="res://Runesmith2/shaders/vfx_grayscale_particle_shader.gdshader" id="1_5lio4"]
+[ext_resource type="Script" uid="uid://b2u1otq6xi5p1" path="res://Runesmith2Code/Nodes/RunesmithNParticlesContainer.cs" id="1_wcy0q"]
+[ext_resource type="Texture2D" uid="uid://bu0xa15k2mxox" path="res://Runesmith2/images/vfx/common_glow.png" id="2_wcy0q"]
+
+[sub_resource type="Gradient" id="Gradient_k0c8p"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hqkpq"]
+gradient = SubResource("Gradient_k0c8p")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_laqtv"]
+shader = ExtResource("1_5lio4")
+shader_parameter/pivot_offset = Vector2(0, 0)
+shader_parameter/lut = SubResource("GradientTexture1D_hqkpq")
+
+[sub_resource type="Curve" id="Curve_w6aoy"]
+_data = [Vector2(0, 0.353), 0.0, -0.753, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_i8kmb"]
+curve = SubResource("Curve_w6aoy")
+
+[sub_resource type="Curve" id="Curve_l7p7p"]
+_data = [Vector2(0, 0), 0.0, 11.542, 0, 0, Vector2(0.203, 0.842), 0.0, 0.211, 0, 0, Vector2(1, 1), 0.198, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_s0ho2"]
+curve = SubResource("Curve_l7p7p")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tumjn"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 3.5
+scale_max = 3.5
+scale_curve = SubResource("CurveTexture_s0ho2")
+alpha_curve = SubResource("CurveTexture_i8kmb")
+
+[node name="runesmith_energy_vfx_back" type="Node2D"]
+script = ExtResource("1_wcy0q")
+
+[node name="vfx_common_glow" type="GPUParticles2D" parent="."]
+self_modulate = Color(0.73072916, 0.6350956, 0.38931984, 1)
+material = SubResource("ShaderMaterial_laqtv")
+emitting = false
+amount = 1
+texture = ExtResource("2_wcy0q")
+one_shot = true
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_tumjn")

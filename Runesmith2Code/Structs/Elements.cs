@@ -1,3 +1,5 @@
+using Runesmith2.Runesmith2Code.DynamicVars;
+
 namespace Runesmith2.Runesmith2Code.Structs;
 
 public struct Elements(int ignis, int terra, int aqua) : IEquatable<Elements>
@@ -10,11 +12,26 @@ public struct Elements(int ignis, int terra, int aqua) : IEquatable<Elements>
     {
     }
 
-    public int Ignis { get; private set; } = ignis;
+    public static Elements WithIgnis(int cost)
+    {
+        return new Elements(cost, 0, 0);
+    }
+    
+    public static Elements WithTerra(int cost)
+    {
+        return new Elements(0, cost, 0);
+    }
+    
+    public static Elements WithAqua(int cost)
+    {
+        return new Elements(0, 0, cost);
+    }
 
-    public int Terra { get; private set; } = terra;
+    public int Ignis { get; set; } = ignis;
 
-    public int Aqua { get; private set; } = aqua;
+    public int Terra { get; set; } = terra;
+
+    public int Aqua { get; set; } = aqua;
 
     public void SetElements(int ignis, int terra, int aqua)
     {

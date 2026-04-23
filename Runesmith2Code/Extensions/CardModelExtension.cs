@@ -10,7 +10,6 @@ public static class CardModelExtension
 {
     public static bool IsEnhanceable(this CardModel cardModel)
     {
-        // TODO weird checks. Need better way to check for damage and block values
         if (cardModel.Type == CardType.Attack)
         {
             return true;
@@ -129,8 +128,6 @@ public static class CardModelExtension
 
         return 0.5m * cardModel.GetCardModelModifier().Enhanced;
     }
-    
-    // TODO Create method for getting enhance with all modifying hooks applied
     
     public static void ClearEnhance(this CardModel cardModel)
     {

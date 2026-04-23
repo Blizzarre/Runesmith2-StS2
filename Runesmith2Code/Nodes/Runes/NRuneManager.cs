@@ -123,7 +123,7 @@ public partial class NRuneManager : Control
         var queue = RunesmithField.RunesmithCombatState[Player.PlayerCombatState]?.RuneQueue;
         if (queue == null) return;
         var runeModel = queue.Runes.Count > 0 ? queue.Runes[^1] : null; // Get last (should be the newly added one)
-        if (_runes.Count >= RuneQueue.MaxCapacity) return; // cannot add rune to full RuneQueue TODO add warning
+        if (_runes.Count >= RuneQueue.MaxCapacity) return; // cannot add rune to full RuneQueue
         var emptyRune = _runes.FirstOrDefault(n => n.Model == null);
         var newRune = NRune.Create(LocalContext.IsMe(Player), runeModel);
         if (emptyRune == null)

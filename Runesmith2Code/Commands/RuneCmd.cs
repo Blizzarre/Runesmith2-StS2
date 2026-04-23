@@ -31,6 +31,7 @@ public static class RuneCmd
             decimal modifiedPotency = potency;
             modifiedPotency = RunesmithHook.ModifyPotency(combatState, player, modifiedPotency, ValueProp.Move,
                 cardPlay.Card, cardPlay, out _);
+            // TODO after modifying charge/potency
             
             rune.ChargeVal = (int)Math.Max(0, charge);
             rune.PassiveVal = (int)Math.Max(0, modifiedPotency);
@@ -42,7 +43,7 @@ public static class RuneCmd
                 var nCreature = NCombatRoom.Instance?.GetCreatureNode(player.Creature);
                 if (nCreature != null)
                 {
-                    var runeManager = RunesmithField.NRuneManager[nCreature];
+                    var runeManager = RunesmithNode.NRuneManager[nCreature];
                     runeManager?.AddRuneAnim();
                     await RunesmithHook.AfterRuneCrafted(combatState, choiceContext, player, rune);
                 }

@@ -28,8 +28,7 @@ public static class PlayerCombatStateExtension
         private RuneQueue _runeQueue = queue;
 
         public RuneQueue RuneQueue => _runeQueue;
-
-        // todo subscribe to this
+        
         public event Action<Elements, Elements>? ElementsChanged;
 
         public void GainElements(Elements amount)
