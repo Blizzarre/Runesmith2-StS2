@@ -31,6 +31,11 @@ public class RuneQueue
         _runes.Clear();
     }
 
+    public bool HasAny()
+    {
+        return _runes.Count != 0;
+    }
+
     public async Task<bool> TryEnqueue(RuneModel rune)
     {
         if (Capacity == 0) return false;
@@ -67,7 +72,7 @@ public class RuneQueue
             if (_owner.Creature.CombatState == null) return;
 
             var triggerCount =
-                RunesmithHook.ModifyingRunePassiveTriggerCount(_owner.Creature.CombatState, rune, 1,
+                RunesmithHook.ModifyRunePassiveTriggerCount(_owner.Creature.CombatState, rune, 1,
                     out var modifyingModels);
             await RunesmithHook.AfterModifyingRunePassiveTriggerCount(_owner.Creature.CombatState, rune,
                 modifyingModels);
@@ -87,7 +92,7 @@ public class RuneQueue
             if (_owner.Creature.CombatState == null) return;
 
             var triggerCount =
-                RunesmithHook.ModifyingRunePassiveTriggerCount(_owner.Creature.CombatState, rune, 1,
+                RunesmithHook.ModifyRunePassiveTriggerCount(_owner.Creature.CombatState, rune, 1,
                     out var modifyingModels);
             await RunesmithHook.AfterModifyingRunePassiveTriggerCount(_owner.Creature.CombatState, rune,
                 modifyingModels);

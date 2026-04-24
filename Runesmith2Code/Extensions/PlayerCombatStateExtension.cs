@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Players;
 using Runesmith2.Runesmith2Code.Entities.Runes;
+using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Structs;
 
 namespace Runesmith2.Runesmith2Code.Extensions;
@@ -49,6 +50,26 @@ public static class PlayerCombatStateExtension
             }
 
             Elements = (Elements - amount).ClampZero();
+        }
+    }
+
+    extension(PlayerCombatState playerCombatState)
+    {
+        public RuneQueue? RuneQueue()
+        {
+            var runesmithCombatState = playerCombatState.Runesmith();
+            return runesmithCombatState?.RuneQueue;
+        }
+
+        public Elements Elements()
+        {
+            var runesmithCombatState = playerCombatState.Runesmith();
+            return runesmithCombatState?.Elements ?? new Elements();
+        }
+
+        public RunesmithCombatState? Runesmith()
+        {
+            return RunesmithField.RunesmithCombatState[playerCombatState];
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Runesmith2.Runesmith2Code.Patches;
 
 // Code mostly taken from https://github.com/lamali292/Downfall/blob/main/Code/Patches/ListLocalizationFilesPatch.cs
 [HarmonyPatch(typeof(LocManager), "ListLocalizationFiles")]
-static class ListLocalizationFilesPatch
+static class ListLocalizationFilesPatches
 {
     private static readonly string[] ExtraTables = ["runes.json"];
 

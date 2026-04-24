@@ -12,12 +12,12 @@ public static class RunesmithResource
     public const string NRunePath = "res://Runesmith2/scenes/runes/rune.tscn";
     public const string NElementsCounterPath = "res://Runesmith2/scenes/combat/energy_counters/elements_counter.tscn";
     public const string NElementsIconPath = "res://Runesmith2/scenes/cards/elements_icon.tscn";
-    public const string ElementsCostPath = "res://Runesmith2/images/cardui/elements_cost.png";
 
     // These assets will be loaded with PreloadManager
     public static readonly IEnumerable<string> AssetPaths =
     [
-        NEnhanceTabPath, NRuneManagerPath, NRunePath, NElementsCounterPath, ElementsCostPath,
+        NEnhanceTabPath, NRuneManagerPath, NRunePath, 
+        NElementsCounterPath, NElementsIconPath,
         "res://Runesmith2/images/charui/elements_ignis_icon.png",
         "res://Runesmith2/images/charui/elements_terra_icon.png",
         "res://Runesmith2/images/charui/elements_aqua_icon.png",

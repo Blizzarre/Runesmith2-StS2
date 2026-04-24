@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Nodes.HoverTips;
 using Runesmith2.Runesmith2Code;
+using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Structs;
 using Runesmith2.Runesmith2Code.Utils;
@@ -123,7 +124,7 @@ public partial class NElementsCounter : Control
         base._ExitTree();
         if (_player != null && _isListeningToCombatState)
         {
-            var runesmithCombatState = RunesmithField.RunesmithCombatState[_player.PlayerCombatState!];
+            var runesmithCombatState = _player.PlayerCombatState?.Runesmith();
             runesmithCombatState?.ElementsChanged -= OnElementsChanged;
             _isListeningToCombatState = false;
         }
@@ -133,7 +134,7 @@ public partial class NElementsCounter : Control
     {
         if (_player != null && !_isListeningToCombatState)
         {
-            var runesmithCombatState = RunesmithField.RunesmithCombatState[_player.PlayerCombatState!];
+            var runesmithCombatState = _player.PlayerCombatState?.Runesmith();
             runesmithCombatState?.ElementsChanged += OnElementsChanged;
             _isListeningToCombatState = true;
         }
@@ -177,8 +178,7 @@ public partial class NElementsCounter : Control
 
     private static Elements GetPlayerElements(Player player)
     {
-        var runesmithCombatState = RunesmithField.RunesmithCombatState[player.PlayerCombatState!];
-        var elements = runesmithCombatState!.Elements;
+        var elements = player.PlayerCombatState?.Elements() ?? new Elements();
         return elements;
     }
 

@@ -30,7 +30,8 @@
     {
       "id": "power",
       "markers": [
-        "CustomPowerModel"
+        "CustomPowerModel",
+        "Runesmith2Power"
       ],
       "fields": [
         {

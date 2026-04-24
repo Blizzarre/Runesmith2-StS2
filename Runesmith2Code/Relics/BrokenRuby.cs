@@ -23,7 +23,7 @@ public class BrokenRuby : Runesmith2Relic
     [
         RunesmithVarIndex.IgnisIconVar,
         new IgnisVar(2),
-        new("Amount", 2)
+        new CardsVar(2)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -34,23 +34,19 @@ public class BrokenRuby : Runesmith2Relic
 
     public override async Task AfterRoomEntered(AbstractRoom room)
     {
-        await RunesmithPlayerCmd.GainElements(Elements.WithIgnis(DynamicVars[IgnisVar.defaultName].IntValue),
-            Owner);
+        if (room is CombatRoom)
+        {
+            await RunesmithPlayerCmd.GainElements(Elements.WithIgnis(DynamicVars[IgnisVar.defaultName].IntValue),
+                Owner);
+        }
     }
 
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player)
     {
         if (player == Owner && player.Creature.CombatState!.RoundNumber <= 1)
         {
-            var pile = PileType.Hand.GetPile(Owner);
-            var amount = DynamicVars["Amount"].IntValue;
-            var cards = new List<CardModel>(pile.Cards).StableShuffle(Owner.RunState.Rng.CombatCardSelection);
-            amount = Math.Min(amount, cards.Count);
-            for (var i = 0; i < amount; i++)
-            {
-                MainFile.Logger.Info($"card is {cards[i].Title}, canonical?: {cards[i].IsCanonical}");
-                await RunesmithCardCmd.Enhance(choiceContext, Owner, cards[i], null, 1);
-            }
+            await RunesmithCardCmd.EnhanceRandomCards(choiceContext, Owner, PileType.Hand.GetPile(Owner).Cards,
+                DynamicVars.Cards.IntValue, 1, Owner.RunState.Rng.CombatCardSelection);
         }
     }
 }

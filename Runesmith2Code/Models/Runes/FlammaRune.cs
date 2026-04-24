@@ -35,12 +35,17 @@ public class FlammaRune : RuneModel
     {
         if (ChargeVal > 0)
         {
-            await ApplyFireDamage(choiceContext);
+            await ApplyFireDamage(choiceContext, PassiveVal);
             UseCharge();
         }
     }
 
-    private async Task ApplyFireDamage(PlayerChoiceContext choiceContext)
+    public override async Task Break(PlayerChoiceContext choiceContext)
+    {
+        await ApplyFireDamage(choiceContext, BreakVal);
+    }
+
+    private async Task ApplyFireDamage(PlayerChoiceContext choiceContext, decimal amount)
     {
         var list = CombatState.GetOpponentsOf(Owner.Creature).Where(e => e.IsHittable).ToList();
         if (list.Count == 0)
@@ -53,7 +58,7 @@ public class FlammaRune : RuneModel
         {
             NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(NGroundFireVfx.Create(target));
             PlayPassiveSfx();
-            await CreatureCmd.Damage(choiceContext, target, PassiveVal, ValueProp.Unpowered, Owner.Creature);
+            await CreatureCmd.Damage(choiceContext, target, amount, ValueProp.Unpowered, Owner.Creature);
         }
     }
 }

@@ -3,7 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 
 namespace Runesmith2.Runesmith2Code.Utils;
 
-public static class RunesmithEnums
+public static class RunesmithTag
 {
     [CustomEnum] public static CardTag Hammer;
     [CustomEnum] public static CardTag Chisel;

@@ -6,6 +6,7 @@ using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Structs;
+using Runesmith2.Runesmith2Code.Utils;
 
 namespace Runesmith2.Runesmith2Code.Cards.Common;
 
@@ -16,6 +17,7 @@ public class ChiselStab : Runesmith2Card
         WithDamage(5, 2);
         WithElementsVar(new IgnisVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Elements);
+        WithTags(RunesmithTag.Chisel);
     }
 
     protected override async Task OnPlay(
@@ -26,6 +28,6 @@ public class ChiselStab : Runesmith2Card
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        await RunesmithPlayerCmd.GainElements(new Elements(DynamicVars[IgnisVar.defaultName].IntValue, 0, 0), Owner);
+        await RunesmithPlayerCmd.GainElements(new Elements(DynamicVars[IgnisVar.defaultName].IntValue, 0, 0), Owner, play);
     }
 }

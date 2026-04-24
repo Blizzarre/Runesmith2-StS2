@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Entities.Runes;
+using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Models;
 using Runesmith2.Runesmith2Code.Utils;
@@ -121,8 +122,7 @@ public partial class NRuneManager : Control
 
     public void AddRuneAnim()
     {
-        if (Player.PlayerCombatState == null) return;
-        var queue = RunesmithField.RunesmithCombatState[Player.PlayerCombatState]?.RuneQueue;
+        var queue = Player.PlayerCombatState?.RuneQueue();
         if (queue == null) return;
         var runeModel = queue.Runes.Count > 0 ? queue.Runes[^1] : null; // Get last (should be the newly added one)
         if (_runes.Count >= RuneQueue.MaxCapacity) return; // cannot add rune to full RuneQueue

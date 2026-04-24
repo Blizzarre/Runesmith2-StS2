@@ -206,7 +206,7 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
     {
         if (amount.Total > 0 && Owner.PlayerCombatState != null)
         {
-            var runesmithCombatState = RunesmithField.RunesmithCombatState[Owner.PlayerCombatState];
+            var runesmithCombatState = Owner.PlayerCombatState.Runesmith();
             if (runesmithCombatState != null)
             {
                 runesmithCombatState.LoseElements(amount);

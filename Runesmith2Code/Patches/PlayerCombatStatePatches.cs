@@ -37,7 +37,7 @@ class PlayerCombatStateAfterCombatEndPatch
     [HarmonyPostfix]
     public static void Postfix(PlayerCombatState __instance)
     {
-        var runesmithCombatState = RunesmithField.RunesmithCombatState[__instance];
+        var runesmithCombatState = __instance.Runesmith();
         if (runesmithCombatState != null) CombatManager.Instance.StateTracker.UnsubscribeElements(runesmithCombatState);
     }
 }
@@ -62,9 +62,8 @@ class PlayerCombatStateHasEnoughResourcesForPatch
 
     static void HasEnoughElements(PlayerCombatState instance, CardModel card, ref UnplayableReason reason)
     {
-        var runesmithCombatState = RunesmithField.RunesmithCombatState[instance];
-        if (runesmithCombatState == null || card is not Runesmith2Card runesmith2Card) return;
-        if (!runesmithCombatState.Elements.CanSpend(runesmith2Card.GetElementsCostWithModifiers()))
+        if (card is not Runesmith2Card runesmith2Card) return;
+        if (!instance.Elements().CanSpend(runesmith2Card.GetElementsCostWithModifiers()))
         {
             reason |= UnplayableReason.StarCostTooHigh;
         }

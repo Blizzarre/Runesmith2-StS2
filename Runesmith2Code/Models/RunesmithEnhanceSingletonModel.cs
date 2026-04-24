@@ -2,15 +2,17 @@
 using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Extensions;
+using Runesmith2.Runesmith2Code.Hooks;
 
 namespace Runesmith2.Runesmith2Code.Models;
 
-public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false), IRunesmithModel
+public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false), IOnModifyPotencyMultiplicative
 {
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
         Creature? dealer, CardModel? cardSource)
@@ -64,8 +66,9 @@ public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false
 
         return Task.CompletedTask;
     }
+    
 
-    public decimal ModifyPotencyMultiplicative(Creature target, decimal block, ValueProp props, CardModel? cardSource,
+    public decimal ModifyPotencyMultiplicative(Player player, decimal block, ValueProp props, CardModel? cardSource,
         CardPlay? cardPlay)
     {
         if (cardSource == null)

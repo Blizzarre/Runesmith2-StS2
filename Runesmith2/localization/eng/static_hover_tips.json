@@ -1,5 +1,5 @@
 {
-  "RUNESMITH2-BREAK.description": "Destroy a Rune and activate its passive effect twice. Power-based effects will be removed before the start of your next turn.",
+  "RUNESMITH2-BREAK.description": "Destroy a Rune and use its Break effect.",
   "RUNESMITH2-BREAK.title": "Break",
   "RUNESMITH2-CHARGE-NONE.description": "Current Charge: [blue]{Charge:diff()}[/blue]\nCharge will not consumed.",
   "RUNESMITH2-CHARGE-NONE.title": "Charge",

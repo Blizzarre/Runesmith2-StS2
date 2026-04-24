@@ -24,6 +24,6 @@ public class EarthShield : Runesmith2Card
         CardPlay play)
     {
         await CommonActions.CardBlock(this, play);
-        await RunesmithPlayerCmd.GainElements(Elements.WithTerra(DynamicVars[TerraVar.defaultName].IntValue), Owner);
+        await RunesmithPlayerCmd.GainElements(Elements.WithTerra(DynamicVars[TerraVar.defaultName].IntValue), Owner, play);
     }
 }

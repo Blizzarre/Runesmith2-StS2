@@ -1,13 +1,12 @@
-﻿using BaseLib.Abstracts;
+﻿using System.Diagnostics.CodeAnalysis;
+using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using Godot;
 using MegaCrit.Sts2.Core.Assets;
-using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -32,8 +31,6 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     ];
 
     private RuneModel _canonicalInstance;
-
-    private Player? _owner;
 
     public virtual decimal PassiveVal { get; set; }
 
@@ -139,22 +136,23 @@ public abstract class RuneModel : AbstractModel, ICustomModel
         }
     }
 
+    [field: AllowNull, MaybeNull]
     public Player Owner
     {
         get
         {
             AssertMutable();
-            return _owner;
+            return field;
         }
         set
         {
             AssertMutable();
-            if (_owner != null && value != null && value != _owner)
+            if (field != null && value != null && value != field)
             {
                 throw new InvalidOperationException("Rune " + Id.Entry + " already has an owner.");
             }
 
-            _owner = value;
+            field = value;
         }
     }
 

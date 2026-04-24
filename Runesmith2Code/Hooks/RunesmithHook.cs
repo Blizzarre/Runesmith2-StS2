@@ -11,111 +11,126 @@ namespace Runesmith2.Runesmith2Code.Hooks;
 
 public static class RunesmithHook
 {
+    private static async Task Dispatch<T>(CombatState combatState, Func<T, Task> action) where T : class
+    {
+        foreach (var model in combatState.IterateHookListeners().OfType<T>())
+        {
+            AbstractModel abstractModel = (AbstractModel)(object)model;
+            await action(model);
+            abstractModel.InvokeExecutionFinished();
+        }
+    }
+    
+    private static async Task Dispatch<T>(CombatState combatState, Func<T, Task> action, IEnumerable<AbstractModel> filter) where T : class
+    {
+        foreach (var model in combatState.IterateHookListeners().OfType<T>().Intersect(filter.OfType<T>()))
+        {
+            AbstractModel abstractModel = (AbstractModel)(object)model;
+            await action(model);
+            abstractModel.InvokeExecutionFinished();
+        }
+    }
+
+    
+    private static async Task Dispatch<T>(CombatState combatState, PlayerChoiceContext choiceContext, Func<T, Task> action) where T : class
+    {
+        foreach (var model in combatState.IterateHookListeners().OfType<T>())
+        {
+            AbstractModel abstractModel = (AbstractModel)(object)model;
+            choiceContext.PushModel(abstractModel);
+            await action(model);
+            abstractModel.InvokeExecutionFinished();
+            choiceContext.PopModel(abstractModel);
+        }
+    }
+
+    private static TResult Aggregate<T, TResult>(CombatState combatState, TResult seed, Func<T, TResult, TResult> action) where T : class
+    {
+        return combatState.IterateHookListeners().OfType<T>()
+            .Aggregate(seed, (curr, model) => action(model, curr));
+    }
+    
+    
     public static int ModifyEnhanceAmount(CombatState combatState, Player player, int originalAmount,
         out IEnumerable<AbstractModel> modifiers)
     {
         var modifyingModels = new List<AbstractModel>();
-        var modifiedEnhance = originalAmount;
-
-        foreach (AbstractModel model in combatState.IterateHookListeners())
+        var res = Aggregate<IModifyEnhanceAmount, int>(combatState, originalAmount, (model, current) =>
         {
-            var runesmithModel = model as IRunesmithModel;
-            if (runesmithModel == null) continue;
-            var addEnhance = runesmithModel.ModifyEnhanceAmount(player, modifiedEnhance);
-            modifiedEnhance += addEnhance;
-            if (addEnhance != 0)
-            {
-                modifyingModels.Add(model);
-            }
-        }
-
+            var next = model.ModifyEnhanceAmount(player, current);
+            if (next != current) modifyingModels.Add((AbstractModel)model);
+            return next;
+        });
         modifiers = modifyingModels;
-        return modifiedEnhance;
+        return res;
     }
 
-    public static async Task AfterModifyingEnhanceAmount(CombatState combatState, int modifiedEnhance,
+    public static Task AfterModifyingEnhanceAmount(CombatState combatState, int modifiedEnhance,
         CardModel? cardSource, CardPlay? cardPlay, IEnumerable<AbstractModel> modifiers)
     {
-        var abstractModels = modifiers.ToHashSet();
-        foreach (var modifier in combatState.IterateHookListeners())
-        {
-            if (!abstractModels.Contains(modifier)) continue;
-            if (modifier is not IRunesmithModel runesmithModel) continue;
-            await runesmithModel.AfterModifyingEnhanceAmount(modifiedEnhance, cardSource, cardPlay);
-            modifier.InvokeExecutionFinished();
-        }
+        return Dispatch<IAfterModifyingEnhanceAmount>(combatState,
+            model => model.AfterModifyingEnhanceAmount(modifiedEnhance, cardSource, cardPlay), modifiers);
     }
 
-    public static async Task AfterCardEnhanced(CombatState combatState, PlayerChoiceContext choiceContext,
+    public static Task AfterCardEnhanced(CombatState combatState, PlayerChoiceContext choiceContext,
         CardModel card, int enhanceAmount)
     {
-        foreach (var model in combatState.IterateHookListeners())
-        {
-            if (model is not IRunesmithModel runesmithModel) continue;
-            choiceContext.PushModel(model);
-            await runesmithModel.AfterCardEnhanced(choiceContext, card, enhanceAmount);
-            model.InvokeExecutionFinished();
-            choiceContext.PopModel(model);
-        }
+        return Dispatch<IAfterCardEnhanced>(combatState, choiceContext,
+            model => model.AfterCardEnhanced(choiceContext, card, enhanceAmount));
     }
 
-    public static int ModifyingRunePassiveTriggerCount(CombatState combatState, RuneModel rune, int triggerCount,
-        out List<AbstractModel> modifyingModels)
+    public static int ModifyRunePassiveTriggerCount(CombatState combatState, RuneModel rune, int originalCount,
+        out List<AbstractModel> modifiers)
     {
-        modifyingModels = [];
-        var currCount = triggerCount;
-        foreach (var model in combatState.IterateHookListeners())
+        var modifyingModels = new List<AbstractModel>();
+        var res = Aggregate<IModifyRunePassiveTriggerCount, int>(combatState, originalCount, (model, current) =>
         {
-            var prevCount = currCount;
-            if (model is not IRunesmithModel runesmithModel) continue;
-            currCount = runesmithModel.ModifyRunePassiveTriggerCounts(rune, currCount);
-            if (prevCount != currCount)
-            {
-                modifyingModels.Add(model);
-            }
-        }
-
-        return currCount;
+            var next = model.ModifyRunePassiveTriggerCounts(rune, current);
+            if (next != current) modifyingModels.Add((AbstractModel)model);
+            return next;
+        });
+        modifiers = modifyingModels;
+        return res;
     }
 
-    public static async Task AfterModifyingRunePassiveTriggerCount(CombatState combatState, RuneModel rune,
+    public static Task AfterModifyingRunePassiveTriggerCount(CombatState combatState, RuneModel rune,
         IEnumerable<AbstractModel> modifiers)
     {
-        var abstractModels = modifiers.ToHashSet();
-        foreach (var modifier in combatState.IterateHookListeners())
-        {
-            if (!abstractModels.Contains(modifier)) continue;
-            if (modifier is not IRunesmithModel runesmithModel) continue;
-            await runesmithModel.AfterModifyingRunePassiveTriggerCount(rune);
-            modifier.InvokeExecutionFinished();
-        }
+        return Dispatch<IAfterModifyingRunePassiveTriggerCount>(combatState,
+            model => model.AfterModifyingRunePassiveTriggerCount(rune), modifiers);
     }
 
     public static decimal ModifyRuneValue(CombatState combatState, Player player, decimal amount)
     {
-        var num = amount;
-        foreach (var model in combatState.IterateHookListeners())
-        {
-            if (model is not IRunesmithModel runesmithModel) continue;
-            num = runesmithModel.ModifyRuneValue(player, num);
-        }
-
-        return num;
+        return Aggregate<IModifyRuneValue, decimal>(combatState, amount,
+            (model, current) => model.ModifyRuneValue(player, current));
     }
 
     public static Elements ModifyElementsGain(CombatState combatState, Player player, Elements originalAmount,
         out IEnumerable<AbstractModel> modifiers)
     {
-        var modifiedAmount = originalAmount;
         var modifyingModels = new List<AbstractModel>();
-        foreach (var model in combatState.IterateHookListeners())
+        var res = Aggregate<IModifyElementsGain, Elements>(combatState, originalAmount, (model, current) =>
         {
-            if (model is not IRunesmithModel runesmithModel) continue;
-            modifiedAmount = runesmithModel.ModifyElementsGain(player, modifiedAmount);
-        }
-
+            var next = model.ModifyElementsGain(player, current);
+            if (next != current) modifyingModels.Add((AbstractModel)model);
+            return next;
+        });
         modifiers = modifyingModels;
-        return modifiedAmount;
+        return res;
+    }
+    
+    public static Task AfterModifyingElementsGain(CombatState combatState, IEnumerable<AbstractModel> modifiers)
+    {
+        return Dispatch<IAfterModifyingElementsGain>(combatState, 
+            model => model.AfterModifyingElementsGain());
+    }
+        
+    public static Task AfterElementsGained(CombatState combatState, Elements amount, Player player,
+        CardPlay? cardPlay = null)
+    {
+        return Dispatch<IAfterElementsGained>(combatState,
+            model => model.AfterElementsGained(combatState, amount, player, cardPlay));
     }
 
     public static Elements ModifyElementsCost(CombatState combatState, CardModel card, Elements originalCost)
@@ -126,38 +141,24 @@ public static class RunesmithHook
         }
 
         var modifiedCost = originalCost;
-        foreach (var model in combatState.IterateHookListeners())
+        foreach (var model in combatState.IterateHookListeners().OfType<IModifyElementsCost>())
         {
-            var runesmithModel = model as IRunesmithModel;
-            runesmithModel?.TryModifyElementsCost(card, modifiedCost, out modifiedCost);
+            model.TryModifyElementsCost(card, modifiedCost, out modifiedCost);
         }
 
         return modifiedCost;
     }
 
-    public static async Task AfterElementsSpent(CombatState combatState, Elements amount, Player spender)
+    public static Task AfterElementsSpent(CombatState combatState, Elements amount, Player spender)
     {
-        foreach (var model in combatState.IterateHookListeners())
-        {
-            var runesmithModel = model as IRunesmithModel;
-            if (runesmithModel != null) await runesmithModel.AfterElementsSpent(amount, spender);
-        }
+        return Dispatch<IAfterElementsSpent>(combatState, model => model.AfterElementsSpent(amount, spender));
     }
 
-    public static async Task AfterRuneCrafted(CombatState combatState, PlayerChoiceContext choiceContext, Player player,
+    public static Task AfterRuneCrafted(CombatState combatState, PlayerChoiceContext choiceContext, Player player,
         RuneModel rune)
     {
-        foreach (var model in combatState.IterateHookListeners())
-        {
-            var runesmithModel = model as IRunesmithModel;
-            if (runesmithModel != null)
-            {
-                choiceContext.PushModel(model);
-                await runesmithModel.AfterRuneCrafted(choiceContext, player, rune);
-                model.InvokeExecutionFinished();
-                choiceContext.PopModel(model);
-            }
-        }
+        return Dispatch<IAfterRuneCrafted>(combatState, choiceContext,
+            model => model.AfterRuneCrafted(choiceContext, player, rune));
     }
 
     public static decimal ModifyPotency(CombatState combatState, Player player, decimal potency, ValueProp props,
@@ -168,44 +169,21 @@ public static class RunesmithHook
 
         //TODO add enchantment modification here if it's implemented
 
-        foreach (AbstractModel model in combatState.IterateHookListeners())
+        modifiedPotency = Aggregate<IOnModifyPotencyAdditive, decimal>(combatState, modifiedPotency, (model, current) =>
         {
-            var runesmithModel = model as IRunesmithModel;
-            if (runesmithModel == null) continue;
-            var addPotency = runesmithModel.ModifyPotencyAdditive(player, modifiedPotency, props, cardSource, cardPlay);
-            modifiedPotency += addPotency;
-            if (addPotency != 0)
-            {
-                modifyingModels.Add(model);
-            }
-        }
-
-        foreach (AbstractModel model in combatState.IterateHookListeners())
+            var add = model.ModifyPotencyAdditive(player, current, props, cardSource, cardPlay);
+            if (add != 0) modifyingModels.Add((AbstractModel)model);
+            return add + current;
+        });
+        
+        modifiedPotency = Aggregate<IOnModifyPotencyMultiplicative, decimal>(combatState, modifiedPotency, (model, current) =>
         {
-            var runesmithModel = model as IRunesmithModel;
-            if (runesmithModel == null) continue;
-            var addPotency =
-                runesmithModel.ModifyPotencyMultiplicative(player, modifiedPotency, props, cardSource, cardPlay);
-            modifiedPotency *= addPotency;
-            if (addPotency != 1)
-            {
-                modifyingModels.Add(model);
-            }
-        }
+            var mult = model.ModifyPotencyMultiplicative(player, current, props, cardSource, cardPlay);
+            if (mult != 1) modifyingModels.Add((AbstractModel)model);
+            return mult * current;
+        });
 
         modifiers = modifyingModels;
         return Math.Max(0, modifiedPotency);
-    }
-
-    public static async Task AfterModifyingElementsGain(CombatState combatState, IEnumerable<AbstractModel> modifiers)
-    {
-        var abstractModels = modifiers.ToHashSet();
-        foreach (var modifier in combatState.IterateHookListeners())
-        {
-            if (!abstractModels.Contains(modifier)) continue;
-            if (modifier is not IRunesmithModel runesmithModel) continue;
-            await runesmithModel.AfterModifyingElementsGain();
-            modifier.InvokeExecutionFinished();
-        }
     }
 }

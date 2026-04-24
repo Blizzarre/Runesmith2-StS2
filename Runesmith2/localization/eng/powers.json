@@ -1,3 +1,7 @@
 {
-  
+  "RUNESMITH2-GRINDSTONE_POWER.description": "",
+  "RUNESMITH2-GRINDSTONE_POWER.smartDescription": "{GrindstonePower:plural:This turn|For [blue]{}[/blue] turns}, any cards played get [gold]Upgraded[/gold]. If the card cannot be [gold]Upgraded[/gold], [gold]Enhance[/gold] it instead.",
+  "RUNESMITH2-GRINDSTONE_POWER.title": "Grindstone",
+  "RUNESMITH2-RUNESMITH2_POWER.title": "",
+  "RUNESMITH2-RUNESMITH2_POWER.description": ""
 }

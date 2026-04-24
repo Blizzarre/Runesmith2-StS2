@@ -8,6 +8,7 @@ public enum RunesmithHoverTip
     Stasis,
     Recipe,
     Craft,
+    Break,
     Charge,
     Potency,
     Elements

@@ -2,6 +2,7 @@ using System.Reflection;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
+using Runesmith2.Runesmith2Code.Utils;
 
 namespace Runesmith2.Runesmith2Code;
 
@@ -20,5 +21,7 @@ public partial class MainFile : Node
         harmony.PatchAll();
 
         Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(Assembly.GetExecutingAssembly());
+        
+        RunesmithSubscriber.Subscribe();
     }
 }

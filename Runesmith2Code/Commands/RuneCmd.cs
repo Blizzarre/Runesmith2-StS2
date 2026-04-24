@@ -2,9 +2,11 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
+using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.Models;
@@ -25,8 +27,8 @@ public static class RuneCmd
         if (!CombatManager.Instance.IsOverOrEnding)
         {
             var combatState = player.Creature.CombatState;
-            var runesmithCombatState = RunesmithField.RunesmithCombatState[player.PlayerCombatState];
-            var runeQueue = runesmithCombatState.RuneQueue;
+            var runeQueue = player.PlayerCombatState?.RuneQueue();
+            if (runeQueue == null) return; // todo log warning/error?
             rune.AssertMutable();
 
             // TODO Modify rune charge and potency
@@ -49,6 +51,71 @@ public static class RuneCmd
                     runeManager?.AddRuneAnim();
                     await RunesmithHook.AfterRuneCrafted(combatState, choiceContext, player, rune);
                 }
+            }
+        }
+    }
+
+    public static RuneModel? ChargeOldest(PlayerChoiceContext choiceContext, Player player,
+        int chargeAmount)
+    {
+        if (CombatManager.Instance.IsOverOrEnding) return null;
+        var runeQueue = player.PlayerCombatState?.RuneQueue();
+        if (runeQueue == null || runeQueue.Runes.Count <= 0) return null;
+        var oldestRune = runeQueue.Runes[0];
+        oldestRune.ModifyCharge(chargeAmount);
+        return oldestRune;
+    }
+
+    public static void Charge(PlayerChoiceContext choiceContext, RuneModel rune, int chargeAmount)
+    {
+        if (!CombatManager.Instance.IsOverOrEnding)
+        {
+            rune.ModifyCharge(chargeAmount);
+        }
+    }
+
+    public static async Task Passive(PlayerChoiceContext choiceContext, RuneModel? rune)
+    {
+        if (!CombatManager.Instance.IsOverOrEnding && rune != null)
+        {
+            choiceContext.PushModel(rune);
+            await rune.Passive(choiceContext);
+            choiceContext.PopModel(rune);
+        }
+    }
+
+    public static async Task<RuneModel?> BreakOldest(PlayerChoiceContext choiceContext, Player player, bool dequeue = true)
+    {
+        var runeQueue = player.PlayerCombatState?.RuneQueue();
+        if (runeQueue == null || !runeQueue.HasAny()) return null;
+        var rune = runeQueue.Runes[0];
+        choiceContext.PushModel(rune);
+        await Break(choiceContext, player, rune, dequeue);
+        choiceContext.PopModel(rune);
+        return rune;
+    }
+
+    public static async Task Break(PlayerChoiceContext choiceContext, Player player, RuneModel? brokenRune, bool dequeue = true)
+    {
+        if (CombatManager.Instance.IsOverOrEnding || brokenRune == null) return;
+        var runeQueue = player.PlayerCombatState?.RuneQueue();
+        if (runeQueue == null) return;
+        if (!runeQueue.HasAny()) return;
+        var removed = false;
+        if (dequeue)
+        {
+            removed = runeQueue.Remove(brokenRune);
+            NCombatRoom.Instance?.GetCreatureNode(player.Creature)?.RuneManager()?.BreakRuneAnim(brokenRune);
+        }
+        choiceContext.PushModel(brokenRune);
+        await brokenRune.Break(choiceContext);
+        choiceContext.PopModel(brokenRune);
+        if (player.Creature.CombatState != null)
+        {
+            // TODO consider hook for after rune broken
+            if (removed)
+            {
+                brokenRune.RemoveInternal();
             }
         }
     }
