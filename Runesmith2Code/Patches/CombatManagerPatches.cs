@@ -9,12 +9,9 @@ namespace Runesmith2.Runesmith2Code.Patches;
 public static class CombatManagerHandlePlayerDeathPatch
 {
     [HarmonyPostfix]
-    static async Task Postfix(Task results, CombatManager __instance, Player player)
+    private static async Task Postfix(Task results, CombatManager __instance, Player player)
     {
         await results;
-        if (__instance.IsInProgress)
-        {
-            await RunesmithPlayerCmd.ResetElements(player);
-        }
+        if (__instance.IsInProgress) await RunesmithPlayerCmd.ResetElements(player);
     }
 }

@@ -4,50 +4,38 @@ using MegaCrit.Sts2.Core.Helpers.Models;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Hooks;
-using Runesmith2.Runesmith2Code.Models;
 using Runesmith2.Runesmith2Code.Structs;
 
 namespace Runesmith2.Runesmith2Code.Utils;
 
 public static class RunesmithCardCostHelper
 {
-    public static CardCostColor GetElementsCostColor(Runesmith2Card card, CombatState? state)
+    public static CardCostColor GetElementsCostColor(Runesmith2Card card, ICombatState? state)
     {
-        if (state == null)
-        {
-            return CardCostColor.Unmodified;
-        }
+        if (state == null) return CardCostColor.Unmodified;
 
-        if (!card.CanPlay(out UnplayableReason reason, out AbstractModel? model)
+        if (!card.CanPlay(out var reason, out var model)
             && reason.HasFlag(UnplayableReason.StarCostTooHigh)
             && model == card)
-        {
             return CardCostColor.InsufficientResources;
-        }
 
         if (TryModifyElementsCostWithHook(card, state, out var hookModifiedCost))
-        {
             return CardCostHelper.GetColorForHookModifiedCost(hookModifiedCost.Total, card.BaseElementsCost.Total);
-        }
 
         if (card.TemporaryElementsCost != null)
-        {
             return CardCostHelper.GetColorForLocalCost(card.TemporaryElementsCost.Cost, card.BaseElementsCost.Total);
-        }
 
         return CardCostColor.Unmodified;
     }
 
-    private static bool TryModifyElementsCostWithHook(Runesmith2Card card, CombatState state,
+    private static bool TryModifyElementsCostWithHook(Runesmith2Card card, ICombatState state,
         out Elements hookModifiedCost)
     {
         hookModifiedCost = card.BaseElementsCost;
         var isModified = false;
         foreach (var item in state.IterateHookListeners())
-        {
             if (item is IModifyElementsCost runesmithModel)
                 isModified |= runesmithModel.TryModifyElementsCost(card, hookModifiedCost, out hookModifiedCost);
-        }
 
         return isModified;
     }

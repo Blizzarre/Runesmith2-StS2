@@ -11,16 +11,28 @@ using Runesmith2.Runesmith2Code.Utils;
 namespace Runesmith2.Runesmith2Code.Nodes;
 
 [GlobalClass]
-public partial class NEnhanceTab : TextureRect
+public partial class NEnhanceTabContainer : Control
 {
+    // TODO refactor this to Font color utils class
     private static readonly (Color, Color, Color) FontColor = (new Color("f4e8c7"), new Color("00000030"),
         new Color("554c36"));
+
+    private static readonly (Color, Color, Color) StasisFontColor = (new Color("cef2f2"), new Color("00000030"),
+        new Color("303a55"));
+
+    private static readonly Vector3 BlueHsv = new(0.478f, 1.574f, 1.0f);
+
+    private ShaderMaterial _hsv;
+
+    private TextureRect _enhanceTab;
+
+    private TextureRect _stasisOverlay;
 
     private MegaLabel? _enhanceLabel;
 
     public NCard? NCard { get; private set; }
 
-    public NEnhanceTab WithData(NCard nCard)
+    public NEnhanceTabContainer WithData(NCard nCard)
     {
         NCard = nCard;
 
@@ -32,6 +44,13 @@ public partial class NEnhanceTab : TextureRect
         SetAnchorsPreset(LayoutPreset.Center, true);
         Size = new Vector2(162, 40);
         Position = new Vector2(-81, -171);
+
+        _enhanceTab = GetNode<TextureRect>("%EnhanceTab");
+        _enhanceTab.Visible = false;
+        _hsv = (ShaderMaterial)_enhanceTab.Material;
+
+        _stasisOverlay = GetNode<TextureRect>("%StasisOverlay");
+        _stasisOverlay.Visible = false;
 
         if (_enhanceLabel != null) return;
         _enhanceLabel = new MegaLabel();
@@ -51,6 +70,8 @@ public partial class NEnhanceTab : TextureRect
         _enhanceLabel.AddThemeFontOverride("font", BaseResourceIndex.FontKreonRegularSpaceOne);
         _enhanceLabel.Text = "";
 
+        _enhanceLabel.UseParentMaterial = true;
+
         AddChild(_enhanceLabel);
     }
 
@@ -61,26 +82,53 @@ public partial class NEnhanceTab : TextureRect
 
     public void UpdateEnhanceVisuals()
     {
-        // TODO vfx
         if (NCard?._model != null)
         {
             var modifier = NCard._model.GetCardModelModifier();
+
             if (modifier.Enhanced > 0)
             {
-                if (!Visible) Visible = true;
+                if (!_enhanceTab.Visible) _enhanceTab.Visible = true;
                 var locString = RunesmithHoverTipFactory.StaticBanner(RunesmithHoverTip.Enhanced,
                     new DynamicVar("Amount", modifier.Enhanced));
                 _enhanceLabel?.SetTextAutoSize(locString.GetFormattedText());
-                return;
             }
+            else
+            {
+                _enhanceTab.Visible = false;
+                _enhanceLabel?.Text = "";
+            }
+
+            if (modifier.Stasis)
+            {
+                UpdateShaderHsv(BlueHsv);
+                _enhanceLabel?.AddThemeColorOverride(ThemeConstants.Label.FontColor, StasisFontColor.Item1);
+                _enhanceLabel?.AddThemeColorOverride(ThemeConstants.Label.FontOutlineColor, StasisFontColor.Item3);
+                _stasisOverlay.Visible = true;
+            }
+            else
+            {
+                UpdateShaderHsv(Vector3.One);
+                _enhanceLabel?.AddThemeColorOverride(ThemeConstants.Label.FontColor, FontColor.Item1);
+                _enhanceLabel?.AddThemeColorOverride(ThemeConstants.Label.FontOutlineColor, FontColor.Item3);
+                _stasisOverlay.Visible = false;
+            }
+
+            return;
         }
 
         Visible = false;
-        if (_enhanceLabel != null) _enhanceLabel.Text = "";
+    }
+
+    private void UpdateShaderHsv(Vector3 vec)
+    {
+        _hsv.SetShaderParameter("h", vec.X);
+        _hsv.SetShaderParameter("s", vec.Y);
+        _hsv.SetShaderParameter("v", vec.Z);
     }
 
     public void OnStasisChanged()
     {
-        // TODO
+        UpdateEnhanceVisuals();
     }
 }

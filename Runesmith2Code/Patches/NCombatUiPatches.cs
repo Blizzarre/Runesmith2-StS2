@@ -8,10 +8,10 @@ using Runesmith2.Runesmith2Code.Field;
 namespace Runesmith2.Runesmith2Code.Patches;
 
 [HarmonyPatch(typeof(NCombatUi), nameof(NCombatUi.Activate))]
-class NCombatUiPatches
+internal class NCombatUiPatches
 {
     [HarmonyPostfix]
-    static void Postfix(NCombatUi __instance, CombatState state)
+    private static void Postfix(NCombatUi __instance, CombatState state)
     {
         var elementsCounter = RunesmithNode.NElementsCounter[__instance];
         if (elementsCounter == null) return;

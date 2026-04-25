@@ -52,6 +52,29 @@
       ]
     },
     {
+      "id": "rune",
+      "markers": [
+        "RuneModel"
+      ],
+      "fields": [
+        {
+          "name": "title",
+          "file": "runes.json",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "file": "runes.json",
+          "optional": false
+        },
+        {
+          "name": "smartDescription",
+          "file": "runes.json",
+          "optional": false
+        }
+      ]
+    },
+    {
       "id": "character",
       "markers": [
         "CustomCharacterModel"

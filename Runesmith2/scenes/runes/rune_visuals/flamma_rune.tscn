@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://cj58dq0utoowu"]
 
-[ext_resource type="Texture2D" uid="uid://b3202jrpupt1q" path="res://Runesmith2/images/runes/Firestone2.png" id="1_nonrh"]
+[ext_resource type="Texture2D" uid="uid://cp1d5hob4cn3n" path="res://Runesmith2/images/runes/flamma_rune.png" id="1_eahpl"]
 
 [node name="FlammaRune" type="Node2D"]
 
-[node name="Firestone2" type="Sprite2D" parent="."]
+[node name="Flamma" type="Sprite2D" parent="."]
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("1_nonrh")
+texture = ExtResource("1_eahpl")

@@ -17,8 +17,12 @@ namespace Runesmith2.Runesmith2Code.Nodes.Runes;
 [GlobalClass]
 public partial class NRune : NClickableControl
 {
+    // TODO refactor this to Font color utils class
     public static readonly (Color, Color, Color) DefaultFontColor =
         (new Color("fff6e2"), new Color("00000040"), new Color("333333e6"));
+    
+    public static readonly (Color, Color, Color) BlueFontColor =
+        (new Color("b7d4f2"), new Color("00000040"), new Color("283252e6"));
 
     public static readonly (Color, Color, Color) BreakFontColor = (new Color("5effff"), new Color("00000040"),
         new Color("143652e6"));
@@ -98,10 +102,7 @@ public partial class NRune : NClickableControl
         _flashParticle = GetNode<CpuParticles2D>("%Flash");
         _chargePanel = GetNode<Panel>("%ChargePanel");
         _chargeCross = GetNode<HSeparator>("%ChargeCross");
-        for (int i = 1; i < 9; i++)
-        {
-            _chargeSeparators.Add(GetNode<VSeparator>($"%Separator{i}"));
-        }
+        for (var i = 1; i < 9; i++) _chargeSeparators.Add(GetNode<VSeparator>($"%Separator{i}"));
 
         _chargePanel.Position = new Vector2(0, _chargePanel.Position.Y);
         _chargePanel.Size = new Vector2(0, _chargePanel.Size.Y);
@@ -131,15 +132,9 @@ public partial class NRune : NClickableControl
         _selectionReticle.Position = new Vector2(-45, -45);
         _selectionReticle.PivotOffset = new Vector2(45, 45);
 
-        if (Model == null)
-        {
-            CreateTween().TweenProperty(_outlineGroup, "scale", Vector2.One, 0.25).From(Vector2.Zero);
-        }
+        if (Model == null) CreateTween().TweenProperty(_outlineGroup, "scale", Vector2.One, 0.25).From(Vector2.Zero);
 
-        if (_isLocal)
-        {
-            Scale *= 0.85f;
-        }
+        if (_isLocal) Scale *= 0.85f;
 
         UpdateVisuals(false);
     }
@@ -194,10 +189,7 @@ public partial class NRune : NClickableControl
 
     public void UpdateVisuals(bool isBreaking)
     {
-        if (!IsNodeReady() || !CombatManager.Instance.IsInProgress)
-        {
-            return;
-        }
+        if (!IsNodeReady() || !CombatManager.Instance.IsInProgress) return;
 
         if (Model == null)
         {
@@ -227,10 +219,7 @@ public partial class NRune : NClickableControl
         _outlineGroup.Visible = false;
         _chargePanel.Visible = _isLocal;
         _labelContainer.Visible = _isLocal;
-        if (!_isLocal)
-        {
-            Modulate = Model.DarkenedColor;
-        }
+        if (!_isLocal) Modulate = Model.DarkenedColor;
 
         if (!isBreaking)
         {
@@ -296,10 +285,7 @@ public partial class NRune : NClickableControl
         tween.Parallel().TweenProperty(_chargePanel, "position:x", -panelWidth / 2, 0.25)
             .FromCurrent().SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
 
-        for (var i = 1; i < 9; i++)
-        {
-            _chargeSeparators[i - 1].Visible = i < charge;
-        }
+        for (var i = 1; i < 9; i++) _chargeSeparators[i - 1].Visible = i < charge;
     }
 
     // NOTE: Only use flash to show the next empty Rune slot after the number of active Runes changed.
@@ -321,20 +307,14 @@ public partial class NRune : NClickableControl
             nHoverTipSet.SetFollowOwner();
             _labelContainer.Visible = true;
             Modulate = Colors.White;
-            if (NControllerManager.Instance.IsUsingController)
-            {
-                _selectionReticle.OnSelect();
-            }
+            if (NControllerManager.Instance.IsUsingController) _selectionReticle.OnSelect();
         }
     }
 
     protected override void OnUnfocus()
     {
         _labelContainer.Visible = _isLocal;
-        if (Model != null)
-        {
-            Modulate = (_isLocal ? Colors.White : Model.DarkenedColor);
-        }
+        if (Model != null) Modulate = _isLocal ? Colors.White : Model.DarkenedColor;
 
         NHoverTipSet.Remove(_bounds);
         _selectionReticle.OnDeselect();

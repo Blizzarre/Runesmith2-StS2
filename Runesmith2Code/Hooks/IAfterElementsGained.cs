@@ -7,5 +7,6 @@ namespace Runesmith2.Runesmith2Code.Hooks;
 
 public interface IAfterElementsGained
 {
-    public Task AfterElementsGained(CombatState combatState, Elements amount, Player player, CardPlay? cardPlay = null);
+    public Task AfterElementsGained(ICombatState combatState, Elements amount, Player player,
+        CardPlay? cardPlay = null);
 }

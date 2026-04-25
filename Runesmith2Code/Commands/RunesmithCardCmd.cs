@@ -17,10 +17,7 @@ public static class RunesmithCardCmd
     {
         if (!CombatManager.Instance.IsOverOrEnding)
         {
-            if (!targetCard.IsEnhanceable())
-            {
-                throw new InvalidOperationException($"Cannot enhance {targetCard.Id}.");
-            }
+            if (!targetCard.IsEnhanceable()) throw new InvalidOperationException($"Cannot enhance {targetCard.Id}.");
 
             var combatState = targetCard.CombatState ?? targetCard.Owner.Creature.CombatState;
             // TODO Consider adding history for cards enhanced.
@@ -39,9 +36,17 @@ public static class RunesmithCardCmd
     {
         var randomCards = new List<CardModel>(cards).StableShuffle(rng);
         cardCount = Math.Min(cardCount, randomCards.Count);
-        for (var i = 0; i < cardCount; i++)
-        {
-            await Enhance(choiceContext, player, randomCards[i], null, enhanceBy);
-        }
+        for (var i = 0; i < cardCount; i++) await Enhance(choiceContext, player, randomCards[i], null, enhanceBy);
+    }
+
+    public static bool Stasis(CardModel targetCard)
+    {
+        if (CombatManager.Instance.IsOverOrEnding) return false;
+        if (!targetCard.IsEnhanceable()) throw new InvalidOperationException($"Cannot enhance {targetCard.Id}.");
+
+        if (targetCard.IsStasis()) return false;
+
+        targetCard.SetStasis(true);
+        return true;
     }
 }

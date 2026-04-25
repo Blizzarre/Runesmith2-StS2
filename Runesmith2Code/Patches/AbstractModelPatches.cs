@@ -6,7 +6,7 @@ using Runesmith2.Runesmith2Code.Field;
 namespace Runesmith2.Runesmith2Code.Patches;
 
 [HarmonyPatch(typeof(AbstractModel), nameof(AbstractModel.MutableClone))]
-class AbstractModelMutableClonePatch
+internal class AbstractModelMutableClonePatch
 {
     private static void CloneSpireField(AbstractModel src, AbstractModel dest)
     {
@@ -17,7 +17,7 @@ class AbstractModelMutableClonePatch
     }
 
     [HarmonyTranspiler]
-    static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    private static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return new InstructionPatcher(instructions).Match(new InstructionMatcher()
             .ldloc_0()

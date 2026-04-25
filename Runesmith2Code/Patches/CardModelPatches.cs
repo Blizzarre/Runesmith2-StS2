@@ -13,63 +13,53 @@ using Runesmith2.Runesmith2Code.Field;
 namespace Runesmith2.Runesmith2Code.Patches;
 
 [HarmonyPatch(typeof(CardModel), "AfterCloned")]
-class CardModelAfterClonedPatch
+internal class CardModelAfterClonedPatch
 {
     [HarmonyPostfix]
-    static void Postfix(CardModel __instance)
+    private static void Postfix(CardModel __instance)
     {
         RunesmithField.Modifier[__instance]?.ClearFlags();
     }
 }
 
 [HarmonyPatch(typeof(CardModel), nameof(CardModel.SetToFreeThisTurn))]
-class CardModelSetToFreeThisTurnPatch
+internal class CardModelSetToFreeThisTurnPatch
 {
     [HarmonyPostfix]
-    static void Postfix(CardModel __instance)
+    private static void Postfix(CardModel __instance)
     {
-        if (__instance is Runesmith2Card card)
-        {
-            card.SetElementsCostThisTurn(0);
-        }
+        if (__instance is Runesmith2Card card) card.SetElementsCostThisTurn(0);
     }
 }
 
 [HarmonyPatch(typeof(CardModel), nameof(CardModel.SetToFreeThisCombat))]
-class CardModelSetToFreeThisCombatPatch
+internal class CardModelSetToFreeThisCombatPatch
 {
     [HarmonyPostfix]
-    static void Postfix(CardModel __instance)
+    private static void Postfix(CardModel __instance)
     {
-        if (__instance is Runesmith2Card card)
-        {
-            card.SetElementsCostThisCombat(0);
-        }
+        if (__instance is Runesmith2Card card) card.SetElementsCostThisCombat(0);
     }
 }
 
 [HarmonyPatch(typeof(CardModel), nameof(CardModel.EndOfTurnCleanup))]
-class CardModelEndOfTurnCleanupPatch
+internal class CardModelEndOfTurnCleanupPatch
 {
     [HarmonyPostfix]
-    static void Postfix(CardModel __instance)
+    private static void Postfix(CardModel __instance)
     {
         if (__instance is Runesmith2Card card)
-        {
             if (card._temporaryElementsCosts.RemoveAll(c => c.ClearsWhenTurnEnds) > 0)
-            {
                 card.InvokeElementsCostChanged();
-            }
-        }
     }
 }
 
 // TODO check functionality later
 [HarmonyPatch(typeof(CardModel), nameof(CardModel.SpendResources))]
-class CardModelSpendResourcesPatch
+internal class CardModelSpendResourcesPatch
 {
     [HarmonyPostfix]
-    static async Task Postfix(Task results, CardModel __instance)
+    private static async Task Postfix(Task results, CardModel __instance)
     {
         await results;
         if (__instance is not Runesmith2Card card) return;
@@ -80,10 +70,10 @@ class CardModelSpendResourcesPatch
 }
 
 [HarmonyPatch(typeof(CardModel), nameof(CardModel.OnPlayWrapper), MethodType.Async)]
-class CardModelOnPlayWrapperPatch
+internal class CardModelOnPlayWrapperPatch
 {
     [HarmonyTranspiler]
-    static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    private static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return new InstructionPatcher(instructions)
             .Match(new InstructionMatcher()
@@ -96,28 +86,24 @@ class CardModelOnPlayWrapperPatch
             ]);
     }
 
-    static void ElementsCostChanged(CardModel instance)
+    private static void ElementsCostChanged(CardModel instance)
     {
         if (instance is not Runesmith2Card card) return;
-        if (card._temporaryElementsCosts.RemoveAll(c => c.ClearsWhenCardIsPlayed) > 0)
-        {
-            card.InvokeElementsCostChanged();
-        }
+        if (card._temporaryElementsCosts.RemoveAll(c => c.ClearsWhenCardIsPlayed) > 0) card.InvokeElementsCostChanged();
     }
 }
 
 [HarmonyPatch(typeof(CardModel), nameof(CardModel.CostsEnergyOrStars))]
-class CardModelCostsEnergyOrStarPatch
+internal class CardModelCostsEnergyOrStarPatch
 {
     [HarmonyPostfix]
-    static void Postfix(ref bool __result, bool includeGlobalModifiers, CardModel __instance)
+    private static void Postfix(ref bool __result, bool includeGlobalModifiers, CardModel __instance)
     {
         if (__result) return;
         if (__instance is not Runesmith2Card card) return;
         if (includeGlobalModifiers)
-        {
-            if (card.GetElementsCostWithModifiers().Total > 0) __result = true;
-        }
+            if (card.GetElementsCostWithModifiers().Total > 0)
+                __result = true;
 
         if (card.CurrentElementsCost.Total > 0) __result = true;
     }
@@ -125,10 +111,10 @@ class CardModelCostsEnergyOrStarPatch
 
 [HarmonyPatch(typeof(CardModel), nameof(CardModel.CanPlay), [typeof(UnplayableReason), typeof(AbstractModel)],
     [ArgumentType.Out, ArgumentType.Out])]
-class CardModelCanPlayPatch
+internal class CardModelCanPlayPatch
 {
     [HarmonyTranspiler]
-    static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    private static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         // Patch before return
         return new InstructionPatcher(instructions).Match(new InstructionMatcher()
@@ -150,13 +136,10 @@ class CardModelCanPlayPatch
     // Only override the preventer if the 'star' cost is too high when it's a runesmith card
     // This also override the preventer that's from hooks, but it shouldn't matter when UnplayableReason.StarCostTooHigh
     // is checked and returned first when getting loc string.
-    static void GetPreventerModel(CardModel card, UnplayableReason reason, ref AbstractModel? preventer)
+    private static void GetPreventerModel(CardModel card, UnplayableReason reason, ref AbstractModel? preventer)
     {
         if (reason == UnplayableReason.None) return;
         if (card is not Runesmith2Card runesmith2Card) return;
-        if (reason.HasFlag(UnplayableReason.StarCostTooHigh))
-        {
-            preventer = runesmith2Card;
-        }
+        if (reason.HasFlag(UnplayableReason.StarCostTooHigh)) preventer = runesmith2Card;
     }
 }

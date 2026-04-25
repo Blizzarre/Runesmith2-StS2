@@ -21,7 +21,7 @@ public partial class MainFile : Node
         harmony.PatchAll();
 
         Godot.Bridge.ScriptManagerBridge.LookupScriptsInAssembly(Assembly.GetExecutingAssembly());
-        
+
         RunesmithSubscriber.Subscribe();
     }
 }

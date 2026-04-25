@@ -29,7 +29,7 @@ public static class RunesmithNode
         return elementsIcon;
     });
 
-    public static readonly SpireField<NCard, NEnhanceTab> NEnhanceTab = new(() => null);
+    public static readonly SpireField<NCard, NEnhanceTabContainer> NEnhanceTab = new(() => null);
 
     public static readonly SpireField<NCreature, NRuneManager> NRuneManager = new(() => null);
 }

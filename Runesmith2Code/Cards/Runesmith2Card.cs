@@ -113,10 +113,7 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
     {
         get
         {
-            if (!IsMutable)
-            {
-                return CanonicalElementsCost;
-            }
+            if (!IsMutable) return CanonicalElementsCost;
 
             if (_elementsCostSet) return field;
 
@@ -137,7 +134,7 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
         get
         {
             var tempCost = TemporaryElementsCost?.Cost;
-            if (!tempCost.HasValue || tempCost == 0 && BaseElementsCost.Total < 0) return BaseElementsCost;
+            if (!tempCost.HasValue || (tempCost == 0 && BaseElementsCost.Total < 0)) return BaseElementsCost;
             return new Elements(tempCost.Value);
         }
     }
@@ -188,9 +185,7 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
     public Elements GetElementsCostWithModifiers()
     {
         if (Pile != null && Pile.IsCombatPile && CombatState != null)
-        {
             return RunesmithHook.ModifyElementsCost(CombatState, this, CurrentElementsCost);
-        }
 
         return CurrentElementsCost;
     }

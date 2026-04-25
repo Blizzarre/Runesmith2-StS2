@@ -17,22 +17,14 @@ public class GrindstonePower : Runesmith2Power
         if (Owner.Player == null) return;
         var card = cardPlay.Card;
         if (card.IsUpgradable)
-        {
             CardCmd.Upgrade(card);
-        }
-        else if (card.IsEnhanceable())
-        {
-            await RunesmithCardCmd.Enhance(choiceContext, Owner.Player, card, cardPlay, 1);
-        }
+        else if (card.IsEnhanceable()) await RunesmithCardCmd.Enhance(choiceContext, Owner.Player, card, cardPlay, 1);
     }
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
     {
-        if (side == CombatSide.Player)
-        {
-            await PowerCmd.Decrement(this);
-        }
+        if (side == CombatSide.Player) await PowerCmd.Decrement(this);
     }
 }

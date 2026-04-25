@@ -28,9 +28,6 @@ public class HammerSwing : Runesmith2Card
 
         var drawnCards = await CommonActions.Draw(this, choiceContext);
 
-        foreach (var card in drawnCards.Where(c => c.IsUpgradable))
-        {
-            CardCmd.Upgrade(card);
-        }
+        foreach (var card in drawnCards.Where(c => c.IsUpgradable)) CardCmd.Upgrade(card);
     }
 }

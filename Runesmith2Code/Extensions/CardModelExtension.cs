@@ -10,21 +10,13 @@ public static class CardModelExtension
 {
     public static bool IsEnhanceable(this CardModel cardModel)
     {
-        if (cardModel.Type == CardType.Attack)
-        {
-            return true;
-        }
+        if (cardModel.Type == CardType.Attack) return true;
 
-        if (cardModel.GainsBlock)
-        {
-            return true;
-        }
+        if (cardModel.GainsBlock) return true;
 
         if (cardModel.DynamicVars.ContainsKey(PotencyVar.defaultName) &&
             cardModel.DynamicVars[PotencyVar.defaultName].BaseValue > 0)
-        {
             return true;
-        }
 
         return false;
     }
@@ -134,9 +126,7 @@ public static class CardModelExtension
     public static decimal GetEnhanceMultiplier(this CardModel cardModel)
     {
         if (cardModel is Runesmith2Card runesmith2Card)
-        {
             return 0.5m * cardModel.GetCardModelModifier().Enhanced * runesmith2Card.EnhanceMultiplier;
-        }
 
         return 0.5m * cardModel.GetCardModelModifier().Enhanced;
     }

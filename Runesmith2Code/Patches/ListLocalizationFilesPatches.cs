@@ -5,12 +5,12 @@ namespace Runesmith2.Runesmith2Code.Patches;
 
 // Code mostly taken from https://github.com/lamali292/Downfall/blob/main/Code/Patches/ListLocalizationFilesPatch.cs
 [HarmonyPatch(typeof(LocManager), "ListLocalizationFiles")]
-static class ListLocalizationFilesPatches
+internal static class ListLocalizationFilesPatches
 {
     private static readonly string[] ExtraTables = ["runes.json"];
 
     [HarmonyPostfix]
-    static void Postfix(ref IEnumerable<string> __result)
+    private static void Postfix(ref IEnumerable<string> __result)
     {
         var result = __result;
         var enumerable = result as string[] ?? result.ToArray();
@@ -19,11 +19,11 @@ static class ListLocalizationFilesPatches
 }
 
 [HarmonyPatch(typeof(LocManager), "LoadTable")]
-static class LoadTablePatch
+internal static class LoadTablePatch
 {
     private static readonly string[] ExtraTables = ["runes.json"];
 
-    static bool Prefix(string path, ref Dictionary<string, string> __result)
+    private static bool Prefix(string path, ref Dictionary<string, string> __result)
     {
         if (Godot.FileAccess.FileExists(path)) return true;
         if (!ExtraTables.Any(path.Contains)) return true;

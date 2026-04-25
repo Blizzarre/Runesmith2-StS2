@@ -19,10 +19,6 @@ public class FlammaRune : RuneModel
     public override int ChargeVal { get; set; } = 2;
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.EndTurn;
-    public override (bool, bool) ShowTopLabel => (false, false);
-    public override (decimal, decimal) TopValue => (0, 0);
-    public override (bool, bool) ShowBottomLabel => (true, true);
-    public override (decimal, decimal) BottomValue => (PassiveVal, BreakVal);
 
     public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Flamma>();
 
@@ -48,10 +44,7 @@ public class FlammaRune : RuneModel
     private async Task ApplyFireDamage(PlayerChoiceContext choiceContext, decimal amount)
     {
         var list = CombatState.GetOpponentsOf(Owner.Creature).Where(e => e.IsHittable).ToList();
-        if (list.Count == 0)
-        {
-            return;
-        }
+        if (list.Count == 0) return;
 
         var target = Owner.RunState.Rng.CombatTargets.NextItem(list);
         if (target != null)

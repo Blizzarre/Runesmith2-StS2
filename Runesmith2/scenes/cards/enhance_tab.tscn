@@ -1,22 +1,67 @@
-[gd_scene load_steps=3 format=3 uid="uid://baxtoeb3p4qk1"]
+[gd_scene load_steps=9 format=3 uid="uid://baxtoeb3p4qk1"]
 
+[ext_resource type="Shader" uid="uid://badwhyucvwyha" path="res://Runesmith2/shaders/hsv.gdshader" id="1_2d0lk"]
+[ext_resource type="Script" uid="uid://cdux02e1cac2r" path="res://Runesmith2Code/Nodes/NEnhanceTabContainer.cs" id="1_8ael8"]
 [ext_resource type="Texture2D" uid="uid://da8srqav3xfks" path="res://Runesmith2/images/cardui/enhance_tab.png" id="1_k6wlj"]
-[ext_resource type="Script" uid="uid://cdux02e1cac2r" path="res://Runesmith2Code/Nodes/NEnhanceTab.cs" id="2_38s0a"]
+[ext_resource type="Shader" uid="uid://c8ln3ymr7xp43" path="res://Runesmith2/shaders/displacement_shader.gdshader" id="4_8ael8"]
+[ext_resource type="Texture2D" uid="uid://3afdilsl7gmu" path="res://Runesmith2/images/vfx/noises.png" id="5_17dnw"]
+[ext_resource type="Texture2D" uid="uid://v7qrsa67muen" path="res://Runesmith2/images/cardui/stasis_overlay.png" id="6_jk5k3"]
 
-[node name="EnhanceTab" type="TextureRect"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ugspq"]
+resource_local_to_scene = true
+shader = ExtResource("1_2d0lk")
+shader_parameter/h = 1.0
+shader_parameter/s = 1.0
+shader_parameter/v = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sjq2u"]
+resource_local_to_scene = true
+shader = ExtResource("4_8ael8")
+shader_parameter/shaking = true
+shader_parameter/amplitude = 3.735
+shader_parameter/noise_scale_x = 2.29
+shader_parameter/noise_speed_x = 1.93
+shader_parameter/noise_scale_y = 3.375
+shader_parameter/noise_speed_y = 2.895
+shader_parameter/noise = ExtResource("5_17dnw")
+
+[node name="EnhanceTabContainer" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -81.0
+offset_top = -171.0
+offset_right = 81.0
+offset_bottom = -131.0
+script = ExtResource("1_8ael8")
+
+[node name="EnhanceTab" type="TextureRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_ugspq")
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -657.0
-offset_top = -495.0
-offset_right = -495.0
-offset_bottom = -455.0
+offset_left = -81.0
+offset_top = -20.0
+offset_right = 81.0
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("1_k6wlj")
 expand_mode = 1
 stretch_mode = 4
-script = ExtResource("2_38s0a")
+
+[node name="StasisOverlay" type="TextureRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_sjq2u")
+layout_mode = 0
+offset_left = -44.0
+offset_top = 8.0
+offset_right = 206.0
+offset_bottom = 42.0
+texture = ExtResource("6_jk5k3")
+expand_mode = 1
+stretch_mode = 4

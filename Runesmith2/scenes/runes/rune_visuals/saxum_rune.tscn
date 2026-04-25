@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://o0ksrv564b8c"]
+
+[ext_resource type="Texture2D" uid="uid://phl5vrhvq3ik" path="res://Runesmith2/images/runes/icons/saxum_rune.png" id="1_0b3an"]
+
+[node name="SaxumRune" type="Node2D"]
+
+[node name="Saxum" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_0b3an")

@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
+using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Hooks;
@@ -15,6 +16,13 @@ namespace Runesmith2.Runesmith2Code.Commands;
 
 public static class RuneCmd
 {
+    public static async Task Craft<T>(PlayerChoiceContext choiceContext, Player player, CardPlay? cardPlay, CardModel card) where T : RuneModel
+    {
+        var charge = card.DynamicVars.TryGetValue(ChargeVar.defaultName, out var var1) ? var1.IntValue : 0;
+        var potency = card.DynamicVars.TryGetValue(PotencyVar.defaultName, out var var2) ? var2.IntValue : 0;
+        await Craft(choiceContext, ModelDb.Get<T>().ToMutable(), player, cardPlay, charge, potency);
+    }
+    
     public static async Task Craft<T>(PlayerChoiceContext choiceContext, Player player, CardPlay? cardPlay,
         decimal charge, decimal potency = 0) where T : RuneModel
     {
@@ -32,9 +40,9 @@ public static class RuneCmd
             rune.AssertMutable();
 
             // TODO Modify rune charge and potency
-            decimal modifiedPotency = potency;
+            var modifiedPotency = potency;
             modifiedPotency = RunesmithHook.ModifyPotency(combatState, player, modifiedPotency, ValueProp.Move,
-                cardPlay.Card, cardPlay, out _);
+                cardPlay?.Card, cardPlay, out _);
             // TODO after modifying charge/potency
 
             rune.ChargeVal = (int)Math.Max(0, charge);
@@ -68,10 +76,7 @@ public static class RuneCmd
 
     public static void Charge(PlayerChoiceContext choiceContext, RuneModel rune, int chargeAmount)
     {
-        if (!CombatManager.Instance.IsOverOrEnding)
-        {
-            rune.ModifyCharge(chargeAmount);
-        }
+        if (!CombatManager.Instance.IsOverOrEnding) rune.ModifyCharge(chargeAmount);
     }
 
     public static async Task Passive(PlayerChoiceContext choiceContext, RuneModel? rune)
@@ -84,7 +89,8 @@ public static class RuneCmd
         }
     }
 
-    public static async Task<RuneModel?> BreakOldest(PlayerChoiceContext choiceContext, Player player, bool dequeue = true)
+    public static async Task<RuneModel?> BreakOldest(PlayerChoiceContext choiceContext, Player player,
+        bool dequeue = true)
     {
         var runeQueue = player.PlayerCombatState?.RuneQueue();
         if (runeQueue == null || !runeQueue.HasAny()) return null;
@@ -95,7 +101,8 @@ public static class RuneCmd
         return rune;
     }
 
-    public static async Task Break(PlayerChoiceContext choiceContext, Player player, RuneModel? brokenRune, bool dequeue = true)
+    public static async Task Break(PlayerChoiceContext choiceContext, Player player, RuneModel? brokenRune,
+        bool dequeue = true)
     {
         if (CombatManager.Instance.IsOverOrEnding || brokenRune == null) return;
         var runeQueue = player.PlayerCombatState?.RuneQueue();
@@ -107,16 +114,13 @@ public static class RuneCmd
             removed = runeQueue.Remove(brokenRune);
             NCombatRoom.Instance?.GetCreatureNode(player.Creature)?.RuneManager()?.BreakRuneAnim(brokenRune);
         }
+
         choiceContext.PushModel(brokenRune);
         await brokenRune.Break(choiceContext);
         choiceContext.PopModel(brokenRune);
         if (player.Creature.CombatState != null)
-        {
             // TODO consider hook for after rune broken
             if (removed)
-            {
                 brokenRune.RemoveInternal();
-            }
-        }
     }
 }

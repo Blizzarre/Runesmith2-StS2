@@ -51,10 +51,7 @@ public static class RunesmithHoverTipFactory
     {
         var text = tip.GetType().GetPrefix() + StringHelper.Slugify(tip.ToString());
         var locString = L10NStatic(text + ".banner");
-        foreach (var dynamicVar in vars)
-        {
-            locString.Add(dynamicVar);
-        }
+        foreach (var dynamicVar in vars) locString.Add(dynamicVar);
 
         return locString;
     }

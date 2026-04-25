@@ -27,7 +27,6 @@ public class Flamma : Runesmith2RecipeCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        await RuneCmd.Craft<FlammaRune>(choiceContext, Owner, cardPlay, DynamicVars[ChargeVar.defaultName].BaseValue,
-            DynamicVars[PotencyVar.defaultName].BaseValue);
+        await RuneCmd.Craft<FlammaRune>(choiceContext, Owner, cardPlay, this);
     }
 }

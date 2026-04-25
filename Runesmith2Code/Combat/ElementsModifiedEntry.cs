@@ -18,7 +18,7 @@ public class ElementsModifiedEntry(
     {
         get
         {
-            var left = $"{Actor.Player.Character.Id.Entry} {((Amount.Total < 0) ? "lost" : "gained")} ";
+            var left = $"{Actor.Player.Character.Id.Entry} {(Amount.Total < 0 ? "lost" : "gained")} ";
 
             string[] arr =
             [

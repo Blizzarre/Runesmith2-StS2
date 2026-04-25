@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://odf8oym6ev6o"]
+
+[ext_resource type="Texture2D" uid="uid://6ne6nu633qt2" path="res://Runesmith2/images/runes/magma_rune.png" id="1_gb8fd"]
+
+[node name="MagmaRune" type="Node2D"]
+
+[node name="Magma" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_gb8fd")

@@ -8,10 +8,11 @@ namespace Runesmith2.Runesmith2Code.Extensions;
 
 public static class CombatHistoryExtension
 {
-    public static void ElementsModified(this CombatHistory combatHistory, CombatState combatState, Elements amount,
+    public static void ElementsModified(this CombatHistory combatHistory, ICombatState combatState, Elements amount,
         Player player)
     {
-        combatHistory.Add(new ElementsModifiedEntry(amount, player, combatState.RoundNumber, combatState.CurrentSide,
+        combatHistory.Add(combatState, new ElementsModifiedEntry(amount, player, combatState.RoundNumber,
+            combatState.CurrentSide,
             combatHistory));
     }
 

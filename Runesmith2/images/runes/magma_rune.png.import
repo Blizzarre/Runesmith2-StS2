@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3202jrpupt1q"
-path="res://.godot/imported/Firestone2.png-14706d796b1c0c5625831ebb1a0cf6ff.ctex"
+uid="uid://6ne6nu633qt2"
+path="res://.godot/imported/magma_rune.png-53e0d2d0c4b5646bebaa3175f7f77c53.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Runesmith2/images/runes/Firestone2.png"
-dest_files=["res://.godot/imported/Firestone2.png-14706d796b1c0c5625831ebb1a0cf6ff.ctex"]
+source_file="res://Runesmith2/images/runes/magma_rune.png"
+dest_files=["res://.godot/imported/magma_rune.png-53e0d2d0c4b5646bebaa3175f7f77c53.ctex"]
 
 [params]
 

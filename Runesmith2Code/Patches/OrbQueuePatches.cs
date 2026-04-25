@@ -9,10 +9,10 @@ namespace Runesmith2.Runesmith2Code.Patches;
 
 // Ties the RuneQueue start and end turn triggers to the OrbQueue's triggers
 [HarmonyPatch(typeof(OrbQueue), nameof(OrbQueue.AfterTurnStart))]
-class OrbQueueAfterTurnStartPatch
+internal class OrbQueueAfterTurnStartPatch
 {
     [HarmonyPostfix]
-    static async Task Postfix(Task results, PlayerChoiceContext choiceContext, OrbQueue __instance)
+    private static async Task Postfix(Task results, PlayerChoiceContext choiceContext, OrbQueue __instance)
     {
         await results;
         var playerCombatState = __instance._owner.PlayerCombatState;
@@ -25,10 +25,10 @@ class OrbQueueAfterTurnStartPatch
 }
 
 [HarmonyPatch(typeof(OrbQueue), nameof(OrbQueue.BeforeTurnEnd))]
-class OrbQueueBeforeTurnEndPatch
+internal class OrbQueueBeforeTurnEndPatch
 {
     [HarmonyPostfix]
-    static async Task Postfix(Task results, PlayerChoiceContext choiceContext, OrbQueue __instance)
+    private static async Task Postfix(Task results, PlayerChoiceContext choiceContext, OrbQueue __instance)
     {
         await results;
         var playerCombatState = __instance._owner.PlayerCombatState;

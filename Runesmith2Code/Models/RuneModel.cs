@@ -34,7 +34,11 @@ public abstract class RuneModel : AbstractModel, ICustomModel
 
     public virtual decimal PassiveVal { get; set; }
 
+    public virtual decimal CalculatedPassiveVal => PassiveVal;
+
     public virtual decimal BreakVal => PassiveVal * 2;
+
+    public virtual decimal CalculatedBreakVal => BreakVal;
 
     public virtual int ChargeVal { get; set; }
 
@@ -55,17 +59,17 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public LocString SmartDescription =>
         !HasSmartDescription ? Description : new LocString(LocTable, Id.Entry + ".smartDescription");
 
-    public abstract (bool, bool) ShowTopLabel { get; }
+    public virtual (bool, bool) ShowTopLabel => (false, false);
 
-    public abstract (decimal, decimal) TopValue { get; }
+    public virtual (decimal, decimal) TopValue => (PassiveVal, BreakVal);
 
     public virtual (Color, Color, Color) TopLabelColor => NRune.DefaultFontColor;
 
     public virtual (Color, Color, Color) TopLabelBreakColor => NRune.BreakFontColor;
 
-    public abstract (bool, bool) ShowBottomLabel { get; }
+    public virtual (bool, bool) ShowBottomLabel => (true, true);
 
-    public abstract (decimal, decimal) BottomValue { get; }
+    public virtual (decimal, decimal) BottomValue => (PassiveVal, BreakVal);
 
     public virtual (Color, Color, Color) BottomLabelColor => NRune.DefaultFontColor;
 
@@ -97,7 +101,9 @@ public abstract class RuneModel : AbstractModel, ICustomModel
                 var smartDescription = SmartDescription;
                 smartDescription.Add("energyPrefix", Owner.Character.CardPool.Title);
                 smartDescription.Add("Passive", PassiveVal);
+                smartDescription.Add("CalculatedPassive", CalculatedPassiveVal);
                 smartDescription.Add("Break", BreakVal);
+                smartDescription.Add("CalculatedBreak", CalculatedBreakVal);
                 smartDescription.Add("Charge", ChargeVal);
                 list.Add(RunesmithHoverTipFactory.CreateRuneHoverTip(this, smartDescription));
                 var chargeLocKey = ChargeDepletion switch
@@ -136,7 +142,8 @@ public abstract class RuneModel : AbstractModel, ICustomModel
         }
     }
 
-    [field: AllowNull, MaybeNull]
+    [field: AllowNull]
+    [field: MaybeNull]
     public Player Owner
     {
         get
@@ -148,15 +155,13 @@ public abstract class RuneModel : AbstractModel, ICustomModel
         {
             AssertMutable();
             if (field != null && value != null && value != field)
-            {
                 throw new InvalidOperationException("Rune " + Id.Entry + " already has an owner.");
-            }
 
             field = value;
         }
     }
 
-    public CombatState CombatState => Owner.Creature.CombatState;
+    protected ICombatState CombatState => Owner.Creature.CombatState;
 
     public override bool ShouldReceiveCombatHooks => true;
 
@@ -164,31 +169,22 @@ public abstract class RuneModel : AbstractModel, ICustomModel
 
     protected void PlayPassiveSfx()
     {
-        if (PassiveSfx != "")
-        {
-            SfxCmd.Play(PassiveSfx);
-        }
+        if (PassiveSfx != "") SfxCmd.Play(PassiveSfx);
     }
 
     protected void PlayBreakSfx()
     {
-        if (BreakSfx != "")
-        {
-            SfxCmd.Play(BreakSfx);
-        }
+        if (BreakSfx != "") SfxCmd.Play(BreakSfx);
     }
 
     public void PlayCraftedSfx()
     {
-        if (CraftSfx != "")
-        {
-            SfxCmd.Play(CraftSfx);
-        }
+        if (CraftSfx != "") SfxCmd.Play(CraftSfx);
     }
 
     public Node2D CreateSprite()
     {
-        Node2D node2D = PreloadManager.Cache.GetScene(SpritePath).Instantiate<Node2D>();
+        var node2D = PreloadManager.Cache.GetScene(SpritePath).Instantiate<Node2D>();
         // new MegaSprite(node2D.GetNode("SpineSkeleton")).GetAnimationState().SetAnimation("idle_loop");
         return node2D;
     }
@@ -203,7 +199,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
 
     public void Trigger()
     {
-        this.Triggered?.Invoke();
+        Triggered?.Invoke();
     }
 
     public virtual Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)

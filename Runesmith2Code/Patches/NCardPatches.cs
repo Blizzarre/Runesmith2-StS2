@@ -17,23 +17,24 @@ namespace Runesmith2.Runesmith2Code.Patches;
 // Patch to add enhance and stasis visuals to card display
 // Need to instantiate NEnhanceTab before it get accessed during Ready call because of SubscribeToModel
 [HarmonyPatch(typeof(NCard), nameof(NCard._EnterTree))]
-class NCardEnterTreePatch
+internal class NCardEnterTreePatch
 {
     [HarmonyPrefix]
-    static void Prefix(NCard __instance)
+    private static void Prefix(NCard __instance)
     {
         if (RunesmithNode.NEnhanceTab[__instance] != null) return;
-        var enhanceTab = PreloadManager.Cache.GetScene(RunesmithResource.NEnhanceTabPath).Instantiate<NEnhanceTab>()
+        var enhanceTab = PreloadManager.Cache.GetScene(RunesmithResource.NEnhanceTabPath)
+            .Instantiate<NEnhanceTabContainer>()
             .WithData(__instance);
         RunesmithNode.NEnhanceTab[__instance] = enhanceTab;
     }
 }
 
 [HarmonyPatch(typeof(NCard), nameof(NCard._Ready))]
-class NCardReadyPatch
+internal class NCardReadyPatch
 {
     [HarmonyPostfix]
-    static void Postfix(NCard __instance)
+    private static void Postfix(NCard __instance)
     {
         var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
         if (enhanceTab == null) return;
@@ -45,10 +46,10 @@ class NCardReadyPatch
 }
 
 [HarmonyPatch(typeof(NCard), nameof(NCard.SubscribeToModel))]
-class NCardSubscribePatch
+internal class NCardSubscribePatch
 {
     [HarmonyPrefix]
-    static void Prefix(
+    private static void Prefix(
         NCard __instance, CardModel? model
     )
     {
@@ -61,10 +62,10 @@ class NCardSubscribePatch
 }
 
 [HarmonyPatch(typeof(NCard), nameof(NCard.UnsubscribeFromModel))]
-class NCardUnsubscribePatch
+internal class NCardUnsubscribePatch
 {
     [HarmonyPrefix]
-    static void Prefix(
+    private static void Prefix(
         NCard __instance, CardModel? model
     )
     {
@@ -78,12 +79,11 @@ class NCardUnsubscribePatch
 }
 
 // TODO Implement check for forceUnpoweredPreview?
-
 [HarmonyPatch(typeof(NCard), nameof(NCard.UpdateVisuals))]
-class NCardUpdateVisualsPatch
+internal class NCardUpdateVisualsPatch
 {
     [HarmonyTranspiler]
-    static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    private static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return new InstructionPatcher(instructions).Match(new InstructionMatcher()
             .ldarg_0()
@@ -96,7 +96,7 @@ class NCardUpdateVisualsPatch
         ]);
     }
 
-    static void UpdateRunesmithVisuals(NCard instance, PileType pileType)
+    private static void UpdateRunesmithVisuals(NCard instance, PileType pileType)
     {
         var enhanceTab = RunesmithNode.NEnhanceTab[instance];
         enhanceTab?.UpdateEnhanceVisuals();
@@ -107,10 +107,10 @@ class NCardUpdateVisualsPatch
 }
 
 [HarmonyPatch(typeof(NCard), nameof(NCard.SetPretendCardCanBePlayed))]
-class NCardSetPretendCardCanBePlayedPatch
+internal class NCardSetPretendCardCanBePlayedPatch
 {
     [HarmonyPostfix]
-    static void Postfix(NCard __instance)
+    private static void Postfix(NCard __instance)
     {
         var elementsIcon = RunesmithNode.NElementsIcon[__instance];
         elementsIcon?.UpdateElementsCostVisuals(__instance.DisplayingPile);
@@ -118,14 +118,12 @@ class NCardSetPretendCardCanBePlayedPatch
 }
 
 [HarmonyPatch(typeof(NCard), nameof(NCard.UpdateEnchantmentVisuals))]
-class NCardUpdateEnchantmentVisualsPatch
+internal class NCardUpdateEnchantmentVisualsPatch
 {
     [HarmonyPostfix]
-    static void Postfix(NCard __instance)
+    private static void Postfix(NCard __instance)
     {
         if (__instance.Model is Runesmith2Card { BaseElementsCost.Total: >= 0 })
-        {
             __instance._enchantmentTab.Position = __instance._defaultEnchantmentPosition + Vector2.Down * 20f;
-        }
     }
 }

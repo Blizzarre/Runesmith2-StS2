@@ -21,10 +21,8 @@ public static class RunesmithPlayerCmd
             var finalAmount = RunesmithHook.ModifyElementsGain(combatState, player, amount, out var modifiers);
             await RunesmithHook.AfterModifyingElementsGain(combatState, modifiers);
             if (finalAmount.Total > 0)
-            {
                 // TODO play sfx
                 runesmithCombatState?.GainElements(finalAmount);
-            }
 
             await RunesmithHook.AfterElementsGained(combatState, amount, player, cardPlay);
         }
@@ -32,11 +30,8 @@ public static class RunesmithPlayerCmd
 
     public static Task LoseElements(Elements amount, Player player)
     {
-        if (amount.Total <= 0 || CombatManager.Instance.IsEnding)
-        {
-            return Task.CompletedTask;
-        }
-        
+        if (amount.Total <= 0 || CombatManager.Instance.IsEnding) return Task.CompletedTask;
+
         player.PlayerCombatState?.Runesmith()?.LoseElements(amount);
         return Task.CompletedTask;
     }

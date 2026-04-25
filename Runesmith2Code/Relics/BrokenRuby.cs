@@ -35,18 +35,14 @@ public class BrokenRuby : Runesmith2Relic
     public override async Task AfterRoomEntered(AbstractRoom room)
     {
         if (room is CombatRoom)
-        {
             await RunesmithPlayerCmd.GainElements(Elements.WithIgnis(DynamicVars[IgnisVar.defaultName].IntValue),
                 Owner);
-        }
     }
 
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player)
     {
         if (player == Owner && player.Creature.CombatState!.RoundNumber <= 1)
-        {
             await RunesmithCardCmd.EnhanceRandomCards(choiceContext, Owner, PileType.Hand.GetPile(Owner).Cards,
                 DynamicVars.Cards.IntValue, 1, Owner.RunState.Rng.CombatCardSelection);
-        }
     }
 }

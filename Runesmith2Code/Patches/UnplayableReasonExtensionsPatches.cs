@@ -10,7 +10,7 @@ namespace Runesmith2.Runesmith2Code.Patches;
 public class UnplayableReasonExtensionsGetPlayerDialogueLinePatch
 {
     [HarmonyPrefix]
-    static bool Prefix(ref LocString? __result, UnplayableReason reason, AbstractModel? preventer)
+    private static bool Prefix(ref LocString? __result, UnplayableReason reason, AbstractModel? preventer)
     {
         MainFile.Logger.Info($"GetPlayerDialogueLinePatch {__result} {reason} {preventer}");
         if (reason.HasFlag(UnplayableReason.StarCostTooHigh) && preventer is Runesmith2Card)

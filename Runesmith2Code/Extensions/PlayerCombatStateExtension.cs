@@ -34,20 +34,14 @@ public static class PlayerCombatStateExtension
 
         public void GainElements(Elements amount)
         {
-            if (amount.Total < 0)
-            {
-                throw new ArgumentException("Must not be negative", nameof(amount));
-            }
+            if (amount.Total < 0) throw new ArgumentException("Must not be negative", nameof(amount));
 
             Elements = (Elements + amount).ClampZero();
         }
 
         public void LoseElements(Elements amount)
         {
-            if (amount.Total < 0)
-            {
-                throw new ArgumentException("Must not be negative", nameof(amount));
-            }
+            if (amount.Total < 0) throw new ArgumentException("Must not be negative", nameof(amount));
 
             Elements = (Elements - amount).ClampZero();
         }

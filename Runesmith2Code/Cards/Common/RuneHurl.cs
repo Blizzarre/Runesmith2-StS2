@@ -24,10 +24,7 @@ public class RuneHurl : Runesmith2Card
 
     private bool HasRune()
     {
-        if (IsInCombat)
-        {
-            return Owner.PlayerCombatState?.RuneQueue()?.HasAny() ?? false;
-        }
+        if (IsInCombat) return Owner.PlayerCombatState?.RuneQueue()?.HasAny() ?? false;
 
         return false;
     }

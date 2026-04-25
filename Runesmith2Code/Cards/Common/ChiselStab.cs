@@ -28,6 +28,6 @@ public class ChiselStab : Runesmith2Card
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        await RunesmithPlayerCmd.GainElements(new Elements(DynamicVars[IgnisVar.defaultName].IntValue, 0, 0), Owner, play);
+        await RunesmithPlayerCmd.GainElements(new Elements(this), Owner, play);
     }
 }

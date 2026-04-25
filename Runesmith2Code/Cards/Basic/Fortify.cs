@@ -39,9 +39,7 @@ public class Fortify : Runesmith2Card
             this
         )).FirstOrDefault();
         if (card != null)
-        {
             await RunesmithCardCmd.Enhance(choiceContext, Owner, card, play,
                 DynamicVars[EnhanceByVar.defaultName].IntValue);
-        }
     }
 }

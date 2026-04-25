@@ -27,7 +27,8 @@ public class ShiftingHammer : Runesmith2Card
         CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
-        var attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(2).FromCard(this).Targeting(play.Target)
+        var attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(2).FromCard(this)
+            .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
 
@@ -43,10 +44,7 @@ public class ShiftingHammer : Runesmith2Card
                 card => card.IsEnhanceable(),
                 this
             )).FirstOrDefault();
-            if (enhanceCard != null)
-            {
-                await RunesmithCardCmd.Enhance(choiceContext, Owner, enhanceCard, play, enhanceBy);
-            }
+            if (enhanceCard != null) await RunesmithCardCmd.Enhance(choiceContext, Owner, enhanceCard, play, enhanceBy);
         }
     }
 }

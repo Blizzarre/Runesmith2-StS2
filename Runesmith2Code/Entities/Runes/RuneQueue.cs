@@ -40,10 +40,7 @@ public class RuneQueue
     {
         if (Capacity == 0) return false;
         rune.AssertMutable();
-        if (Runes.Count >= Capacity)
-        {
-            throw new InvalidOperationException("RuneQueue is full");
-        }
+        if (Runes.Count >= Capacity) throw new InvalidOperationException("RuneQueue is full");
 
         _runes.Add(rune);
         await SmallWait();
@@ -57,10 +54,7 @@ public class RuneQueue
 
     public void Insert(int idx, RuneModel rune)
     {
-        if (idx > Capacity)
-        {
-            throw new InvalidOperationException("idx cannot be greater than capacity");
-        }
+        if (idx > Capacity) throw new InvalidOperationException("idx cannot be greater than capacity");
 
         _runes.Insert(idx, rune);
     }
@@ -108,12 +102,8 @@ public class RuneQueue
     private async Task SmallWait()
     {
         if (LocalContext.IsMe(_owner))
-        {
             await Cmd.CustomScaledWait(0.1f, 0.25f);
-        }
         else
-        {
             await Cmd.Wait(0.05f);
-        }
     }
 }

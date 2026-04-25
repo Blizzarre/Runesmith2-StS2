@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcglxq825f17s"]
+
+[ext_resource type="FontFile" uid="uid://iahxpsb5kdf2" path="res://Runesmith2/font/kreon_bold.ttf" id="1_xr3ii"]
+
+[sub_resource type="FontVariation" id="FontVariation_7wyth"]
+base_font = ExtResource("1_xr3ii")
+spacing_glyph = 1
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0.71690106, 0.8323081, 0.9490196, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.1882353)
+theme_override_colors/font_outline_color = Color(0.15686275, 0.19607843, 0.32156864, 0.9019608)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = SubResource("FontVariation_7wyth")
+theme_override_font_sizes/font_size = 24
+text = "Testificate"

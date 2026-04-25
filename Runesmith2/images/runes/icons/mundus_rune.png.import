@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://r74qmjc5qal1"
-path="res://.godot/imported/heated_chisel.png-780cfd71ad57499ed829b96096670ccc.ctex"
+uid="uid://dvr6qbaygy6f8"
+path="res://.godot/imported/mundus_rune.png-8c9fc6cd6f8fd7989398cded8756a94f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Runesmith2/images/card_portraits/heated_chisel.png"
-dest_files=["res://.godot/imported/heated_chisel.png-780cfd71ad57499ed829b96096670ccc.ctex"]
+source_file="res://Runesmith2/images/runes/icons/mundus_rune.png"
+dest_files=["res://.godot/imported/mundus_rune.png-8c9fc6cd6f8fd7989398cded8756a94f.ctex"]
 
 [params]
 

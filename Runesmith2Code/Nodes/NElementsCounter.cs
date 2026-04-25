@@ -5,9 +5,7 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Nodes.HoverTips;
-using Runesmith2.Runesmith2Code;
 using Runesmith2.Runesmith2Code.Extensions;
-using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Structs;
 using Runesmith2.Runesmith2Code.Utils;
 
@@ -143,7 +141,7 @@ public partial class NElementsCounter : Control
     private void OnHovered()
     {
         var nHoverTipSet = NHoverTipSet.CreateAndShow(this, _hoverTip);
-        nHoverTipSet.GlobalPosition = GlobalPosition + new Vector2(140, -70);
+        nHoverTipSet?.GlobalPosition = GlobalPosition + new Vector2(-70, -240);
     }
 
     private void OnUnhovered()
@@ -163,9 +161,7 @@ public partial class NElementsCounter : Control
         var elements = GetPlayerElements(_player);
         var rotSpeed = elements.Total == 0 ? 10f : 40f;
         for (var i = 0; i < _rotationLayers.GetChildCount(); i++)
-        {
             _rotationLayers.GetChild<Control>(i).RotationDegrees += (float)delta * rotSpeed * (i + 1);
-        }
 
         _lerpingIgnisCount =
             MathHelper.SmoothDamp(_lerpingIgnisCount, elements.Ignis, ref _velocity1, 0.1f, (float)delta);

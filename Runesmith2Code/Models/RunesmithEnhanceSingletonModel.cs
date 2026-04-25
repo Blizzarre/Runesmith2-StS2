@@ -17,20 +17,11 @@ public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
         Creature? dealer, CardModel? cardSource)
     {
-        if (cardSource == null)
-        {
-            return 1;
-        }
+        if (cardSource == null) return 1;
 
-        if (!props.IsPoweredAttack_())
-        {
-            return 1;
-        }
+        if (!props.IsPoweredAttack_()) return 1;
 
-        if (!cardSource.IsEnhanced())
-        {
-            return 1;
-        }
+        if (!cardSource.IsEnhanced()) return 1;
 
         return 1 + cardSource.GetEnhanceMultiplier();
     }
@@ -38,20 +29,11 @@ public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false
     public override decimal ModifyBlockMultiplicative(Creature target, decimal block, ValueProp props,
         CardModel? cardSource, CardPlay? cardPlay)
     {
-        if (cardSource == null)
-        {
-            return 1;
-        }
+        if (cardSource == null) return 1;
 
-        if (!props.IsPoweredCardOrMonsterMoveBlock_())
-        {
-            return 1;
-        }
+        if (!props.IsPoweredCardOrMonsterMoveBlock_()) return 1;
 
-        if (!cardSource.IsEnhanced())
-        {
-            return 1;
-        }
+        if (!cardSource.IsEnhanced()) return 1;
 
         return 1 + cardSource.GetEnhanceMultiplier();
     }
@@ -59,32 +41,20 @@ public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false
     public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
         if (cardPlay.Card.IsStasis()) return Task.CompletedTask;
-        if (cardPlay.IsLastInSeries && cardPlay.Card.IsEnhanced())
-        {
-            cardPlay.Card.ClearEnhance();
-        }
+        if (cardPlay.IsLastInSeries && cardPlay.Card.IsEnhanced()) cardPlay.Card.ClearEnhance();
 
         return Task.CompletedTask;
     }
-    
+
 
     public decimal ModifyPotencyMultiplicative(Player player, decimal block, ValueProp props, CardModel? cardSource,
         CardPlay? cardPlay)
     {
-        if (cardSource == null)
-        {
-            return 1;
-        }
+        if (cardSource == null) return 1;
 
-        if (!props.IsPoweredCardOrMonsterMoveBlock_())
-        {
-            return 1;
-        }
+        if (!props.IsPoweredCardOrMonsterMoveBlock_()) return 1;
 
-        if (!cardSource.IsEnhanced())
-        {
-            return 1;
-        }
+        if (!cardSource.IsEnhanced()) return 1;
 
         return 1 + cardSource.GetEnhanceMultiplier();
     }

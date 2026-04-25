@@ -1,7 +1,16 @@
 {
-  "RUNESMITH2-EMPTY_SLOT.title" : "Rune Slot",
-  "RUNESMITH2-EMPTY_SLOT.description" : "Rune can be [gold]Crafted[/gold] into this slot. You can have no more than [blue]7[/blue] Runes.",
-  "RUNESMITH2-FLAMMA_RUNE.title" : "Flamma",
-  "RUNESMITH2-FLAMMA_RUNE.description" : "Rune: Deals damage to random enemies.",
-  "RUNESMITH2-FLAMMA_RUNE.smartDescription" : "[gold]Passive:[/gold] At the end of turn, deal [blue]{Passive}[/blue] damage to a random enemy.\n[gold]Break:[/gold] Deal [blue]{Break}[/blue] damage to a random enemy."
+  "RUNESMITH2-EMPTY_SLOT.description": "Rune can be [gold]Crafted[/gold] into this slot. You can have no more than [blue]7[/blue] Runes.",
+  "RUNESMITH2-EMPTY_SLOT.title": "Rune Slot",
+  "RUNESMITH2-FLAMMA_RUNE.description": "Rune: Deals damage to random enemies.",
+  "RUNESMITH2-FLAMMA_RUNE.smartDescription": "[gold]Passive:[/gold] At the end of turn, deal [blue]{Passive}[/blue] damage to a random enemy.\n[gold]Break:[/gold] Deal [blue]{Break}[/blue] damage to a random enemy.",
+  "RUNESMITH2-FLAMMA_RUNE.title": "Flamma",
+  "RUNESMITH2-MAGMA_RUNE.description": "Rune: Deals damage to random enemies and gain [gold]Block[/gold].",
+  "RUNESMITH2-MAGMA_RUNE.smartDescription": "[gold]Passive:[/gold] At the end of turn, deal [blue]{Passive}[/blue] damage to a random enemy. Gain [blue]{CalculatedPassive}[/blue] Block.\n[gold]Break:[/gold] Deal [blue]{Break}[/blue] damage to a random enemy. Gain [blue]{CalculatedBreak}[/blue] [gold]Block[/gold].",
+  "RUNESMITH2-MAGMA_RUNE.title": "Magma",
+  "RUNESMITH2-MUNDUS_RUNE.description": "Rune: Does nothing.",
+  "RUNESMITH2-MUNDUS_RUNE.smartDescription": "Rune: Does nothing.\n[color=gray][i]Perhaps the stored Charge and Potency could be used for something...[/i][/color]",
+  "RUNESMITH2-MUNDUS_RUNE.title": "Mundus",
+  "RUNESMITH2-SAXUM_RUNE.description": "Rune: Gain [gold]Block[/gold].",
+  "RUNESMITH2-SAXUM_RUNE.smartDescription": "[gold]Passive[/gold]: At the end of turn, gain [blue]{Passive}[/blue] [gold]Block[/gold].\n[gold]Break[/gold]: Gain [blue]{Break}[/blue] [gold]Block[/gold].",
+  "RUNESMITH2-SAXUM_RUNE.title": "Saxum"
 }

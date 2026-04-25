@@ -47,10 +47,7 @@ public partial class NRuneManager : Control
     {
         get
         {
-            if (_runes.Count <= 0 || _runes.First().Model == null)
-            {
-                return _creatureNode.Hitbox;
-            }
+            if (_runes.Count <= 0 || _runes.First().Model == null) return _creatureNode.Hitbox;
 
             return _runes.First();
         }
@@ -78,9 +75,7 @@ public partial class NRuneManager : Control
     public static NRuneManager Create(NCreature creature, bool isLocal)
     {
         if (creature.Entity.Player == null)
-        {
             throw new InvalidOperationException("NRuneManager can only be applied to player creatures");
-        }
 
         var nRuneManager = PreloadManager.Cache.GetScene(ScenePath).Instantiate<NRuneManager>();
         nRuneManager._creatureNode = creature;
@@ -91,10 +86,7 @@ public partial class NRuneManager : Control
     private void OnCombatSetup(CombatState _)
     {
         if (!Player.Creature.IsAlive || Player.PlayerCombatState == null) return;
-        if (Player.PlayerCombatState.AllCards.Any(c => c is Runesmith2RecipeCard))
-        {
-            AddSlotAnim();
-        }
+        if (Player.PlayerCombatState.AllCards.Any(c => c is Runesmith2RecipeCard)) AddSlotAnim();
     }
 
     private void OnCombatStateChanged(CombatState _)
@@ -178,10 +170,7 @@ public partial class NRuneManager : Control
         var position = GetRunePosition(_runes.Count);
         _runes.Add(newEmptyRune);
         newEmptyRune.Position = position;
-        if (breakRune.HasFocus())
-        {
-            _creatureNode.Hitbox.TryGrabFocus();
-        }
+        if (breakRune.HasFocus()) _creatureNode.Hitbox.TryGrabFocus();
 
         TweenLayout();
         UpdateControllerNavigation();
@@ -217,10 +206,7 @@ public partial class NRuneManager : Control
     private Vector2 GetRunePosition(int index)
     {
         var radius = Radius;
-        if (!IsLocal)
-        {
-            radius *= 0.75f;
-        }
+        if (!IsLocal) radius *= 0.75f;
 
         const float angleStep = FanAngle / (RuneQueue.MaxCapacity - 1);
         var angle = float.DegreesToRadians(-angleStep * index - AngleOffset); // neg angle is counter-clockwise
@@ -229,10 +215,7 @@ public partial class NRuneManager : Control
 
     public void UpdateVisuals(RuneBreakType breakType)
     {
-        foreach (var rune in _runes)
-        {
-            rune.UpdateVisuals(false);
-        }
+        foreach (var rune in _runes) rune.UpdateVisuals(false);
 
         switch (breakType)
         {
@@ -244,10 +227,7 @@ public partial class NRuneManager : Control
                 break;
             case RuneBreakType.All:
             {
-                foreach (var rune2 in _runes)
-                {
-                    rune2.UpdateVisuals(true);
-                }
+                foreach (var rune2 in _runes) rune2.UpdateVisuals(true);
 
                 break;
             }
@@ -259,10 +239,7 @@ public partial class NRuneManager : Control
     public void ClearRunes()
     {
         _curTween?.Kill();
-        if (_runes.Count == 0)
-        {
-            return;
-        }
+        if (_runes.Count == 0) return;
 
         _curTween = CreateTween();
         foreach (var rune in _runes)
@@ -272,10 +249,7 @@ public partial class NRuneManager : Control
             _curTween.Parallel().TweenProperty(rune, "modulate:a", 0, 0.25);
         }
 
-        foreach (var rune2 in _runes)
-        {
-            _curTween.Chain().TweenCallback(Callable.From(rune2.QueueFreeSafely));
-        }
+        foreach (var rune2 in _runes) _curTween.Chain().TweenCallback(Callable.From(rune2.QueueFreeSafely));
 
         _runes.Clear();
     }

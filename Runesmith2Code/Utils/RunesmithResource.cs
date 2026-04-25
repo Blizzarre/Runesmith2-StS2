@@ -16,7 +16,7 @@ public static class RunesmithResource
     // These assets will be loaded with PreloadManager
     public static readonly IEnumerable<string> AssetPaths =
     [
-        NEnhanceTabPath, NRuneManagerPath, NRunePath, 
+        NEnhanceTabPath, NRuneManagerPath, NRunePath,
         NElementsCounterPath, NElementsIconPath,
         "res://Runesmith2/images/charui/elements_ignis_icon.png",
         "res://Runesmith2/images/charui/elements_terra_icon.png",

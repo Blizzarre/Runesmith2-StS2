@@ -10,10 +10,10 @@ namespace Runesmith2.Runesmith2Code.Patches;
 
 // Patch to trigger card flash on card being enhanced or stasis
 [HarmonyPatch(typeof(NHandCardHolder), nameof(NHandCardHolder.SubscribeToEvents))]
-class NHandCardHolderSubscribePatch
+internal class NHandCardHolderSubscribePatch
 {
     [HarmonyPrefix]
-    static void SubscribeToEventsPrefix(
+    private static void SubscribeToEventsPrefix(
         NHandCardHolder __instance, ref CardModel? card
     )
     {
@@ -28,10 +28,10 @@ class NHandCardHolderSubscribePatch
 }
 
 [HarmonyPatch(typeof(NHandCardHolder), nameof(NHandCardHolder.UnsubscribeFromEvents))]
-class NHandCardHolderUnsubscribePatch
+internal class NHandCardHolderUnsubscribePatch
 {
     [HarmonyPrefix]
-    static void UnsubscribeFromEventsPrefix(
+    private static void UnsubscribeFromEventsPrefix(
         NHandCardHolder __instance, ref CardModel? card
     )
     {
@@ -43,28 +43,21 @@ class NHandCardHolderUnsubscribePatch
 }
 
 [HarmonyPatch(typeof(NHandCardHolder), nameof(NHandCardHolder.Flash))]
-class NHandCardHolderFlashPatch
+internal class NHandCardHolderFlashPatch
 {
     private static readonly Color BeigeGlow = new("dfbd81fa");
 
     private static void ShouldGlowBeige(NHandCardHolder instance)
     {
         var cardModel = instance.CardNode?.Model;
-        if (cardModel == null)
-        {
-            return;
-        }
+        if (cardModel == null) return;
 
-        if (!CombatManager.Instance.IsPlayPhase) return;
         var modifier = cardModel.GetCardModelModifier();
-        if (modifier.JustEnhanced)
-        {
-            instance._flash.Modulate = BeigeGlow;
-        }
+        if (modifier.JustEnhanced) instance._flash.Modulate = BeigeGlow;
     }
 
     [HarmonyTranspiler]
-    static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    private static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return new InstructionPatcher(instructions).Match(new InstructionMatcher()
             .ldarg_0()

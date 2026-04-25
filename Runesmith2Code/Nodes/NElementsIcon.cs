@@ -11,7 +11,7 @@ namespace Runesmith2.Runesmith2Code.Nodes;
 public partial class NElementsIcon : TextureRect
 {
     private Font _font = BaseResourceIndex.FontKreonBoldShared;
-    
+
     private MegaLabel[] _labels = new MegaLabel[3];
 
     private TextureRect[] _unplayableIcons = new TextureRect[3];
@@ -80,14 +80,9 @@ public partial class NElementsIcon : TextureRect
 
         var shouldShowUnplayableIcon = false;
         if (pileType == PileType.Hand && !runesmithCard.CanPlay(out var reason, out _))
-        {
             shouldShowUnplayableIcon = !reason.HasResourceCostReason();
-        }
 
-        foreach (var unplayableIcon in _unplayableIcons)
-        {
-            unplayableIcon.Visible = shouldShowUnplayableIcon;
-        }
+        foreach (var unplayableIcon in _unplayableIcons) unplayableIcon.Visible = shouldShowUnplayableIcon;
     }
 
     private void UpdateElementsCostColor(PileType pileType, Runesmith2Card card, int index)

@@ -15,10 +15,10 @@ namespace Runesmith2.Runesmith2Code.Patches;
 
 [HarmonyPatch(typeof(PlayerCombatState), MethodType.Constructor)]
 [HarmonyPatch([typeof(Player)])]
-class PlayerCombatStateConstructorPatch
+internal class PlayerCombatStateConstructorPatch
 {
     [HarmonyPostfix]
-    static void Postfix(Player player, PlayerCombatState __instance)
+    private static void Postfix(Player player, PlayerCombatState __instance)
     {
         var runeQueue = new RuneQueue(player);
         runeQueue.Clear();
@@ -32,7 +32,7 @@ class PlayerCombatStateConstructorPatch
 }
 
 [HarmonyPatch(typeof(PlayerCombatState), nameof(PlayerCombatState.AfterCombatEnd))]
-class PlayerCombatStateAfterCombatEndPatch
+internal class PlayerCombatStateAfterCombatEndPatch
 {
     [HarmonyPostfix]
     public static void Postfix(PlayerCombatState __instance)
@@ -43,10 +43,10 @@ class PlayerCombatStateAfterCombatEndPatch
 }
 
 [HarmonyPatch(typeof(PlayerCombatState), nameof(PlayerCombatState.HasEnoughResourcesFor))]
-class PlayerCombatStateHasEnoughResourcesForPatch
+internal class PlayerCombatStateHasEnoughResourcesForPatch
 {
     [HarmonyTranspiler]
-    static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    private static List<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return new InstructionPatcher(instructions).Match(new InstructionMatcher()
             .ldarg_2()
@@ -60,12 +60,10 @@ class PlayerCombatStateHasEnoughResourcesForPatch
         ]);
     }
 
-    static void HasEnoughElements(PlayerCombatState instance, CardModel card, ref UnplayableReason reason)
+    private static void HasEnoughElements(PlayerCombatState instance, CardModel card, ref UnplayableReason reason)
     {
         if (card is not Runesmith2Card runesmith2Card) return;
         if (!instance.Elements().CanSpend(runesmith2Card.GetElementsCostWithModifiers()))
-        {
             reason |= UnplayableReason.StarCostTooHigh;
-        }
     }
 }
