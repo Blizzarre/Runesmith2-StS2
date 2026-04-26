@@ -1,7 +1,14 @@
 {
-  "RUNESMITH2-GRINDSTONE_POWER.description": "",
-  "RUNESMITH2-GRINDSTONE_POWER.smartDescription": "{GrindstonePower:plural:This turn|For [blue]{}[/blue] turns}, any cards played get [gold]Upgraded[/gold]. If the card cannot be [gold]Upgraded[/gold], [gold]Enhance[/gold] it instead.",
+  "RUNESMITH2-AMP_POWER.description": "Your next Crafted Rune gains additional [gold]Potency[/gold].",
+  "RUNESMITH2-AMP_POWER.smartDescription": "Your next Crafted Rune gains [blue]{Amount}[/blue] additional [gold]Potency[/gold].",
+  "RUNESMITH2-AMP_POWER.title": "Amp",
+  "RUNESMITH2-BRACE_POWER.description": "Your next played card with [gold]Block[/gold] gains additional [gold]Block[/gold].",
+  "RUNESMITH2-BRACE_POWER.title": "Brace",
+  "RUNESMITH2-BRACE_POWER.smartDescription": "Your next played card with [gold]Block[/gold] gains [blue]{Amount}[/blue] additional [gold]Block[/gold].",
+  "RUNESMITH2-GRINDSTONE_POWER.description": "This turn, whenever you play a card, [gold]Upgrade[/gold] it. If the card cannot be [gold]Upgraded[/gold], [gold]Enhance[/gold] it instead.",
+  "RUNESMITH2-GRINDSTONE_POWER.smartDescription": "{GrindstonePower:plural:This turn|For [blue]{}[/blue] turns}, whenever you play a card, [gold]Upgrade[/gold] it. If the card cannot be [gold]Upgraded[/gold], [gold]Enhance[/gold] it instead.",
   "RUNESMITH2-GRINDSTONE_POWER.title": "Grindstone",
-  "RUNESMITH2-RUNESMITH2_POWER.title": "",
-  "RUNESMITH2-RUNESMITH2_POWER.description": ""
+  "RUNESMITH2-ICE_COLD_POWER.title": "Ice-Cold",
+  "RUNESMITH2-ICE_COLD_POWER.description": "Creatures with [gold]Ice-Cold[/gold] has reduced attack damage.\n[gold]Ice-Cold[/gold] is reduced by [blue]1[/blue] at the end of turn.",
+  "RUNESMITH2-ICE_COLD_POWER.smartDescription": "{OnPlayer:Your|[gold]{OwnerName}'s[/gold]} attack damage is reduced by [blue]{Amount}[/blue].\n[gold]Ice-Cold[/gold] is reduced by [blue]{Decrement}[/blue] at the end of {OnPlayer:your|[gold]{OwnerName}'s[/gold]} turn."
 }

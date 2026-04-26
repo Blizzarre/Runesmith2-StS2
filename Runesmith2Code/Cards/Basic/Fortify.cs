@@ -35,7 +35,7 @@ public class Fortify : Runesmith2Card
             choiceContext,
             Owner,
             new CardSelectorPrefs(RunesmithCardSelectorPrefs.EnhanceSelectionPrompt, 1),
-            card => card.IsEnhanceable(),
+            card => card.CanEnhance(),
             this
         )).FirstOrDefault();
         if (card != null)

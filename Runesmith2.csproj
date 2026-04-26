@@ -125,6 +125,12 @@
       <Content Include="readme.md" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="SmartFormat">
+        <HintPath>E:\SteamLibrary\steamapps\common\Slay the Spire 2\data_sts2_windows_x86_64\SmartFormat.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
     <Target Name="CheckDependencyPaths">
         <Error
                 Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'"

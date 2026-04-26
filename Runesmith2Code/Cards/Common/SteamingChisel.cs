@@ -19,8 +19,7 @@ public class SteamingChisel : Runesmith2Card
         WithDamage(3, 1);
         WithBlock(3, 1);
         WithPower<WeakPower>(1, 1);
-        WithElementsVar(new IgnisVar(1));
-        WithElementsVar(new AquaVar(1));
+        WithVars(new IgnisVar(1), new AquaVar(1));
         WithTip(RunesmithHoverTip.Elements);
         WithTags(RunesmithTag.Chisel);
     }

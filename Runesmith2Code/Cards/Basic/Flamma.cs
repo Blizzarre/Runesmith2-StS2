@@ -17,16 +17,14 @@ public class Flamma : Runesmith2RecipeCard
         WithVars(new PotencyVar(4).WithUpgrade(1), new ChargeVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Recipe);
         WithTip(RunesmithHoverTip.Craft);
-        WithTip(RunesmithHoverTip.Potency);
-        WithTip(RunesmithHoverTip.Charge);
         WithRuneTip<FlammaRune>();
     }
 
     public override Elements CanonicalElementsCost => new(1, 0, 0);
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        await RuneCmd.Craft<FlammaRune>(choiceContext, Owner, cardPlay, this);
+        await RuneCmd.Craft<FlammaRune>(choiceContext, Owner, play, this);
     }
 }

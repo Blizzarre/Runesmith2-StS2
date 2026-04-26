@@ -8,14 +8,13 @@ namespace Runesmith2.Runesmith2Code.Extensions;
 
 public static class CardModelExtension
 {
-    public static bool IsEnhanceable(this CardModel cardModel)
+    public static bool CanEnhance(this CardModel cardModel)
     {
         if (cardModel.Type == CardType.Attack) return true;
 
         if (cardModel.GainsBlock) return true;
 
-        if (cardModel.DynamicVars.ContainsKey(PotencyVar.defaultName) &&
-            cardModel.DynamicVars[PotencyVar.defaultName].BaseValue > 0)
+        if (cardModel.HasPotency())
             return true;
 
         return false;
@@ -146,5 +145,11 @@ public static class CardModelExtension
     public static bool IsStasis(this CardModel cardModel)
     {
         return cardModel.GetCardModelModifier().Stasis;
+    }
+
+    public static bool HasPotency(this CardModel cardModel)
+    {
+        return cardModel.DynamicVars.ContainsKey(PotencyVar.defaultName) &&
+               cardModel.DynamicVars[PotencyVar.defaultName].BaseValue > 0;
     }
 }

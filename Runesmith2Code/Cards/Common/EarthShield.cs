@@ -15,7 +15,7 @@ public class EarthShield : Runesmith2Card
     public EarthShield() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
         WithBlock(7, 3);
-        WithElementsVar(new TerraVar(2).WithUpgrade(1));
+        WithVar(new TerraVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Elements);
     }
 

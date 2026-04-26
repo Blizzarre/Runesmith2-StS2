@@ -1,12 +1,13 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Runesmith2.Runesmith2Code.Hooks;
 
 public interface IModifyEnhanceAmount
 {
-    public int ModifyEnhanceAmount(Player player, int amount);
+    public int ModifyEnhanceAmount(Player player, int amount, ValueProp props, CardModel? cardSource);
 }
 
 public interface IAfterModifyingEnhanceAmount

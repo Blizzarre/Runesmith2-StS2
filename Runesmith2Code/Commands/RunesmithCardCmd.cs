@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Random;
+using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Hooks;
 
@@ -17,12 +18,12 @@ public static class RunesmithCardCmd
     {
         if (!CombatManager.Instance.IsOverOrEnding)
         {
-            if (!targetCard.IsEnhanceable()) throw new InvalidOperationException($"Cannot enhance {targetCard.Id}.");
+            if (!targetCard.CanEnhance()) throw new InvalidOperationException($"Cannot enhance {targetCard.Id}.");
 
-            var combatState = targetCard.CombatState ?? targetCard.Owner.Creature.CombatState;
+            var combatState = targetCard.CombatState ?? targetCard.Owner.Creature.CombatState!;
             // TODO Consider adding history for cards enhanced.
             var modifiedEnhance =
-                RunesmithHook.ModifyEnhanceAmount(combatState, player, enhanceAmount, out var modifiers);
+                RunesmithHook.ModifyEnhanceAmount(combatState, player, enhanceAmount, ValueProp.Move, targetCard, out var modifiers);
             await RunesmithHook.AfterModifyingEnhanceAmount(combatState, modifiedEnhance, cardPlay?.Card, cardPlay,
                 modifiers);
             targetCard.AddEnhance(enhanceAmount);
@@ -34,7 +35,7 @@ public static class RunesmithCardCmd
     public static async Task EnhanceRandomCards(PlayerChoiceContext choiceContext, Player player,
         IEnumerable<CardModel> cards, int cardCount, int enhanceBy, Rng rng, bool skipVisuals = false)
     {
-        var randomCards = new List<CardModel>(cards).StableShuffle(rng);
+        var randomCards = new List<CardModel>(cards.Where(c => c.CanEnhance())).StableShuffle(rng);
         cardCount = Math.Min(cardCount, randomCards.Count);
         for (var i = 0; i < cardCount; i++) await Enhance(choiceContext, player, randomCards[i], null, enhanceBy);
     }
@@ -42,7 +43,7 @@ public static class RunesmithCardCmd
     public static bool Stasis(CardModel targetCard)
     {
         if (CombatManager.Instance.IsOverOrEnding) return false;
-        if (!targetCard.IsEnhanceable()) throw new InvalidOperationException($"Cannot enhance {targetCard.Id}.");
+        if (!targetCard.CanEnhance()) throw new InvalidOperationException($"Cannot enhance {targetCard.Id}.");
 
         if (targetCard.IsStasis()) return false;
 

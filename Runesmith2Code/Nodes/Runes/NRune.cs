@@ -20,7 +20,7 @@ public partial class NRune : NClickableControl
     // TODO refactor this to Font color utils class
     public static readonly (Color, Color, Color) DefaultFontColor =
         (new Color("fff6e2"), new Color("00000040"), new Color("333333e6"));
-    
+
     public static readonly (Color, Color, Color) BlueFontColor =
         (new Color("b7d4f2"), new Color("00000040"), new Color("283252e6"));
 

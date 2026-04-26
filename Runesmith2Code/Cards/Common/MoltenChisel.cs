@@ -17,8 +17,7 @@ public class MoltenChisel : Runesmith2Card
     {
         WithDamage(6, 2);
         WithPower<VulnerablePower>(1, 1);
-        WithElementsVar(new IgnisVar(1));
-        WithElementsVar(new TerraVar(1));
+        WithVars(new IgnisVar(1), new TerraVar(1));
         WithTip(RunesmithHoverTip.Elements);
         WithTags(RunesmithTag.Chisel);
     }

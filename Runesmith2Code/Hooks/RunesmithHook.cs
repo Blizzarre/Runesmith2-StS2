@@ -55,12 +55,13 @@ public static class RunesmithHook
 
 
     public static int ModifyEnhanceAmount(ICombatState combatState, Player player, int originalAmount,
+        ValueProp props, CardModel? cardSource,
         out IEnumerable<AbstractModel> modifiers)
     {
         var modifyingModels = new List<AbstractModel>();
         var res = Aggregate<IModifyEnhanceAmount, int>(combatState, originalAmount, (model, current) =>
         {
-            var next = model.ModifyEnhanceAmount(player, current);
+            var next = model.ModifyEnhanceAmount(player, current, props, cardSource);
             if (next != current) modifyingModels.Add((AbstractModel)model);
             return next;
         });
@@ -110,12 +111,13 @@ public static class RunesmithHook
     }
 
     public static Elements ModifyElementsGain(ICombatState combatState, Player player, Elements originalAmount,
+        ValueProp props, CardModel? cardSource,
         out IEnumerable<AbstractModel> modifiers)
     {
         var modifyingModels = new List<AbstractModel>();
         var res = Aggregate<IModifyElementsGain, Elements>(combatState, originalAmount, (model, current) =>
         {
-            var next = model.ModifyElementsGain(player, current);
+            var next = model.ModifyElementsGain(player, current, props, cardSource);
             if (next != current) modifyingModels.Add((AbstractModel)model);
             return next;
         });
@@ -167,14 +169,14 @@ public static class RunesmithHook
 
         //TODO add enchantment modification here if it's implemented
 
-        modifiedPotency = Aggregate<IOnModifyPotencyAdditive, decimal>(combatState, modifiedPotency, (model, current) =>
+        modifiedPotency = Aggregate<IModifyPotencyAdditive, decimal>(combatState, modifiedPotency, (model, current) =>
         {
             var add = model.ModifyPotencyAdditive(player, current, props, cardSource, cardPlay);
             if (add != 0) modifyingModels.Add((AbstractModel)model);
             return add + current;
         });
 
-        modifiedPotency = Aggregate<IOnModifyPotencyMultiplicative, decimal>(combatState, modifiedPotency,
+        modifiedPotency = Aggregate<IModifyPotencyMultiplicative, decimal>(combatState, modifiedPotency,
             (model, current) =>
             {
                 var mult = model.ModifyPotencyMultiplicative(player, current, props, cardSource, cardPlay);
@@ -184,5 +186,31 @@ public static class RunesmithHook
 
         modifiers = modifyingModels;
         return Math.Max(0, modifiedPotency);
+    }
+    
+    public static Task AfterModifyingPotency(ICombatState combatState, IEnumerable<AbstractModel> modifiers)
+    {
+        return Dispatch<IAfterModifyingPotency>(combatState,
+            model => model.AfterModifyingPotency());
+    }
+
+    public static decimal ModifyCharge(ICombatState combatState, Player player, decimal charge, ValueProp props,
+        CardModel? cardSource, CardPlay? cardPlay, out IEnumerable<AbstractModel> modifiers)
+    {
+        var modifyingModels = new List<AbstractModel>();
+        var res = Aggregate<IModifyCharge, decimal>(combatState, charge, (model, current) =>
+        {
+            var next = model.ModifyCharge(player, current, props, cardSource);
+            if (next != current) modifyingModels.Add((AbstractModel)model);
+            return next;
+        });
+        modifiers = modifyingModels;
+        return res;
+    }
+    
+    public static Task AfterModifyingCharge(ICombatState combatState, IEnumerable<AbstractModel> modifiers)
+    {
+        return Dispatch<IAfterModifyingCharge>(combatState,
+            model => model.AfterModifyingCharge());
     }
 }

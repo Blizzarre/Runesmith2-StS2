@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckj0ck2oqo8ew"
-path="res://.godot/imported/ui_atlas_0.png-d28df46787d345dcd0c7108dbb103fa4.ctex"
+uid="uid://jgwqwf0qmrnc"
+path="res://.godot/imported/glacies_rune.png-ec763846d323a91499e1a4b59a0aedc9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Runesmith2/images/atlases/ui_atlas_0.png"
-dest_files=["res://.godot/imported/ui_atlas_0.png-d28df46787d345dcd0c7108dbb103fa4.ctex"]
+source_file="res://Runesmith2/images/runes/glacies_rune.png"
+dest_files=["res://.godot/imported/glacies_rune.png-ec763846d323a91499e1a4b59a0aedc9.ctex"]
 
 [params]
 

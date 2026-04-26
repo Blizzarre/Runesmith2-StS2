@@ -248,4 +248,9 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     {
         ChargeVal = Math.Max(0, ChargeVal + amount);
     }
+    
+    public void SetCharge(int amount)
+    {
+        ChargeVal = Math.Max(0, amount);
+    }
 }

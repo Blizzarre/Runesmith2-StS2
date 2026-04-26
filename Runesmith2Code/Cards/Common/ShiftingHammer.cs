@@ -41,7 +41,7 @@ public class ShiftingHammer : Runesmith2Card
                 choiceContext,
                 Owner,
                 new CardSelectorPrefs(RunesmithCardSelectorPrefs.EnhanceSelectionPrompt, DynamicVars.Cards.IntValue),
-                card => card.IsEnhanceable(),
+                card => card.CanEnhance(),
                 this
             )).FirstOrDefault();
             if (enhanceCard != null) await RunesmithCardCmd.Enhance(choiceContext, Owner, enhanceCard, play, enhanceBy);

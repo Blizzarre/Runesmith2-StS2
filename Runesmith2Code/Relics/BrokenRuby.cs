@@ -21,7 +21,6 @@ public class BrokenRuby : Runesmith2Relic
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        RunesmithVarIndex.IgnisIconVar,
         new IgnisVar(2),
         new CardsVar(2)
     ];

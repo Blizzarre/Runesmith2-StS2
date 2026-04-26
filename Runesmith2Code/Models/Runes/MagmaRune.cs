@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Cards.Basic;
+using Runesmith2.Runesmith2Code.Cards.Common;
 using Runesmith2.Runesmith2Code.Nodes.Runes;
 using Runesmith2.Runesmith2Code.Utils;
 
@@ -26,7 +27,7 @@ public class MagmaRune : RuneModel
     public override decimal CalculatedPassiveVal => PassiveVal / 2;
     public override decimal CalculatedBreakVal => BreakVal / 2;
 
-    public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Flamma>();
+    public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Magma>();
 
     public override async Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
     {
@@ -62,7 +63,7 @@ public class MagmaRune : RuneModel
             await CreatureCmd.Damage(choiceContext, target, amount, ValueProp.Unpowered, Owner.Creature);
         }
     }
-    
+
     private async Task GainBlock(PlayerChoiceContext _, decimal amount)
     {
         await CreatureCmd.GainBlock(Owner.Creature, amount, ValueProp.Unpowered, null);

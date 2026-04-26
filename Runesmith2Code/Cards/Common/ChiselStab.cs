@@ -15,7 +15,7 @@ public class ChiselStab : Runesmith2Card
     public ChiselStab() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
         WithDamage(5, 2);
-        WithElementsVar(new IgnisVar(2).WithUpgrade(1));
+        WithVar(new IgnisVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Elements);
         WithTags(RunesmithTag.Chisel);
     }

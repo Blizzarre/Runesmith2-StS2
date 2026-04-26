@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwiabcdpceepb"
-path="res://.godot/imported/charge_indicator.png-16f168f5ccdc8ff8c6d2f431bd774eb2.ctex"
+uid="uid://cqchgwtd02c3g"
+path="res://.godot/imported/incendium_rune.png-b104f6694d2e6f851784cb631075a202.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Runesmith2/images/runes/charge_indicator.png"
-dest_files=["res://.godot/imported/charge_indicator.png-16f168f5ccdc8ff8c6d2f431bd774eb2.ctex"]
+source_file="res://Runesmith2/images/runes/incendium_rune.png"
+dest_files=["res://.godot/imported/incendium_rune.png-b104f6694d2e6f851784cb631075a202.ctex"]
 
 [params]
 

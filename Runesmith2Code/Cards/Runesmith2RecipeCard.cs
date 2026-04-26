@@ -8,7 +8,8 @@ namespace Runesmith2.Runesmith2Code.Cards;
 
 public abstract class Runesmith2RecipeCard : Runesmith2Card
 {
-    protected Runesmith2RecipeCard(int cost, CardType type, CardRarity rarity, TargetType target) : base(cost, type, rarity, target)
+    protected Runesmith2RecipeCard(int cost, CardType type, CardRarity rarity, TargetType target) : base(cost, type,
+        rarity, target)
     {
         WithKeyword(RunesmithKeyword.Recipe);
     }

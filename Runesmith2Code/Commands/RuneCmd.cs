@@ -16,13 +16,14 @@ namespace Runesmith2.Runesmith2Code.Commands;
 
 public static class RuneCmd
 {
-    public static async Task Craft<T>(PlayerChoiceContext choiceContext, Player player, CardPlay? cardPlay, CardModel card) where T : RuneModel
+    public static async Task Craft<T>(PlayerChoiceContext choiceContext, Player player, CardPlay? cardPlay,
+        CardModel card) where T : RuneModel
     {
         var charge = card.DynamicVars.TryGetValue(ChargeVar.defaultName, out var var1) ? var1.IntValue : 0;
         var potency = card.DynamicVars.TryGetValue(PotencyVar.defaultName, out var var2) ? var2.IntValue : 0;
         await Craft(choiceContext, ModelDb.Get<T>().ToMutable(), player, cardPlay, charge, potency);
     }
-    
+
     public static async Task Craft<T>(PlayerChoiceContext choiceContext, Player player, CardPlay? cardPlay,
         decimal charge, decimal potency = 0) where T : RuneModel
     {
@@ -34,7 +35,7 @@ public static class RuneCmd
     {
         if (!CombatManager.Instance.IsOverOrEnding)
         {
-            var combatState = player.Creature.CombatState;
+            var combatState = player.Creature.CombatState!;
             var runeQueue = player.PlayerCombatState?.RuneQueue();
             if (runeQueue == null) return; // todo log warning/error?
             rune.AssertMutable();
@@ -42,10 +43,14 @@ public static class RuneCmd
             // TODO Modify rune charge and potency
             var modifiedPotency = potency;
             modifiedPotency = RunesmithHook.ModifyPotency(combatState, player, modifiedPotency, ValueProp.Move,
-                cardPlay?.Card, cardPlay, out _);
-            // TODO after modifying charge/potency
-
-            rune.ChargeVal = (int)Math.Max(0, charge);
+                cardPlay?.Card, cardPlay, out var potencyModifiers);
+            await RunesmithHook.AfterModifyingPotency(combatState, potencyModifiers);
+            var modifiedCharge = charge;
+            modifiedCharge = RunesmithHook.ModifyCharge(combatState, player, modifiedCharge, ValueProp.Move,
+                cardPlay?.Card, cardPlay, out var chargeModifiers);
+            await RunesmithHook.AfterModifyingCharge(combatState, chargeModifiers);
+            
+            rune.ChargeVal = (int)Math.Max(0, modifiedCharge);
             rune.PassiveVal = (int)Math.Max(0, modifiedPotency);
             rune.Owner = player;
             if (await runeQueue.TryEnqueue(rune))
@@ -77,6 +82,11 @@ public static class RuneCmd
     public static void Charge(PlayerChoiceContext choiceContext, RuneModel rune, int chargeAmount)
     {
         if (!CombatManager.Instance.IsOverOrEnding) rune.ModifyCharge(chargeAmount);
+    }
+
+    public static void SetCharge(PlayerChoiceContext choiceContext, RuneModel rune, int chargeAmount)
+    {
+        if (!CombatManager.Instance.IsOverOrEnding) rune.SetCharge(chargeAmount);
     }
 
     public static async Task Passive(PlayerChoiceContext choiceContext, RuneModel? rune)

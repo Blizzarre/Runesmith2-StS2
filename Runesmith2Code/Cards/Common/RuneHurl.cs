@@ -4,7 +4,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using Runesmith2.Runesmith2Code.Commands;
-using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.HoverTips;
 
 namespace Runesmith2.Runesmith2Code.Cards.Common;
@@ -21,13 +20,6 @@ public class RuneHurl : Runesmith2Card
     protected override bool ShouldGlowGoldInternal => HasRune();
 
     public override TargetType TargetType => HasRune() ? TargetType.AnyEnemy : TargetType.Self;
-
-    private bool HasRune()
-    {
-        if (IsInCombat) return Owner.PlayerCombatState?.RuneQueue()?.HasAny() ?? false;
-
-        return false;
-    }
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

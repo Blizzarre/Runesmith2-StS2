@@ -73,25 +73,6 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
         WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.FromRune<T>()));
     }
 
-    protected void WithElementsVar(DynamicVar var)
-    {
-        switch (var)
-        {
-            case IgnisVar ignisVar:
-                WithVars(ignisVar, RunesmithVarIndex.IgnisIconVar);
-                break;
-            case TerraVar terraVar:
-                WithVars(terraVar, RunesmithVarIndex.TerraIconVar);
-                break;
-            case AquaVar aquaVar:
-                WithVars(aquaVar, RunesmithVarIndex.AquaIconVar);
-                break;
-            case ElementsVar elementsVar:
-                WithVars(elementsVar, RunesmithVarIndex.ElementsIconVar);
-                break;
-        }
-    }
-
     public virtual decimal EnhanceMultiplier => 1m;
 
     public event Action? ElementsCostChanged;
@@ -213,6 +194,11 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
     // OnPlayWrapper - patch done
 
     // DowngradeInternal - patch set base cost (not really needed)
+    
+    protected bool HasRune()
+    {
+        if (IsInCombat) return Owner.PlayerCombatState?.RuneQueue()?.HasAny() ?? false;
 
-    // todo patch has enough resource for play
+        return false;
+    }
 }

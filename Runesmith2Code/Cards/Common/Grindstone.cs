@@ -22,6 +22,6 @@ public class Grindstone : Runesmith2Card
         CardPlay play)
     {
         await CommonActions.CardBlock(this, play);
-        await CommonActions.ApplySelf<GrindstonePower>(this);
+        await CommonActions.ApplySelf<GrindstonePower>(choiceContext, this);
     }
 }

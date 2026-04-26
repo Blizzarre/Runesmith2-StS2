@@ -5,15 +5,20 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Runesmith2.Runesmith2Code.Hooks;
 
-public interface IOnModifyPotencyAdditive
+public interface IModifyPotencyAdditive
 {
     public decimal ModifyPotencyAdditive(Player player, decimal block, ValueProp props, CardModel? cardSource,
         CardPlay? cardPlay);
 }
 
-public interface IOnModifyPotencyMultiplicative
+public interface IModifyPotencyMultiplicative
 {
     public decimal ModifyPotencyMultiplicative(Player player, decimal block, ValueProp props,
         CardModel? cardSource,
         CardPlay? cardPlay);
+}
+
+public interface IAfterModifyingPotency
+{
+    public Task AfterModifyingPotency();
 }

@@ -17,16 +17,14 @@ public class Saxum : Runesmith2RecipeCard
         WithVars(new PotencyVar(4).WithUpgrade(2), new ChargeVar(3));
         WithTip(RunesmithHoverTip.Recipe);
         WithTip(RunesmithHoverTip.Craft);
-        WithTip(RunesmithHoverTip.Potency);
-        WithTip(RunesmithHoverTip.Charge);
         WithRuneTip<SaxumRune>();
     }
 
     public override Elements CanonicalElementsCost => new(0, 2, 0);
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        await RuneCmd.Craft<SaxumRune>(choiceContext, Owner, cardPlay, this);
+        await RuneCmd.Craft<SaxumRune>(choiceContext, Owner, play, this);
     }
 }

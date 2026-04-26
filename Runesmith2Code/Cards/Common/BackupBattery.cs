@@ -15,7 +15,7 @@ public class BackupBattery : Runesmith2Card
     public BackupBattery() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
         WithVar(new CardsVar(1));
-        WithElementsVar(new ElementsVar(2).WithUpgrade(1));
+        WithVar(new ElementsVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Elements);
         WithKeyword(CardKeyword.Exhaust);
     }

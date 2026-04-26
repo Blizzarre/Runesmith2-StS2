@@ -27,9 +27,9 @@ public class PotencyVar : DynamicVar
         bool runGlobalHooks)
     {
         var modifiedValue = BaseValue;
-        //TODO add enchantment modification here if it's implemented
+
         if (runGlobalHooks)
-            modifiedValue = RunesmithHook.ModifyPotency(card.CombatState, card.Owner, BaseValue, ValueProp.Move, card,
+            modifiedValue = RunesmithHook.ModifyPotency(card.CombatState!, card.Owner, BaseValue, ValueProp.Move, card,
                 null, out _);
 
         PreviewValue = modifiedValue;
