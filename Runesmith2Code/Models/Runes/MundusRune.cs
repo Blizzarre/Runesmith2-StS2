@@ -1,20 +1,20 @@
+#region
+
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Nodes.Rooms;
-using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.Cards;
-using Runesmith2.Runesmith2Code.Cards.Basic;
 using Runesmith2.Runesmith2Code.Cards.Common;
 using Runesmith2.Runesmith2Code.Nodes.Runes;
 using Runesmith2.Runesmith2Code.Utils;
 
+#endregion
+
 namespace Runesmith2.Runesmith2Code.Models.Runes;
 
+// Does nothing
 public class MundusRune : RuneModel
 {
     public override decimal PassiveVal { get; set; } = 4;
@@ -24,7 +24,7 @@ public class MundusRune : RuneModel
     public override (decimal, decimal) BottomValue => (PassiveVal, PassiveVal);
     public override (Color, Color, Color) BottomBreakColor => NRune.DefaultFontColor;
 
-    public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Mundus>();
+    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Mundus>().MutableClone() as Runesmith2RecipeCard;
 
     public override async Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
     {

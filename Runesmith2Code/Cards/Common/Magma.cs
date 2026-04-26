@@ -1,3 +1,5 @@
+#region
+
 using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -8,6 +10,8 @@ using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Models.Runes;
 using Runesmith2.Runesmith2Code.Structs;
 
+#endregion
+
 namespace Runesmith2.Runesmith2Code.Cards.Common;
 
 public class Magma : Runesmith2RecipeCard
@@ -15,7 +19,6 @@ public class Magma : Runesmith2RecipeCard
     public Magma() : base(0, CardType.Skill, CardRarity.Basic, TargetType.Self)
     {
         WithVars(new PotencyVar(4).WithUpgrade(1), new ChargeVar(2).WithUpgrade(1));
-        WithTip(RunesmithHoverTip.Recipe);
         WithTip(RunesmithHoverTip.Craft);
         WithRuneTip<MagmaRune>();
     }

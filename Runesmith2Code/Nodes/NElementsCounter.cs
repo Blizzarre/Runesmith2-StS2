@@ -1,3 +1,5 @@
+#region
+
 using Godot;
 using MegaCrit.Sts2.addons.mega_text;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -8,6 +10,8 @@ using MegaCrit.Sts2.Core.Nodes.HoverTips;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Structs;
 using Runesmith2.Runesmith2Code.Utils;
+
+#endregion
 
 public partial class NElementsCounter : Control
 {

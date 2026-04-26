@@ -1,8 +1,12 @@
+#region
+
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Cards;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Patches;
 

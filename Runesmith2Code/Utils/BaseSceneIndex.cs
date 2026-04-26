@@ -1,5 +1,9 @@
+#region
+
 using Godot;
 using MegaCrit.Sts2.Core.Helpers;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Utils;
 

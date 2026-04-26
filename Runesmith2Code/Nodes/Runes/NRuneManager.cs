@@ -1,18 +1,20 @@
+#region
+
 using Godot;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Helpers;
-using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Entities.Runes;
 using Runesmith2.Runesmith2Code.Extensions;
-using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Models;
 using Runesmith2.Runesmith2Code.Utils;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Nodes.Runes;
 
@@ -117,7 +119,7 @@ public partial class NRuneManager : Control
         var queue = Player.PlayerCombatState?.RuneQueue();
         if (queue == null) return;
         var runeModel = queue.Runes.Count > 0 ? queue.Runes[^1] : null; // Get last (should be the newly added one)
-        if (_runes.Count >= RuneQueue.MaxCapacity) return; // cannot add rune to full RuneQueue
+        if (_runes.Count(r => r.Model != null) >= RuneQueue.MaxCapacity) return; // cannot add rune to full RuneQueue
         var emptyRune = _runes.FirstOrDefault(n => n.Model == null);
         var newRune = NRune.Create(LocalContext.IsMe(Player), runeModel);
         if (emptyRune == null)

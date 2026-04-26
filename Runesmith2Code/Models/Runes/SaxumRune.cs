@@ -1,19 +1,18 @@
-using Godot;
+#region
+
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Nodes.Rooms;
-using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.Cards;
-using Runesmith2.Runesmith2Code.Cards.Basic;
 using Runesmith2.Runesmith2Code.Cards.Common;
 using Runesmith2.Runesmith2Code.Utils;
 
+#endregion
+
 namespace Runesmith2.Runesmith2Code.Models.Runes;
 
+// Gain Block
 public class SaxumRune : RuneModel
 {
     public override decimal PassiveVal { get; set; } = 4;
@@ -21,7 +20,7 @@ public class SaxumRune : RuneModel
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.EndTurn;
 
-    public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Saxum>();
+    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Saxum>().MutableClone() as Runesmith2RecipeCard;
 
     public override async Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
     {
@@ -45,6 +44,7 @@ public class SaxumRune : RuneModel
 
     private async Task GainBlock(PlayerChoiceContext _, decimal amount)
     {
+        PlayPassiveSfx();
         await CreatureCmd.GainBlock(Owner.Creature, amount, ValueProp.Unpowered, null);
     }
 }

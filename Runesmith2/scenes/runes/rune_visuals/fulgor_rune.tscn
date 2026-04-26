@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuco6rn6y08ul"]
+
+[ext_resource type="Texture2D" uid="uid://cf4xgsxum1kdm" path="res://Runesmith2/images/runes/fulgor_rune.png" id="1_8r8fq"]
+
+[node name="FulgorRune" type="Node2D"]
+
+[node name="Fulgor" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_8r8fq")

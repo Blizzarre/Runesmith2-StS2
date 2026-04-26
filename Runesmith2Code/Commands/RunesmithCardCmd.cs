@@ -1,4 +1,6 @@
-﻿using MegaCrit.Sts2.Core.Combat;
+﻿#region
+
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
@@ -8,6 +10,8 @@ using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Hooks;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Commands;
 
@@ -23,7 +27,8 @@ public static class RunesmithCardCmd
             var combatState = targetCard.CombatState ?? targetCard.Owner.Creature.CombatState!;
             // TODO Consider adding history for cards enhanced.
             var modifiedEnhance =
-                RunesmithHook.ModifyEnhanceAmount(combatState, player, enhanceAmount, ValueProp.Move, targetCard, out var modifiers);
+                RunesmithHook.ModifyEnhanceAmount(combatState, player, enhanceAmount, ValueProp.Move, targetCard,
+                    out var modifiers);
             await RunesmithHook.AfterModifyingEnhanceAmount(combatState, modifiedEnhance, cardPlay?.Card, cardPlay,
                 modifiers);
             targetCard.AddEnhance(enhanceAmount);

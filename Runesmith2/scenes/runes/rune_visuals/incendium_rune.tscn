@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://6nos6uemnhsf"]
+
+[ext_resource type="Texture2D" uid="uid://cqchgwtd02c3g" path="res://Runesmith2/images/runes/incendium_rune.png" id="1_uk08y"]
+
+[node name="IncendiumRune" type="Node2D"]
+
+[node name="Incendium" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_uk08y")

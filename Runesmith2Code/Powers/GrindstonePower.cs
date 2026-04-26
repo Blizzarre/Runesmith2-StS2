@@ -1,4 +1,5 @@
-using MegaCrit.Sts2.Core.Combat;
+#region
+
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -6,6 +7,8 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.Extensions;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Powers;
 
@@ -20,7 +23,9 @@ public class GrindstonePower : Runesmith2Power
         if (Owner.Player == null) return;
         var card = cardPlay.Card;
         if (card.IsUpgradable)
+        {
             CardCmd.Upgrade(card);
+        }
         else if (card.CanEnhance())
         {
             await RunesmithCardCmd.Enhance(choiceContext, Owner.Player, card, cardPlay, 1);

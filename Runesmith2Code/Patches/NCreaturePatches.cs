@@ -1,3 +1,5 @@
+#region
+
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Context;
@@ -6,6 +8,8 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Runs;
 using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Nodes.Runes;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Patches;
 

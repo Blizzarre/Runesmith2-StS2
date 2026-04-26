@@ -1,6 +1,10 @@
+#region
+
 using MegaCrit.Sts2.Core.Combat;
 using Runesmith2.Runesmith2Code.Structs;
 using static Runesmith2.Runesmith2Code.Extensions.PlayerCombatStateExtension;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Extensions;
 

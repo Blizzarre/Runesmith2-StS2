@@ -1,3 +1,5 @@
+#region
+
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
@@ -7,6 +9,8 @@ using Runesmith2.Runesmith2Code.CardSelection;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.HoverTips;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Cards.Common;
 

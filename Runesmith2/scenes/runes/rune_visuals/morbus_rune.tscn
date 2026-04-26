@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dageb1fnv2iql"]
+
+[ext_resource type="Texture2D" uid="uid://do2cgvtp0vi3w" path="res://Runesmith2/images/runes/morbus_rune.png" id="1_cd858"]
+
+[node name="MorbusRune" type="Node2D"]
+
+[node name="Morbus" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_cd858")

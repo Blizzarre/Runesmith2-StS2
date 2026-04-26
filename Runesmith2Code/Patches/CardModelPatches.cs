@@ -1,7 +1,6 @@
-using System.Reflection;
+#region
+
 using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using BaseLib.Extensions;
 using BaseLib.Utils.Patching;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -9,6 +8,8 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Field;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Patches;
 

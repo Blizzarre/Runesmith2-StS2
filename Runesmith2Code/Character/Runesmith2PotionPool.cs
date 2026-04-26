@@ -1,6 +1,10 @@
-﻿using BaseLib.Abstracts;
-using Runesmith2.Runesmith2Code.Extensions;
+﻿#region
+
+using BaseLib.Abstracts;
 using Godot;
+using Runesmith2.Runesmith2Code.Extensions;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Character;
 

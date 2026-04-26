@@ -1,4 +1,8 @@
+#region
+
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Utils;
 

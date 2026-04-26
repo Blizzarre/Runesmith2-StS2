@@ -1,7 +1,11 @@
+#region
+
 using BaseLib.Utils.Patching;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Field;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Patches;
 

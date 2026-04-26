@@ -1,9 +1,13 @@
-﻿using HarmonyLib;
+﻿#region
+
+using HarmonyLib;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.HoverTips;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Patches;
 

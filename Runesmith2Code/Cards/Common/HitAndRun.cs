@@ -1,8 +1,12 @@
+#region
+
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using Runesmith2.Runesmith2Code.Powers;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Cards.Common;
 

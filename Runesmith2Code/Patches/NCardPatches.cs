@@ -1,4 +1,6 @@
-﻿using BaseLib.Utils.Patching;
+﻿#region
+
+using BaseLib.Utils.Patching;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Assets;
@@ -11,6 +13,8 @@ using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Nodes;
 using Runesmith2.Runesmith2Code.Utils;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Patches;
 

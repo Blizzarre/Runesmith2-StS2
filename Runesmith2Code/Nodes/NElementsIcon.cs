@@ -1,3 +1,5 @@
+#region
+
 using Godot;
 using MegaCrit.Sts2.addons.mega_text;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -5,6 +7,8 @@ using MegaCrit.Sts2.Core.Entities.UI;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Utils;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Nodes;
 

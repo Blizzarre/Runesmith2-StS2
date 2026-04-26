@@ -1,12 +1,14 @@
-﻿using BaseLib.Abstracts;
-using Runesmith2.Runesmith2Code.Extensions;
+﻿#region
+
+using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.Models.Relics;
 using Runesmith2.Runesmith2Code.Cards.Basic;
+using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Relics;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Character;
 

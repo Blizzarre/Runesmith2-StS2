@@ -1,4 +1,8 @@
+#region
+
 using Runesmith2.Runesmith2Code.Structs;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Extensions;
 

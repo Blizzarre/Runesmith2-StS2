@@ -1,7 +1,11 @@
-﻿using BaseLib.Abstracts;
+﻿#region
+
+using BaseLib.Abstracts;
 using BaseLib.Extensions;
-using Runesmith2.Runesmith2Code.Extensions;
 using Godot;
+using Runesmith2.Runesmith2Code.Extensions;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Powers;
 

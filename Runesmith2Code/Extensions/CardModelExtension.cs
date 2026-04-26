@@ -1,8 +1,12 @@
-﻿using MegaCrit.Sts2.Core.Entities.Cards;
+﻿#region
+
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.Field;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Extensions;
 

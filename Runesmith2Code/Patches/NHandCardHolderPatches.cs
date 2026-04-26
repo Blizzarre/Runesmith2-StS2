@@ -1,10 +1,13 @@
-﻿using BaseLib.Utils.Patching;
+﻿#region
+
+using BaseLib.Utils.Patching;
 using Godot;
 using HarmonyLib;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using Runesmith2.Runesmith2Code.Extensions;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Patches;
 

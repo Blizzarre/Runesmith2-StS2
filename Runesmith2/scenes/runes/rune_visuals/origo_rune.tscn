@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bflxcuyhh7hrf"]
+
+[ext_resource type="Texture2D" uid="uid://b8s5rf4h02a2q" path="res://Runesmith2/images/runes/origo_rune.png" id="1_yj6md"]
+
+[node name="OrigoRune" type="Node2D"]
+
+[node name="Origo" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_yj6md")

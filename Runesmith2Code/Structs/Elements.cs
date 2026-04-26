@@ -1,6 +1,9 @@
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
+#region
+
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.DynamicVars;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Structs;
 

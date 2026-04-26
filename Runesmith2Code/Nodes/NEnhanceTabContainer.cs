@@ -1,12 +1,14 @@
-﻿using BaseLib.Extensions;
+﻿#region
+
 using Godot;
 using MegaCrit.Sts2.addons.mega_text;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Utils;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Nodes;
 

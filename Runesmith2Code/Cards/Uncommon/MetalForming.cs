@@ -1,4 +1,5 @@
-using BaseLib.Extensions;
+#region
+
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -11,13 +12,14 @@ using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Structs;
 
+#endregion
+
 namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 
 public class MetalForming : Runesmith2Card
 {
-    
     // TODO This card is super jank. Find a better way to calculate preview and gain block.
-    
+
     public MetalForming() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
         var terra = new TerraVar(1);

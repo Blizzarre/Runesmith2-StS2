@@ -1,6 +1,10 @@
-﻿using BaseLib.Abstracts;
+﻿#region
+
+using BaseLib.Abstracts;
 using BaseLib.Utils;
 using Runesmith2.Runesmith2Code.Character;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Potions;
 

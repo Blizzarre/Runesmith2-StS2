@@ -1,7 +1,11 @@
+#region
+
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Orbs;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using Runesmith2.Runesmith2Code.Field;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Patches;
 

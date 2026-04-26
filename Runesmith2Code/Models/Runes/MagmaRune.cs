@@ -1,6 +1,7 @@
+#region
+
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
@@ -8,13 +9,15 @@ using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.Cards;
-using Runesmith2.Runesmith2Code.Cards.Basic;
 using Runesmith2.Runesmith2Code.Cards.Common;
 using Runesmith2.Runesmith2Code.Nodes.Runes;
 using Runesmith2.Runesmith2Code.Utils;
 
+#endregion
+
 namespace Runesmith2.Runesmith2Code.Models.Runes;
 
+// Deal damage, gain Block
 public class MagmaRune : RuneModel
 {
     public override decimal PassiveVal { get; set; } = 4;
@@ -22,12 +25,12 @@ public class MagmaRune : RuneModel
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.EndTurn;
     public override (bool, bool) ShowTopLabel => (true, true);
-    public override (decimal, decimal) TopValue => (CalculatedPassiveVal, CalculatedPassiveVal);
+    public override (decimal, decimal) TopValue => (CalculatedPassiveVal, CalculatedBreakVal);
     public override (Color, Color, Color) TopLabelColor => NRune.BlueFontColor;
     public override decimal CalculatedPassiveVal => PassiveVal / 2;
     public override decimal CalculatedBreakVal => BreakVal / 2;
 
-    public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Magma>();
+    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Magma>().MutableClone() as Runesmith2RecipeCard;
 
     public override async Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
     {
@@ -38,6 +41,7 @@ public class MagmaRune : RuneModel
     {
         if (ChargeVal > 0)
         {
+            PlayPassiveSfx();
             await ApplyFireDamage(choiceContext, PassiveVal);
             await GainBlock(choiceContext, CalculatedPassiveVal);
             UseCharge();
@@ -46,6 +50,7 @@ public class MagmaRune : RuneModel
 
     public override async Task Break(PlayerChoiceContext choiceContext)
     {
+        PlayPassiveSfx();
         await ApplyFireDamage(choiceContext, BreakVal);
         await GainBlock(choiceContext, CalculatedBreakVal);
     }
@@ -59,7 +64,6 @@ public class MagmaRune : RuneModel
         if (target != null)
         {
             NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(NGroundFireVfx.Create(target));
-            PlayPassiveSfx();
             await CreatureCmd.Damage(choiceContext, target, amount, ValueProp.Unpowered, Owner.Creature);
         }
     }

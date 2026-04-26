@@ -1,11 +1,13 @@
+#region
+
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Hooks;
-using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.Models;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Entities.Runes;
 
@@ -59,44 +61,59 @@ public class RuneQueue
         _runes.Insert(idx, rune);
     }
 
+    public bool IsFull()
+    {
+        return Runes.Count >= Capacity;
+    }
+
     public async Task BeforeTurnEnd(PlayerChoiceContext choiceContext)
     {
-        foreach (var rune in Runes.ToList())
-        {
-            if (_owner.Creature.CombatState == null) return;
+        if (_owner.Creature.CombatState == null) return;
 
-            var triggerCount =
-                RunesmithHook.ModifyRunePassiveTriggerCount(_owner.Creature.CombatState, rune, 1,
-                    out var modifyingModels);
-            await RunesmithHook.AfterModifyingRunePassiveTriggerCount(_owner.Creature.CombatState, rune,
-                modifyingModels);
-            if (_owner.Creature.CombatState == null) return;
-            for (var i = 0; i < triggerCount; i++)
+        var count = RunesmithHook.ModifyRunePassiveTriggerCount(_owner.Creature.CombatState, 1,
+            out var modifyingModels);
+        await RunesmithHook.AfterModifyingRunePassiveTriggerCount(_owner.Creature.CombatState,
+            modifyingModels);
+
+        var runeTriggerCount = Runes.Select(rune => new Tuple<RuneModel, int>(rune, Math.Min(rune.ChargeVal, count)))
+            .ToList();
+        foreach (var pair in runeTriggerCount)
+            for (var i = 0; i < pair.Item2; i++)
             {
-                await rune.BeforeTurnEndRuneTrigger(choiceContext);
+                var wait = await pair.Item1.BeforeTurnEndEarlyRuneTrigger(choiceContext);
+                if (wait)
+                    await SmallWait();
+            }
+
+        // refresh count in case the rune charges has changed due to early trigger
+        runeTriggerCount = Runes.Select(rune => new Tuple<RuneModel, int>(rune, Math.Min(rune.ChargeVal, count)))
+            .ToList();
+        foreach (var pair in runeTriggerCount)
+            for (var i = 0; i < pair.Item2; i++)
+            {
+                await pair.Item1.BeforeTurnEndRuneTrigger(choiceContext);
                 await SmallWait();
             }
-        }
     }
 
     public async Task AfterTurnStart(PlayerChoiceContext choiceContext)
     {
-        foreach (var rune in Runes.ToList())
-        {
-            if (_owner.Creature.CombatState == null) return;
+        if (_owner.Creature.CombatState == null) return;
 
-            var triggerCount =
-                RunesmithHook.ModifyRunePassiveTriggerCount(_owner.Creature.CombatState, rune, 1,
-                    out var modifyingModels);
-            await RunesmithHook.AfterModifyingRunePassiveTriggerCount(_owner.Creature.CombatState, rune,
-                modifyingModels);
-            if (_owner.Creature.CombatState == null) return;
-            for (var i = 0; i < triggerCount; i++)
+        var count = RunesmithHook.ModifyRunePassiveTriggerCount(_owner.Creature.CombatState, 1,
+            out var modifyingModels);
+        await RunesmithHook.AfterModifyingRunePassiveTriggerCount(_owner.Creature.CombatState,
+            modifyingModels);
+
+        var runeTriggerCount = Runes.Select(rune => new Tuple<RuneModel, int>(rune, Math.Min(rune.ChargeVal, count)))
+            .ToList();
+
+        foreach (var pair in runeTriggerCount)
+            for (var i = 0; i < pair.Item2; i++)
             {
-                await rune.AfterTurnStartRuneTrigger(choiceContext);
+                await pair.Item1.AfterTurnStartRuneTrigger(choiceContext);
                 await SmallWait();
             }
-        }
     }
 
     private async Task SmallWait()

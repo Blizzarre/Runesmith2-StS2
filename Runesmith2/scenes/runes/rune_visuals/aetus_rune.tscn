@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6f0hx5qwvkna"]
+
+[ext_resource type="Texture2D" uid="uid://cwufar0colbak" path="res://Runesmith2/images/runes/aetus_rune.png" id="1_30drn"]
+
+[node name="AetusRune" type="Node2D"]
+
+[node name="Aetus" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_30drn")

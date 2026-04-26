@@ -1,6 +1,9 @@
+#region
+
 using Godot;
-using Godot.Collections;
 using MegaCrit.Sts2.Core.Nodes.Vfx.Utilities;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Nodes;
 

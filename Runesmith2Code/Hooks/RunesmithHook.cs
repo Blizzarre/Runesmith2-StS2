@@ -1,4 +1,6 @@
-﻿using MegaCrit.Sts2.Core.Combat;
+﻿#region
+
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -6,6 +8,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.Models;
 using Runesmith2.Runesmith2Code.Structs;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Hooks;
 
@@ -83,13 +87,13 @@ public static class RunesmithHook
             model => model.AfterCardEnhanced(choiceContext, card, enhanceAmount));
     }
 
-    public static int ModifyRunePassiveTriggerCount(ICombatState combatState, RuneModel rune, int originalCount,
+    public static int ModifyRunePassiveTriggerCount(ICombatState combatState, int originalCount,
         out List<AbstractModel> modifiers)
     {
         var modifyingModels = new List<AbstractModel>();
         var res = Aggregate<IModifyRunePassiveTriggerCount, int>(combatState, originalCount, (model, current) =>
         {
-            var next = model.ModifyRunePassiveTriggerCounts(rune, current);
+            var next = model.ModifyRunePassiveTriggerCounts(current);
             if (next != current) modifyingModels.Add((AbstractModel)model);
             return next;
         });
@@ -97,11 +101,11 @@ public static class RunesmithHook
         return res;
     }
 
-    public static Task AfterModifyingRunePassiveTriggerCount(ICombatState combatState, RuneModel rune,
+    public static Task AfterModifyingRunePassiveTriggerCount(ICombatState combatState,
         IEnumerable<AbstractModel> modifiers)
     {
         return Dispatch<IAfterModifyingRunePassiveTriggerCount>(combatState,
-            model => model.AfterModifyingRunePassiveTriggerCount(rune), modifiers);
+            model => model.AfterModifyingRunePassiveTriggerCount(), modifiers);
     }
 
     public static decimal ModifyRuneValue(ICombatState combatState, Player player, decimal amount)
@@ -187,7 +191,7 @@ public static class RunesmithHook
         modifiers = modifyingModels;
         return Math.Max(0, modifiedPotency);
     }
-    
+
     public static Task AfterModifyingPotency(ICombatState combatState, IEnumerable<AbstractModel> modifiers)
     {
         return Dispatch<IAfterModifyingPotency>(combatState,
@@ -207,7 +211,7 @@ public static class RunesmithHook
         modifiers = modifyingModels;
         return res;
     }
-    
+
     public static Task AfterModifyingCharge(ICombatState combatState, IEnumerable<AbstractModel> modifiers)
     {
         return Dispatch<IAfterModifyingCharge>(combatState,

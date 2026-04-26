@@ -1,7 +1,11 @@
+#region
+
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using SmartFormat.Core.Extensions;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Formatters;
 
@@ -42,36 +46,29 @@ public class ElementsIconsFormatter : IFormatter
                 iconText = GetElementsIcon(formattingInfo.FormatterOptions);
                 break;
             default:
-                throw new LocException($"Unknown value='{formattingInfo.CurrentValue}' type={formattingInfo.CurrentValue?.GetType()}");
+                throw new LocException(
+                    $"Unknown value='{formattingInfo.CurrentValue}' type={formattingInfo.CurrentValue?.GetType()}");
         }
 
-        if (formattingInfo.FormatterOptions == "0")
-        {
-            amount = 0;
-        }
+        if (formattingInfo.FormatterOptions.Contains('0')) amount = 0;
 
         string finalText;
         if (amount <= 0)
-        {
             finalText = iconText;
-        }
         else if (formattingInfo.CurrentValue is DynamicVar dynamicVar)
-        {
-            finalText = dynamicVar.ToHighlightedString(inverse:false) + iconText;
-        }
+            finalText = dynamicVar.ToHighlightedString(false) + iconText;
         else
-        {
             finalText = $"{amount}{iconText}";
-        }
-        
+
         formattingInfo.Write(finalText);
-        
+
         return true;
     }
 
     private static string GetElementsIcon(string format)
     {
-        return format switch
+        var name = format.Split(",").First();
+        return name switch
         {
             "ignis" => "[img]res://Runesmith2/images/charui/elements_ignis_icon.png[/img]",
             "terra" => "[img]res://Runesmith2/images/charui/elements_terra_icon.png[/img]",

@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿#region
+
+using System.Diagnostics.CodeAnalysis;
 using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using Godot;
@@ -18,6 +20,8 @@ using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Models.Runes;
 using Runesmith2.Runesmith2Code.Nodes.Runes;
 using Runesmith2.Runesmith2Code.Utils;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Models;
 
@@ -41,6 +45,10 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public virtual decimal CalculatedBreakVal => BreakVal;
 
     public virtual int ChargeVal { get; set; }
+
+    public virtual bool IsUpgradeable => false;
+
+    public bool Upgraded { get; set; }
 
     public abstract ChargeDepletionType ChargeDepletion { get; }
 
@@ -87,7 +95,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public HoverTip DumbHoverTip => RunesmithHoverTipFactory.CreateRuneHoverTip(this, Description);
 
     // Return the Recipe card that crafts this Rune.
-    public abstract Runesmith2RecipeCard RecipeCard { get; }
+    public abstract Runesmith2RecipeCard? RecipeCard { get; }
 
     protected virtual IEnumerable<IHoverTip> ExtraHoverTips => [];
 
@@ -105,6 +113,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
                 smartDescription.Add("Break", BreakVal);
                 smartDescription.Add("CalculatedBreak", CalculatedBreakVal);
                 smartDescription.Add("Charge", ChargeVal);
+                smartDescription.Add("IfUpgraded", Upgraded);
                 list.Add(RunesmithHoverTipFactory.CreateRuneHoverTip(this, smartDescription));
                 var chargeLocKey = ChargeDepletion switch
                 {
@@ -202,6 +211,11 @@ public abstract class RuneModel : AbstractModel, ICustomModel
         Triggered?.Invoke();
     }
 
+    public virtual Task<bool> BeforeTurnEndEarlyRuneTrigger(PlayerChoiceContext choiceContext)
+    {
+        return Task.FromResult(false);
+    }
+
     public virtual Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
     {
         return Task.CompletedTask;
@@ -248,9 +262,14 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     {
         ChargeVal = Math.Max(0, ChargeVal + amount);
     }
-    
+
     public void SetCharge(int amount)
     {
         ChargeVal = Math.Max(0, amount);
+    }
+
+    public void Upgrade()
+    {
+        if (IsUpgradeable) Upgraded = true;
     }
 }

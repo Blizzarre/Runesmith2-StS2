@@ -1,10 +1,14 @@
+#region
+
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Hooks;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.Extensions;
@@ -12,26 +16,28 @@ using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.Models;
 
+#endregion
+
 namespace Runesmith2.Runesmith2Code.Commands;
 
 public static class RuneCmd
 {
     public static async Task Craft<T>(PlayerChoiceContext choiceContext, Player player, CardPlay? cardPlay,
-        CardModel card) where T : RuneModel
+        CardModel card, bool upgraded = false) where T : RuneModel
     {
         var charge = card.DynamicVars.TryGetValue(ChargeVar.defaultName, out var var1) ? var1.IntValue : 0;
         var potency = card.DynamicVars.TryGetValue(PotencyVar.defaultName, out var var2) ? var2.IntValue : 0;
-        await Craft(choiceContext, ModelDb.Get<T>().ToMutable(), player, cardPlay, charge, potency);
+        await Craft(choiceContext, ModelDb.Get<T>().ToMutable(), player, cardPlay, charge, potency, upgraded);
     }
 
     public static async Task Craft<T>(PlayerChoiceContext choiceContext, Player player, CardPlay? cardPlay,
-        decimal charge, decimal potency = 0) where T : RuneModel
+        decimal charge, decimal potency = 0, bool upgraded = false) where T : RuneModel
     {
-        await Craft(choiceContext, ModelDb.Get<T>().ToMutable(), player, cardPlay, charge, potency);
+        await Craft(choiceContext, ModelDb.Get<T>().ToMutable(), player, cardPlay, charge, potency, upgraded);
     }
 
     public static async Task Craft(PlayerChoiceContext choiceContext, RuneModel rune, Player player, CardPlay? cardPlay,
-        decimal charge, decimal potency = 0)
+        decimal charge, decimal potency = 0, bool upgraded = false)
     {
         if (!CombatManager.Instance.IsOverOrEnding)
         {
@@ -39,6 +45,15 @@ public static class RuneCmd
             var runeQueue = player.PlayerCombatState?.RuneQueue();
             if (runeQueue == null) return; // todo log warning/error?
             rune.AssertMutable();
+
+            if (runeQueue.IsFull())
+            {
+                var playerDialogueLine = new LocString("combat_messages", "RUNESMITH2-FULL_RUNE_SLOTS");
+                player.Creature.GetVfxContainer()
+                    ?.AddChildSafely(NThoughtBubbleVfx.Create(playerDialogueLine.GetFormattedText(), player.Creature,
+                        1.0));
+                return;
+            }
 
             // TODO Modify rune charge and potency
             var modifiedPotency = potency;
@@ -49,9 +64,11 @@ public static class RuneCmd
             modifiedCharge = RunesmithHook.ModifyCharge(combatState, player, modifiedCharge, ValueProp.Move,
                 cardPlay?.Card, cardPlay, out var chargeModifiers);
             await RunesmithHook.AfterModifyingCharge(combatState, chargeModifiers);
-            
+
             rune.ChargeVal = (int)Math.Max(0, modifiedCharge);
             rune.PassiveVal = (int)Math.Max(0, modifiedPotency);
+            if (upgraded)
+                rune.Upgrade();
             rune.Owner = player;
             if (await runeQueue.TryEnqueue(rune))
             {
@@ -77,6 +94,13 @@ public static class RuneCmd
         var oldestRune = runeQueue.Runes[0];
         oldestRune.ModifyCharge(chargeAmount);
         return oldestRune;
+    }
+
+    public static void Charge(PlayerChoiceContext choiceContext, IEnumerable<RuneModel> runes, int chargeAmount)
+    {
+        foreach (var rune in runes)
+            if (!CombatManager.Instance.IsOverOrEnding)
+                rune.ModifyCharge(chargeAmount);
     }
 
     public static void Charge(PlayerChoiceContext choiceContext, RuneModel rune, int chargeAmount)

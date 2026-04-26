@@ -1,13 +1,14 @@
+#region
+
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Hooks;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.Extensions;
-using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.Structs;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Commands;
 
@@ -19,7 +20,8 @@ public static class RunesmithPlayerCmd
         {
             var combatState = player.Creature.CombatState;
             var runesmithCombatState = player.PlayerCombatState?.Runesmith();
-            var finalAmount = RunesmithHook.ModifyElementsGain(combatState, player, amount, ValueProp.Move, cardPlay?.Card, out var modifiers);
+            var finalAmount = RunesmithHook.ModifyElementsGain(combatState, player, amount, ValueProp.Move,
+                cardPlay?.Card, out var modifiers);
             await RunesmithHook.AfterModifyingElementsGain(combatState, modifiers);
             if (finalAmount.Total > 0)
                 // TODO play sfx

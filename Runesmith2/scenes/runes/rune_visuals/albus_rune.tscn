@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ba2vnj3rds75l"]
+
+[ext_resource type="Texture2D" uid="uid://bxmyob3q6r8h7" path="res://Runesmith2/images/runes/albus_rune.png" id="1_5twg8"]
+
+[node name="AlbusRune" type="Node2D"]
+
+[node name="Albus" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_5twg8")

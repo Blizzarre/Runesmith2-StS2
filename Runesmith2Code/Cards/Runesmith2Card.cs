@@ -1,18 +1,18 @@
-﻿using BaseLib.Abstracts;
+﻿#region
+
+using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using BaseLib.Utils;
 using Godot;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using Runesmith2.Runesmith2Code.Character;
 using Runesmith2.Runesmith2Code.Extensions;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using Runesmith2.Runesmith2Code.DynamicVars;
-using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Models;
 using Runesmith2.Runesmith2Code.Structs;
-using Runesmith2.Runesmith2Code.Utils;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Cards;
 
@@ -61,6 +61,9 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
         {
             case RunesmithHoverTip.Elements:
                 WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.CreateElementsHoverTip()));
+                break;
+            case RunesmithHoverTip.Craft:
+                WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.CreateCraftHoverTip()));
                 break;
             default:
                 WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.Static(runesmithTip)));
@@ -194,11 +197,18 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
     // OnPlayWrapper - patch done
 
     // DowngradeInternal - patch set base cost (not really needed)
-    
+
     protected bool HasRune()
     {
         if (IsInCombat) return Owner.PlayerCombatState?.RuneQueue()?.HasAny() ?? false;
 
         return false;
+    }
+
+    protected bool IsRuneSlotsFull()
+    {
+        if (!IsInCombat) return false;
+        var runeQueue = Owner.PlayerCombatState?.RuneQueue();
+        return runeQueue != null && runeQueue.IsFull();
     }
 }

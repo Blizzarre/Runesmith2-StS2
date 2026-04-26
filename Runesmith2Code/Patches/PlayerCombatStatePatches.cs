@@ -1,4 +1,5 @@
-using System.Reflection;
+#region
+
 using System.Reflection.Emit;
 using BaseLib.Utils.Patching;
 using HarmonyLib;
@@ -10,6 +11,8 @@ using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Entities.Runes;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Field;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Patches;
 

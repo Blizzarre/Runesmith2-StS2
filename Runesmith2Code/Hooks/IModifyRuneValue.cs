@@ -1,4 +1,8 @@
+#region
+
 using MegaCrit.Sts2.Core.Entities.Players;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Hooks;
 

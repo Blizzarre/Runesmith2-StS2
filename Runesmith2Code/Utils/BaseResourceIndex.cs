@@ -1,4 +1,8 @@
-﻿using Godot;
+﻿#region
+
+using Godot;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Utils;
 

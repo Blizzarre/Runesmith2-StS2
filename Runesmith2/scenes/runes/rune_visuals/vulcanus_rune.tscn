@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://t3nd1cvgi5au"]
+
+[ext_resource type="Texture2D" uid="uid://d1w0fqumalr5c" path="res://Runesmith2/images/runes/vulcanus_rune.png" id="1_ef558"]
+
+[node name="VulcanusRune" type="Node2D"]
+
+[node name="Vulcanus" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_ef558")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b045fovckefqe"]
+
+[ext_resource type="Texture2D" uid="uid://c3ynt2cpl7yka" path="res://Runesmith2/images/runes/flumen_rune.png" id="1_62l7i"]
+
+[node name="FlumenRune" type="Node2D"]
+
+[node name="Flumen" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_62l7i")

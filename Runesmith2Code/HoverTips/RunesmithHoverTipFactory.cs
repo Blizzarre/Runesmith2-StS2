@@ -1,13 +1,16 @@
-﻿using BaseLib.Extensions;
+﻿#region
+
+using BaseLib.Extensions;
 using Godot;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Models;
 using Runesmith2.Runesmith2Code.Utils;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.HoverTips;
 
@@ -21,6 +24,14 @@ public static class RunesmithHoverTipFactory
         return Static(text, RunesmithResource.ElementsIcon, RunesmithVarIndex.IgnisIconVar,
             RunesmithVarIndex.TerraIconVar,
             RunesmithVarIndex.AquaIconVar);
+    }
+
+    public static IHoverTip CreateCraftHoverTip()
+    {
+        const RunesmithHoverTip tip = RunesmithHoverTip.Craft;
+        var text = tip.GetType().GetPrefix() + StringHelper.Slugify(tip.ToString());
+
+        return Static(text, RunesmithVarIndex.ElementsIconVar);
     }
 
     public static IHoverTip Static(RunesmithHoverTip tip, params DynamicVar[] vars)

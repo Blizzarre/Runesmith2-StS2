@@ -1,7 +1,11 @@
+#region
+
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Localization;
 using Runesmith2.Runesmith2Code.Formatters;
 using SmartFormat;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Patches;
 

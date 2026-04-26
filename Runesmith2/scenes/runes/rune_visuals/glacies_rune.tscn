@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cachl1u837ovw"]
+
+[ext_resource type="Texture2D" uid="uid://jgwqwf0qmrnc" path="res://Runesmith2/images/runes/glacies_rune.png" id="1_w63nu"]
+
+[node name="GlaciesRune" type="Node2D"]
+
+[node name="Glacies" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_w63nu")

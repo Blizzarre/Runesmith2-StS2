@@ -1,5 +1,10 @@
+#region
+
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Localization;
+using FileAccess = Godot.FileAccess;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Patches;
 
@@ -25,7 +30,7 @@ internal static class LoadTablePatch
 
     private static bool Prefix(string path, ref Dictionary<string, string> __result)
     {
-        if (Godot.FileAccess.FileExists(path)) return true;
+        if (FileAccess.FileExists(path)) return true;
         if (!ExtraTables.Any(path.Contains)) return true;
         // Only override result if file does not exist and path is known to be in ExtraTables.
         __result = new Dictionary<string, string>();

@@ -1,3 +1,5 @@
+#region
+
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Helpers;
@@ -6,6 +8,8 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using Runesmith2.Runesmith2Code.Nodes;
 using Runesmith2.Runesmith2Code.Nodes.Runes;
 using Runesmith2.Runesmith2Code.Utils;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Field;
 

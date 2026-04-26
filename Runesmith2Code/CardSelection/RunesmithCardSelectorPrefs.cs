@@ -1,4 +1,8 @@
-﻿using MegaCrit.Sts2.Core.Localization;
+﻿#region
+
+using MegaCrit.Sts2.Core.Localization;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.CardSelection;
 
