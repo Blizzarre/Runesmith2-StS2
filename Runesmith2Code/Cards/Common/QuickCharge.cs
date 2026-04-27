@@ -24,8 +24,8 @@ public class QuickCharge : Runesmith2Card
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
+        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         var rune = RuneCmd.ChargeOldest(choiceContext, Owner, DynamicVars[ChargeVar.defaultName].IntValue);
-        await Cmd.CustomScaledWait(0.1f, 0.2f);
         await RuneCmd.Passive(choiceContext, rune);
     }
 }

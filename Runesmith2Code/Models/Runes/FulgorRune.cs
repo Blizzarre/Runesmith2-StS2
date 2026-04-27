@@ -28,7 +28,7 @@ public class FulgorRune : RuneModel
     public override (decimal, decimal) TopValue => (CalculatedPassiveVal, CalculatedBreakVal);
     public override (Color, Color, Color) TopLabelColor => NRune.BlueFontColor;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Fulgor>().MutableClone() as Runesmith2RecipeCard;
+    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Fulgor>();
 
     public override async Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
     {

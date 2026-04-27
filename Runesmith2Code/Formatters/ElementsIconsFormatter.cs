@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using SmartFormat.Core.Extensions;
+using static System.Int32;
 
 #endregion
 
@@ -33,6 +34,10 @@ public class ElementsIconsFormatter : IFormatter
                 amount = Convert.ToInt32(aquaVar.PreviewValue);
                 iconText = "[img]res://Runesmith2/images/charui/elements_aqua_icon.png[/img]";
                 break;
+            case DynamicVar dynVar:
+                amount = Convert.ToInt32(dynVar.PreviewValue);
+                iconText = GetElementsIcon(formattingInfo.FormatterOptions);
+                break;
             case int value:
                 amount = value;
                 iconText = GetElementsIcon(formattingInfo.FormatterOptions);
@@ -52,13 +57,22 @@ public class ElementsIconsFormatter : IFormatter
 
         if (formattingInfo.FormatterOptions.Contains('0')) amount = 0;
 
+        var splitOpts = formattingInfo.FormatterOptions.Split(',');
+        if (splitOpts.Length > 1)
+        {
+            if (TryParse(splitOpts[1], out var newAmount))
+            {
+                amount = newAmount;
+            }
+        }
+
         string finalText;
         if (amount <= 0)
             finalText = iconText;
         else if (formattingInfo.CurrentValue is DynamicVar dynamicVar)
-            finalText = dynamicVar.ToHighlightedString(false) + iconText;
+            finalText = dynamicVar.ToHighlightedString(false) + " " + iconText;
         else
-            finalText = $"{amount}{iconText}";
+            finalText = $"{amount} {iconText}";
 
         formattingInfo.Write(finalText);
 
@@ -78,9 +92,10 @@ public class ElementsIconsFormatter : IFormatter
         };
     }
 
+    // Prefixed formatter name to prevent conflict with other mods
     public string Name
     {
-        get => "elementsIcons";
+        get => "rs2Icon";
         set => throw new NotImplementedException();
     }
 

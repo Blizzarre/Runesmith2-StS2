@@ -1,5 +1,6 @@
 #region
 
+using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -23,6 +24,7 @@ public class EnhanceByVar : DynamicVar
     public EnhanceByVar(string name, int amount)
         : base(name, amount)
     {
+        this.WithTooltip("RUNESMITH2-ENHANCE");
     }
 
     public override void UpdateCardPreview(CardModel card, CardPreviewMode previewMode, Creature? target,
@@ -32,7 +34,7 @@ public class EnhanceByVar : DynamicVar
 
         if (runGlobalHooks)
             modifiedValue =
-                RunesmithHook.ModifyEnhanceAmount(card.CombatState!, card.Owner, IntValue, ValueProp.Move, card, out _);
+                RunesmithHook.ModifyEnhanceAmount(card.CombatState!, card.Owner, IntValue, card, out _);
 
         PreviewValue = modifiedValue;
     }

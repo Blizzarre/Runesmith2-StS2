@@ -5,6 +5,7 @@ using BaseLib.Extensions;
 using BaseLib.Utils;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Localization;
 using Runesmith2.Runesmith2Code.Character;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Hooks;
@@ -62,9 +63,6 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
             case RunesmithHoverTip.Elements:
                 WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.CreateElementsHoverTip()));
                 break;
-            case RunesmithHoverTip.Craft:
-                WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.CreateCraftHoverTip()));
-                break;
             default:
                 WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.Static(runesmithTip)));
                 break;
@@ -76,7 +74,11 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
         WithTip(new TooltipSource(_ => RunesmithHoverTipFactory.FromRune<T>()));
     }
 
-    public virtual decimal EnhanceMultiplier => 1m;
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+        description.Add("elements", 0);
+    }
 
     public event Action? ElementsCostChanged;
 

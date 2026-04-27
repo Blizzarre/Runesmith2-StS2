@@ -22,7 +22,6 @@ public class Fortify : Runesmith2Card
     {
         WithBlock(6);
         WithVar(new EnhanceByVar(1).WithUpgrade(1));
-        WithTip(RunesmithHoverTip.Enhance);
     }
 
     public override bool GainsBlock => true;
@@ -32,8 +31,7 @@ public class Fortify : Runesmith2Card
         CardPlay play)
     {
         await CommonActions.CardBlock(this, play);
-
-        // TODO create custom selection screen (like upgrade) to show enhanced value
+        
         var card = (await CardSelectCmd.FromHand(
             choiceContext,
             Owner,

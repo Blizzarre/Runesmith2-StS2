@@ -11,7 +11,7 @@ namespace Runesmith2.Runesmith2Code.Hooks;
 
 public interface IModifyEnhanceAmount
 {
-    public int ModifyEnhanceAmount(Player player, int amount, ValueProp props, CardModel? cardSource);
+    public int ModifyEnhanceAmount(Player player, int amount, CardModel? cardSource);
 }
 
 public interface IAfterModifyingEnhanceAmount

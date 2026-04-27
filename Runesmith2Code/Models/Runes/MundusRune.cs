@@ -24,30 +24,6 @@ public class MundusRune : RuneModel
     public override (decimal, decimal) BottomValue => (PassiveVal, PassiveVal);
     public override (Color, Color, Color) BottomBreakColor => NRune.DefaultFontColor;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Mundus>().MutableClone() as Runesmith2RecipeCard;
-
-    public override async Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
-    {
-        await Passive(choiceContext);
-    }
-
-    public override async Task Passive(PlayerChoiceContext choiceContext)
-    {
-        if (ChargeVal > 0)
-        {
-            Trigger();
-            await GainBlock(choiceContext, PassiveVal);
-            UseCharge();
-        }
-    }
-
-    public override async Task Break(PlayerChoiceContext choiceContext)
-    {
-        await GainBlock(choiceContext, BreakVal);
-    }
-
-    private async Task GainBlock(PlayerChoiceContext _, decimal amount)
-    {
-        await CreatureCmd.GainBlock(Owner.Creature, amount, ValueProp.Unpowered, null);
-    }
+    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Mundus>();
+    
 }

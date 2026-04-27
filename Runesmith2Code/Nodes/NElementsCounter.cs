@@ -82,10 +82,7 @@ public partial class NElementsCounter : Control
         GetNode<MarginContainer>("%MarginContainer2").AddChild(_labels[1]);
         GetNode<MarginContainer>("%MarginContainer3").AddChild(_labels[2]);
         var locString = new LocString("static_hover_tips", "RUNESMITH2-ELEMENTS_COUNT.description");
-        locString.Add("ElementsIcon", "[img]res://Runesmith2/images/charui/elements_all_icon.png[/img]");
-        locString.Add("IgnisIcon", "[img]res://Runesmith2/images/charui/elements_ignis_icon.png[/img]");
-        locString.Add("TerraIcon", "[img]res://Runesmith2/images/charui/elements_terra_icon.png[/img]");
-        locString.Add("AquaIcon", "[img]res://Runesmith2/images/charui/elements_aqua_icon.png[/img]");
+        locString.Add("elements", 0);
         _hoverTip = new HoverTip(new LocString("static_hover_tips", "RUNESMITH2-ELEMENTS_COUNT.title"), locString,
             RunesmithResource.ElementsIcon);
         Connect(Control.SignalName.MouseEntered, Callable.From(OnHovered));

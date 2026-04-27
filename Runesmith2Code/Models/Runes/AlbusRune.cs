@@ -24,7 +24,7 @@ public class AlbusRune : RuneModel
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.EndTurn;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Albus>().MutableClone() as Runesmith2RecipeCard;
+    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Albus>();
 
     public override async Task<bool> BeforeTurnEndEarlyRuneTrigger(PlayerChoiceContext choiceContext)
     {

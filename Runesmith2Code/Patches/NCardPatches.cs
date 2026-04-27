@@ -30,24 +30,23 @@ internal class NCardEnterTreePatch
         var enhanceTab = PreloadManager.Cache.GetScene(RunesmithResource.NEnhanceTabPath)
             .Instantiate<NEnhanceTabContainer>()
             .WithData(__instance);
+        var cardContainer = __instance.GetChild(0);
+        if (cardContainer == null) return;
+        cardContainer.AddChildSafely(enhanceTab);
+        cardContainer.MoveChildSafely(enhanceTab, cardContainer.GetNode("%TitleBanner").GetIndex());
         RunesmithNode.NEnhanceTab[__instance] = enhanceTab;
     }
 }
 
-[HarmonyPatch(typeof(NCard), nameof(NCard._Ready))]
-internal class NCardReadyPatch
-{
-    [HarmonyPostfix]
-    private static void Postfix(NCard __instance)
-    {
-        var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
-        if (enhanceTab == null) return;
-        var cardContainer = __instance.GetChild(0);
-        if (cardContainer == null) return;
-        cardContainer.AddChildSafely(enhanceTab);
-        cardContainer.MoveChild(enhanceTab, cardContainer.GetNode("%TitleBanner").GetIndex());
-    }
-}
+// [HarmonyPatch(typeof(NCard), nameof(NCard._Ready))]
+// internal class NCardReadyPatch
+// {
+//     [HarmonyPostfix]
+//     private static void Postfix(NCard __instance)
+//     {
+//
+//     }
+// }
 
 [HarmonyPatch(typeof(NCard), nameof(NCard.SubscribeToModel))]
 internal class NCardSubscribePatch
@@ -59,6 +58,7 @@ internal class NCardSubscribePatch
     {
         var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
         if (model == null || enhanceTab == null) return;
+        if (!enhanceTab.IsInsideTree()) return;
         var modifier = model.GetCardModelModifier();
         modifier.EnhanceChanged += enhanceTab.OnEnhanceChanged;
         modifier.StasisChanged += enhanceTab.OnStasisChanged;

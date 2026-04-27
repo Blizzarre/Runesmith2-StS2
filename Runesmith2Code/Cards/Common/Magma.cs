@@ -16,7 +16,7 @@ namespace Runesmith2.Runesmith2Code.Cards.Common;
 
 public class Magma : Runesmith2RecipeCard
 {
-    public Magma() : base(0, CardType.Skill, CardRarity.Basic, TargetType.Self)
+    public Magma() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
         WithVars(new PotencyVar(4).WithUpgrade(1), new ChargeVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Craft);

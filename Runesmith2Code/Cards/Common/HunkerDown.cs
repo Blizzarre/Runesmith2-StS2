@@ -14,7 +14,7 @@ public class HunkerDown : Runesmith2Card
     public HunkerDown() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
         WithBlock(12, 4);
-        WithPower<AmpPower>(3, 1);
+        WithPower<AmpPower>(2, 1);
     }
 
     protected override async Task OnPlay(

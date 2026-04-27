@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpsrfo1ayft0l"
-path="res://.godot/imported/firewall.png-cb8e2d9c025cf4e073e9d173ad2f2cbe.ctex"
+uid="uid://dsiubwjpxtpcm"
+path="res://.godot/imported/hammer_and_chisel.png-98979f9764d34fba0b7f909e8704119b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Runesmith2/images/card_portraits/firewall.png"
-dest_files=["res://.godot/imported/firewall.png-cb8e2d9c025cf4e073e9d173ad2f2cbe.ctex"]
+source_file="res://Runesmith2/images/card_portraits/hammer_and_chisel.png"
+dest_files=["res://.godot/imported/hammer_and_chisel.png-98979f9764d34fba0b7f909e8704119b.ctex"]
 
 [params]
 

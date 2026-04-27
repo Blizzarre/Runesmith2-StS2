@@ -24,7 +24,7 @@ public class FlumenRune : RuneModel
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.StartTurn;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Flumen>().MutableClone() as Runesmith2RecipeCard;
+    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Flumen>();
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {

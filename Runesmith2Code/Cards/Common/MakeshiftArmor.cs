@@ -27,9 +27,9 @@ public class MakeshiftArmor : Runesmith2Card
         if (HasRune())
         {
             await Cmd.CustomScaledWait(0.1f, 0.2f);
-            await CommonActions.CardBlock(this, play);
-            await Cmd.CustomScaledWait(0.1f, 0.2f);
             await RuneCmd.BreakOldest(choiceContext, Owner);
+            await Cmd.CustomScaledWait(0.1f, 0.2f);
+            await CommonActions.CardBlock(this, play);
         }
     }
 }

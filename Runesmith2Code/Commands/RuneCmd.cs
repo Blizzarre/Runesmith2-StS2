@@ -96,6 +96,13 @@ public static class RuneCmd
         return oldestRune;
     }
 
+    public static void ChargeAll(PlayerChoiceContext choiceContext, Player player, int chargeAmount)
+    {
+        var runeQueue = player.PlayerCombatState?.RuneQueue();
+        if (runeQueue == null || runeQueue.Runes.Count <= 0) return;
+        Charge(choiceContext, runeQueue.Runes, chargeAmount);
+    }
+
     public static void Charge(PlayerChoiceContext choiceContext, IEnumerable<RuneModel> runes, int chargeAmount)
     {
         foreach (var rune in runes)

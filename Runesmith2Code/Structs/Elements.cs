@@ -106,6 +106,16 @@ public struct Elements(int ignis, int terra, int aqua) : IEquatable<Elements>
         return !(a == b);
     }
 
+    public static Elements operator /(Elements a, int divisor)
+    {
+        return new Elements(a.Ignis / divisor, a.Terra / divisor, a.Aqua / divisor);
+    }
+    
+    public static Elements operator *(Elements a, int mult)
+    {
+        return new Elements(a.Ignis * mult, a.Terra * mult, a.Aqua * mult);
+    }
+
     public bool Equals(Elements other)
     {
         return Ignis == other.Ignis && Terra == other.Terra && Aqua == other.Aqua;

@@ -23,7 +23,7 @@ public class FlammaRune : RuneModel
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.EndTurn;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Flamma>().MutableClone() as Runesmith2RecipeCard;
+    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Flamma>();
 
     public override async Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
     {

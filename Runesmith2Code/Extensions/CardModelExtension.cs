@@ -128,8 +128,8 @@ public static class CardModelExtension
 
     public static decimal GetEnhanceMultiplier(this CardModel cardModel)
     {
-        if (cardModel is Runesmith2Card runesmith2Card)
-            return 0.5m * cardModel.GetCardModelModifier().Enhanced * runesmith2Card.EnhanceMultiplier;
+        if (cardModel is ICardEnhanceMult cardEnhanceMult)
+            return 0.5m * cardModel.GetCardModelModifier().Enhanced * cardEnhanceMult.EnhanceMult;
 
         return 0.5m * cardModel.GetCardModelModifier().Enhanced;
     }

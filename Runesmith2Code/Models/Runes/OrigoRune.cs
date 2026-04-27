@@ -29,7 +29,7 @@ public class OrigoRune : RuneModel
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.StartTurn;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Origo>().MutableClone() as Runesmith2RecipeCard;
+    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Origo>();
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {

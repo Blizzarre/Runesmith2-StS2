@@ -24,7 +24,7 @@ public class AetusRune : RuneModel
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.StartTurn;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Aetus>().MutableClone() as Runesmith2RecipeCard;
+    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Aetus>();
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {

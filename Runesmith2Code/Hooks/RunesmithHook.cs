@@ -58,14 +58,13 @@ public static class RunesmithHook
     }
 
 
-    public static int ModifyEnhanceAmount(ICombatState combatState, Player player, int originalAmount,
-        ValueProp props, CardModel? cardSource,
+    public static int ModifyEnhanceAmount(ICombatState combatState, Player player, int originalAmount, CardModel? cardSource,
         out IEnumerable<AbstractModel> modifiers)
     {
         var modifyingModels = new List<AbstractModel>();
         var res = Aggregate<IModifyEnhanceAmount, int>(combatState, originalAmount, (model, current) =>
         {
-            var next = model.ModifyEnhanceAmount(player, current, props, cardSource);
+            var next = model.ModifyEnhanceAmount(player, current, cardSource);
             if (next != current) modifyingModels.Add((AbstractModel)model);
             return next;
         });
