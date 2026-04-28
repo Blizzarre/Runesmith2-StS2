@@ -19,6 +19,10 @@ public class MakeshiftArmor : Runesmith2Card
         WithTip(RunesmithHoverTip.Break);
     }
 
+    protected override bool ShouldGlowGoldInternal => HasRune();
+
+    public override RuneBreakType RuneBreakType => RuneBreakType.Oldest;
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)

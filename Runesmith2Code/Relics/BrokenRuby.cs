@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.DynamicVars;
@@ -44,5 +45,10 @@ public class BrokenRuby : Runesmith2Relic
         if (player == Owner && player.Creature.CombatState!.RoundNumber <= 1)
             await RunesmithCardCmd.EnhanceRandomCards(choiceContext, Owner, PileType.Hand.GetPile(Owner).Cards,
                 DynamicVars.Cards.IntValue, 1, Owner.RunState.Rng.CombatCardSelection);
+    }
+
+    public override RelicModel GetUpgradeReplacement()
+    {
+        return ModelDb.Get<CoreCrystal>().ToMutable();
     }
 }

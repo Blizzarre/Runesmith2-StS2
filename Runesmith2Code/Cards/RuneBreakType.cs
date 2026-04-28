@@ -5,5 +5,6 @@ public enum RuneBreakType
     None,
     Oldest,
     Newest,
-    All
+    All,
+    AllExceptNewest
 }

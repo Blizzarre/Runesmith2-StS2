@@ -16,7 +16,7 @@ public class QuickCharge : Runesmith2Card
 {
     public QuickCharge() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
-        WithVar(new ChargeVar(3).WithUpgrade(1));
+        WithVar(new ChargeGainVar(3).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Charge);
     }
 
@@ -25,7 +25,7 @@ public class QuickCharge : Runesmith2Card
         CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        var rune = RuneCmd.ChargeOldest(choiceContext, Owner, DynamicVars[ChargeVar.defaultName].IntValue);
+        var rune = RuneCmd.ChargeOldest(choiceContext, Owner, DynamicVars[ChargeGainVar.defaultName].IntValue);
         await RuneCmd.Passive(choiceContext, rune);
     }
 }

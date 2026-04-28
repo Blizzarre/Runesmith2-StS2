@@ -27,13 +27,12 @@ public class StaticCage : Runesmith2Card
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
+        VfxCmd.PlayOnCreature(Owner.Creature, "vfx/vfx_attack_lightning");
         await CommonActions.CardBlock(this, play);
 
-        var cards = await CardSelectCmd.FromHand(
-            choiceContext,
-            Owner,
+        var cards = await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(RunesmithCardSelectorPrefs.StasisSelectionPrompt, DynamicVars.Cards.IntValue),
-            card => card.CanEnhance(),
+            card => card.CanStasis(),
             this
         );
         foreach (var card in cards) RunesmithCardCmd.Stasis(card);

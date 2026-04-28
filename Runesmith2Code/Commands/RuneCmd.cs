@@ -54,8 +54,7 @@ public static class RuneCmd
                         1.0));
                 return;
             }
-
-            // TODO Modify rune charge and potency
+            
             var modifiedPotency = potency;
             modifiedPotency = RunesmithHook.ModifyPotency(combatState, player, modifiedPotency, ValueProp.Move,
                 cardPlay?.Card, cardPlay, out var potencyModifiers);
@@ -84,6 +83,38 @@ public static class RuneCmd
             }
         }
     }
+    
+    public static async Task AddPotency(PlayerChoiceContext choiceContext, IEnumerable<RuneModel> runes, Player player, CardPlay? cardPlay, decimal potency = 0, ValueProp props = ValueProp.Move)
+    {
+        if (!CombatManager.Instance.IsOverOrEnding)
+        {
+            var combatState = player.Creature.CombatState!;
+            var runeQueue = player.PlayerCombatState?.RuneQueue();
+            if (runeQueue == null) return; // todo log warning/error?
+            
+            var modifiedPotency = potency;
+            modifiedPotency = RunesmithHook.ModifyPotency(combatState, player, modifiedPotency, props,
+                cardPlay?.Card, cardPlay, out var potencyModifiers);
+            await RunesmithHook.AfterModifyingPotency(combatState, potencyModifiers);
+
+            foreach (var rune in runes)
+            {
+                rune.PassiveVal = (int)Math.Max(0, rune.PassiveVal + modifiedPotency);
+            }
+        }
+    }
+        
+    public static void RemovePotency(IEnumerable<RuneModel> runes, Player player, decimal potency = 0)
+    {
+        if (CombatManager.Instance.IsOverOrEnding) return;
+        var runeQueue = player.PlayerCombatState?.RuneQueue();
+        if (runeQueue == null) return; // todo log warning/error?
+            
+        foreach (var rune in runes)
+        {
+            rune.PassiveVal = (int)Math.Max(0, rune.PassiveVal - potency);
+        }
+    }
 
     public static RuneModel? ChargeOldest(PlayerChoiceContext choiceContext, Player player,
         int chargeAmount)
@@ -92,6 +123,17 @@ public static class RuneCmd
         var runeQueue = player.PlayerCombatState?.RuneQueue();
         if (runeQueue == null || runeQueue.Runes.Count <= 0) return null;
         var oldestRune = runeQueue.Runes[0];
+        oldestRune.ModifyCharge(chargeAmount);
+        return oldestRune;
+    }
+    
+    public static RuneModel? ChargeNewest(PlayerChoiceContext choiceContext, Player player,
+        int chargeAmount)
+    {
+        if (CombatManager.Instance.IsOverOrEnding) return null;
+        var runeQueue = player.PlayerCombatState?.RuneQueue();
+        if (runeQueue == null || runeQueue.Runes.Count <= 0) return null;
+        var oldestRune = runeQueue.Runes[^1];
         oldestRune.ModifyCharge(chargeAmount);
         return oldestRune;
     }
@@ -160,8 +202,11 @@ public static class RuneCmd
         await brokenRune.Break(choiceContext);
         choiceContext.PopModel(brokenRune);
         if (player.Creature.CombatState != null)
+        {
             // TODO consider hook for after rune broken
+            await RunesmithHook.AfterRuneBroken(player.Creature.CombatState, choiceContext, player, brokenRune);
             if (removed)
                 brokenRune.RemoveInternal();
+        }
     }
 }

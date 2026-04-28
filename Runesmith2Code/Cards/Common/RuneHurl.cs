@@ -21,6 +21,8 @@ public class RuneHurl : Runesmith2Card
         WithTip(RunesmithHoverTip.Break);
     }
 
+    public override RuneBreakType RuneBreakType => RuneBreakType.Oldest;
+
     protected override bool ShouldGlowGoldInternal => HasRune();
 
     public override TargetType TargetType => HasRune() ? TargetType.AnyEnemy : TargetType.Self;

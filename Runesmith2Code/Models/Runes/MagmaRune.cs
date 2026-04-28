@@ -30,7 +30,7 @@ public class MagmaRune : RuneModel
     public override decimal CalculatedPassiveVal => PassiveVal / 2;
     public override decimal CalculatedBreakVal => BreakVal / 2;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Magma>();
+    public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Magma>();
 
     public override async Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
     {

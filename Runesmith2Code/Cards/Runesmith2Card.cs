@@ -87,6 +87,8 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
         ElementsCostChanged?.Invoke();
     }
 
+    public virtual RuneBreakType RuneBreakType => RuneBreakType.None;
+
     private bool _elementsCostSet;
 
     public virtual Elements CanonicalElementsCost => new(-1, -1, -1);

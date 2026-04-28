@@ -1,12 +1,9 @@
 #region
 
-using BaseLib.Cards.Variables;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using Runesmith2.Runesmith2Code.CardSelection;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.HoverTips;
@@ -19,7 +16,7 @@ namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 public class HammerTornado : Runesmith2Card
 {
     private const string CalculatedHitsKey = "CalculatedHits";
-    
+
     public HammerTornado() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
         WithDamage(9, 4);
@@ -33,6 +30,8 @@ public class HammerTornado : Runesmith2Card
         WithTip(RunesmithHoverTip.Break);
         WithTags(RunesmithTag.Hammer);
     }
+
+    public override RuneBreakType RuneBreakType => RuneBreakType.Oldest;
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

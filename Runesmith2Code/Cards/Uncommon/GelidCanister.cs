@@ -10,7 +10,6 @@ using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Powers;
 using Runesmith2.Runesmith2Code.Structs;
-using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
 
@@ -18,7 +17,7 @@ namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 
 public class GelidCanister : Runesmith2Card
 {
-    public GelidCanister() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
+    public GelidCanister() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies)
     {
         WithPower<IceColdPower>(4, 1);
         WithVars(new AquaVar(2).WithUpgrade(1));
@@ -32,12 +31,9 @@ public class GelidCanister : Runesmith2Card
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         if (CombatState != null)
-        {
             foreach (var hittableEnemy in CombatState.HittableEnemies)
-            {
                 await CommonActions.Apply<IceColdPower>(choiceContext, hittableEnemy, this);
-            }
-        }
+
         await RunesmithPlayerCmd.GainElements(new Elements(this), Owner, play);
     }
 }

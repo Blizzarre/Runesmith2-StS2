@@ -156,4 +156,16 @@ public struct Elements(int ignis, int terra, int aqua) : IEquatable<Elements>
     {
         return Ignis >= other.Ignis && Terra >= other.Terra && Aqua >= other.Aqua;
     }
+
+    public int SubtractSequential(int sub)
+    {
+        var rem = Ignis - sub;
+        Ignis = Math.Max(0, rem);
+        rem = Terra - Math.Max(0, -rem);
+        Terra = Math.Max(0, rem);
+        rem = Aqua - Math.Max(0, -rem);
+        Aqua = Math.Max(0, rem);
+        sub = Math.Max(0, -rem);
+        return sub;
+    }
 }

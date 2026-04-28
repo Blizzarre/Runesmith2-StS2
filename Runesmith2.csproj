@@ -111,6 +111,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Changelog\" />
         <Folder Include="Runesmith2Code\Nodes\Runes\" />
         <Folder Include="Runesmith2\images\cardui\" />
         <Folder Include="Runesmith2\images\card_portraits\big\"/>

@@ -35,6 +35,7 @@ public class HotHammer : Runesmith2Card
             .Execute(choiceContext);
 
         await RunesmithCardCmd.EnhanceRandomCards(choiceContext, Owner, PileType.Hand.GetPile(Owner).Cards,
-            DynamicVars.Cards.IntValue, DynamicVars[EnhanceByVar.defaultName].IntValue, Owner.RunState.Rng.CombatCardSelection);
+            DynamicVars.Cards.IntValue, DynamicVars[EnhanceByVar.defaultName].IntValue,
+            Owner.RunState.Rng.CombatCardSelection);
     }
 }

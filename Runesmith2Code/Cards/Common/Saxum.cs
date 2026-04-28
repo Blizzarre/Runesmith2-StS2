@@ -1,9 +1,11 @@
 #region
 
 using BaseLib.Extensions;
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.HoverTips;
@@ -20,6 +22,7 @@ public class Saxum : Runesmith2RecipeCard
     {
         WithVars(new PotencyVar(4).WithUpgrade(2), new ChargeVar(3));
         WithTip(RunesmithHoverTip.Craft);
+        WithTip(new TooltipSource(_ => HoverTipFactory.Static(StaticHoverTip.Block)));
         WithRuneTip<SaxumRune>();
     }
 

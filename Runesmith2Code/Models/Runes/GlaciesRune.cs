@@ -18,7 +18,7 @@ public class GlaciesRune : RuneModel
     public override decimal PassiveVal { get; set; } = 0;
     public override int ChargeVal { get; set; } = 3;
 
-    public override decimal CalculatedPassiveVal => 2;
+    public override decimal CalculatedPassiveVal => 1;
 
     public override decimal CalculatedBreakVal => CalculatedPassiveVal * 2;
 
@@ -28,7 +28,7 @@ public class GlaciesRune : RuneModel
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.EndTurn;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Glacies>();
+    public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Glacies>();
 
     public override async Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
     {

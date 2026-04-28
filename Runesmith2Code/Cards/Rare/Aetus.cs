@@ -21,6 +21,7 @@ public class Aetus : Runesmith2RecipeCard
         WithVars(new ChargeVar(3).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Craft);
         WithRuneTip<AetusRune>();
+        WithEnergyTip();
     }
 
     public override Elements CanonicalElementsCost => new(0, 0, 3);

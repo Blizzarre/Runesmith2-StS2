@@ -31,6 +31,7 @@ public class HeatExchange : Runesmith2Card
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
+        if (CombatState == null) return;
         var hittableEnemies = CombatState.HittableEnemies;
         foreach (var enemy in hittableEnemies)
             NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(NGroundFireVfx.Create(enemy));

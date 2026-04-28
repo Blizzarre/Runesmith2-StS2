@@ -24,6 +24,6 @@ public class MundusRune : RuneModel
     public override (decimal, decimal) BottomValue => (PassiveVal, PassiveVal);
     public override (Color, Color, Color) BottomBreakColor => NRune.DefaultFontColor;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Mundus>();
+    public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Mundus>();
     
 }

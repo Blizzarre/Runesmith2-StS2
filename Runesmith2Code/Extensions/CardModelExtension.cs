@@ -12,17 +12,6 @@ namespace Runesmith2.Runesmith2Code.Extensions;
 
 public static class CardModelExtension
 {
-    public static bool CanEnhance(this CardModel cardModel)
-    {
-        if (cardModel.Type == CardType.Attack) return true;
-
-        if (cardModel.GainsBlock) return true;
-
-        if (cardModel.HasPotency())
-            return true;
-
-        return false;
-    }
 
     public class RunesmithCardModelModifier
     {
@@ -103,57 +92,77 @@ public static class CardModelExtension
         public event Action? StasisChanged;
     }
 
-    public static RunesmithCardModelModifier GetCardModelModifier(this CardModel cardModel)
+    extension(CardModel cardModel)
     {
-        if (RunesmithField.Modifier[cardModel] == null)
-            return RunesmithField.Modifier[cardModel] = new RunesmithCardModelModifier(cardModel);
-        return RunesmithField.Modifier[cardModel]!;
-    }
+        public RunesmithCardModelModifier GetCardModelModifier()
+        {
+            if (RunesmithField.Modifier[cardModel] == null)
+                return RunesmithField.Modifier[cardModel] = new RunesmithCardModelModifier(cardModel);
+            return RunesmithField.Modifier[cardModel]!;
+        }
 
-    public static void AddEnhance(this CardModel cardModel, int amount)
-    {
-        if (!cardModel.IsMutable) return;
-        cardModel.GetCardModelModifier().Enhanced += amount;
-    }
+        public void AddEnhance(int amount)
+        {
+            if (!cardModel.IsMutable) return;
+            cardModel.GetCardModelModifier().Enhanced += amount;
+        }
 
-    public static bool IsEnhanced(this CardModel cardModel)
-    {
-        return cardModel.GetCardModelModifier().Enhanced > 0;
-    }
+        public bool IsEnhanced()
+        {
+            return cardModel.GetCardModelModifier().Enhanced > 0;
+        }
 
-    public static int GetEnhance(this CardModel cardModel)
-    {
-        return cardModel.GetCardModelModifier().Enhanced;
-    }
+        public int GetEnhance()
+        {
+            return cardModel.GetCardModelModifier().Enhanced;
+        }
 
-    public static decimal GetEnhanceMultiplier(this CardModel cardModel)
-    {
-        if (cardModel is ICardEnhanceMult cardEnhanceMult)
-            return 0.5m * cardModel.GetCardModelModifier().Enhanced * cardEnhanceMult.EnhanceMult;
+        public decimal GetEnhanceMultiplier()
+        {
+            if (cardModel is ICardEnhanceMult cardEnhanceMult)
+                return 0.5m * cardModel.GetCardModelModifier().Enhanced * cardEnhanceMult.EnhanceMult;
 
-        return 0.5m * cardModel.GetCardModelModifier().Enhanced;
-    }
+            return 0.5m * cardModel.GetCardModelModifier().Enhanced;
+        }
 
-    public static void ClearEnhance(this CardModel cardModel)
-    {
-        if (!cardModel.IsMutable) return;
-        cardModel.GetCardModelModifier().Enhanced = 0;
-    }
+        public void ClearEnhance()
+        {
+            if (!cardModel.IsMutable) return;
+            cardModel.GetCardModelModifier().Enhanced = 0;
+        }
 
-    public static void SetStasis(this CardModel cardModel, bool stasis)
-    {
-        if (!cardModel.IsMutable) return;
-        cardModel.GetCardModelModifier().Stasis = stasis;
-    }
+        public void SetStasis(bool stasis)
+        {
+            if (!cardModel.IsMutable) return;
+            cardModel.GetCardModelModifier().Stasis = stasis;
+        }
 
-    public static bool IsStasis(this CardModel cardModel)
-    {
-        return cardModel.GetCardModelModifier().Stasis;
-    }
+        public bool IsStasis()
+        {
+            return cardModel.GetCardModelModifier().Stasis;
+        }
 
-    public static bool HasPotency(this CardModel cardModel)
-    {
-        return cardModel.DynamicVars.ContainsKey(PotencyVar.defaultName) &&
-               cardModel.DynamicVars[PotencyVar.defaultName].BaseValue > 0;
+        public bool HasPotency()
+        {
+            return cardModel.DynamicVars.ContainsKey(PotencyVar.defaultName) &&
+                   cardModel.DynamicVars[PotencyVar.defaultName].BaseValue > 0;
+        }
+
+        public bool CanEnhance()
+        {
+            if (cardModel.Type == CardType.Attack) return true;
+
+            if (cardModel.GainsBlock) return true;
+
+            if (cardModel.HasPotency())
+                return true;
+
+            return false;
+        }
+
+        public bool CanStasis()
+        {
+            return cardModel.CanEnhance() && !cardModel.IsStasis();
+        }
     }
 }

@@ -29,7 +29,7 @@ public class OrigoRune : RuneModel
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.StartTurn;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Origo>();
+    public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Origo>();
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
@@ -62,7 +62,7 @@ public class OrigoRune : RuneModel
         foreach (var card in cardModels)
         {
             if (Upgraded)
-                card.UpgradeInternal();
+                CardCmd.Upgrade(card);
             card.SetToFreeThisTurn();
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
         }

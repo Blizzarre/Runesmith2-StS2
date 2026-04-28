@@ -57,14 +57,13 @@ public static class RunesmithCardCmd
         await Enhance(choiceContext, player, randomCards.Take(cardCount), null, enhanceBy);
     }
 
-    public static bool Stasis(CardModel targetCard)
+    public static void Stasis(CardModel targetCard)
     {
-        if (CombatManager.Instance.IsOverOrEnding) return false;
-        if (!targetCard.CanEnhance()) throw new InvalidOperationException($"Cannot enhance {targetCard.Id}.");
+        if (CombatManager.Instance.IsOverOrEnding) return;
+        if (!targetCard.CanEnhance()) throw new InvalidOperationException($"Cannot stasis {targetCard.Id}.");
 
-        if (targetCard.IsStasis()) return false;
+        if (targetCard.IsStasis()) return;
 
         targetCard.SetStasis(true);
-        return true;
     }
 }

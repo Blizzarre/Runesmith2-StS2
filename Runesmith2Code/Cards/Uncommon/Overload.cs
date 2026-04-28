@@ -16,33 +16,37 @@ namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 
 public class Overload : Runesmith2Card
 {
+    private const string ThresholdVarKey = "Threshold";
+
     public Overload() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        WithVar(new ChargeVar(2).WithUpgrade(1));
-        WithVar(new DynamicVar("Threshold", 5));
+        WithVar(new ChargeGainVar(2).WithUpgrade(1));
+        WithVar(new DynamicVar(ThresholdVarKey, 5));
         WithTip(RunesmithHoverTip.Charge);
         WithTip(RunesmithHoverTip.Break);
     }
 
-    protected override bool ShouldGlowGoldInternal
+    public override RuneBreakType RuneBreakType => IfWillBreak() ? RuneBreakType.Oldest : RuneBreakType.None;
+
+    protected override bool ShouldGlowGoldInternal => IfWillBreak();
+
+    private bool IfWillBreak()
     {
-        get
-        {
-            if (!IsInCombat) return false;
-            var runeQueue = Owner.PlayerCombatState?.RuneQueue();
-            if (runeQueue == null || !runeQueue.HasAny()) return false;
-            var rune = runeQueue.Runes[0];
-            return rune.ChargeVal + DynamicVars[ChargeVar.defaultName].BaseValue >= DynamicVars["Threshold"].BaseValue;
-        }
+        if (!IsInCombat) return false;
+        var runeQueue = Owner.PlayerCombatState?.RuneQueue();
+        if (runeQueue == null || !runeQueue.HasAny()) return false;
+        var rune = runeQueue.Runes[0];
+        return rune.ChargeVal + DynamicVars[ChargeGainVar.defaultName].BaseValue >=
+               DynamicVars[ThresholdVarKey].BaseValue;
     }
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var rune = RuneCmd.ChargeOldest(choiceContext, Owner, DynamicVars[ChargeVar.defaultName].IntValue);
+        var rune = RuneCmd.ChargeOldest(choiceContext, Owner, DynamicVars[ChargeGainVar.defaultName].IntValue);
 
-        if (rune != null && rune.ChargeVal >= DynamicVars["Threshold"].IntValue)
+        if (rune != null && rune.ChargeVal >= DynamicVars[ThresholdVarKey].IntValue)
         {
             var count = rune.ChargeVal;
             for (var i = 0; i < count; i++)

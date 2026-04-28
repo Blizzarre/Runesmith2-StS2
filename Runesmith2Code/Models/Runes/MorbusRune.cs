@@ -24,7 +24,7 @@ public class MorbusRune : RuneModel
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.StartTurn;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Morbus>();
+    public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Morbus>();
 
 
     public override async Task AfterTurnStartRuneTrigger(PlayerChoiceContext choiceContext)

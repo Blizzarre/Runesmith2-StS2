@@ -70,7 +70,7 @@ public class RuneQueue
     {
         if (_owner.Creature.CombatState == null) return;
 
-        var count = RunesmithHook.ModifyRunePassiveTriggerCount(_owner.Creature.CombatState, 1,
+        var count = RunesmithHook.ModifyRunePassiveTriggerCount(_owner.Creature.CombatState, _owner,1,
             out var modifyingModels);
         await RunesmithHook.AfterModifyingRunePassiveTriggerCount(_owner.Creature.CombatState,
             modifyingModels);
@@ -100,7 +100,7 @@ public class RuneQueue
     {
         if (_owner.Creature.CombatState == null) return;
 
-        var count = RunesmithHook.ModifyRunePassiveTriggerCount(_owner.Creature.CombatState, 1,
+        var count = RunesmithHook.ModifyRunePassiveTriggerCount(_owner.Creature.CombatState, _owner, 1,
             out var modifyingModels);
         await RunesmithHook.AfterModifyingRunePassiveTriggerCount(_owner.Creature.CombatState,
             modifyingModels);

@@ -218,7 +218,7 @@ public partial class NRuneManager : Control
     public void UpdateVisuals(RuneBreakType breakType)
     {
         foreach (var rune in _runes) rune.UpdateVisuals(false);
-
+        
         switch (breakType)
         {
             case RuneBreakType.Oldest:
@@ -231,6 +231,14 @@ public partial class NRuneManager : Control
             {
                 foreach (var rune2 in _runes) rune2.UpdateVisuals(true);
 
+                break;
+            }
+            case RuneBreakType.AllExceptNewest:
+            {
+                for (var i = 0; i < _runes.Count - 1; i++)
+                {
+                    _runes[i].UpdateVisuals(true);
+                }
                 break;
             }
             case RuneBreakType.None:

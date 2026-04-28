@@ -53,7 +53,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Layer2" type="TextureRect" parent="Layers/RotationLayers"]
+[node name="Layer1" type="TextureRect" parent="Layers/RotationLayers"]
 layout_mode = 0
 offset_right = 128.0
 offset_bottom = 128.0
@@ -63,7 +63,7 @@ texture = ExtResource("2_kgvn1")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Layer3" type="TextureRect" parent="Layers/RotationLayers"]
+[node name="Layer2" type="TextureRect" parent="Layers/RotationLayers"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -76,7 +76,7 @@ texture = ExtResource("3_4dy3v")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Layer4" type="TextureRect" parent="Layers/RotationLayers"]
+[node name="Layer3" type="TextureRect" parent="Layers/RotationLayers"]
 layout_mode = 0
 offset_right = 128.0
 offset_bottom = 128.0

@@ -33,6 +33,8 @@ internal class NCreatureReadyPatch
     }
 }
 
+// TODO Fix async method patch
+//  Rework this to transpiler patch?
 [HarmonyPatch(typeof(NCreature), "AnimDie")]
 internal class NCreatureAnimDiePatch
 {

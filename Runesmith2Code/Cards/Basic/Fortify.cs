@@ -10,7 +10,6 @@ using Runesmith2.Runesmith2Code.CardSelection;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.Extensions;
-using Runesmith2.Runesmith2Code.HoverTips;
 
 #endregion
 
@@ -31,13 +30,10 @@ public class Fortify : Runesmith2Card
         CardPlay play)
     {
         await CommonActions.CardBlock(this, play);
-        
-        var card = (await CardSelectCmd.FromHand(
-            choiceContext,
-            Owner,
+
+        var card = (await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(RunesmithCardSelectorPrefs.EnhanceSelectionPrompt, 1),
-            card => card.CanEnhance(),
-            this
+            card => card.CanEnhance(), this
         )).FirstOrDefault();
         if (card != null)
             await RunesmithCardCmd.Enhance(choiceContext, Owner, card, play,

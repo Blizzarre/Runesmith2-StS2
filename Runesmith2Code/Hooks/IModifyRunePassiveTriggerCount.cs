@@ -1,8 +1,10 @@
+using MegaCrit.Sts2.Core.Entities.Players;
+
 namespace Runesmith2.Runesmith2Code.Hooks;
 
 public interface IModifyRunePassiveTriggerCount
 {
-    public int ModifyRunePassiveTriggerCounts(int triggerCount);
+    public int ModifyRunePassiveTriggerCounts(int triggerCount, Player player);
 }
 
 public interface IAfterModifyingRunePassiveTriggerCount

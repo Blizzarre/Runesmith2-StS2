@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -95,7 +96,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public HoverTip DumbHoverTip => RunesmithHoverTipFactory.CreateRuneHoverTip(this, Description);
 
     // Return the Recipe card that crafts this Rune.
-    public abstract Runesmith2RecipeCard? RecipeCard { get; }
+    public abstract Runesmith2RecipeCard RecipeCard { get; }
 
     protected virtual IEnumerable<IHoverTip> ExtraHoverTips => [];
 
@@ -107,6 +108,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
             if (HasSmartDescription && IsMutable)
             {
                 var smartDescription = SmartDescription;
+                // TODO Fix energy prefix display
                 smartDescription.Add("energyPrefix", Owner.Character.CardPool.Title);
                 smartDescription.Add("Passive", PassiveVal);
                 smartDescription.Add("CalculatedPassive", CalculatedPassiveVal);
@@ -234,6 +236,13 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public virtual Task Break(PlayerChoiceContext choiceContext)
     {
         return Task.CompletedTask;
+    }
+
+    public RuneModel CreateClone()
+    {
+        AssertMutable();
+        var clonedRune = (RuneModel)ClonePreservingMutability();
+        return clonedRune;
     }
 
     // Note: Rune value shouldn't get modified after craft but having this just in case

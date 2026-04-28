@@ -36,6 +36,9 @@ public class SteamingChisel : Runesmith2Card
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         await CommonActions.CardBlock(this, play);
+        
+        await CommonActions.Apply<WeakPower>(choiceContext, play.Target, this);
+        
         await RunesmithPlayerCmd.GainElements(new Elements(this), Owner, play);
     }
 }

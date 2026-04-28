@@ -18,11 +18,13 @@ public class ElementsModifiedEntry(
 {
     public Elements Amount { get; } = amount;
 
+    public Player Player { get; } = player;
+
     public override string Description
     {
         get
         {
-            var left = $"{Actor.Player.Character.Id.Entry} {(Amount.Total < 0 ? "lost" : "gained")} ";
+            var left = $"{Actor.Player?.Character.Id.Entry} {(Amount.Total < 0 ? "lost" : "gained")} ";
 
             string[] arr =
             [

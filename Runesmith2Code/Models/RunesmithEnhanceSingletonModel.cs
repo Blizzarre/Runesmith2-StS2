@@ -2,6 +2,7 @@
 
 using BaseLib.Abstracts;
 using BaseLib.Extensions;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -60,5 +61,15 @@ public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false
         if (!cardSource.IsEnhanced()) return 1;
 
         return 1 + cardSource.GetEnhanceMultiplier();
+    }
+
+    public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    {
+        return base.AfterPlayerTurnStart(choiceContext, player);
+    }
+
+    public override Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    {
+        return base.BeforeTurnEnd(choiceContext, side);
     }
 }

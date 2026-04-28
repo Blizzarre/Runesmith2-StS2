@@ -20,7 +20,7 @@ public class SaxumRune : RuneModel
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.EndTurn;
 
-    public override Runesmith2RecipeCard? RecipeCard => ModelDb.Get<Saxum>();
+    public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Saxum>();
 
     public override async Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
     {

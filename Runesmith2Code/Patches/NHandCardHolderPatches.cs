@@ -16,7 +16,7 @@ namespace Runesmith2.Runesmith2Code.Patches;
 internal class NHandCardHolderSubscribePatch
 {
     [HarmonyPrefix]
-    private static void SubscribeToEventsPrefix(
+    private static void Prefix(
         NHandCardHolder __instance, ref CardModel? card
     )
     {
@@ -34,7 +34,7 @@ internal class NHandCardHolderSubscribePatch
 internal class NHandCardHolderUnsubscribePatch
 {
     [HarmonyPrefix]
-    private static void UnsubscribeFromEventsPrefix(
+    private static void Prefix(
         NHandCardHolder __instance, ref CardModel? card
     )
     {

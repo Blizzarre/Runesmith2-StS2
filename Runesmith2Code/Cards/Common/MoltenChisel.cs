@@ -34,6 +34,7 @@ public class MoltenChisel : Runesmith2Card
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+        
         await CommonActions.Apply<VulnerablePower>(choiceContext, play.Target, this);
 
         await RunesmithPlayerCmd.GainElements(new Elements(this), Owner, play);

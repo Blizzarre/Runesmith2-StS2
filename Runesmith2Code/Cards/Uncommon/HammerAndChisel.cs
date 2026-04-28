@@ -1,17 +1,11 @@
 #region
 
-using BaseLib.Extensions;
-using BaseLib.Utils;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using Runesmith2.Runesmith2Code.Commands;
-using Runesmith2.Runesmith2Code.DynamicVars;
-using Runesmith2.Runesmith2Code.Extensions;
-using Runesmith2.Runesmith2Code.HoverTips;
-using Runesmith2.Runesmith2Code.Powers;
+using MegaCrit.Sts2.Core.Models;
+using Runesmith2.Runesmith2Code.Character;
 using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
@@ -31,20 +25,18 @@ public class HammerAndChisel : Runesmith2Card
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
+        var cardPool = ModelDb.CardPool<Runesmith2CardPool>()
+            .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint).ToList();
+        
         var hammer = CardFactory.GetDistinctForCombat(Owner,
-                Owner.Character.CardPool.GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint)
-                    .Where(c => c.Tags.Contains(RunesmithTag.Hammer)), 1, Owner.RunState.Rng.CombatCardGeneration)
+                cardPool.Where(c => c.Tags.Contains(RunesmithTag.Hammer)), 1, Owner.RunState.Rng.CombatCardGeneration)
             .FirstOrDefault();
         var chisel = CardFactory.GetDistinctForCombat(Owner,
-                Owner.Character.CardPool.GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint)
-                    .Where(c => c.Tags.Contains(RunesmithTag.Chisel)), 1, Owner.RunState.Rng.CombatCardGeneration)
+                cardPool.Where(c => c.Tags.Contains(RunesmithTag.Chisel)), 1, Owner.RunState.Rng.CombatCardGeneration)
             .FirstOrDefault();
         if (hammer != null)
         {
-            if (IsUpgraded)
-            {
-                hammer.UpgradeInternal();
-            }
+            if (IsUpgraded) CardCmd.Upgrade(hammer);
 
             hammer.EnergyCost.AddThisCombat(-1);
             await CardPileCmd.Add(hammer, PileType.Hand);
@@ -52,10 +44,7 @@ public class HammerAndChisel : Runesmith2Card
 
         if (chisel != null)
         {
-            if (IsUpgraded)
-            {
-                chisel.UpgradeInternal();
-            }
+            if (IsUpgraded) CardCmd.Upgrade(chisel);
 
             chisel.EnergyCost.AddThisCombat(-1);
             await CardPileCmd.Add(chisel, PileType.Hand);

@@ -1,13 +1,16 @@
 #region
 
 using BaseLib.Extensions;
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Models.Runes;
+using Runesmith2.Runesmith2Code.Powers;
 using Runesmith2.Runesmith2Code.Structs;
 
 #endregion
@@ -21,6 +24,7 @@ public class Glacies : Runesmith2RecipeCard
         WithVars(new ChargeVar(3).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Craft);
         WithRuneTip<GlaciesRune>();
+        WithTip(new TooltipSource(_ => HoverTipFactory.FromPower<IceColdPower>()));
     }
 
     public override Elements CanonicalElementsCost => new(0, 2, 1);

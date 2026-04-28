@@ -1,5 +1,8 @@
 {
   "RUNESMITH2-BROKEN_RUBY.description": "At the start of each combat, gain {Ignis:rs2Icon()} and [gold]Enhance[/gold] [blue]{Cards:diff()}[/blue] card{Cards:plural:|s} in your [gold]Hand[/gold] at random.",
   "RUNESMITH2-BROKEN_RUBY.flavor": "",
-  "RUNESMITH2-BROKEN_RUBY.title": "Broken Ruby"
+  "RUNESMITH2-BROKEN_RUBY.title": "Broken Ruby",
+  "RUNESMITH2-CORE_CRYSTAL.description": "At the start of each combat, gain {Elements:rs2Icon()} and [gold]Enhance[/gold] all cards in your [gold]Hand[/gold].",
+  "RUNESMITH2-CORE_CRYSTAL.flavor": "",
+  "RUNESMITH2-CORE_CRYSTAL.title": "Core Crystal"
 }

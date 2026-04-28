@@ -86,13 +86,13 @@ public static class RunesmithHook
             model => model.AfterCardEnhanced(choiceContext, card, enhanceAmount));
     }
 
-    public static int ModifyRunePassiveTriggerCount(ICombatState combatState, int originalCount,
+    public static int ModifyRunePassiveTriggerCount(ICombatState combatState, Player player, int originalCount,
         out List<AbstractModel> modifiers)
     {
         var modifyingModels = new List<AbstractModel>();
         var res = Aggregate<IModifyRunePassiveTriggerCount, int>(combatState, originalCount, (model, current) =>
         {
-            var next = model.ModifyRunePassiveTriggerCounts(current);
+            var next = model.ModifyRunePassiveTriggerCounts(current, player);
             if (next != current) modifyingModels.Add((AbstractModel)model);
             return next;
         });
@@ -162,6 +162,13 @@ public static class RunesmithHook
     {
         return Dispatch<IAfterRuneCrafted>(combatState, choiceContext,
             model => model.AfterRuneCrafted(choiceContext, player, rune));
+    }
+    
+    public static Task AfterRuneBroken(ICombatState combatState, PlayerChoiceContext choiceContext, Player player,
+        RuneModel rune)
+    {
+        return Dispatch<IAfterRuneBroken>(combatState, choiceContext,
+            model => model.AfterRuneBroken(choiceContext, player, rune));
     }
 
     public static decimal ModifyPotency(ICombatState combatState, Player player, decimal potency, ValueProp props,

@@ -16,15 +16,18 @@ public class EnhanceByVar : DynamicVar
 {
     public const string defaultName = "EnhanceBy";
 
-    public EnhanceByVar(int amount)
-        : this(defaultName, amount)
+    public EnhanceByVar(int amount, bool tip = true)
+        : this(defaultName, amount, tip)
     {
     }
-
-    public EnhanceByVar(string name, int amount)
+    
+    public EnhanceByVar(string name, int amount, bool tip)
         : base(name, amount)
     {
-        this.WithTooltip("RUNESMITH2-ENHANCE");
+        if (tip)
+        {
+            this.WithTooltip("RUNESMITH2-ENHANCE");
+        }
     }
 
     public override void UpdateCardPreview(CardModel card, CardPreviewMode previewMode, Creature? target,
