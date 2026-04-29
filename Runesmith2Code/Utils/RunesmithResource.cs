@@ -9,7 +9,7 @@ namespace Runesmith2.Runesmith2Code.Utils;
 
 public static class RunesmithResource
 {
-    public static readonly Texture2D ElementsIcon =
+    public static Texture2D ElementsIcon =>
         ResourceLoader.Load<Texture2D>("res://Runesmith2/images/charui/elements_all_icon.png");
 
     public const string NEnhanceTabPath = "res://Runesmith2/scenes/cards/enhance_tab.tscn";

@@ -27,8 +27,8 @@ public class MagmaRune : RuneModel
     public override (bool, bool) ShowTopLabel => (true, true);
     public override (decimal, decimal) TopValue => (CalculatedPassiveVal, CalculatedBreakVal);
     public override (Color, Color, Color) TopLabelColor => NRune.BlueFontColor;
-    public override decimal CalculatedPassiveVal => PassiveVal / 2;
-    public override decimal CalculatedBreakVal => BreakVal / 2;
+    public override decimal CalculatedPassiveVal => (int)(PassiveVal / 2);
+    public override decimal CalculatedBreakVal => (int)(BreakVal / 2);
 
     public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Magma>();
 

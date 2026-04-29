@@ -14,9 +14,9 @@ public class ReduceEntropy : Runesmith2Card
 {
     public ReduceEntropy() : base(2, CardType.Skill, CardRarity.Rare, TargetType.AllEnemies)
     {
-        WithPower<IceColdPower>(4, 1);
-        WithVar("SelfIceColdPower", 2);
-        WithBlock(11, 4);
+        WithPower<IceColdPower>(6, 2);
+        WithVar("SelfIceColdPower", 4);
+        WithBlock(8, 4);
     }
 
     protected override async Task OnPlay(

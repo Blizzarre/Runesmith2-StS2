@@ -25,7 +25,7 @@ void fragment() {
 		vec2 rand_dir = normalize(vec2(nx * 2.0 - 1.0, ny * 2.0 - 1.0));
 
 		// Use another noise value to determine the jitter amplitude sign.
-		float n = texture(noise, uv * (noise_scale_x + noise_scale_y) * 0.5 + vec2(TIME * (noise_speed_x + noise_speed_y) * 0.5)).b;
+		float n = texture(noise, uv * vec2(noise_scale_x, noise_scale_y) + vec2(TIME * noise_speed_x, TIME * noise_speed_y)).b;
 		float off = (n * 2.0 - 1.0) * amplitude;
 
 		// Offset along a random direction

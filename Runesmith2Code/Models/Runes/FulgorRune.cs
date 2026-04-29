@@ -20,7 +20,7 @@ namespace Runesmith2.Runesmith2Code.Models.Runes;
 // Deal damage, gain Block, draw card
 public class FulgorRune : RuneModel
 {
-    public override decimal PassiveVal { get; set; } = 6;
+    public override decimal PassiveVal { get; set; } = 4;
     public override int ChargeVal { get; set; } = 3;
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.StartTurn;

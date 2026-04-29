@@ -21,7 +21,6 @@ public class CalmBeforeStorm : Runesmith2Card
         WithEnergyTip();
     }
 
-    public override RuneBreakType RuneBreakType => RuneBreakType.Oldest;
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

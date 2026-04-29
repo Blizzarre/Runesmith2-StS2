@@ -18,13 +18,13 @@ public class GlaciesRune : RuneModel
     public override decimal PassiveVal { get; set; } = 0;
     public override int ChargeVal { get; set; } = 3;
 
-    public override decimal CalculatedPassiveVal => 1;
+    public override decimal CalculatedPassiveVal => 2;
 
     public override decimal CalculatedBreakVal => CalculatedPassiveVal * 2;
 
     public override (bool, bool) ShowBottomLabel => (false, true);
 
-    public override (decimal, decimal) BottomValue => (2, 4);
+    public override (decimal, decimal) BottomValue => (CalculatedPassiveVal, CalculatedBreakVal);
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.EndTurn;
 

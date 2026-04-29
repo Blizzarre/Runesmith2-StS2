@@ -20,7 +20,7 @@ public class Magma : Runesmith2RecipeCard
 {
     public Magma() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
-        WithVars(new PotencyVar(4).WithUpgrade(1), new ChargeVar(2).WithUpgrade(1));
+        WithVars(new PotencyVar(4).WithUpgrade(2), new ChargeVar(3));
         WithTip(RunesmithHoverTip.Craft);
         WithTip(new TooltipSource(_ => HoverTipFactory.Static(StaticHoverTip.Block)));
         WithRuneTip<MagmaRune>();

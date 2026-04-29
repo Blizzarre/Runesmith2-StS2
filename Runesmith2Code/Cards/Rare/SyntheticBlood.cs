@@ -19,7 +19,7 @@ public class SyntheticBlood : Runesmith2Card
 {
     public SyntheticBlood() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
-        WithPower<SyntheticBloodPower>(2, 1);
+        WithVar("Amount", 2, 1);
         WithVars(new ElementsVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Elements);
     }
@@ -30,6 +30,6 @@ public class SyntheticBlood : Runesmith2Card
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         await RunesmithPlayerCmd.GainElements(new Elements(this), Owner, play);
-        await CommonActions.ApplySelf<SyntheticBloodPower>(choiceContext, this);
+        await CommonActions.ApplySelf<SyntheticBloodPower>(choiceContext, this,  DynamicVars["Amount"].IntValue);
     }
 }

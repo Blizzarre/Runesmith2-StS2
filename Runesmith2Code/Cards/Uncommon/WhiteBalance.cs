@@ -33,8 +33,6 @@ public class WhiteBalance : Runesmith2Card
         WithTip(RunesmithHoverTip.Elements);
     }
 
-    public override RuneBreakType RuneBreakType => RuneBreakType.Oldest;
-
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
@@ -46,7 +44,5 @@ public class WhiteBalance : Runesmith2Card
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
-
-        await RuneCmd.BreakOldest(choiceContext, Owner);
     }
 }

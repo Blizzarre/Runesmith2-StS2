@@ -19,7 +19,7 @@ public class GelidCanister : Runesmith2Card
 {
     public GelidCanister() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies)
     {
-        WithPower<IceColdPower>(4, 1);
+        WithPower<IceColdPower>(4, 2);
         WithVars(new AquaVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Elements);
         WithKeyword(CardKeyword.Exhaust);

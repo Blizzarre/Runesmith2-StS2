@@ -17,7 +17,7 @@ public class AdamantiumHammer : Runesmith2Card, IAfterCardEnhanced
 {
     public AdamantiumHammer() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
-        WithDamage(10, 4);
+        WithDamage(5, 2);
         WithTip(RunesmithHoverTip.Enhance);
         WithTags(RunesmithEnum.Hammer);
     }
