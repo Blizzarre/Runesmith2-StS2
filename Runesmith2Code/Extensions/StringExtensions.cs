@@ -3,6 +3,11 @@
 //Mostly utilities to get asset paths.
 public static class StringExtensions
 {
+    public static string ToRes(this string path)
+    {
+        return Path.Join("res://", path);
+    }
+    
     public static string ImagePath(this string path)
     {
         return Path.Join(MainFile.ModId, "images", path);
@@ -17,7 +22,12 @@ public static class StringExtensions
     {
         return Path.Join(MainFile.ModId, "images", "card_portraits", "big", path);
     }
-
+    
+    public static string EnchantmentImagePath(this string path)
+    {
+        return Path.Join(MainFile.ModId, "images", "enchantments", path);
+    }
+    
     public static string PowerImagePath(this string path)
     {
         return Path.Join(MainFile.ModId, "images", "powers", path);

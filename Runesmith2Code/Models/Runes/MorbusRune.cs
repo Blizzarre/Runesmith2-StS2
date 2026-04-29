@@ -37,6 +37,7 @@ public class MorbusRune : RuneModel
         if (ChargeVal > 0)
         {
             PlayPassiveSfx();
+            Trigger();
             await ApplyVulnerable(choiceContext, 1);
             await ApplyWeak(choiceContext, 1);
             UseCharge();

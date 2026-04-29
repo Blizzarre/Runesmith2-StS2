@@ -25,7 +25,7 @@ public class PerfectChisel : Runesmith2Card
         WithVars(new PotencyVar(3).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Enhance);
         WithTip(new TooltipSource(_ => HoverTipFactory.FromPower<AmpPower>()));
-        WithTags(RunesmithTag.Chisel);
+        WithTags(RunesmithEnum.Chisel);
     }
 
     protected override async Task OnPlay(

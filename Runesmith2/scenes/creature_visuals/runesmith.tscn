@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxkbshrpxtk1v"]
+
+[ext_resource type="Texture2D" uid="uid://b7ku2pnwh0541" path="res://Runesmith2/images/character/rs_new2.png" id="1_2q24s"]
+
+[node name="Runesmith" type="Node2D"]
+
+[node name="Visuals" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-27, -132)
+texture = ExtResource("1_2q24s")
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -137.0
+offset_top = -276.0
+offset_right = 101.0
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-3, -149)
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(12, -297)

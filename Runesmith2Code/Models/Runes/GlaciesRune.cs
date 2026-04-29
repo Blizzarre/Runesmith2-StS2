@@ -39,6 +39,7 @@ public class GlaciesRune : RuneModel
     {
         if (ChargeVal > 0)
         {
+            Trigger();
             await ApplyIceCold(choiceContext, CalculatedPassiveVal);
             UseCharge();
         }

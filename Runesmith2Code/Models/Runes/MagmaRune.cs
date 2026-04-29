@@ -42,6 +42,7 @@ public class MagmaRune : RuneModel
         if (ChargeVal > 0)
         {
             PlayPassiveSfx();
+            Trigger();
             await ApplyFireDamage(choiceContext, PassiveVal);
             await GainBlock(choiceContext, CalculatedPassiveVal);
             UseCharge();

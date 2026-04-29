@@ -9,11 +9,13 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Cards;
+using Runesmith2.Runesmith2Code.Character;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.HoverTips;
@@ -108,7 +110,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
             {
                 var smartDescription = SmartDescription;
                 // TODO Fix energy prefix display
-                smartDescription.Add("energyPrefix", Owner.Character.CardPool.Title);
+                smartDescription.Add("energyPrefix", GetRuneOwnerPool().EnergyColorName);
                 smartDescription.Add("Passive", PassiveVal);
                 smartDescription.Add("CalculatedPassive", CalculatedPassiveVal);
                 smartDescription.Add("Break", BreakVal);
@@ -132,6 +134,11 @@ public abstract class RuneModel : AbstractModel, ICustomModel
 
             return list;
         }
+    }
+
+    private IPoolModel GetRuneOwnerPool()
+    {
+        return IsMutable ? Owner.Character.CardPool : ModelDb.CardPool<Runesmith2CardPool>();
     }
 
     private string IconPath => Id.Entry.RemovePrefix().ToLowerInvariant().RuneImagePath();

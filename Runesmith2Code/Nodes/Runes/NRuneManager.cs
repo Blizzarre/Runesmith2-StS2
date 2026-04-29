@@ -27,7 +27,7 @@ public partial class NRuneManager : Control
 
     private NCreature _creatureNode;
 
-    private const float Radius = 330f;
+    private const float Radius = 320f;
 
     private const float FanAngle = 100f;
 
@@ -37,7 +37,7 @@ public partial class NRuneManager : Control
 
     private Tween? _curTween;
 
-    private static readonly Vector2 CenterOffset = new(-100f, -70f);
+    private static readonly Vector2 CenterOffset = new(-120f, 225f);
 
     private static string ScenePath => RunesmithResource.NRuneManagerPath;
 

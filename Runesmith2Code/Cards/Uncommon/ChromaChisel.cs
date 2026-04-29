@@ -23,7 +23,7 @@ public class ChromaChisel : Runesmith2Card
         WithPower<AmpPower>(1, 1);
         WithVars(new ElementsVar(1));
         WithTip(RunesmithHoverTip.Elements);
-        WithTags(RunesmithTag.Chisel);
+        WithTags(RunesmithEnum.Chisel);
     }
 
     protected override async Task OnPlay(

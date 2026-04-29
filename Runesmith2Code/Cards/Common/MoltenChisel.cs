@@ -23,7 +23,7 @@ public class MoltenChisel : Runesmith2Card
         WithPower<VulnerablePower>(1, 1);
         WithVars(new IgnisVar(1), new TerraVar(1));
         WithTip(RunesmithHoverTip.Elements);
-        WithTags(RunesmithTag.Chisel);
+        WithTags(RunesmithEnum.Chisel);
     }
 
     protected override async Task OnPlay(

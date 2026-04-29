@@ -18,7 +18,7 @@ public class Fulgor : Runesmith2RecipeCard
 {
     public Fulgor() : base(0, CardType.Skill, CardRarity.Ancient, TargetType.Self)
     {
-        WithVars(new PotencyVar(6).WithUpgrade(2), new ChargeVar(3).WithUpgrade(1));
+        WithVars(new PotencyVar(4).WithUpgrade(2), new ChargeVar(3).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Craft);
         WithRuneTip<FulgorRune>();
     }

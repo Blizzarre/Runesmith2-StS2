@@ -24,7 +24,7 @@ public static class CardModelExtension
                 _justEnhanced = false;
                 return ret;
             }
-            private set => _justEnhanced = value;
+            set => _justEnhanced = value;
         }
 
         private bool _justStasis;
@@ -100,10 +100,13 @@ public static class CardModelExtension
             return RunesmithField.Modifier[cardModel]!;
         }
 
-        public void AddEnhance(int amount)
+        public void AddEnhance(int amount, bool skipVisuals = false)
         {
             if (!cardModel.IsMutable) return;
-            cardModel.GetCardModelModifier().Enhanced += amount;
+            var modifier = cardModel.GetCardModelModifier();
+            modifier.Enhanced += amount;
+            if (skipVisuals)
+                modifier.JustEnhanced = false;
         }
 
         public bool IsEnhanced()

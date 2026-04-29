@@ -55,6 +55,7 @@ public class FulgorRune : RuneModel
         if (ChargeVal > 0)
         {
             PlayPassiveSfx();
+            Trigger();
             await ApplyAoeFireDamage(choiceContext, PassiveVal);
             await GainBlock(choiceContext, PassiveVal);
             await DrawCard(choiceContext, 1);

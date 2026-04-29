@@ -28,7 +28,7 @@ public class HammerTornado : Runesmith2Card
         });
         WithTip(RunesmithHoverTip.Charge);
         WithTip(RunesmithHoverTip.Break);
-        WithTags(RunesmithTag.Hammer);
+        WithTags(RunesmithEnum.Hammer);
     }
 
     public override RuneBreakType RuneBreakType => RuneBreakType.Oldest;

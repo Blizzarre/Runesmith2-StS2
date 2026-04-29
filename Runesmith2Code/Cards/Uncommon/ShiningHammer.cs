@@ -19,7 +19,7 @@ public class ShiningHammer : Runesmith2Card
         WithDamage(11, 1);
         WithCalculatedVar("EnhanceBy", 1, GetEnhanceBonus, 1);
         WithTip(RunesmithHoverTip.Enhance);
-        WithTags(RunesmithTag.Hammer);
+        WithTags(RunesmithEnum.Hammer);
     }
 
     protected override async Task OnPlay(
@@ -40,7 +40,7 @@ public class ShiningHammer : Runesmith2Card
             var cards = Owner.PlayerCombatState.AllPiles
                 .Where(p => p.IsCombatPile && p.Type != PileType.Exhaust)
                 .SelectMany(p => p.Cards)
-                .Where(c => c != this && c.Tags.Contains(RunesmithTag.Hammer) && c.CanEnhance());
+                .Where(c => c != this && c.Tags.Contains(RunesmithEnum.Hammer) && c.CanEnhance());
             await RunesmithCardCmd.Enhance(choiceContext, Owner, cards, play,
                 DynamicVars["EnhanceByBase"].IntValue);
         }

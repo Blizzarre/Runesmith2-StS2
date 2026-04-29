@@ -21,7 +21,7 @@ public class HotHammer : Runesmith2Card
         WithVar(new CardsVar(1).WithUpgrade(1));
         WithCalculatedVar("EnhanceBy", 1, GetEnhanceBonus);
         WithTip(RunesmithHoverTip.Enhance);
-        WithTags(RunesmithTag.Hammer);
+        WithTags(RunesmithEnum.Hammer);
     }
 
     protected override async Task OnPlay(

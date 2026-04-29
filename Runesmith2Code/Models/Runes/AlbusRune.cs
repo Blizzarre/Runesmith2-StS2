@@ -36,6 +36,7 @@ public class AlbusRune : RuneModel
     {
         if (ChargeVal > 0)
         {
+            Trigger();
             await ChargeRunes(choiceContext, 1);
             UseCharge();
         }

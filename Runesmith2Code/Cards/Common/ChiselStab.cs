@@ -21,7 +21,7 @@ public class ChiselStab : Runesmith2Card
         WithDamage(5, 2);
         WithVar(new IgnisVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Elements);
-        WithTags(RunesmithTag.Chisel);
+        WithTags(RunesmithEnum.Chisel);
     }
 
     protected override async Task OnPlay(

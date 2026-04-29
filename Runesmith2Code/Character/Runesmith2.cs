@@ -1,12 +1,15 @@
 ﻿#region
 
 using BaseLib.Abstracts;
+using BaseLib.Utils.NodeFactories;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using Runesmith2.Runesmith2Code.Cards.Basic;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Relics;
+using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
 
@@ -58,4 +61,11 @@ public class Runesmith2 : PlaceholderCharacterModel
         "res://Runesmith2/scenes/combat/energy_counters/runesmith_energy_counter.tscn";
 
     public override Color EnergyLabelOutlineColor => new("5b4a31");
+
+    public override NCreatureVisuals CreateCustomVisuals()
+    {
+        return NodeFactory<NCreatureVisuals>.CreateFromScene(RunesmithResource.NCreatureVisualsRunesmithPath);
+    }
+
+    public override string CustomCharacterSelectBg => RunesmithResource.NCharSelectBgRunesmithPath;
 }

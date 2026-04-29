@@ -168,7 +168,7 @@ public partial class NRune : NClickableControl
         base._EnterTree();
         if (Model != null)
         {
-            // Model.Triggered += Flash;
+            Model.Triggered += Flash;
         }
     }
 
@@ -177,7 +177,7 @@ public partial class NRune : NClickableControl
         base._ExitTree();
         if (Model != null)
         {
-            // Model.Triggered -= Flash;
+            Model.Triggered -= Flash;
         }
     }
 
@@ -290,10 +290,10 @@ public partial class NRune : NClickableControl
 
         for (var i = 1; i < 9; i++) _chargeSeparators[i - 1].Visible = i < charge;
     }
-
-    // NOTE: Only use flash to show the next empty Rune slot after the number of active Runes changed.
-    private void FlashEmpty()
+    
+    private void Flash()
     {
+        _flashParticle.Restart();
         _flashParticle.Emitting = true;
     }
 

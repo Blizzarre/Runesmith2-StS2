@@ -34,6 +34,7 @@ public class FlammaRune : RuneModel
     {
         if (ChargeVal > 0)
         {
+            Trigger();
             await ApplyFireDamage(choiceContext, PassiveVal);
             UseCharge();
         }

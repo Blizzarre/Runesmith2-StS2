@@ -29,10 +29,10 @@ public class HammerAndChisel : Runesmith2Card
             .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint).ToList();
 
         var hammer = CardFactory.GetDistinctForCombat(Owner,
-                cardPool.Where(c => c.Tags.Contains(RunesmithTag.Hammer)), 1, Owner.RunState.Rng.CombatCardGeneration)
+                cardPool.Where(c => c.Tags.Contains(RunesmithEnum.Hammer)), 1, Owner.RunState.Rng.CombatCardGeneration)
             .FirstOrDefault();
         var chisel = CardFactory.GetDistinctForCombat(Owner,
-                cardPool.Where(c => c.Tags.Contains(RunesmithTag.Chisel)), 1, Owner.RunState.Rng.CombatCardGeneration)
+                cardPool.Where(c => c.Tags.Contains(RunesmithEnum.Chisel)), 1, Owner.RunState.Rng.CombatCardGeneration)
             .FirstOrDefault();
         if (hammer != null)
         {

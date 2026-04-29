@@ -21,7 +21,7 @@ public class ChargedHammer : Runesmith2Card
         WithDamage(12, 2);
         WithVar(new ChargeGainVar(1).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Charge);
-        WithTags(RunesmithTag.Hammer);
+        WithTags(RunesmithEnum.Hammer);
     }
 
     protected override async Task OnPlay(

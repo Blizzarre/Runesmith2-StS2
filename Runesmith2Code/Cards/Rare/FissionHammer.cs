@@ -21,7 +21,7 @@ public class FissionHammer : Runesmith2Card
         WithDamage(8, 2);
         WithCards(1, 1);
         WithTip(RunesmithHoverTip.Enhance);
-        WithTags(RunesmithTag.Hammer);
+        WithTags(RunesmithEnum.Hammer);
     }
 
     protected override async Task OnPlay(

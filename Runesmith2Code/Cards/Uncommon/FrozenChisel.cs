@@ -23,7 +23,7 @@ public class FrozenChisel : Runesmith2Card
         WithPower<IceColdPower>(3, 1);
         WithVars(new TerraVar(1), new AquaVar(1));
         WithTip(RunesmithHoverTip.Elements);
-        WithTags(RunesmithTag.Chisel);
+        WithTags(RunesmithEnum.Chisel);
     }
 
     protected override async Task OnPlay(

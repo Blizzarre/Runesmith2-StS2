@@ -35,6 +35,7 @@ public class FlumenRune : RuneModel
     {
         if (ChargeVal > 0)
         {
+            Trigger();
             await DrawCard(choiceContext, 1);
             UseCharge();
         }

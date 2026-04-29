@@ -16,7 +16,7 @@ public class EngravedHammer : Runesmith2Card, ICardEnhanceMult
     {
         WithDamage(6, 3);
         WithTip(RunesmithHoverTip.Enhance);
-        WithTags(RunesmithTag.Hammer);
+        WithTags(RunesmithEnum.Hammer);
     }
 
     protected override async Task OnPlay(

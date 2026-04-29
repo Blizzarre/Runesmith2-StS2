@@ -40,6 +40,7 @@ public class OrigoRune : RuneModel
     {
         if (ChargeVal > 0)
         {
+            Trigger();
             await CreateCard(choiceContext, 1);
             UseCharge();
         }

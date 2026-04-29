@@ -35,6 +35,7 @@ public class AetusRune : RuneModel
     {
         if (ChargeVal > 0)
         {
+            Trigger();
             await GainEnergy(choiceContext, 1);
             UseCharge();
         }

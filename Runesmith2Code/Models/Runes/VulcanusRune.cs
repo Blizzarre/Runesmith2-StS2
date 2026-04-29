@@ -34,6 +34,7 @@ public class VulcanusRune : RuneModel
     {
         if (ChargeVal > 0)
         {
+            Trigger();
             await ApplyAoeFireDamageAndGainBlock(choiceContext, PassiveVal);
             UseCharge();
         }

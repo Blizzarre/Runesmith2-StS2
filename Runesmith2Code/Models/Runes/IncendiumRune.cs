@@ -33,6 +33,7 @@ public class IncendiumRune : RuneModel
     {
         if (ChargeVal > 0)
         {
+            Trigger();
             await ApplyAoeFireDamage(choiceContext, PassiveVal);
             UseCharge();
         }

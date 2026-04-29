@@ -18,7 +18,7 @@ public class HammerSwing : Runesmith2Card
     {
         WithDamage(5, 1);
         WithVar(new CardsVar(1).WithUpgrade(1));
-        WithTags(RunesmithTag.Hammer);
+        WithTags(RunesmithEnum.Hammer);
     }
 
     protected override async Task OnPlay(
