@@ -58,7 +58,8 @@ public static class RunesmithHook
     }
 
 
-    public static int ModifyEnhanceAmount(ICombatState combatState, Player player, int originalAmount, CardModel? cardSource,
+    public static int ModifyEnhanceAmount(ICombatState combatState, Player player, int originalAmount,
+        CardModel? cardSource,
         out IEnumerable<AbstractModel> modifiers)
     {
         var modifyingModels = new List<AbstractModel>();
@@ -163,7 +164,7 @@ public static class RunesmithHook
         return Dispatch<IAfterRuneCrafted>(combatState, choiceContext,
             model => model.AfterRuneCrafted(choiceContext, player, rune));
     }
-    
+
     public static Task AfterRuneBroken(ICombatState combatState, PlayerChoiceContext choiceContext, Player player,
         RuneModel rune)
     {

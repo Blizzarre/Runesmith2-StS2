@@ -14,15 +14,16 @@ namespace Runesmith2.Runesmith2Code.Cards.Rare;
 
 public class AllInOne : Runesmith2Card
 {
-    public AllInOne() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
+    public AllInOne() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
         WithTip(RunesmithHoverTip.Break);
         WithTip(RunesmithHoverTip.Charge);
         WithTip(RunesmithHoverTip.Potency);
-        WithCostUpgradeBy(-1);
+        WithKeyword(CardKeyword.Exhaust, UpgradeType.Remove);
     }
 
-    protected override bool ShouldGlowGoldInternal {
+    protected override bool ShouldGlowGoldInternal
+    {
         get
         {
             var runeQueue = Owner.PlayerCombatState?.RuneQueue();
@@ -37,7 +38,7 @@ public class AllInOne : Runesmith2Card
         CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        
+
         var runeQueue = Owner.PlayerCombatState?.RuneQueue();
         if (runeQueue is { Runes.Count: > 1 })
         {

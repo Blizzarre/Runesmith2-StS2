@@ -5,10 +5,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
-using Runesmith2.Runesmith2Code.Commands;
-using Runesmith2.Runesmith2Code.Extensions;
-using Runesmith2.Runesmith2Code.HoverTips;
-using Runesmith2.Runesmith2Code.Models;
 using Runesmith2.Runesmith2Code.Powers;
 
 #endregion
@@ -19,13 +15,11 @@ public class CalmBeforeStorm : Runesmith2Card
 {
     public CalmBeforeStorm() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
-        WithPower<BracePower>(3, 1);
+        WithPower<BracePower>(5);
         WithCards(2);
         WithEnergy(1, 1);
         WithEnergyTip();
     }
-
-    protected override bool ShouldGlowGoldInternal => HasRune();
 
     public override RuneBreakType RuneBreakType => RuneBreakType.Oldest;
 

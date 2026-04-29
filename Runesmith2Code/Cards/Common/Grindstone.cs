@@ -1,11 +1,9 @@
 #region
 
-using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Powers;
@@ -28,9 +26,10 @@ public class Grindstone : Runesmith2Card
         CardPlay play)
     {
         await CommonActions.CardBlock(this, play);
-        
+
         var power = (GrindstonePower)ModelDb.Power<GrindstonePower>().MutableClone();
         power.SetOwnerCard(this);
-        await PowerCmd.Apply(choiceContext, power, Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply(choiceContext, power, Owner.Creature, DynamicVars["Amount"].BaseValue, Owner.Creature,
+            this);
     }
 }

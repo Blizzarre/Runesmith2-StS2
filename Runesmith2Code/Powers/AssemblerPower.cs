@@ -1,3 +1,5 @@
+#region
+
 using BaseLib.Cards.Variables;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -7,17 +9,20 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 
+#endregion
+
 namespace Runesmith2.Runesmith2Code.Powers;
 
 public class AssemblerPower : Runesmith2Power
 {
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerStackType StackType => PowerStackType.Single;
 
     public CardModel? PickedCard { get; set; }
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips {
+    protected override IEnumerable<IHoverTip> ExtraHoverTips
+    {
         get
         {
             if (PickedCard == null) return [];
@@ -25,7 +30,8 @@ public class AssemblerPower : Runesmith2Power
         }
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DisplayVar<AssemblerPower>("CardTitle", p => p.PickedCard?.Title ?? "")];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DisplayVar<AssemblerPower>("CardTitle", p => p.PickedCard?.Title ?? "")];
 
     public void PickCard(CardModel card)
     {

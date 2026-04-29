@@ -7,7 +7,6 @@ using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Random;
-using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Hooks;
 
@@ -23,8 +22,9 @@ public static class RunesmithCardCmd
     {
         await Enhance(choiceContext, player, [targetCard], cardPlay, enhanceAmount, skipVisuals);
     }
-    
-    public static async Task Enhance(PlayerChoiceContext choiceContext, Player player, IEnumerable<CardModel> targetCards,
+
+    public static async Task Enhance(PlayerChoiceContext choiceContext, Player player,
+        IEnumerable<CardModel> targetCards,
         CardPlay? cardPlay, int enhanceAmount, bool skipVisuals = false)
     {
         if (!CombatManager.Instance.IsOverOrEnding)
@@ -42,10 +42,10 @@ public static class RunesmithCardCmd
             foreach (var targetCard in cardList)
             {
                 if (!targetCard.CanEnhance()) throw new InvalidOperationException($"Cannot enhance {targetCard.Id}.");
-            
-                targetCard.AddEnhance(enhanceAmount);
+
+                targetCard.AddEnhance(modifiedEnhance);
                 // TODO Enhance vfx
-                await RunesmithHook.AfterCardEnhanced(combatState, choiceContext, targetCard, enhanceAmount);
+                await RunesmithHook.AfterCardEnhanced(combatState, choiceContext, targetCard, modifiedEnhance);
             }
         }
     }

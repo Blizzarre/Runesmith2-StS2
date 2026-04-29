@@ -35,7 +35,9 @@ public class ElementalDecay : Runesmith2Card
             this
         );
 
-        var totalCost = cards.Select(c => c.EnergyCost.GetAmountToSpend()).Aggregate(0, (a, b) => a + b);
+        // Do not add X cost
+        var totalCost = cards.Select(c => c.EnergyCost.CostsX ? 0 : c.EnergyCost.GetAmountToSpend())
+            .Aggregate(0, (a, b) => a + b);
 
         if (totalCost > 0)
         {

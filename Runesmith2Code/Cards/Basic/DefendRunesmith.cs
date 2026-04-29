@@ -13,6 +13,7 @@ public class DefendRunesmith : Runesmith2Card
     public DefendRunesmith() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
     {
         WithBlock(5, 3);
+        WithTags(CardTag.Defend);
     }
 
     public override bool GainsBlock => true;

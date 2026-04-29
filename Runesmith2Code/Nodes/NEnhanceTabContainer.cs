@@ -5,7 +5,6 @@ using MegaCrit.Sts2.addons.mega_text;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using Runesmith2.Runesmith2Code.Extensions;
-using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Utils;
 
@@ -86,10 +85,7 @@ public partial class NEnhanceTabContainer : Control
 
     public void UpdateEnhanceVisuals()
     {
-        if (!IsNodeReady())
-        {
-            return;
-        }
+        if (!IsNodeReady()) return;
         if (NCard?._model != null)
         {
             var modifier = NCard._model.GetCardModelModifier();

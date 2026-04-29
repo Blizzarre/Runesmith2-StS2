@@ -218,7 +218,7 @@ public partial class NElementsCounter : Control
                 };
 
                 label.AddThemeColorOverride(ThemeConstants.Label.FontColor, elemValue == 0 ? StsColors.red : fontColor);
-                label.Text = elemValue.ToString();
+                label.SetTextAutoSize(elemValue.ToString());
             }
 
             if (elements.Total == 0)

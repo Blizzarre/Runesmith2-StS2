@@ -13,7 +13,7 @@
   "RUNESMITH2-FLUMEN_RUNE.description": "Rune: Draws a card.",
   "RUNESMITH2-FLUMEN_RUNE.smartDescription": "[gold]Passive:[/gold] At the start of turn, draw 1 card.\n[gold]Break:[/gold] Draw [blue]2[/blue] cards.",
   "RUNESMITH2-FLUMEN_RUNE.title": "Flumen",
-  "RUNESMITH2-FULGOR_RUNE.description": "Rune: Deals damage to ALL enemies, gains Block, and draws a card.",
+  "RUNESMITH2-FULGOR_RUNE.description": "Rune: Deals damage to ALL enemies, gains [gold]Block[/gold], and draws a card.",
   "RUNESMITH2-FULGOR_RUNE.smartDescription": "[gold]Passive:[/gold] At the end of turn, deal [blue]{Passive}[/blue] damage to a random enemy and gain [blue]{Passive}[/blue] [gold]Block[/gold].\nAt the start of turn, draw [blue]1[/blue] card.\n[gold]Break:[/gold] Deal [blue]{Break}[/blue] damage to a random enemy, gain [blue]{Break}[/blue] [gold]Block[/gold], and draw [blue]1[/blue] card.",
   "RUNESMITH2-FULGOR_RUNE.title": "Fulgor",
   "RUNESMITH2-GLACIES_RUNE.description": "Rune: Applies [gold]Ice-Cold[/gold] to ALL enemies.",

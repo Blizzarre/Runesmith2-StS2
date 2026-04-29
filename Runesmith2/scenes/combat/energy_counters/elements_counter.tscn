@@ -86,26 +86,26 @@ stretch_mode = 5
 [node name="MarginContainer1" type="MarginContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 44.0
+offset_left = 38.0
 offset_top = 24.0
-offset_right = 84.0
+offset_right = 90.0
 offset_bottom = 64.0
 mouse_filter = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 71.0
+offset_left = 65.0
 offset_top = 68.0
-offset_right = 111.0
+offset_right = 117.0
 offset_bottom = 108.0
 mouse_filter = 2
 
 [node name="MarginContainer3" type="MarginContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 17.0
+offset_left = 11.0
 offset_top = 68.0
-offset_right = 57.0
+offset_right = 63.0
 offset_bottom = 108.0
 mouse_filter = 2

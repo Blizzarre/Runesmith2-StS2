@@ -1,18 +1,12 @@
 #region
 
-using BaseLib.Extensions;
-using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using Runesmith2.Runesmith2Code.Commands;
-using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Powers;
-using Runesmith2.Runesmith2Code.Structs;
 using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
@@ -32,11 +26,12 @@ public class Assembler : Runesmith2Card
         CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        
+
         var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
         var pile = PileType.Discard.GetPile(Owner);
         var cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext,
-            pile.Cards.Where(c => c.Keywords.Contains(RunesmithKeyword.Recipe)).ToList(), Owner, prefs)).FirstOrDefault();
+                pile.Cards.Where(c => c.Keywords.Contains(RunesmithKeyword.Recipe)).ToList(), Owner, prefs))
+            .FirstOrDefault();
 
         if (cardModel != null)
         {

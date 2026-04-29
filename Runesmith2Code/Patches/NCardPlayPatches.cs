@@ -1,15 +1,19 @@
+#region
+
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Field;
 
+#endregion
+
 namespace Runesmith2.Runesmith2Code.Patches;
 
 [HarmonyPatch(typeof(NCardPlay), nameof(NCardPlay.TryShowEvokingOrbs))]
-static class NCardPlayTryShowEvokingOrbsPatch
+internal static class NCardPlayTryShowEvokingOrbsPatch
 {
     [HarmonyPostfix]
-    static void Postfix(NCardPlay __instance)
+    private static void Postfix(NCardPlay __instance)
     {
         var owner = __instance.CardOwnerNode;
         var card = __instance.Card;
@@ -21,10 +25,10 @@ static class NCardPlayTryShowEvokingOrbsPatch
 }
 
 [HarmonyPatch(typeof(NCardPlay), nameof(NCardPlay.HideEvokingOrbs))]
-static class NCardPlayHideEvokingOrbsPatch
+internal static class NCardPlayHideEvokingOrbsPatch
 {
     [HarmonyPostfix]
-    static void Postfix(NCardPlay __instance)
+    private static void Postfix(NCardPlay __instance)
     {
         var owner = __instance.CardOwnerNode;
         if (owner == null) return;

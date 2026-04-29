@@ -59,12 +59,8 @@ public class ElementsIconsFormatter : IFormatter
 
         var splitOpts = formattingInfo.FormatterOptions.Split(',');
         if (splitOpts.Length > 1)
-        {
             if (TryParse(splitOpts[1], out var newAmount))
-            {
                 amount = newAmount;
-            }
-        }
 
         string finalText;
         if (amount <= 0)

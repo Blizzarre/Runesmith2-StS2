@@ -11,7 +11,6 @@ using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Models.Runes;
-using Runesmith2.Runesmith2Code.Powers;
 using Runesmith2.Runesmith2Code.Structs;
 
 #endregion

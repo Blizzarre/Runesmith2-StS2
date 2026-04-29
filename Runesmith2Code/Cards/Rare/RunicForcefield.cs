@@ -1,14 +1,10 @@
 #region
 
-using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using Runesmith2.Runesmith2Code.Commands;
-using Runesmith2.Runesmith2Code.DynamicVars;
-using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Models;
@@ -31,15 +27,12 @@ public class RunicForcefield : Runesmith2Card, IAfterRuneCrafted
     {
         await CommonActions.CardBlock(this, play);
     }
-    
+
     public async Task AfterRuneCrafted(PlayerChoiceContext choiceContext, Player player, RuneModel rune)
     {
         if (player != Owner) return;
 
         var handPile = PileType.Hand.GetPile(Owner);
-        if (!handPile.Cards.Contains(this))
-        {
-            await CardPileCmd.Add(this, PileType.Hand);
-        }
+        if (!handPile.Cards.Contains(this)) await CardPileCmd.Add(this, PileType.Hand);
     }
 }

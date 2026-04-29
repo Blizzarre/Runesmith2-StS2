@@ -27,7 +27,7 @@ public class HammerAndChisel : Runesmith2Card
 
         var cardPool = ModelDb.CardPool<Runesmith2CardPool>()
             .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint).ToList();
-        
+
         var hammer = CardFactory.GetDistinctForCombat(Owner,
                 cardPool.Where(c => c.Tags.Contains(RunesmithTag.Hammer)), 1, Owner.RunState.Rng.CombatCardGeneration)
             .FirstOrDefault();

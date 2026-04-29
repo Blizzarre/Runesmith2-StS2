@@ -11,11 +11,11 @@ using Runesmith2.Runesmith2Code.HoverTips;
 
 #endregion
 
-namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
+namespace Runesmith2.Runesmith2Code.Cards.Common;
 
 public class Stabilize : Runesmith2Card
 {
-    public Stabilize() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public Stabilize() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
         WithBlock(6, 2);
         WithVar(new ChargeVar(2).WithUpgrade(1));

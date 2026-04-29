@@ -36,6 +36,7 @@ public class GrindstonePower : Runesmith2Power
             _ownerCard = null;
             return;
         }
+
         if (card.IsUpgradable)
         {
             CardCmd.Upgrade(card);

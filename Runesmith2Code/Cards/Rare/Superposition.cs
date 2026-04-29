@@ -1,6 +1,5 @@
 #region
 
-using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -8,11 +7,8 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
-using Runesmith2.Runesmith2Code.Commands;
-using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Hooks;
-using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Models;
 
 #endregion
@@ -51,28 +47,21 @@ public class Superposition : Runesmith2Card, IAfterRuneCrafted, IAfterRuneBroken
             }
         }
     }
-    
+
     private static IHoverTip GetCardTip(CardModel card)
     {
         return HoverTipFactory.FromCard(((Superposition)card).GetTransformedVersion());
     }
-    
+
     private CardModel GetTransformedVersion()
     {
         CardModel targetCard;
         if (CombatState != null)
-        {
             targetCard = CombatState.CreateCard<Underposition>(Owner);
-        }
         else
-        {
             targetCard = (CardModel)ModelDb.Card<Underposition>().MutableClone();
-        }
 
-        if (IsUpgraded)
-        {
-            CardCmd.Upgrade(targetCard);
-        }
+        if (IsUpgraded) CardCmd.Upgrade(targetCard);
         if (Enchantment != null)
         {
             var enchantmentModel = (EnchantmentModel)Enchantment.MutableClone();
@@ -80,34 +69,22 @@ public class Superposition : Runesmith2Card, IAfterRuneCrafted, IAfterRuneBroken
         }
 
         var enhance = this.GetEnhance();
-        if (enhance > 0)
-        {
-            targetCard.AddEnhance(enhance);
-        }
+        if (enhance > 0) targetCard.AddEnhance(enhance);
 
         var stasis = this.IsStasis();
-        if (stasis)
-        {
-            targetCard.SetStasis(stasis);
-        }
+        if (stasis) targetCard.SetStasis(stasis);
 
         return targetCard;
     }
 
     public async Task AfterRuneCrafted(PlayerChoiceContext choiceContext, Player player, RuneModel rune)
     {
-        if (player == Owner)
-        {
-            await CheckAndTransformSelf();
-        }
+        if (player == Owner) await CheckAndTransformSelf();
     }
 
     public async Task AfterRuneBroken(PlayerChoiceContext choiceContext, Player player, RuneModel rune)
     {
-        if (player == Owner)
-        {
-            await CheckAndTransformSelf();
-        }
+        if (player == Owner) await CheckAndTransformSelf();
     }
 
     public override async Task AfterCardEnteredCombat(CardModel card)

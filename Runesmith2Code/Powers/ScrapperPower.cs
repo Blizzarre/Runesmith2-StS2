@@ -15,8 +15,8 @@ public class ScrapperPower : Runesmith2Power, IAfterRuneBroken
 {
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Single;
-    
+    public override PowerStackType StackType => PowerStackType.Counter;
+
     public Task AfterRuneBroken(PlayerChoiceContext choiceContext, Player player, RuneModel rune)
     {
         if (player != Owner.Player) return Task.CompletedTask;

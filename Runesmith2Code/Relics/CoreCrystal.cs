@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Rooms;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.DynamicVars;
+using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Structs;
 
@@ -41,6 +42,7 @@ public class CoreCrystal : Runesmith2Relic
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player)
     {
         if (player == Owner && player.Creature.CombatState!.RoundNumber <= 1)
-            await RunesmithCardCmd.Enhance(choiceContext, Owner, PileType.Hand.GetPile(Owner).Cards, null, 1);
+            await RunesmithCardCmd.Enhance(choiceContext, Owner,
+                PileType.Hand.GetPile(Owner).Cards.Where(c => c.CanEnhance()), null, 1);
     }
 }

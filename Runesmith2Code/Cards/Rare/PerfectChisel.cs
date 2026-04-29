@@ -39,9 +39,7 @@ public class PerfectChisel : Runesmith2Card
 
         var runeQueue = Owner.PlayerCombatState?.RuneQueue();
         if (runeQueue != null)
-        {
             await RuneCmd.AddPotency(choiceContext, runeQueue.Runes, Owner, play,
                 DynamicVars[PotencyVar.defaultName].BaseValue);
-        }
     }
 }

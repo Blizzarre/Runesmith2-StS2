@@ -6,7 +6,6 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using Runesmith2.Runesmith2Code.CardSelection;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.DynamicVars;
@@ -45,6 +44,6 @@ public class PoweredAnvil : Runesmith2Card
                     DynamicVars[EnhanceByVar.defaultName].IntValue);
         }
 
-        await CommonActions.ApplySelf<PoweredAnvilPower>(choiceContext,this,  1);
+        await CommonActions.ApplySelf<PoweredAnvilPower>(choiceContext, this, 1);
     }
 }

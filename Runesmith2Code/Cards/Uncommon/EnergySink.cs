@@ -6,7 +6,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.HoverTips;
-using Runesmith2.Runesmith2Code.Structs;
 
 #endregion
 
@@ -32,10 +31,7 @@ public class EnergySink : Runesmith2Card
         {
             var energyToGain = runeQueue.Runes.Count(r => r.ChargeVal > 0);
             RuneCmd.ChargeAll(choiceContext, Owner, -DynamicVars["ChargeLoss"].IntValue);
-            if (!IsUpgraded)
-            {
-                RuneCmd.RemovePotency(runeQueue.Runes, Owner, DynamicVars["PotencyLoss"].IntValue);
-            }
+            if (!IsUpgraded) RuneCmd.RemovePotency(runeQueue.Runes, Owner, DynamicVars["PotencyLoss"].IntValue);
             await Cmd.CustomScaledWait(0.1f, 0.2f);
             await PlayerCmd.GainEnergy(energyToGain, Owner);
         }

@@ -28,6 +28,8 @@ public class ReduceEntropy : Runesmith2Card
             foreach (var hittableEnemy in CombatState.HittableEnemies)
                 await CommonActions.Apply<IceColdPower>(choiceContext, hittableEnemy, this);
 
+        await CommonActions.CardBlock(this, play);
+
         await CommonActions.ApplySelf<IceColdPower>(choiceContext, this, DynamicVars["SelfIceColdPower"].IntValue);
     }
 }

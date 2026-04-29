@@ -1,6 +1,10 @@
+#region
+
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+
+#endregion
 
 namespace Runesmith2.Runesmith2Code.Nodes;
 
@@ -25,7 +29,7 @@ public partial class NCustomRotationLayers : Control
     public override void _Process(double delta)
     {
         var speed = _player.PlayerCombatState is { Energy: 0 } ? 5f : 30f;
-        _layer1.RotationDegrees += (float) delta * speed * 1;
-        _layer3.RotationDegrees += (float) delta * speed * 2f;
+        _layer1.RotationDegrees += (float)delta * speed * 1;
+        _layer3.RotationDegrees += (float)delta * speed * 2f;
     }
 }

@@ -12,11 +12,11 @@ using Runesmith2.Runesmith2Code.Structs;
 
 #endregion
 
-namespace Runesmith2.Runesmith2Code.Cards.Common;
+namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 
 public class Mundus : Runesmith2RecipeCard
 {
-    public Mundus() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
+    public Mundus() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
         WithVars(new PotencyVar(4).WithUpgrade(2), new ChargeVar(3).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Craft);

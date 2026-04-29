@@ -14,8 +14,8 @@ public class WildfirePower : Runesmith2Power
 {
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Single;
-    
+    public override PowerStackType StackType => PowerStackType.Counter;
+
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         await RunesmithPlayerCmd.GainElements(new Elements(Amount, Amount, 0), player);

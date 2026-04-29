@@ -1,6 +1,5 @@
 #region
 
-using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -19,7 +18,7 @@ namespace Runesmith2.Runesmith2Code.Cards.Rare;
 public class ShockTherapy : Runesmith2Card
 {
     private const string CalculatedHitsKey = "CalculatedHits";
-    
+
     public ShockTherapy() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
         WithDamage(5, 2);
@@ -27,7 +26,7 @@ public class ShockTherapy : Runesmith2Card
         WithCalculatedVar(CalculatedHitsKey, 0, GetPrecalculatedHits, 1);
         WithTip(RunesmithHoverTip.Stasis);
     }
-    
+
     private static decimal GetPrecalculatedHits(CardModel card, Creature? _)
     {
         var toStasisCards = card.DynamicVars.Cards.BaseValue;
@@ -46,7 +45,7 @@ public class ShockTherapy : Runesmith2Card
             this
         );
         foreach (var card in cards) RunesmithCardCmd.Stasis(card);
-        
+
         var stasisCardCount = PileType.Hand.GetPile(Owner).Cards.Count(c => c.IsStasis());
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)

@@ -5,7 +5,9 @@ using BaseLib.Extensions;
 using BaseLib.Utils;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Character;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Hooks;
@@ -214,5 +216,10 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
         if (!IsInCombat) return false;
         var runeQueue = Owner.PlayerCombatState?.RuneQueue();
         return runeQueue != null && runeQueue.IsFull();
+    }
+
+    protected static decimal GetEnhanceBonus(CardModel c, Creature? _)
+    {
+        return RunesmithHook.ModifyEnhanceAmount(c.CombatState!, c.Owner, 0, c, out var _);
     }
 }

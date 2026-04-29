@@ -7,7 +7,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using Runesmith2.Runesmith2Code.CardSelection;
 using Runesmith2.Runesmith2Code.Commands;
-using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.HoverTips;
 
@@ -21,7 +20,7 @@ public class DoubleUp : Runesmith2Card
     {
         WithBlock(10);
         WithCards(1, 1);
-        WithVar(new EnhanceByVar(1));
+        WithCalculatedVar("EnhanceBy", 1, GetEnhanceBonus);
         WithTip(RunesmithHoverTip.Enhance);
     }
 
@@ -42,6 +41,6 @@ public class DoubleUp : Runesmith2Card
 
         foreach (var card in cards.Where(card => card.IsUpgradable)) CardCmd.Upgrade(card);
         await RunesmithCardCmd.Enhance(choiceContext, Owner, cards.Where(c => c.CanEnhance()), play,
-            DynamicVars[EnhanceByVar.defaultName].IntValue);
+            DynamicVars["EnhanceByBase"].IntValue);
     }
 }

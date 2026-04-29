@@ -16,7 +16,7 @@ public class DuctTapePower : Runesmith2Power, IAfterCardEnhanced
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Single;
-    
+
     public Task AfterCardEnhanced(PlayerChoiceContext choiceContext, CardModel card, int enhanceAmount)
     {
         if (card.Owner != Owner.Player || card.IsStasis()) return Task.CompletedTask;

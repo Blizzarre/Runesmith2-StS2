@@ -12,7 +12,6 @@ namespace Runesmith2.Runesmith2Code.Extensions;
 
 public static class CardModelExtension
 {
-
     public class RunesmithCardModelModifier
     {
         private bool _justEnhanced;

@@ -16,7 +16,6 @@ namespace Runesmith2.Runesmith2Code.HoverTips;
 
 public static class RunesmithHoverTipFactory
 {
-    
     public static IHoverTip CreateElementsHoverTip()
     {
         const RunesmithHoverTip tip = RunesmithHoverTip.Elements;
@@ -24,7 +23,7 @@ public static class RunesmithHoverTipFactory
 
         return Static(text, RunesmithResource.ElementsIcon);
     }
-    
+
     public static IHoverTip Static(RunesmithHoverTip tip, params DynamicVar[] vars)
     {
         var text = tip.GetType().GetPrefix() + StringHelper.Slugify(tip.ToString());
@@ -45,6 +44,7 @@ public static class RunesmithHoverTipFactory
             locString.Add(dynamicVar);
             locString2.Add(dynamicVar);
         }
+
         locString2.Add("elements", 0);
 
         return new HoverTip(locString, locString2, icon);

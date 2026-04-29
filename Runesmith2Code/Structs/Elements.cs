@@ -110,7 +110,7 @@ public struct Elements(int ignis, int terra, int aqua) : IEquatable<Elements>
     {
         return new Elements(a.Ignis / divisor, a.Terra / divisor, a.Aqua / divisor);
     }
-    
+
     public static Elements operator *(Elements a, int mult)
     {
         return new Elements(a.Ignis * mult, a.Terra * mult, a.Aqua * mult);

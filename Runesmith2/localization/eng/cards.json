@@ -1,5 +1,5 @@
 {
-  "RUNESMITH2-ACCELERATE.description": "Gain {Block:diff()} [gold]Block[/gold].\n[gold]Break[/gold] your oldest Rune.\nDraw 1 card for each [gold]Charge[/gold]{IfUpgraded:show: plus 1|}.{InCombat:\n(Draw {Cards:diff()} card{Cards:plural:|s})}",
+  "RUNESMITH2-ACCELERATE.description": "Gain {Block:diff()} [gold]Block[/gold].\n[gold]Break[/gold] your oldest Rune.\nDraw 1 card for each [gold]Charge[/gold]{IfUpgraded:show: plus 1|}.{InCombat:\n(Draw {Cards:diff()} card{Cards:plural:|s})|}",
   "RUNESMITH2-ACCELERATE.title": "Accelerate",
   "RUNESMITH2-ADAMANTIUM_HAMMER.description": "Deal {Damage:diff()} damage.\nWhenever you [gold]Enhance[/gold] another card, this card gain [gold]Enhance[/gold] by the same amount.",
   "RUNESMITH2-ADAMANTIUM_HAMMER.title": "Adamantium Hammer",

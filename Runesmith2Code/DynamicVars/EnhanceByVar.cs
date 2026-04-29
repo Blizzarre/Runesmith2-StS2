@@ -5,7 +5,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.Hooks;
 
 #endregion
@@ -20,14 +19,12 @@ public class EnhanceByVar : DynamicVar
         : this(defaultName, amount, tip)
     {
     }
-    
+
     public EnhanceByVar(string name, int amount, bool tip)
         : base(name, amount)
     {
-        if (tip)
-        {
-            this.WithTooltip("RUNESMITH2-ENHANCE");
-        }
+        BaseValue = amount;
+        if (tip) this.WithTooltip("RUNESMITH2-ENHANCE");
     }
 
     public override void UpdateCardPreview(CardModel card, CardPreviewMode previewMode, Creature? target,

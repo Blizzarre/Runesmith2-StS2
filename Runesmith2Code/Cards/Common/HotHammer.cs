@@ -6,7 +6,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using Runesmith2.Runesmith2Code.Commands;
-using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Utils;
 
@@ -20,7 +19,7 @@ public class HotHammer : Runesmith2Card
     {
         WithDamage(8, 2);
         WithVar(new CardsVar(1).WithUpgrade(1));
-        WithVar(new EnhanceByVar(1));
+        WithCalculatedVar("EnhanceBy", 1, GetEnhanceBonus);
         WithTip(RunesmithHoverTip.Enhance);
         WithTags(RunesmithTag.Hammer);
     }
@@ -35,7 +34,7 @@ public class HotHammer : Runesmith2Card
             .Execute(choiceContext);
 
         await RunesmithCardCmd.EnhanceRandomCards(choiceContext, Owner, PileType.Hand.GetPile(Owner).Cards,
-            DynamicVars.Cards.IntValue, DynamicVars[EnhanceByVar.defaultName].IntValue,
+            DynamicVars.Cards.IntValue, DynamicVars["EnhanceByBase"].IntValue,
             Owner.RunState.Rng.CombatCardSelection);
     }
 }

@@ -18,7 +18,8 @@ public class FissionHammer : Runesmith2Card
 {
     public FissionHammer() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
-        WithDamage(8, 4);
+        WithDamage(8, 2);
+        WithCards(1, 1);
         WithTip(RunesmithHoverTip.Enhance);
         WithTags(RunesmithTag.Hammer);
     }
@@ -37,10 +38,10 @@ public class FissionHammer : Runesmith2Card
             .Execute(choiceContext);
 
         var enhanceBy = this.GetEnhance();
-        var card = (await CardSelectCmd.FromHand(choiceContext, Owner,
-            new CardSelectorPrefs(RunesmithCardSelectorPrefs.EnhanceSelectionPrompt, 1),
+        var cards = (await CardSelectCmd.FromHand(choiceContext, Owner,
+            new CardSelectorPrefs(RunesmithCardSelectorPrefs.EnhanceSelectionPrompt, DynamicVars.Cards.IntValue),
             c => c.CanEnhance(), this
-        )).FirstOrDefault();
-        if (card != null) await RunesmithCardCmd.Enhance(choiceContext, Owner, card, play, enhanceBy);
+        )).ToList();
+        if (cards.Count != 0) await RunesmithCardCmd.Enhance(choiceContext, Owner, cards, play, enhanceBy);
     }
 }
