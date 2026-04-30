@@ -3,34 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://b7ku2pnwh0541" path="res://Runesmith2/images/character/rs_new2.png" id="1_2q24s"]
 [ext_resource type="Texture2D" uid="uid://bvm54i7ufo22c" path="res://Runesmith2/images/character/corpse.png" id="2_8ps8u"]
 
-[sub_resource type="Animation" id="Animation_jfict"]
-resource_name = "idle"
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../Corpse:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
 [sub_resource type="Animation" id="Animation_oou7x"]
 length = 0.001
 tracks/0/type = "value"
@@ -103,8 +75,40 @@ tracks/5/keys = {
 "values": [Vector2(-27, -132)]
 }
 
+[sub_resource type="Animation" id="Animation_vrjic"]
+resource_name = "Attack"
+length = 0.5333367
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333333, 0.3, 0.39999998),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-27, -132), Vector2(-64, -132), Vector2(15, -132), Vector2(-27, -132)]
+}
+
+[sub_resource type="Animation" id="Animation_q44wv"]
+resource_name = "Cast"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-27, -132), Vector2(-27, -141), Vector2(-27, -132)]
+}
+
 [sub_resource type="Animation" id="Animation_j0ay5"]
-resource_name = "die"
+resource_name = "Dead"
 length = 1.0000033
 tracks/0/type = "bezier"
 tracks/0/imported = false
@@ -164,45 +168,65 @@ tracks/4/keys = {
 "values": [false, false, true]
 }
 
-[sub_resource type="Animation" id="Animation_vrjic"]
-resource_name = "attack"
-length = 0.5333367
+[sub_resource type="Animation" id="Animation_jfict"]
+resource_name = "Idle"
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 2
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.13333333, 0.3, 0.39999998),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(-27, -132), Vector2(-64, -132), Vector2(15, -132), Vector2(-27, -132)]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
-
-[sub_resource type="Animation" id="Animation_q44wv"]
-resource_name = "cast"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.26666668),
-"transitions": PackedFloat32Array(1, 1, 1),
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Corpse:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-27, -132), Vector2(-27, -141), Vector2(-27, -132)]
+"values": [Vector2(-27, -132)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4xv5a"]
 _data = {
-&"RESET": SubResource("Animation_oou7x"),
-&"attack": SubResource("Animation_vrjic"),
-&"cast": SubResource("Animation_q44wv"),
-&"die": SubResource("Animation_j0ay5"),
-&"idle": SubResource("Animation_jfict")
+&"Attack": SubResource("Animation_vrjic"),
+&"Cast": SubResource("Animation_q44wv"),
+&"Dead": SubResource("Animation_j0ay5"),
+&"Idle": SubResource("Animation_jfict"),
+&"RESET": SubResource("Animation_oou7x")
 }
 
 [node name="Runesmith" type="Node2D"]
@@ -224,9 +248,7 @@ root_node = NodePath("../Idle")
 libraries = {
 &"": SubResource("AnimationLibrary_4xv5a")
 }
-autoplay = "RESET"
-next/attack = &"idle"
-next/cast = &"idle"
+autoplay = "Idle"
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true

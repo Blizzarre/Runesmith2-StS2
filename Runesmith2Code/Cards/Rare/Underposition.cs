@@ -72,15 +72,20 @@ public class Underposition : Runesmith2Card, IAfterRuneCrafted, IAfterRuneBroken
 
         return targetCard;
     }
-
+    
     public async Task AfterRuneCrafted(PlayerChoiceContext choiceContext, Player player, RuneModel rune)
     {
-        if (player == Owner) await CheckAndTransformSelf();
+        if (player == Owner && PileType.Hand.GetPile(player).Cards.Contains(this)) await CheckAndTransformSelf();
     }
 
     public async Task AfterRuneBroken(PlayerChoiceContext choiceContext, Player player, RuneModel rune)
     {
-        if (player == Owner) await CheckAndTransformSelf();
+        if (player == Owner && PileType.Hand.GetPile(player).Cards.Contains(this)) await CheckAndTransformSelf();
+    }
+
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        if (card == this) await CheckAndTransformSelf();
     }
 
     public override async Task AfterCardEnteredCombat(CardModel card)

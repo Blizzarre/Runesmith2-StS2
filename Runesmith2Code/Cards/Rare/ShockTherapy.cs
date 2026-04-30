@@ -22,16 +22,17 @@ public class ShockTherapy : Runesmith2Card
     public ShockTherapy() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
         WithDamage(5, 2);
-        WithCards(2);
-        WithCalculatedVar(CalculatedHitsKey, 0, GetPrecalculatedHits, 1);
+        WithCards(2, 1);
+        WithCalculatedVar(CalculatedHitsKey, 0, GetPrecalculatedHits);
         WithTip(RunesmithHoverTip.Stasis);
     }
 
     private static decimal GetPrecalculatedHits(CardModel card, Creature? _)
     {
         var toStasisCards = card.DynamicVars.Cards.BaseValue;
-        var isStasisCards = PileType.Hand.GetPile(card.Owner).Cards.Count(c => c.IsStasis());
-        var canStasisCards = PileType.Hand.GetPile(card.Owner).Cards.Count(c => c.CanStasis());
+        var validCards = PileType.Hand.GetPile(card.Owner).Cards.Where(c => c != card).ToList();
+        var isStasisCards = validCards.Count(c => c.IsStasis());
+        var canStasisCards = validCards.Count(c => c.CanStasis());
         return isStasisCards + Math.Min(toStasisCards, canStasisCards);
     }
 

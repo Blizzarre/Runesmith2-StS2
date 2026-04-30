@@ -7,7 +7,7 @@
   "RUNESMITH2-CHARGE-TURN-END.title": "Charge",
   "RUNESMITH2-CHARGE-TURN-START.description": "Current Charge: [blue]{Charge:diff()}[/blue]\nAt the start of turn, [blue]1[/blue] Charge will be depleted to trigger the [gold]Passive[/gold] ability.",
   "RUNESMITH2-CHARGE-TURN-START.title": "Charge",
-  "RUNESMITH2-CHARGE.description": "Runes consume [blue]1[/blue] Charge to activate their passive abilities.",
+  "RUNESMITH2-CHARGE.description": "Runes deplete [blue]1[/blue] Charge to activate their passive abilities.",
   "RUNESMITH2-CHARGE.title": "Charge",
   "RUNESMITH2-CRAFT.description": "Create a Rune using {elements:rs2Icon(all)}.\nYou can have no more than [blue]7[/blue] active Runes.",
   "RUNESMITH2-CRAFT.title": "Craft",

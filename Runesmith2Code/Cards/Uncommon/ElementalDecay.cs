@@ -27,15 +27,15 @@ public class ElementalDecay : Runesmith2Card
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var cards = await CardSelectCmd.FromHand(
+        var cards = (await CardSelectCmd.FromHand(
             choiceContext,
             Owner,
             new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 0, DynamicVars.Cards.IntValue),
             null,
             this
-        );
+        )).ToList();
 
-        // Do not add X cost
+        // Do not add X cost (or do it and gain elements to energy count??)
         var totalCost = cards.Select(c => c.EnergyCost.CostsX ? 0 : c.EnergyCost.GetAmountToSpend())
             .Aggregate(0, (a, b) => a + b);
 
@@ -43,6 +43,10 @@ public class ElementalDecay : Runesmith2Card
         {
             await Cmd.CustomScaledWait(0.1f, 0.2f);
             await RunesmithPlayerCmd.GainElements(new Elements(totalCost), Owner, play);
+        }
+        foreach (var card in cards)
+        {
+            await CardCmd.Exhaust(choiceContext, card);
         }
     }
 }
