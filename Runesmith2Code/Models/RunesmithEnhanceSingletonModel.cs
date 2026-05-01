@@ -9,8 +9,10 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Hooks;
+using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
 
@@ -44,6 +46,11 @@ public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(true, false
 
     public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
+        if (cardPlay is { Card: Runesmith2Card runesmithCard, IsLastInSeries: true })
+        {
+            runesmithCard.IsPlayedWithoutElements = false;
+        } 
+        
         if (cardPlay.Card.IsStasis()) return Task.CompletedTask;
         if (cardPlay.IsLastInSeries && cardPlay.Card.IsEnhanced()) cardPlay.Card.ClearEnhance();
 

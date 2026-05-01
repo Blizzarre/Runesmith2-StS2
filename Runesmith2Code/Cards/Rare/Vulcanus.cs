@@ -18,7 +18,7 @@ namespace Runesmith2.Runesmith2Code.Cards.Rare;
 
 public class Vulcanus : Runesmith2RecipeCard
 {
-    public Vulcanus() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self)
+    public Vulcanus() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
         WithVars(new PotencyVar(4).WithUpgrade(2), new ChargeVar(3));
         WithTip(RunesmithHoverTip.Craft);
@@ -28,7 +28,7 @@ public class Vulcanus : Runesmith2RecipeCard
 
     public override Elements CanonicalElementsCost => new(3, 3, 0);
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task RecipeOnPlayWrapper(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         await RuneCmd.Craft<VulcanusRune>(choiceContext, Owner, play, this);

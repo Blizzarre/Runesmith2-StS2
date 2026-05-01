@@ -17,37 +17,32 @@ using Runesmith2.Runesmith2Code.Utils;
 
 namespace Runesmith2.Runesmith2Code.Models.Runes;
 
-// Deal damage, gain Block, draw card
+// Deal damage multiple times
 public class FulgorRune : RuneModel
 {
-    public override decimal PassiveVal { get; set; } = 4;
-    public override int ChargeVal { get; set; } = 3;
+    public override decimal PassiveVal { get; set; } = 5;
+    public override int ChargeVal { get; set; } = 4;
 
-    public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.StartTurn;
+    public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.EndTurn;
+    
+    
     public override (bool, bool) ShowTopLabel => (true, true);
-    public override (decimal, decimal) TopValue => (CalculatedPassiveVal, CalculatedBreakVal);
-    public override (Color, Color, Color) TopLabelColor => NRune.BlueFontColor;
+    public override (decimal, decimal) TopValue => (PassiveVal, PassiveVal);
+    public override (Color, Color, Color) TopLabelColor => NRune.DefaultFontColor;
+    public override (Color, Color, Color) TopLabelBreakColor => NRune.DefaultFontColor;
+
+    public override (bool, bool) ShowBottomLabel => (true, true);
+    public override (decimal, decimal) BottomValue => (-1, -1);
+    public override (string, string) BottomTextAppend => ("x2", "x4");
+    public override (Color, Color, Color) BottomLabelColor => NRune.BlueFontColor;
+
+    public override decimal BreakVal => PassiveVal;
 
     public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Fulgor>();
 
     public override async Task BeforeTurnEndRuneTrigger(PlayerChoiceContext choiceContext)
     {
-        if (ChargeVal > 0)
-        {
-            PlayPassiveSfx();
-            await ApplyAoeFireDamage(choiceContext, PassiveVal);
-            await GainBlock(choiceContext, PassiveVal);
-        }
-    }
-
-    public override async Task AfterTurnStartRuneTrigger(PlayerChoiceContext choiceContext)
-    {
-        if (ChargeVal > 0)
-        {
-            PlayPassiveSfx();
-            await DrawCard(choiceContext, 1);
-            UseCharge();
-        }
+        await Passive(choiceContext);
     }
 
     public override async Task Passive(PlayerChoiceContext choiceContext)
@@ -56,9 +51,7 @@ public class FulgorRune : RuneModel
         {
             PlayPassiveSfx();
             Trigger();
-            await ApplyAoeFireDamage(choiceContext, PassiveVal);
-            await GainBlock(choiceContext, PassiveVal);
-            await DrawCard(choiceContext, 1);
+            await ApplyFireDamage(choiceContext, PassiveVal, 2);
             UseCharge();
         }
     }
@@ -66,28 +59,22 @@ public class FulgorRune : RuneModel
     public override async Task Break(PlayerChoiceContext choiceContext)
     {
         PlayBreakSfx();
-        await ApplyAoeFireDamage(choiceContext, BreakVal);
-        await GainBlock(choiceContext, BreakVal);
-        await DrawCard(choiceContext, 2);
+        await ApplyFireDamage(choiceContext, PassiveVal, 4);
     }
-
-    private async Task ApplyAoeFireDamage(PlayerChoiceContext choiceContext, decimal amount)
+    
+    private async Task ApplyFireDamage(PlayerChoiceContext choiceContext, decimal amount, int count)
     {
-        var targets = CombatState.GetOpponentsOf(Owner.Creature).Where(e => e.IsHittable).ToList();
-        if (targets.Count == 0) return;
-
-        foreach (var target in targets)
+        PlayPassiveSfx();
+        for (var i = 0; i < count; i++)
+        {
+            var list = CombatState.GetOpponentsOf(Owner.Creature).Where(e => e.IsHittable).ToList();
+            if (list.Count == 0) return;
+            
+            var target = Owner.RunState.Rng.CombatTargets.NextItem(list);
+            if (target == null) break; // Should be okay to break when there are no valid targets
+            
             NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(NGroundFireVfx.Create(target));
-        await CreatureCmd.Damage(choiceContext, targets, amount, ValueProp.Unpowered, Owner.Creature);
-    }
-
-    private async Task GainBlock(PlayerChoiceContext _, decimal amount)
-    {
-        await CreatureCmd.GainBlock(Owner.Creature, amount, ValueProp.Unpowered, null);
-    }
-
-    private async Task DrawCard(PlayerChoiceContext choiceContext, decimal amount)
-    {
-        await CardPileCmd.Draw(choiceContext, amount, Owner);
+            await CreatureCmd.Damage(choiceContext, target, amount, ValueProp.Unpowered, Owner.Creature);
+        }
     }
 }

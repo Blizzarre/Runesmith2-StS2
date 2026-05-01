@@ -28,7 +28,7 @@ public class Flamma : Runesmith2RecipeCard, ITranscendenceCard
 
     public override Elements CanonicalElementsCost => new(1, 0, 0);
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task RecipeOnPlayWrapper(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         await RuneCmd.Craft<FlammaRune>(choiceContext, Owner, play, this);

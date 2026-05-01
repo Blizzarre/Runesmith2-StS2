@@ -11,6 +11,7 @@ using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Entities.Runes;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Field;
+using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
 
@@ -66,6 +67,7 @@ internal class PlayerCombatStateHasEnoughResourcesForPatch
     private static void HasEnoughElements(PlayerCombatState instance, CardModel card, ref UnplayableReason reason)
     {
         if (card is not Runesmith2Card runesmith2Card) return;
+        if (card.Tags.Contains(RunesmithEnum.Recipe)) return; // Recipe cards get to bypass elements check.
         if (!instance.Elements().CanSpend(runesmith2Card.GetElementsCostWithModifiers()))
             reason |= UnplayableReason.StarCostTooHigh;
     }

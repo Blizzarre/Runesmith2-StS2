@@ -1,12 +1,10 @@
 #region
 
-using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
-using MegaCrit.Sts2.Core.Models;
+using Runesmith2.Runesmith2Code.Commands;
+using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
@@ -21,25 +19,33 @@ public abstract class Runesmith2RecipeCard : Runesmith2Card
         description.Add("IfFull", IsRuneSlotsFull());
     }
 
+    protected override bool ShouldGlowGoldInternal => HasElements();
+
     protected override bool ShouldGlowRedInternal => IsRuneSlotsFull() && CanPlay();
 
     protected Runesmith2RecipeCard(int cost, CardType type, CardRarity rarity, TargetType target) : base(cost, type,
         rarity, target)
     {
-        WithKeyword(RunesmithKeyword.Recipe);
+        WithTags(RunesmithEnum.Recipe);
+        WithTip(RunesmithHoverTip.Recipe);
+        WithTip(RunesmithHoverTip.Craft);
     }
 
-    // All recipe cards will draw 1 card after being drawn (only once a turn)
-    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (card.Owner.Creature != Owner.Creature || this != card)
+        // Gains Elements instead
+        if (IsPlayedWithoutElements)
+        {
+            await RunesmithPlayerCmd.GainElements(GetElementsCostWithModifiers().ClampZero(), Owner, cardPlay);
             return;
+        }
+        
+        // Otherwise, use the actual card effects
+        await RecipeOnPlayWrapper(choiceContext, cardPlay);
+    }
 
-        // Do not draw more card if another Recipe card was already drawn this turn.
-        if (CombatManager.Instance.History.Entries.OfType<CardDrawnEntry>().Any(ce =>
-                ce.HappenedThisTurn(card.CombatState) && ce.Card.Owner == Owner && ce.Card != card &&
-                ce.Card.Keywords.Contains(RunesmithKeyword.Recipe)))
-            return;
-        await CardPileCmd.Draw(choiceContext, 1, Owner);
+    protected virtual Task RecipeOnPlayWrapper(PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        return Task.CompletedTask;
     }
 }

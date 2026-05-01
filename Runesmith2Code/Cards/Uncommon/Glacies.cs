@@ -29,7 +29,7 @@ public class Glacies : Runesmith2RecipeCard
 
     public override Elements CanonicalElementsCost => new(0, 2, 1);
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task RecipeOnPlayWrapper(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         await RuneCmd.Craft<GlaciesRune>(choiceContext, Owner, play, this);

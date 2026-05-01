@@ -24,7 +24,7 @@ public class IceColdPower : Runesmith2Power
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DisplayVar<IceColdPower>("Decrement", pow => (pow.Amount / 2).ToString())];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DisplayVar<IceColdPower>("Decrement", pow => (pow.Amount - pow.Amount / 2).ToString())];
 
     public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -47,6 +47,6 @@ public class IceColdPower : Runesmith2Power
 
     public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
     {
-        if (side == Owner.Side) await PowerCmd.ModifyAmount(choiceContext, this, -(Amount / 2), null, null);
+        if (side == Owner.Side) await PowerCmd.ModifyAmount(choiceContext, this, -(Amount - Amount / 2), null, null);
     }
 }

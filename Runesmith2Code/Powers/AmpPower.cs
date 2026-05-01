@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Hooks;
 
@@ -35,7 +36,11 @@ public class AmpPower : Runesmith2Power, IModifyPotencyAdditive
         var card = cardPlay.Card;
         if (cardPlay.Card.Owner != Owner.Player) return Task.CompletedTask;
         var internalData = GetInternalData<Data>();
-        if (internalData.CardToModify != null || !card.HasPotency()) return Task.CompletedTask;
+        if (internalData.CardToModify != null || !card.HasPotency() ||
+            card is Runesmith2Card { IsPlayedWithoutElements: true })
+        {
+            return Task.CompletedTask;
+        }
         internalData.CardToModify = card;
         internalData.AmountWhenCardPlayed = Amount;
         return Task.CompletedTask;

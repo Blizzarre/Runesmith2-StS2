@@ -25,7 +25,7 @@ public class Mundus : Runesmith2RecipeCard
 
     public override Elements CanonicalElementsCost => new(0, 0, 0);
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task RecipeOnPlayWrapper(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         await RuneCmd.Craft<MundusRune>(choiceContext, Owner, play, this);

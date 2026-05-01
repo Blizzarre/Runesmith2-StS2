@@ -1,6 +1,6 @@
 <Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CheckDependencyPaths">
     <PropertyGroup>
-        <ModVersion>0.0.1</ModVersion>
+        <ModVersion>0.0.2</ModVersion>
         <Version>$(ModVersion)</Version>
         <FileVersion>$(ModVersion).0</FileVersion>
         <InformationalVersion>$(ModVersion)</InformationalVersion>

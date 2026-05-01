@@ -29,6 +29,9 @@ public partial class NRune : NClickableControl
 
     public static readonly (Color, Color, Color) BreakFontColor = (new Color("5effff"), new Color("00000040"),
         new Color("143652e6"));
+    
+    public static readonly (Color, Color, Color) GreenFontColor = (StsColors.green, new Color("00000040"),
+        StsColors.energyGreenOutline);
 
     private static readonly (Color, Color, Color) ChargeFontColor =
         (new Color("f4e8c7"), new Color("00000030"), new Color("554c36"));
@@ -147,7 +150,7 @@ public partial class NRune : NClickableControl
         var label = new MegaLabel();
         label.MaxFontSize = 24;
         label.AutoSizeEnabled = false;
-        label.HorizontalAlignment = HorizontalAlignment.Center;
+        label.HorizontalAlignment = HorizontalAlignment.Left;
         label.VerticalAlignment = VerticalAlignment.Top;
         label.AddThemeColorOverride("font_color", fontColor.Item1);
         label.AddThemeColorOverride("font_shadow_color", fontColor.Item2);
@@ -224,25 +227,39 @@ public partial class NRune : NClickableControl
         _labelContainer.Visible = _isLocal;
         if (!_isLocal) Modulate = Model.DarkenedColor;
 
-        if (!isBreaking)
-        {
-            _topLabel.Visible = Model.ShowTopLabel.Item1;
-            _topLabel.SetTextAutoSize(Model.TopValue.Item1.ToString("0"));
-            _bottomLabel.Visible = Model.ShowBottomLabel.Item1;
-            _bottomLabel.SetTextAutoSize(Model.BottomValue.Item1.ToString("0"));
-
-            _topBreakLabel.Visible = false;
-            _bottomBreakLabel.Visible = false;
-        }
-        else
+        if (isBreaking)
         {
             _topBreakLabel.Visible = Model.ShowTopLabel.Item2;
-            _topBreakLabel.SetTextAutoSize(Model.TopValue.Item2.ToString("0"));
+            var topText = Model.TopTextAppend.Item2;
+            if (Model.TopValue.Item2 >= 0)
+                topText = Model.TopValue.Item2.ToString("0") + topText;
+            _topBreakLabel.SetTextAutoSize(topText);
+
             _bottomBreakLabel.Visible = Model.ShowBottomLabel.Item2;
-            _bottomBreakLabel.SetTextAutoSize(Model.BottomValue.Item2.ToString("0"));
+            var bottomText = Model.BottomTextAppend.Item2;
+            if (Model.BottomValue.Item2 >= 0)
+                bottomText = Model.BottomValue.Item2.ToString("0") + bottomText;
+            _bottomBreakLabel.SetTextAutoSize(bottomText);
 
             _topLabel.Visible = false;
             _bottomLabel.Visible = false;
+        }
+        else
+        {
+            _topLabel.Visible = Model.ShowTopLabel.Item1;
+            var topText = Model.TopTextAppend.Item1;
+            if (Model.TopValue.Item1 >= 0)
+                topText = Model.TopValue.Item1.ToString("0") + topText;
+            _topLabel.SetTextAutoSize(topText);
+
+            _bottomLabel.Visible = Model.ShowBottomLabel.Item1;
+            var bottomText = Model.BottomTextAppend.Item1;
+            if (Model.BottomValue.Item1 >= 0)
+                bottomText = Model.BottomValue.Item1.ToString("0") + bottomText;
+            _bottomLabel.SetTextAutoSize(bottomText);
+
+            _topBreakLabel.Visible = false;
+            _bottomBreakLabel.Visible = false;
         }
 
         _sprite.Modulate = Model.ChargeVal <= 0 ? Model.DarkenedColor : Colors.White;

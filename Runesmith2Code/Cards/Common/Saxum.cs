@@ -20,7 +20,7 @@ public class Saxum : Runesmith2RecipeCard
 {
     public Saxum() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
-        WithVars(new PotencyVar(4).WithUpgrade(2), new ChargeVar(3));
+        WithVars(new PotencyVar(3).WithUpgrade(2), new ChargeVar(3));
         WithTip(RunesmithHoverTip.Craft);
         WithTip(new TooltipSource(_ => HoverTipFactory.Static(StaticHoverTip.Block)));
         WithRuneTip<SaxumRune>();
@@ -28,7 +28,7 @@ public class Saxum : Runesmith2RecipeCard
 
     public override Elements CanonicalElementsCost => new(0, 2, 0);
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task RecipeOnPlayWrapper(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         await RuneCmd.Craft<SaxumRune>(choiceContext, Owner, play, this);

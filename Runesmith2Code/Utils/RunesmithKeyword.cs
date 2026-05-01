@@ -9,6 +9,5 @@ namespace Runesmith2.Runesmith2Code.Utils;
 
 public static class RunesmithKeyword
 {
-    [CustomEnum] [KeywordProperties(AutoKeywordPosition.Before)]
-    public static CardKeyword Recipe;
+
 }

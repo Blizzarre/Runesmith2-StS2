@@ -69,9 +69,13 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public LocString SmartDescription =>
         !HasSmartDescription ? Description : new LocString(LocTable, Id.Entry + ".smartDescription");
 
+    // TODO Refactor text stuff to be in one class
+    
     public virtual (bool, bool) ShowTopLabel => (false, false);
 
     public virtual (decimal, decimal) TopValue => (PassiveVal, BreakVal);
+
+    public virtual (string, string) TopTextAppend => ("", "");
 
     public virtual (Color, Color, Color) TopLabelColor => NRune.DefaultFontColor;
 
@@ -80,6 +84,8 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public virtual (bool, bool) ShowBottomLabel => (true, true);
 
     public virtual (decimal, decimal) BottomValue => (PassiveVal, BreakVal);
+    
+    public virtual (string, string) BottomTextAppend => ("", "");
 
     public virtual (Color, Color, Color) BottomLabelColor => NRune.DefaultFontColor;
 

@@ -14,6 +14,7 @@ using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Models;
 using Runesmith2.Runesmith2Code.Structs;
+using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
 
@@ -90,6 +91,8 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
     }
 
     public virtual RuneBreakType RuneBreakType => RuneBreakType.None;
+
+    public virtual bool BlockStasis => false;
 
     private bool _elementsCostSet;
 
@@ -194,11 +197,20 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
             var runesmithCombatState = Owner.PlayerCombatState.Runesmith();
             if (runesmithCombatState != null)
             {
+                // Give elements if unable to play Recipe
+                if (Tags.Contains(RunesmithEnum.Recipe) && !runesmithCombatState.Elements.CanSpend(amount))
+                {
+                    IsPlayedWithoutElements = true;
+                    return;
+                }
+                
                 runesmithCombatState.LoseElements(amount);
                 await RunesmithHook.AfterElementsSpent(Owner.Creature.CombatState, amount, Owner);
             }
         }
     }
+
+    public bool IsPlayedWithoutElements = false;
 
     // OnPlayWrapper - patch done
 
@@ -209,6 +221,13 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
         if (IsInCombat) return Owner.PlayerCombatState?.RuneQueue()?.HasAny() ?? false;
 
         return false;
+    }
+
+    public bool HasElements()
+    {
+        if (!IsInCombat) return true;
+        var elements = Owner.PlayerCombatState?.Elements() ?? new Elements();
+        return elements.CanSpend(GetElementsCostWithModifiers().ClampZero());
     }
 
     protected bool IsRuneSlotsFull()

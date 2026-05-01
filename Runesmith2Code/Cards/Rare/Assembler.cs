@@ -30,7 +30,7 @@ public class Assembler : Runesmith2Card
         var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
         var pile = PileType.Discard.GetPile(Owner);
         var cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext,
-                pile.Cards.Where(c => c.Keywords.Contains(RunesmithKeyword.Recipe)).ToList(), Owner, prefs))
+                pile.Cards.Where(c => c.Tags.Contains(RunesmithEnum.Recipe)).ToList(), Owner, prefs))
             .FirstOrDefault();
 
         if (cardModel != null)

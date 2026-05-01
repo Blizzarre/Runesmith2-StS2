@@ -72,12 +72,13 @@ public partial class NElementsIcon : TextureRect
             return;
         }
 
-        var elementsCost = runesmithCard.GetElementsCostWithModifiers();
+        var elementsCost = runesmithCard.GetElementsCostWithModifiers(); 
+        var elementsCostColor = RunesmithCardCostHelper.GetElementsCostColor(runesmithCard, runesmithCard.CombatState);
         for (var i = 0; i < 3; i++)
         {
             var label = _labels[i];
             label.SetTextAutoSize(elementsCost.ByIndex(i).ToString());
-            UpdateElementsCostColor(pileType, runesmithCard, i);
+            UpdateElementsCostColor(pileType, runesmithCard, elementsCostColor, i);
         }
 
         Visible = runesmithCard.GetElementsCostWithModifiers().Total >= 0;
@@ -89,13 +90,12 @@ public partial class NElementsIcon : TextureRect
         foreach (var unplayableIcon in _unplayableIcons) unplayableIcon.Visible = shouldShowUnplayableIcon;
     }
 
-    private void UpdateElementsCostColor(PileType pileType, Runesmith2Card card, int index)
+    private void UpdateElementsCostColor(PileType pileType, Runesmith2Card card, CardCostColor elementsCostColor, int index)
     {
         var (fontColor, _, fontOutlineColor) = GetFontColor(index);
-
+        
         if (pileType == PileType.Hand)
         {
-            var elementsCostColor = RunesmithCardCostHelper.GetElementsCostColor(card, card.CombatState);
             fontColor = NCard.GetCostTextColorInHand(elementsCostColor, NCard!._pretendCardCanBePlayed, fontColor);
             fontOutlineColor =
                 NCard.GetCostOutlineColorInHand(elementsCostColor, NCard!._pretendCardCanBePlayed, fontOutlineColor);

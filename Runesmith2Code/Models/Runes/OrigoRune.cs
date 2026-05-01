@@ -1,13 +1,16 @@
 #region
 
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Cards.Rare;
+using Runesmith2.Runesmith2Code.Nodes.Runes;
 using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
@@ -18,12 +21,22 @@ namespace Runesmith2.Runesmith2Code.Models.Runes;
 public class OrigoRune : RuneModel
 {
     // TODO show upgraded visual
-    public override decimal PassiveVal { get; set; } = 0;
+    public override decimal PassiveVal { get; set; } = -1;
     public override int ChargeVal { get; set; } = 3;
 
-    public override (bool, bool) ShowBottomLabel => (false, true);
+    public override (bool, bool) ShowTopLabel => (false, true);
 
-    public override (decimal, decimal) BottomValue => (1, 2);
+    public override (decimal, decimal) TopValue => (0, 2);
+
+    public override (bool, bool) ShowBottomLabel => (true, true);
+
+    public override (string, string) BottomTextAppend => ("+", "+");
+
+    public override (decimal, decimal) BottomValue => (-1, -1);
+
+    public override (Color, Color, Color) BottomLabelColor => NRune.GreenFontColor;
+
+    public override (Color, Color, Color) BottomBreakColor => NRune.GreenFontColor;
 
     public override bool IsUpgradeable => true;
 

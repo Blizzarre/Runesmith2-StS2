@@ -64,7 +64,6 @@ internal class CardModelSpendResourcesPatch
     {
         await results;
         if (__instance is not Runesmith2Card card) return;
-        MainFile.Logger.Info("Spending Resources");
         var elementsToSpend = card.GetElementsCostWithModifiers().ClampZero();
         await card.SpendElements(elementsToSpend);
     }

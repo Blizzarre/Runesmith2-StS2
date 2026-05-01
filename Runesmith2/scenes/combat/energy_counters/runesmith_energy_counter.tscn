@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://uk1yapc0w8sf"]
+[gd_scene load_steps=9 format=3 uid="uid://uk1yapc0w8sf"]
 
 [ext_resource type="PackedScene" uid="uid://boum8xi7r4lme" path="res://Runesmith2/scenes/combat/energy_counters/runesmith_energy_vfx_back.tscn" id="1_4dy3v"]
 [ext_resource type="Texture2D" uid="uid://bb7xcnuxp1s0f" path="res://Runesmith2/images/combatui/energy_counters/runesmith_orb_layer_1.png" id="1_k626g"]
 [ext_resource type="Texture2D" uid="uid://b66xqwx6knnw0" path="res://Runesmith2/images/combatui/energy_counters/runesmith_orb_layer_2.png" id="2_kgvn1"]
+[ext_resource type="Script" uid="uid://db7c1apu0n24n" path="res://Runesmith2Code/Nodes/NCustomRotationLayers.cs" id="3_0fl75"]
 [ext_resource type="Texture2D" uid="uid://dyijiaopsr4nc" path="res://Runesmith2/images/combatui/energy_counters/runesmith_orb_layer_3.png" id="3_4dy3v"]
 [ext_resource type="Texture2D" uid="uid://vaqd2os8rhh1" path="res://Runesmith2/images/combatui/energy_counters/runesmith_orb_layer_4.png" id="4_0fl75"]
 [ext_resource type="Texture2D" uid="uid://beoe2emasnl0d" path="res://Runesmith2/images/combatui/energy_counters/runesmith_orb_layer_5.png" id="5_k0c8p"]
@@ -28,6 +29,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("3_0fl75")
+
+[node name="RotationLayers" type="Control" parent="Layers"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="Layer1" type="TextureRect" parent="Layers"]
 layout_mode = 1
@@ -43,17 +55,7 @@ texture = ExtResource("1_k626g")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="RotationLayers" type="Control" parent="Layers"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Layer1" type="TextureRect" parent="Layers/RotationLayers"]
+[node name="Layer2" type="TextureRect" parent="Layers"]
 layout_mode = 0
 offset_right = 128.0
 offset_bottom = 128.0
@@ -63,20 +65,17 @@ texture = ExtResource("2_kgvn1")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Layer2" type="TextureRect" parent="Layers/RotationLayers"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Layer3" type="TextureRect" parent="Layers"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
 pivot_offset = Vector2(64, 64)
 mouse_filter = 2
 texture = ExtResource("3_4dy3v")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 4
 
-[node name="Layer3" type="TextureRect" parent="Layers/RotationLayers"]
+[node name="Layer4" type="TextureRect" parent="Layers"]
 layout_mode = 0
 offset_right = 128.0
 offset_bottom = 128.0

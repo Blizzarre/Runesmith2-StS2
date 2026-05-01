@@ -12,6 +12,7 @@ public static class RunesmithEnum
 {
     [CustomEnum] public static CardTag Hammer;
     [CustomEnum] public static CardTag Chisel;
+    [CustomEnum] public static CardTag Recipe;
 }
 
 public enum ElementType

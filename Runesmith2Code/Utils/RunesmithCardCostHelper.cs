@@ -28,6 +28,12 @@ public static class RunesmithCardCostHelper
         if (card.TemporaryElementsCost != null)
             return CardCostHelper.GetColorForLocalCost(card.TemporaryElementsCost.Cost, card.BaseElementsCost.Total);
 
+        // Show as Red even if it's 'playable'
+        if (card.Tags.Contains(RunesmithEnum.Recipe) && !card.HasElements())
+        {
+            return CardCostColor.InsufficientResources;
+        }
+        
         return CardCostColor.Unmodified;
     }
 

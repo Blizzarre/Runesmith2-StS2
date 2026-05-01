@@ -18,7 +18,7 @@ public class Stabilize : Runesmith2Card
     public Stabilize() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
         WithBlock(6, 2);
-        WithVar(new ChargeVar(2).WithUpgrade(1));
+        WithVar(new ChargeGainVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Charge);
     }
 
@@ -30,7 +30,7 @@ public class Stabilize : Runesmith2Card
         var runeQueue = Owner.PlayerCombatState?.RuneQueue();
         if (runeQueue != null)
         {
-            var amount = DynamicVars[ChargeVar.defaultName].IntValue;
+            var amount = DynamicVars[ChargeGainVar.defaultName].IntValue;
             foreach (var rune in runeQueue.Runes) RuneCmd.SetCharge(choiceContext, rune, amount);
         }
     }

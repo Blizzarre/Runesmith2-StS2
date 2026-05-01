@@ -27,7 +27,7 @@ public class SecretRecipe : Runesmith2Card
         var cards = CardFactory.GetDistinctForCombat(Owner,
                 ModelDb.CardPool<Runesmith2CardPool>()
                     .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint)
-                    .Where(c => c.Keywords.Contains(RunesmithKeyword.Recipe)), 3,
+                    .Where(c => c.Tags.Contains(RunesmithEnum.Recipe)), 3,
                 Owner.RunState.Rng.CombatCardGeneration
             )
             .ToList();

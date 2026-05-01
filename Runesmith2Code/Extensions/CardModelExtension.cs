@@ -136,6 +136,7 @@ public static class CardModelExtension
         public void SetStasis(bool stasis)
         {
             if (!cardModel.IsMutable) return;
+            if (stasis && cardModel is Runesmith2Card { BlockStasis: true }) return;
             cardModel.GetCardModelModifier().Stasis = stasis;
         }
 
