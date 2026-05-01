@@ -35,8 +35,7 @@ public class CoreCrystal : Runesmith2Relic
     public override async Task AfterRoomEntered(AbstractRoom room)
     {
         if (room is CombatRoom)
-            await RunesmithPlayerCmd.GainElements(Elements.WithIgnis(DynamicVars[ElementsVar.defaultName].IntValue),
-                Owner);
+            await RunesmithPlayerCmd.GainElements(new Elements(DynamicVars[ElementsVar.defaultName].IntValue), Owner);
     }
 
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player)

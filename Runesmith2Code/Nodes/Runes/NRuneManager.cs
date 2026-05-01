@@ -219,23 +219,25 @@ public partial class NRuneManager : Control
     {
         foreach (var rune in _runes) rune.UpdateVisuals(false);
 
+        var nonEmptyRunes = _runes.Where(r => r.Model != null).ToList();
+
         switch (breakType)
         {
             case RuneBreakType.Oldest:
-                _runes.FirstOrDefault()?.UpdateVisuals(true);
+                nonEmptyRunes.FirstOrDefault()?.UpdateVisuals(true);
                 break;
             case RuneBreakType.Newest:
-                _runes.LastOrDefault()?.UpdateVisuals(true);
+                nonEmptyRunes.LastOrDefault()?.UpdateVisuals(true);
                 break;
             case RuneBreakType.All:
             {
-                foreach (var rune2 in _runes) rune2.UpdateVisuals(true);
+                foreach (var rune2 in nonEmptyRunes) rune2.UpdateVisuals(true);
 
                 break;
             }
             case RuneBreakType.AllExceptNewest:
             {
-                for (var i = 0; i < _runes.Count - 1; i++) _runes[i].UpdateVisuals(true);
+                for (var i = 0; i < nonEmptyRunes.Count - 1; i++) nonEmptyRunes[i].UpdateVisuals(true);
                 break;
             }
             case RuneBreakType.None:
