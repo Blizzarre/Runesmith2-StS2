@@ -18,7 +18,7 @@ public class FissionHammer : Runesmith2Card
 {
     public FissionHammer() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
-        WithDamage(8, 2);
+        WithDamage(11, 2);
         WithCards(1,1);
         WithTip(RunesmithHoverTip.Enhance);
         WithTags(RunesmithEnum.Hammer);

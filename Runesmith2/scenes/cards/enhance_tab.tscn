@@ -18,11 +18,11 @@ shader_parameter/v = 1.0
 resource_local_to_scene = true
 shader = ExtResource("4_8ael8")
 shader_parameter/shaking = true
-shader_parameter/amplitude = 6.625
+shader_parameter/amplitude = 5.451
 shader_parameter/noise_scale_x = 2.29
-shader_parameter/noise_speed_x = 0.566
+shader_parameter/noise_speed_x = 0.448
 shader_parameter/noise_scale_y = 1.925
-shader_parameter/noise_speed_y = 1.8820000000000001
+shader_parameter/noise_speed_y = 0.88
 shader_parameter/noise = ExtResource("5_17dnw")
 
 [node name="EnhanceTabContainer" type="Control"]

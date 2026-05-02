@@ -11,14 +11,14 @@ using Runesmith2.Runesmith2Code.HoverTips;
 
 #endregion
 
-namespace Runesmith2.Runesmith2Code.Cards.Common;
+namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 
 public class Stabilize : Runesmith2Card
 {
-    public Stabilize() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+    public Stabilize() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        WithBlock(6, 2);
-        WithVar(new ChargeGainVar(2).WithUpgrade(1));
+        WithBlock(6, 1);
+        WithVar(new ChargeGainVar(3).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Charge);
     }
 
@@ -31,7 +31,7 @@ public class Stabilize : Runesmith2Card
         if (runeQueue != null)
         {
             var amount = DynamicVars[ChargeGainVar.defaultName].IntValue;
-            foreach (var rune in runeQueue.Runes) RuneCmd.SetCharge(choiceContext, rune, amount);
+            foreach (var rune in runeQueue.Runes.Where(r => r.ChargeVal > 0)) RuneCmd.SetCharge(choiceContext, rune, amount);
         }
     }
 }

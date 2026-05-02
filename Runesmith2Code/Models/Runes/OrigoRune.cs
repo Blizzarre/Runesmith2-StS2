@@ -28,9 +28,9 @@ public class OrigoRune : RuneModel
 
     public override (decimal, decimal) TopValue => (0, 2);
 
-    public override (bool, bool) ShowBottomLabel => (true, true);
+    public override (bool, bool) ShowBottomLabel => (false, true);
 
-    public override (string, string) BottomTextAppend => ("+", "+");
+    public override (string, string) BottomTextAppend => ("", "+");
 
     public override (decimal, decimal) BottomValue => (-1, -1);
 
@@ -67,10 +67,8 @@ public class OrigoRune : RuneModel
     private async Task CreateCard(PlayerChoiceContext choiceContext, int amount)
     {
         var cardModels = CardFactory.GetForCombat(Owner,
-            from c in Owner.Character.CardPool.GetUnlockedCards(Owner.UnlockState,
-                Owner.RunState.CardMultiplayerConstraint)
-            where true
-            select c, amount, Owner.RunState.Rng.CombatCardGeneration);
+            Owner.Character.CardPool.GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint),
+            amount, Owner.RunState.Rng.CombatCardGeneration);
 
         PlayPassiveSfx();
         foreach (var card in cardModels)

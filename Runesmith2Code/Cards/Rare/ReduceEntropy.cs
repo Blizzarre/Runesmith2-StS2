@@ -16,7 +16,7 @@ public class ReduceEntropy : Runesmith2Card
     {
         WithPower<IceColdPower>(6, 2);
         WithVar("SelfIceColdPower", 4);
-        WithBlock(8, 4);
+        WithBlock(10, 2);
     }
 
     protected override async Task OnPlay(

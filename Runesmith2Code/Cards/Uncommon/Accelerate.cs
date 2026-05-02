@@ -15,16 +15,13 @@ namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 
 public class Accelerate : Runesmith2Card
 {
-    private const string CardsKey = "Cards";
+    private const string ExtraCardsKey = "ExtraCards";
 
     public Accelerate() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
         WithBlock(7, 2);
-        WithCalculatedVar(CardsKey, 0, (card, _) =>
-        {
-            var runeQueue = card.Owner.PlayerCombatState?.RuneQueue();
-            return runeQueue is { Runes.Count: > 0 } ? runeQueue.Runes[0].ChargeVal : 0;
-        }, 1);
+        WithCards(1);
+        WithVar(ExtraCardsKey, 2, 1);
 
         WithTip(RunesmithHoverTip.Break);
     }
@@ -40,15 +37,13 @@ public class Accelerate : Runesmith2Card
         await CommonActions.CardBlock(this, play);
         if (HasRune())
         {
-            var cardsToDraw = (int)((CalculatedVar)DynamicVars[CardsKey]).Calculate(play.Target);
             await RuneCmd.BreakOldest(choiceContext, Owner);
             await Cmd.CustomScaledWait(0.1f, 0.2f);
-            await CardPileCmd.Draw(choiceContext, cardsToDraw, Owner);
+            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue + DynamicVars[ExtraCardsKey].IntValue, Owner);
         }
         else
         {
-            var cardsToDraw = (int)((CalculatedVar)DynamicVars[CardsKey]).Calculate(play.Target);
-            await CardPileCmd.Draw(choiceContext, cardsToDraw, Owner);
+            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
         }
     }
 }

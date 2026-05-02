@@ -23,7 +23,7 @@ public class HeatExchange : Runesmith2Card
     {
         WithCalculatedDamage(6, 1, (card, _) => card.Owner.PlayerCombatState?.Elements().Ignis ?? 0,
             ValueProp.Move, 0, 1);
-        WithVar(new IgnisVar(1));
+        WithVar("IgnisLoss", 1);
         WithTip(RunesmithHoverTip.Elements);
     }
 
@@ -39,6 +39,6 @@ public class HeatExchange : Runesmith2Card
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
-        await RunesmithPlayerCmd.LoseElements(new Elements(this), Owner);
+        await RunesmithPlayerCmd.LoseElements(Elements.WithIgnis(DynamicVars["IgnisLoss"].IntValue), Owner);
     }
 }

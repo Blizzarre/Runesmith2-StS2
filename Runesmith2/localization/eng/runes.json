@@ -37,7 +37,7 @@
   "RUNESMITH2-SAXUM_RUNE.description": "Rune: Gains [gold]Block[/gold].",
   "RUNESMITH2-SAXUM_RUNE.smartDescription": "[gold]Passive[/gold]: At the end of turn, gain [blue]{Passive}[/blue] [gold]Block[/gold].\n[gold]Break[/gold]: Gain [blue]{Break}[/blue] [gold]Block[/gold].",
   "RUNESMITH2-SAXUM_RUNE.title": "Saxum",
-  "RUNESMITH2-VULCANUS_RUNE.description": "Rune: Deals damage to ALL enemies and gain [gold]Block[/gold] equals to the damage dealt.",
-  "RUNESMITH2-VULCANUS_RUNE.smartDescription": "[gold]Passive:[/gold] At the end of turn, deal [blue]{Passive}[/blue] damage to ALL enemies and gain [gold]Block[/gold] equals to the damage dealt.\n[gold]Break:[/gold] Deal [blue]{Break}[/blue] damage to ALL enemies and gain [gold]Block[/gold] equals to the damage dealt.",
+  "RUNESMITH2-VULCANUS_RUNE.description": "Rune: Deals damage to ALL enemies and gain [gold]Block[/gold].",
+  "RUNESMITH2-VULCANUS_RUNE.smartDescription": "[gold]Passive:[/gold] At the end of turn, deal [blue]{Passive}[/blue] damage to ALL enemies and gain [blue]{Passive}[/blue] [gold]Block[/gold].\n[gold]Break:[/gold] Deal [blue]{Break}[/blue] damage to ALL enemies and gain [blue]{Break}[/blue] [gold]Block[/gold].",
   "RUNESMITH2-VULCANUS_RUNE.title": "Vulcanus"
 }

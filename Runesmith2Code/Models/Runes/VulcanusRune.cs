@@ -35,17 +35,19 @@ public class VulcanusRune : RuneModel
         if (ChargeVal > 0)
         {
             Trigger();
-            await ApplyAoeFireDamageAndGainBlock(choiceContext, PassiveVal);
+            await ApplyAoeFireDamage(choiceContext, PassiveVal);
+            await GainBlock(choiceContext, PassiveVal);
             UseCharge();
         }
     }
 
     public override async Task Break(PlayerChoiceContext choiceContext)
     {
-        await ApplyAoeFireDamageAndGainBlock(choiceContext, BreakVal);
+        await ApplyAoeFireDamage(choiceContext, BreakVal);
+        await GainBlock(choiceContext, BreakVal);
     }
 
-    private async Task ApplyAoeFireDamageAndGainBlock(PlayerChoiceContext choiceContext, decimal amount)
+    private async Task ApplyAoeFireDamage(PlayerChoiceContext choiceContext, decimal amount)
     {
         var targets = CombatState.GetOpponentsOf(Owner.Creature).Where(e => e.IsHittable).ToList();
         if (targets.Count == 0) return;
@@ -53,8 +55,12 @@ public class VulcanusRune : RuneModel
         foreach (var target in targets)
             NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(NGroundFireVfx.Create(target));
         PlayPassiveSfx();
-        var results = await CreatureCmd.Damage(choiceContext, targets, amount, ValueProp.Unpowered, Owner.Creature);
-        var totalDamage = results.Aggregate(0, (current, r) => current + r.TotalDamage);
-        await CreatureCmd.GainBlock(Owner.Creature, totalDamage, ValueProp.Unpowered, null);
+        await CreatureCmd.Damage(choiceContext, targets, amount, ValueProp.Unpowered, Owner.Creature);
+    }
+    
+    private async Task GainBlock(PlayerChoiceContext _, decimal amount)
+    {
+        PlayPassiveSfx();
+        await CreatureCmd.GainBlock(Owner.Creature, amount, ValueProp.Unpowered, null);
     }
 }

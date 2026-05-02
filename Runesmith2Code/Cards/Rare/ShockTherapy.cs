@@ -21,7 +21,7 @@ public class ShockTherapy : Runesmith2Card
 
     public ShockTherapy() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
-        WithDamage(5, 2);
+        WithDamage(6);
         WithCards(2, 1);
         WithCalculatedVar(CalculatedHitsKey, 0, GetPrecalculatedHits);
         WithTip(RunesmithHoverTip.Stasis);

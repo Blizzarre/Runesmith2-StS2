@@ -36,7 +36,7 @@ public class SecretRecipe : Runesmith2Card
 
         if (card != null)
         {
-            card.SetToFreeThisCombat();
+            card.SetToFreeThisTurn();
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
         }
     }

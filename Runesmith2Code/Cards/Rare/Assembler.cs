@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Powers;
+using Runesmith2.Runesmith2Code.Structs;
 using Runesmith2.Runesmith2Code.Utils;
 
 #endregion

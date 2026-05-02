@@ -1,0 +1,8 @@
+{
+  "RUNESMITH2-RGB_POTION.description": "Gain [blue]{Elements}[/blue] {Elements:rs2Icon(0)}.",
+  "RUNESMITH2-RGB_POTION.title": "RGB Potion",
+  "RUNESMITH2-ICE_IN_A_BOTTLE.description": "Apply [blue]{IceColdPower}[blue] [gold]Ice-Cold[/gold].",
+  "RUNESMITH2-ICE_IN_A_BOTTLE.title": "Ice in a Bottle",
+  "RUNESMITH2-IRON_SUPPLEMENT.description": "[gold]Enhance[/gold] [blue]1[/blue] card by [blue]{EnhanceBy}[/blue].",
+  "RUNESMITH2-IRON_SUPPLEMENT.title": "Iron Supplement"
+}

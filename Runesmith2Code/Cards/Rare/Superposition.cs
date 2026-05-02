@@ -87,12 +87,12 @@ public class Superposition : Runesmith2Card, IAfterRuneCrafted, IAfterRuneBroken
         if (player == Owner && PileType.Hand.GetPile(player).Cards.Contains(this)) await CheckAndTransformSelf();
     }
     
-    public override async Task AfterCardEnteredCombat(CardModel card)
-    {
-        if (card != this) return;
-        if (IsClone) return;
-        await CheckAndTransformSelf();
-    }
+    // public override async Task AfterCardEnteredCombat(CardModel card)
+    // {
+    //     if (card != this) return;
+    //     if (IsClone) return;
+    //     await CheckAndTransformSelf();
+    // }
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? source)
     {
