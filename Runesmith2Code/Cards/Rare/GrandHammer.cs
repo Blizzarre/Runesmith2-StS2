@@ -28,7 +28,7 @@ public class GrandHammer : Runesmith2Card
     {
         if (CombatState == null) return;
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play)
             .TargetingAllOpponents(CombatState)
             .SpawningHitVfxOnEachCreature()
             .WithHitFx("vfx/vfx_attack_blunt")

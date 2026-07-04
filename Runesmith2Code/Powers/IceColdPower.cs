@@ -28,8 +28,8 @@ public class IceColdPower : Runesmith2Power
         new DisplayVar<IceColdPower>("Decrement", pow => (pow.Amount - pow.Amount / 2).ToString())
     ];
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer,
-        CardModel? cardSource)
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         if (Owner != dealer) return 0;
 

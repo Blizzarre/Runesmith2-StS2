@@ -28,7 +28,7 @@ public class Electrocute : Runesmith2Card
         ArgumentNullException.ThrowIfNull(play.Target);
 
         VfxCmd.PlayOnCreature(play.Target, "vfx/vfx_attack_lightning");
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play)
             .Targeting(play.Target)
             .Execute(choiceContext);
 

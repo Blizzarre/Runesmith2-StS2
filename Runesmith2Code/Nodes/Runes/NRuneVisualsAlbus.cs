@@ -10,7 +10,8 @@ public partial class NRuneVisualsAlbus : NRuneVisuals
 {
     protected override Action CustomTrigger => () =>
     {
-        var track = SpineAnimation.SetAnimation("trigger", false, 1);
+        SpineAnimation.SetAnimation("trigger", false, 1);
+        var track = SpineAnimation.GetCurrentTrack(1);
         track?.SetMixBlend(MixBlend.MixBlend_Replace);
     };
 
@@ -18,7 +19,8 @@ public partial class NRuneVisualsAlbus : NRuneVisuals
     {
         // Restore idle animation
         var track1Data = TrackDict[1];
-        var track = SpineAnimation.SetAnimation("idle/loop_2", true, 1);
+        SpineAnimation.SetAnimation("idle/loop_2", true, 1);
+        var track = SpineAnimation.GetCurrentTrack(1);
         if (track == null) return;
         track.SetTrackTime(0);
         track.SetTimeScale(track1Data.TimeScale);

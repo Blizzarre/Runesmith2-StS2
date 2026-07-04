@@ -23,6 +23,8 @@ public class LithiumIonPower : Runesmith2Power
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new AquaVar(1)

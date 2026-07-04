@@ -28,6 +28,8 @@ public class Recycler : Runesmith2Relic
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
+        RunesmithHoverTipFactory.Static(RunesmithHoverTip.Break),
+        RunesmithHoverTipFactory.Static(RunesmithHoverTip.Charge),
         RunesmithHoverTipFactory.CreateElementsHoverTip()
     ];
 

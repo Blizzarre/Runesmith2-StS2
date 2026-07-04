@@ -16,7 +16,8 @@ public partial class NRuneVisualsOneTrack : NRuneVisuals
     {
         // Restore idle animation
         var track0Data = TrackDict[0];
-        var track = SpineAnimation.SetAnimation("idle_loop");
+        SpineAnimation.SetAnimation("idle_loop");
+        var track = SpineAnimation.GetCurrentTrack();
         if (track == null) return;
         track.SetTrackTime(_currTime);
         track.SetTimeScale(track0Data.TimeScale);

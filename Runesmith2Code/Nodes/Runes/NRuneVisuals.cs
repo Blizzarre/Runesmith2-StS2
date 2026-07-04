@@ -114,7 +114,8 @@ public partial class NRuneVisuals : Node2D
         // default option, don't call spine functions too much
         if (animNames.Contains("idle_loop"))
         {
-            var track = SpineAnimation.SetAnimation("idle_loop", true);
+            SpineAnimation.SetAnimation("idle_loop", true);
+            var track = SpineAnimation.GetCurrentTrack(0);
             var timeScale = Rng.Chaotic.NextFloat(0.9f, 1.1f);
             if (track == null) return;
             track.SetTimeScale(timeScale);
@@ -130,7 +131,8 @@ public partial class NRuneVisuals : Node2D
             var name = $"idle/loop_{index + 1}";
             if (animNames.Contains(name))
             {
-                var track = SpineAnimation.SetAnimation(name, true, index);
+                SpineAnimation.SetAnimation(name, true, index);
+                var track = SpineAnimation.GetCurrentTrack(index);
                 var timeScale = Rng.Chaotic.NextFloat(0.9f, 1.1f);
                 if (track != null)
                 {
@@ -158,7 +160,8 @@ public partial class NRuneVisuals : Node2D
         _isTriggering = true;
         if (CustomTrigger == null)
         {
-            var track = SpineAnimation.SetAnimation("trigger", false, _triggerTrack);
+            SpineAnimation.SetAnimation("trigger", false, _triggerTrack);
+            var track = SpineAnimation.GetCurrentTrack(_triggerTrack);
             track?.SetMixBlend(TriggerMixBlend);
             SpineAnimation.GetAnimationState()?.AddEmptyAnimation(_triggerTrack);
         }

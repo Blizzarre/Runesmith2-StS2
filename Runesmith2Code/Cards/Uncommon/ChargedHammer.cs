@@ -32,7 +32,7 @@ public class ChargedHammer : Runesmith2Card
 
         VfxCmd.PlayOnCreature(play.Target, "vfx/vfx_attack_lightning");
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .SpawningHitVfxOnEachCreature()

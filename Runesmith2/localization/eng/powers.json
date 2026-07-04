@@ -35,8 +35,8 @@
   "RUNESMITH2-LASER_TURRET_POWER.description": "Whenever you gain {elements:rs2Icon(all)}, deal damage to ALL enemies equal to [blue]1[/blue] times the number of {elements:rs2Icon(all)} gained.",
   "RUNESMITH2-LASER_TURRET_POWER.smartDescription": "Whenever you gain {elements:rs2Icon(all)}, deal damage to ALL enemies equal to [blue]{Amount}[/blue] times the number of {elements:rs2Icon(all)} gained.",
   "RUNESMITH2-LASER_TURRET_POWER.title": "Laser Turret",
-  "RUNESMITH2-LITHIUM_ION_POWER.description": "At the start of turn, spend [blue]1[/blue] {elements:rs2Icon(aqua)} to gain [gold]Amp[/gold].",
-  "RUNESMITH2-LITHIUM_ION_POWER.smartDescription": "At the start of turn, spend [blue]{Aqua}[/blue] {Aqua:rs2Icon(0)} to gain [blue]{Amount}[/blue] [gold]Amp[/gold].",
+  "RUNESMITH2-LITHIUM_ION_POWER.description": "At the start of turn, spend [blue]1[/blue]{elements:rs2Icon(aqua)} to gain [gold]Amp[/gold].",
+  "RUNESMITH2-LITHIUM_ION_POWER.smartDescription": "At the start of turn, spend [blue]{Aqua:rs2Icon()}[/blue] to gain [blue]{Amount}[/blue] [gold]Amp[/gold].",
   "RUNESMITH2-LITHIUM_ION_POWER.title": "Lithium Ion",
   "RUNESMITH2-PARTICLE_ACCELERATOR_POWER.description": "Runes are [gold]Crafted[/gold] with [blue]2[/blue] additional [gold]Charges[/gold].\nRunes trigger their passive abilities an additional time.",
   "RUNESMITH2-PARTICLE_ACCELERATOR_POWER.smartDescription": "Runes are [gold]Crafted[/gold] with [blue]{Amount}[/blue] additional [gold]Charge{Amount:plural:|s}[/gold].\nRunes trigger their passive abilities {TriggerCount:plural:an|[blue]{}[/blue]} additional time{TriggerCount:plural:|s}.",
@@ -54,6 +54,6 @@
   "RUNESMITH2-SYNTHETIC_BLOOD_POWER.smartDescription": "{Amount:plural:This turn|For [blue]{}[/blue] turns}, you lose[br]{elements:rs2Icon(ignis)} {elements:rs2Icon(terra)} {elements:rs2Icon(aqua)} before losing HP.",
   "RUNESMITH2-SYNTHETIC_BLOOD_POWER.title": "Synthetic Blood",
   "RUNESMITH2-WILDFIRE_POWER.description": "At the start of turn, gain {elements:rs2Icon(ignis)} and {elements:rs2Icon(terra)}.",
-  "RUNESMITH2-WILDFIRE_POWER.smartDescription": "At the start of turn, gain [blue]{Amount}[/blue] {elements:rs2Icon(ignis)} and [blue]{Amount}[/blue] {elements:rs2Icon(terra)}.",
+  "RUNESMITH2-WILDFIRE_POWER.smartDescription": "At the start of turn, gain [blue]{Amount:rs2Icon(ignis)}[/blue] and [blue]{Amount:rs2Icon(terra)}[/blue].",
   "RUNESMITH2-WILDFIRE_POWER.title": "Wildfire"
 }

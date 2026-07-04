@@ -104,7 +104,7 @@
   "RUNESMITH2-INCENDIUM.title": "Incendium",
   "RUNESMITH2-LASER_TURRET.description": "Whenever you gain {elements:rs2Icon(all)}, deal damage to ALL enemies equal to {Amount:diff()} times the number of {elements:rs2Icon(all)} gained.",
   "RUNESMITH2-LASER_TURRET.title": "Laser Turret",
-  "RUNESMITH2-LITHIUM_ION.description": "Gain {Aqua:rs2Icon()}.\nAt the start of your turn, spend 1 {Aqua:rs2Icon(0)} to gain {Amount:diff()} [gold]Amp[/gold].",
+  "RUNESMITH2-LITHIUM_ION.description": "Gain {Aqua:rs2Icon()}.\nAt the start of your turn, spend 1{Aqua:rs2Icon(0)} to gain {Amount:diff()} [gold]Amp[/gold].",
   "RUNESMITH2-LITHIUM_ION.title": "Lithium Ion",
   "RUNESMITH2-MAGMA.description": "[gold]Recipe[/gold].\n[gold]Craft[/gold] a [gold]Magma[/gold] Rune with {Potency:diff()} [gold]Potency[/gold] and {Charge:diff()} [gold]Charge{Charge:rs2Plural:|s}[/gold].{IfFull:\n[red](Rune Slots are full)[/red]|}",
   "RUNESMITH2-MAGMA.title": "Magma",
@@ -182,6 +182,6 @@
   "RUNESMITH2-WATCH_OUT.title": "Watch Out!",
   "RUNESMITH2-WHITE_BALANCE.description": "Deal {Damage:diff()} damage to ALL enemies.\nIf you have at least 1 of each {elements:rs2Icon(all)}, gain {Energy:energyIcons()}.",
   "RUNESMITH2-WHITE_BALANCE.title": "White Balance",
-  "RUNESMITH2-WILDFIRE.description": "Gain {Ignis:rs2Icon()} and {Terra:rs2Icon()}.\nAt the start of your turn, gain {Amount:diff()} {elements:rs2Icon(ignis)} and {Amount:diff()} {elements:rs2Icon(terra)}.",
+  "RUNESMITH2-WILDFIRE.description": "Gain {Ignis:rs2Icon()} and {Terra:rs2Icon()}.\nAt the start of your turn, gain {Amount:rs2Icon(ignis)} and {Amount:rs2Icon(terra)}.",
   "RUNESMITH2-WILDFIRE.title": "Wildfire"
 }

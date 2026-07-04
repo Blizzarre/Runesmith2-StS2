@@ -51,7 +51,7 @@ public class ShockTherapy : Runesmith2Card
 
         var stasisCardCount = PileType.Hand.GetPile(Owner).Cards.Count(c => c.IsStasis());
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play)
             .WithHitCount(stasisCardCount)
             .WithHitFx("vfx/vfx_attack_lightning")
             .TargetingAllOpponents(CombatState)

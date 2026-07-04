@@ -28,7 +28,7 @@ public class CompleteCircuit : Runesmith2Card
         foreach (var enemy in hittableEnemies)
             VfxCmd.PlayOnCreature(enemy, "vfx/vfx_attack_lightning");
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play)
             .TargetingAllOpponents(CombatState)
             .Execute(choiceContext);
 

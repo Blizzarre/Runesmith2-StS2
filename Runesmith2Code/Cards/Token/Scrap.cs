@@ -46,10 +46,12 @@ public class Scrap : Runesmith2Card
         }
         await Cmd.Wait(0.20f);
     }
-    
-    protected override PileType GetResultPileTypeForCardPlay()
+
+
+
+    protected override (PileType, CardPilePosition) GetResultPileTypeAndPositionForCardPlay()
     {
-        var pileTypeForCardPlay = base.GetResultPileTypeForCardPlay();
-        return pileTypeForCardPlay != PileType.Discard ? pileTypeForCardPlay : PileType.Hand;
+        var (pileType, cardPilePosition) = base.GetResultPileTypeAndPositionForCardPlay();
+        return pileType != PileType.Discard ? (pileType, cardPilePosition) : (PileType.Hand, CardPilePosition.Bottom);
     }
 }

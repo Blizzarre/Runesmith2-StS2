@@ -21,7 +21,7 @@ namespace Runesmith2.Runesmith2Code.Models;
 public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(HookType.Combat), IModifyPotencyMultiplicative
 {
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
-        Creature? dealer, CardModel? cardSource)
+        Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (cardSource == null) return 1;
 

@@ -35,7 +35,7 @@ public class HammerTornado : Runesmith2Card
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount((int)((CalculatedVar)DynamicVars[CalculatedHitsKey]).Calculate(play.Target))
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .SpawningHitVfxOnEachCreature()

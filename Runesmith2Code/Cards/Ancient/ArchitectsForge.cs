@@ -19,7 +19,6 @@ public class ArchitectsForge : Runesmith2Card
     {
         WithVar("Amount", 2, 1);
         WithTips(c => HoverTipFactory.FromEnchantment<Forged>(c.DynamicVars["Amount"].IntValue));
-        WithTip(RunesmithHoverTip.Enhance);
     }
 
     protected override async Task OnPlay(
