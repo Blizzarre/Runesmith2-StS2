@@ -1,5 +1,5 @@
 {
-  "RUNESMITH2-BALL_PEEN_HAMMER.description": "每当你在一回合内打出[blue]{Cards}[/blue]{Cards:plural(en技能牌}, 随机[gold]增幅[/gold]你手牌中的[blue]1[/blue]张牌",
+  "RUNESMITH2-BALL_PEEN_HAMMER.description": "每当你在一回合内打出[blue]{Cards}[/blue]张技能牌,随机[gold]增幅[/gold]你手牌中的[blue]1[/blue]张牌",
   "RUNESMITH2-BALL_PEEN_HAMMER.flavor": "",
   "RUNESMITH2-BALL_PEEN_HAMMER.title": "球头锤",
   "RUNESMITH2-BROKEN_RUBY.description": "每场战斗开始时, 获得[blue]{Ignis}[/blue]{Ignis:rs2Icon(0)}并随机[gold]增幅[/gold]手牌中的[blue]{Cards:diff()}[/blue]张牌",
@@ -12,7 +12,7 @@
   "RUNESMITH2-CRAFTING_MANUAL.flavor": "",
   "RUNESMITH2-CRAFTING_MANUAL.selectionScreenPrompt": "每场战斗开始时,将1张[gold]配方[/gold]从[gold]抽牌堆[/gold]加入手牌,该牌本回合内免费",
   "RUNESMITH2-CRAFTING_MANUAL.title": "锻造指南",
-  "RUNESMITH2-CRYSTALLIZED_RAINBOW.description": "每当你打出一张牌,随机获得[blue]{Elements}[/blue]{Elements:rs2Icon(0)}",
+  "RUNESMITH2-CRYSTALLIZED_RAINBOW.description": "每当你花费[blue]{Energy:energyIcons()}[/blue],获得[blue]{Elements:rs2Icon()}[/blue]",
   "RUNESMITH2-CRYSTALLIZED_RAINBOW.flavor": "",
   "RUNESMITH2-CRYSTALLIZED_RAINBOW.title": "彩虹结晶",
   "RUNESMITH2-LIQUID_NITROGEN.description": "在你的回合开始时,向全体敌人施加[blue]{IceColdPower}[/blue][gold]冰霜[/gold]",
@@ -24,7 +24,7 @@
   "RUNESMITH2-PLASMA_GLOBE.description": "卢恩被[gold]锻造[/gold]时将获得[blue]{PotencyAmount}[/blue]点额外[gold]符能[/gold]和[blue]{ChargeAmount}[/blue]额外[gold]充能[/gold]",
   "RUNESMITH2-PLASMA_GLOBE.flavor": "",
   "RUNESMITH2-PLASMA_GLOBE.title": "等离子球",
-  "RUNESMITH2-RECYCLER.description": "在你的回合开始时[gold]击碎[/gold]所有[gold]充能[/gold]为[blue]0[/blue]的卢恩,并获得等于其[gold]Recipe[/gold]配方消耗的{Elements:rs2Icon(0)}",
+  "RUNESMITH2-RECYCLER.description": "在你的回合开始时[gold]击碎[/gold]所有[gold]充能[/gold]为[blue]0[/blue]的卢恩,并获得等于其[gold]配方[/gold]所需的{Elements:rs2Icon(0)}",
   "RUNESMITH2-RECYCLER.flavor": "",
   "RUNESMITH2-RECYCLER.title": "循环利用",
   "SEA_GLASS.RUNESMITH2-RUNESMITH2.title": "钢化玻璃"

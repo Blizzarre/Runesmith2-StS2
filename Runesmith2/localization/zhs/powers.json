@@ -24,7 +24,7 @@
   "RUNESMITH2-CREATOR_FORM_POWER.smartDescription": "你的回合开始时,[gold]增幅[/gold]一张牌[blue]{Amount}[/blue]次",
   "RUNESMITH2-CREATOR_FORM_POWER.title": "缔造形态",
   "RUNESMITH2-DUCT_TAPE_POWER.description": "[gold]凝滞[/gold]每回合增幅的第一张未[gold]凝滞[/gold]卡牌",
-  "RUNESMITH2-DUCT_TAPE_POWER.smartDescription": "[gold]凝滞[/gold]每回合[gold]增幅[/gold]的第{Amount:plural(en):|[blue]{}[/blue]}张未[gold]凝滞[/gold]卡牌",
+  "RUNESMITH2-DUCT_TAPE_POWER.smartDescription": "[gold]凝滞[/gold]每回合[gold]增幅[/gold]的{Amount:plural(en):第1|前[blue]{}[/blue]}张未[gold]凝滞[/gold]卡牌",
   "RUNESMITH2-DUCT_TAPE_POWER.title": "布基胶带",
   "RUNESMITH2-GRINDSTONE_POWER.description": "本回合每当你打出一张牌,将其[gold]升级[/gold],若该牌无法被 [gold]升级[/gold],则[gold]增幅[/gold]它",
   "RUNESMITH2-GRINDSTONE_POWER.smartDescription": "{Amount:plural(en):本回合|[blue]{}[/blue]回合内},每当你打出一张牌,将其[gold]升级[/gold],若该牌无法被[gold]升级[/gold],则[gold]增幅[/gold]它",
