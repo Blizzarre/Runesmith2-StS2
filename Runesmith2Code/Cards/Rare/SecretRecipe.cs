@@ -1,11 +1,12 @@
 #region
 
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
-using Runesmith2.Runesmith2Code.Cards.Uncommon;
+using Runesmith2.Runesmith2Code.CardSelection;
 using Runesmith2.Runesmith2Code.Character;
 using Runesmith2.Runesmith2Code.Utils;
 
@@ -25,14 +26,35 @@ public class SecretRecipe : Runesmith2Card
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
+        var recipeCards = ModelDb.CardPool<Runesmith2CardPool>()
+            .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint)
+            .Where(c => c.Tags.Contains(RunesmithTags.Recipe))
+            .ToList();
+        
         var cards = CardFactory.GetDistinctForCombat(Owner,
-                ModelDb.CardPool<Runesmith2CardPool>()
-                    .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint)
-                    .Where(c => c.Tags.Contains(RunesmithTags.Recipe)), DynamicVars.Cards.IntValue,
+                recipeCards, DynamicVars.Cards.IntValue,
                 Owner.RunState.Rng.CombatCardGeneration
             )
             .ToList();
-        var card = await CardSelectCmd.FromChooseACardScreen(choiceContext, cards, Owner, true);
+        
+        CardModel? card;
+        if (DynamicVars.Cards.IntValue > 3)
+        {
+            // Compat for infinite upgrades
+            var prefs = new CardSelectorPrefs(RunesmithCardSelectorPrefs.ChooseCardSelectionPrompt, 0, 1)
+            {
+                Cancelable = true,
+                UnpoweredPreviews = true
+            };
+
+            card = (await CardSelectCmd.FromSimpleGrid(choiceContext, cards.OrderBy(c => c.Rarity)
+                .ThenBy(c => c.Id)
+                .ToList(), Owner, prefs)).FirstOrDefault();
+        }
+        else
+        {
+            card = await CardSelectCmd.FromChooseACardScreen(choiceContext, cards, Owner, true);
+        }
 
         if (card != null)
         {

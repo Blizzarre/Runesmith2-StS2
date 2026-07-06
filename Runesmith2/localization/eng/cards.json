@@ -183,5 +183,7 @@
   "RUNESMITH2-WHITE_BALANCE.description": "Deal {Damage:diff()} damage to ALL enemies.\nIf you have at least 1 of each {elements:rs2Icon(all)}, gain {Energy:energyIcons()}.",
   "RUNESMITH2-WHITE_BALANCE.title": "White Balance",
   "RUNESMITH2-WILDFIRE.description": "Gain {Ignis:rs2Icon()} and {Terra:rs2Icon()}.\nAt the start of your turn, gain {Amount:rs2Icon(ignis)} and {Amount:rs2Icon(terra)}.",
-  "RUNESMITH2-WILDFIRE.title": "Wildfire"
+  "RUNESMITH2-WILDFIRE.title": "Wildfire",
+  "RUNESMITH2-GEMMA.description": "[gold]Enhance[/gold] {Cards:diff()} card{Cards:plural:|s}{EnhanceBy:rs2Plural:| by {EnhanceBy:diff()}}.",
+  "RUNESMITH2-GEMMA.title": "Gemma"
 }

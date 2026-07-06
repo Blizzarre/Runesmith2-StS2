@@ -1,9 +1,14 @@
 #region
 
 using Godot;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Cards;
+using Runesmith2.Runesmith2Code.Cards.Token;
 using Runesmith2.Runesmith2Code.Cards.Uncommon;
+using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.Nodes.Runes;
 
 #endregion
@@ -22,7 +27,17 @@ public class MundusRune : RuneModel
 
     public override ChargeDepletionType ChargeDepletion => ChargeDepletionType.None;
     public override (decimal, decimal) BottomValue => (PassiveVal, PassiveVal);
-    public override (Color, Color, Color) BottomBreakColor => NRune.DefaultFontColor;
 
     public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Mundus>();
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    [
+        HoverTipFactory.FromCard<Gemma>()
+    ];
+
+    public override async Task Break(PlayerChoiceContext choiceContext)
+    {
+        PlayPassiveSfx();
+        await RunesmithCardCmd.GiveCard<Gemma>(Owner, PileType.Hand, skipAnimation: true);
+    }
 }

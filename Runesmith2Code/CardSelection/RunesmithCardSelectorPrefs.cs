@@ -14,4 +14,6 @@ public static class RunesmithCardSelectorPrefs
         new("card_selection", "RUNESMITH2-TO_ENHANCE_AND_UPGRADE");
 
     public static LocString StasisSelectionPrompt => new("card_selection", "RUNESMITH2-TO_STASIS");
+    
+    public static LocString ChooseCardSelectionPrompt => new("card_selection", "RUNESMITH2-CHOOSE_CARD");
 }
