@@ -13,7 +13,7 @@
   "RUNESMITH2-CRAFT.title": "Ковка",
   "RUNESMITH2-ELEMENTS.description": "Элементы ([gold]Игнис[/gold] {elements:rs2Icon(ignis)}, [gold]Терра[/gold] {elements:rs2Icon(terra)} и [gold]Аква[/gold] {elements:rs2Icon(aqua)}) используются для разыгрывания карт [gold]Заготовок[/gold] или активации эффектов других карт.",
   "RUNESMITH2-ELEMENTS.title": "Элементы",
-  "RUNESMITH2-ELEMENTS_COUNT.description": "Текущее количество Элементов ([gold]Игнис[/gold] ({elements:rs2Icon(ignis)}), [gold]Терра[/gold] ({elements:rs2Icon(terra)}) и [gold]Аква[/gold] ({elements:rs2Icon(aqua)}).\nЭлементы используются для разыгрывания или активации эффектов некоторых карт.\n[i]Нажмите, чтобы включить прозрачность.[/i]",
+  "RUNESMITH2-ELEMENTS_COUNT.description": "Текущее количество Элементов ([gold]Игнис[/gold] ({elements:rs2Icon(ignis)}), [gold]Терра[/gold] ({elements:rs2Icon(terra)}) и [gold]Аква[/gold] ({elements:rs2Icon(aqua)}).\nЭлементы используются для разыгрывания или активации эффектов некоторых карт.\n[color=gray][font_size=16]Нажмите, чтобы включить прозрачность.[/font_size][/color]",
   "RUNESMITH2-ELEMENTS_COUNT.title": "Элементы",
   "RUNESMITH2-ENHANCE.description": "Повышает урон, [gold]защиту[/gold] и [gold]Мощь[/gold] карты на [blue]50%[/blue]. Этот эффект суммируется, сбрасывается после разыгрывания карты.",
   "RUNESMITH2-ENHANCE.title": "Полировка",
