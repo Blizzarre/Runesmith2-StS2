@@ -4,6 +4,8 @@ using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.Extensions;
@@ -21,6 +23,8 @@ public class ShiningHammer : Runesmith2Card
         WithVar(new EnhanceByVar(1));
         WithTags(RunesmithTags.Hammer);
     }
+
+    private static readonly HashSet<ModelId> ExtraHammerCards = [ModelDb.Card<HeirloomHammer>().Id];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -40,7 +44,7 @@ public class ShiningHammer : Runesmith2Card
             var cards = Owner.PlayerCombatState.AllPiles
                 .Where(p => p.IsCombatPile && p.Type != PileType.Exhaust)
                 .SelectMany(p => p.Cards)
-                .Where(c => c != this && c.Tags.Contains(RunesmithTags.Hammer) && c.CanEnhance());
+                .Where(c => c != this && (c.Tags.Contains(RunesmithTags.Hammer) || ExtraHammerCards.Contains(c.Id)) && c.CanEnhance());
             await RunesmithCardCmd.Enhance(choiceContext, Owner, cards, play,
                 DynamicVars[EnhanceByVar.defaultName].IntValue);
         }

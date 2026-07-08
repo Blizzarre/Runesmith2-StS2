@@ -16,12 +16,6 @@ namespace Runesmith2.Runesmith2Code.Cards.Rare;
 
 public class Teleport : Runesmith2Card
 {
-    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
-
-    public override RuneBreakType RuneBreakType => RuneBreakType.Newest;
-
-    protected override bool ShouldGlowGoldInternal => HasRune();
-
     public Teleport() : base(0, CardType.Skill, CardRarity.Rare, TargetType.AnyAlly)
     {
         WithTip(RunesmithHoverTip.Break);
@@ -32,6 +26,12 @@ public class Teleport : Runesmith2Card
         });
         WithVar(new ChargeGainVar(0, false).WithUpgrade(2));
     }
+    
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
+
+    public override RuneBreakType RuneBreakType => RuneBreakType.Newest;
+
+    protected override bool ShouldGlowGoldInternal => HasRune();
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

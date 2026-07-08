@@ -81,11 +81,11 @@ public static class RunesmithHook
         return Dispatch<IAfterModifyingEnhanceAmount>(modifiers, model => model.AfterModifyingEnhanceAmount(modifiedEnhance, cardSource, cardPlay));
     }
 
-    public static Task AfterCardEnhanced(ICombatState combatState, PlayerChoiceContext choiceContext,
+    public static Task AfterCardEnhanced(ICombatState combatState, PlayerChoiceContext choiceContext, Player player,
         CardModel card, CardPlay? cardPlay, int enhanceAmount)
     {
         return Dispatch<IAfterCardEnhanced>(combatState, choiceContext,
-            model => model.AfterCardEnhanced(choiceContext, card, cardPlay, enhanceAmount));
+            model => model.AfterCardEnhanced(choiceContext, card, player, cardPlay, enhanceAmount));
     }
 
     public static int ModifyRunePassiveTriggerCount(ICombatState combatState, Player player, int originalCount,

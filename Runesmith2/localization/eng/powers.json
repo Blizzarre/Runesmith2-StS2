@@ -44,8 +44,8 @@
   "RUNESMITH2-POWERED_ANVIL_POWER.description": "Increase ALL [gold]Enhance[/gold] by [blue]1[/blue]. ",
   "RUNESMITH2-POWERED_ANVIL_POWER.smartDescription": "Increase ALL [gold]Enhance[/gold] by [blue]{Amount}[/blue].",
   "RUNESMITH2-POWERED_ANVIL_POWER.title": "Powered Anvil",
-  "RUNESMITH2-SCRAPPER_POWER.description": "Whenever a Rune is [gold]Broken[/gold], all Runes gain [blue]1[/blue] [gold]Charge[/gold].",
-  "RUNESMITH2-SCRAPPER_POWER.smartDescription": "Whenever a Rune is [gold]Broken[/gold], all Runes gain [blue]{Amount}[/blue] [gold]Charge{Amount:plural:|s}.[/gold]",
+  "RUNESMITH2-SCRAPPER_POWER.description": "Whenever your Rune is [gold]Broken[/gold], ALL your Runes gain [blue]1[/blue] [gold]Charge[/gold].",
+  "RUNESMITH2-SCRAPPER_POWER.smartDescription": "Whenever your Rune is [gold]Broken[/gold], ALL your Runes gain [blue]{Amount}[/blue] [gold]Charge{Amount:plural:|s}.[/gold]",
   "RUNESMITH2-SCRAPPER_POWER.title": "Scrapper",
   "RUNESMITH2-SEARCH_ENGINE_POWER.description": "Whenever you [gold]Craft[/gold] a Rune, draw [blue]1[/blue] card.",
   "RUNESMITH2-SEARCH_ENGINE_POWER.smartDescription": "Whenever you [gold]Craft[/gold] a Rune, draw [blue]{Amount}[/blue] card{Amount:plural:|s}.",
@@ -55,5 +55,8 @@
   "RUNESMITH2-SYNTHETIC_BLOOD_POWER.title": "Synthetic Blood",
   "RUNESMITH2-WILDFIRE_POWER.description": "At the start of turn, gain {elements:rs2Icon(ignis)} and {elements:rs2Icon(terra)}.",
   "RUNESMITH2-WILDFIRE_POWER.smartDescription": "At the start of turn, gain [blue]{Amount:rs2Icon(ignis)}[/blue] and [blue]{Amount:rs2Icon(terra)}[/blue].",
-  "RUNESMITH2-WILDFIRE_POWER.title": "Wildfire"
+  "RUNESMITH2-WILDFIRE_POWER.title": "Wildfire",
+  "RUNESMITH2-CONDUIT_POWER.description": "Whenever you [gold]Enhance[/gold] a card, a random card in an ally's [gold]Hand[/gold] gains [gold]Enhance[/gold] by the same amount.",
+  "RUNESMITH2-CONDUIT_POWER.smartDescription": "Whenever [gold]{ApplierName}[/gold] [gold]Enhance[/gold] a card, {Amount:plural:a|{}} random card{Amount:plural:|s} in your [gold]Hand[/gold] gain{Amount:plural:s|} [gold]Enhance[/gold] by the same amount.",
+  "RUNESMITH2-CONDUIT_POWER.title": "Conduit"
 }

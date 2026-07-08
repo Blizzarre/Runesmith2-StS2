@@ -2,9 +2,10 @@
 
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
-using Runesmith2.Runesmith2Code.Extensions;
+using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Utils;
@@ -34,13 +35,12 @@ public class AdamantiumHammer : Runesmith2Card, IAfterCardEnhanced
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
     }
-
-
-    public Task AfterCardEnhanced(PlayerChoiceContext choiceContext, CardModel card, CardPlay? cardPlay, int enhanceAmount)
+    
+    public Task AfterCardEnhanced(PlayerChoiceContext choiceContext, CardModel card, Player applier, CardPlay? cardPlay, int enhanceAmount)
     {
-        if (card.Owner != Owner || enhanceAmount <= 0 || card == this) return Task.CompletedTask;
+        if (applier != Owner || enhanceAmount <= 0 || card == this) return Task.CompletedTask;
 
-        this.AddEnhance(enhanceAmount);
+        RunesmithCardCmd.AddEnhance([this], enhanceAmount);
         return Task.CompletedTask;
     }
 }
