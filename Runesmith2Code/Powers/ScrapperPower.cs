@@ -19,9 +19,9 @@ public class ScrapperPower : Runesmith2Power, IAfterRuneBroken
 
     public Task AfterRuneBroken(PlayerChoiceContext choiceContext, Player player, RuneModel rune)
     {
-        if (player != Owner.Player) return Task.CompletedTask;
+        if (rune.Owner != Owner.Player) return Task.CompletedTask;
         Flash();
-        RuneCmd.ChargeAll(choiceContext, player, Amount);
+        RuneCmd.ChargeAll(choiceContext, rune.Owner, Amount);
 
         return Task.CompletedTask;
     }

@@ -20,6 +20,8 @@ public class HammerAndChisel : Runesmith2Card
         WithKeyword(CardKeyword.Exhaust);
     }
 
+    private static readonly HashSet<ModelId> BannedHammer = [ModelDb.Card<LightningHammer>().Id];
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
@@ -30,7 +32,7 @@ public class HammerAndChisel : Runesmith2Card
             .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint).ToList();
 
         var hammer = CardFactory.GetDistinctForCombat(Owner,
-                cardPool.Where(c => c.Tags.Contains(RunesmithTags.Hammer)), 1, Owner.RunState.Rng.CombatCardGeneration)
+                cardPool.Where(c => c.Tags.Contains(RunesmithTags.Hammer) && !BannedHammer.Contains(c.Id)), 1, Owner.RunState.Rng.CombatCardGeneration)
             .FirstOrDefault();
         var chisel = CardFactory.GetDistinctForCombat(Owner,
                 cardPool.Where(c => c.Tags.Contains(RunesmithTags.Chisel)), 1, Owner.RunState.Rng.CombatCardGeneration)

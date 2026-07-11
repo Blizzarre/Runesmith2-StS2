@@ -152,6 +152,7 @@ public static class RunesmithCardCmd
         CardPilePosition position = CardPilePosition.Bottom,
         AbstractModel? clonedBy = null)
     {
+        if (CombatManager.Instance.IsOverOrEnding) return;
         var cardNode = NCard.FindOnTable(card);
         card.RemoveFromCurrentPile(true);
         card.GiveToAnotherPlayer(player);

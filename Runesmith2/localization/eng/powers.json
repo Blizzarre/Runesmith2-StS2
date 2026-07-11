@@ -20,6 +20,9 @@
   "RUNESMITH2-CATALYTIC_CONVERTER_POWER.description": "Increase ALL [gold]Elements[/gold] gains by [blue]1[/blue]. ",
   "RUNESMITH2-CATALYTIC_CONVERTER_POWER.smartDescription": "Increase ALL {elements:rs2Icon(all)} gains by [blue]{Amount}[/blue]. ",
   "RUNESMITH2-CATALYTIC_CONVERTER_POWER.title": "Catalytic Converter",
+  "RUNESMITH2-CONDUIT_POWER.description": "Whenever you [gold]Enhance[/gold] a card, a random card in an ally's [gold]Hand[/gold] gains [gold]Enhance[/gold] by the same amount.",
+  "RUNESMITH2-CONDUIT_POWER.smartDescription": "Whenever [gold]{ApplierName}[/gold] [gold]Enhance[/gold] a card, {Amount:plural:a|{}} random card{Amount:plural:|s} in your [gold]Hand[/gold] gain{Amount:plural:s|} [gold]Enhance[/gold] by the same amount.",
+  "RUNESMITH2-CONDUIT_POWER.title": "Conduit",
   "RUNESMITH2-CREATOR_FORM_POWER.description": "At the start of your turn, [gold]Enhance[/gold] a card.",
   "RUNESMITH2-CREATOR_FORM_POWER.smartDescription": "At the start of your turn, [gold]Enhance[/gold] a card by [blue]{Amount}[/blue].",
   "RUNESMITH2-CREATOR_FORM_POWER.title": "Creator Form",
@@ -55,8 +58,5 @@
   "RUNESMITH2-SYNTHETIC_BLOOD_POWER.title": "Synthetic Blood",
   "RUNESMITH2-WILDFIRE_POWER.description": "At the start of turn, gain {elements:rs2Icon(ignis)} and {elements:rs2Icon(terra)}.",
   "RUNESMITH2-WILDFIRE_POWER.smartDescription": "At the start of turn, gain [blue]{Amount:rs2Icon(ignis)}[/blue] and [blue]{Amount:rs2Icon(terra)}[/blue].",
-  "RUNESMITH2-WILDFIRE_POWER.title": "Wildfire",
-  "RUNESMITH2-CONDUIT_POWER.description": "Whenever you [gold]Enhance[/gold] a card, a random card in an ally's [gold]Hand[/gold] gains [gold]Enhance[/gold] by the same amount.",
-  "RUNESMITH2-CONDUIT_POWER.smartDescription": "Whenever [gold]{ApplierName}[/gold] [gold]Enhance[/gold] a card, {Amount:plural:a|{}} random card{Amount:plural:|s} in your [gold]Hand[/gold] gain{Amount:plural:s|} [gold]Enhance[/gold] by the same amount.",
-  "RUNESMITH2-CONDUIT_POWER.title": "Conduit"
+  "RUNESMITH2-WILDFIRE_POWER.title": "Wildfire"
 }
