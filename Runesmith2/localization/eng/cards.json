@@ -14,7 +14,7 @@
   "RUNESMITH2-ASSEMBLER.description": "[gold]Exhaust[/gold] a [gold]Recipe[/gold] card in your [gold]Discard Pile[/gold].\nAt the start of your turn, play a copy of it.",
   "RUNESMITH2-ASSEMBLER.selectionScreenPrompt": "Choose a [gold]Recipe[/gold] card.",
   "RUNESMITH2-ASSEMBLER.title": "Assembler",
-  "RUNESMITH2-AUGMENTED_BODY.description": "At the end of your turn, [gold]Retain[/gold] ALL [gold]Improved[/gold] cards.{IfUpgraded:show:\n[gold]Stasis[/gold] ALL cards in your hand.}",
+  "RUNESMITH2-AUGMENTED_BODY.description": "At the end of your turn, [gold]Retain[/gold] ALL [gold]Improved[/gold] cards.{IfUpgraded:show:\n[gold]Stasis[/gold] ALL cards in your [gold]Hand[/gold].}",
   "RUNESMITH2-AUGMENTED_BODY.title": "Augmented Body",
   "RUNESMITH2-BACKUP_BATTERY.description": "Gain {Energy:energyIcons()}.\nGain {Elements:rs2Icon()}.",
   "RUNESMITH2-BACKUP_BATTERY.title": "Backup Battery",
