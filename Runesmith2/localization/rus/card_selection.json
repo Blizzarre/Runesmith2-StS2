@@ -1,5 +1,6 @@
 ﻿{
   "RUNESMITH2-TO_ENHANCE": "Выберите {Amount:plural(ru):карту, которую|[blue]{}[/blue] карты, которые|[blue]{}[/blue] карт, которые} хотите [gold]Отполировать[/gold].",
   "RUNESMITH2-TO_ENHANCE_AND_UPGRADE": "Выберите {Amount:plural(ru):карту, которую|[blue]{}[/blue] карты, которые|[blue]{}[/blue] карт, которые} хотите to [gold]улучшить[/gold] и [gold]Отполировать[/gold].",
-  "RUNESMITH2-TO_STASIS": "Выберите {Amount:plural(ru):карту, на которую|[blue]{}[/blue] карты, на которые|[blue]{}[/blue] карт, на которые} хотите наложить [gold]Стазис[/gold]."
+  "RUNESMITH2-TO_STASIS": "Выберите {Amount:plural(ru):карту, на которую|[blue]{}[/blue] карты, на которые|[blue]{}[/blue] карт, на которые} хотите наложить [gold]Стазис[/gold].",
+  "RUNESMITH2-CHOOSE_CARD": "Выберите карту."
 }
