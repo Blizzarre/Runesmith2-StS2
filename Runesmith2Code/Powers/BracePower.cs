@@ -1,10 +1,12 @@
 #region
 
+using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -28,12 +30,21 @@ public class BracePower : Runesmith2Power
         return new Data();
     }
 
+    private static readonly HashSet<string> BlockVarKeys = [BlockVar.defaultName, CalculatedBlockVar.defaultName]; 
+
+    private static bool IsCardGainBlock(CardModel card)
+    {
+        if (card.GainsBlock) return true;
+        if (card.Enchantment != null && card.Enchantment.DynamicVars.Any(c => BlockVarKeys.Contains(c.Key))) return true;
+        return card.GetModifiers().Any(cardModifier => cardModifier.DynamicVars.Any(m => BlockVarKeys.Contains(m.Key)));
+    }
+
     public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
         var card = cardPlay.Card;
         if (cardPlay.Card.Owner != Owner.Player) return Task.CompletedTask;
         var internalData = GetInternalData<Data>();
-        if (internalData.CardToModify != null || !card.GainsBlock) return Task.CompletedTask;
+        if (internalData.CardToModify != null || !IsCardGainBlock(card)) return Task.CompletedTask;
         internalData.CardToModify = card;
         internalData.AmountWhenCardPlayed = Amount;
         return Task.CompletedTask;

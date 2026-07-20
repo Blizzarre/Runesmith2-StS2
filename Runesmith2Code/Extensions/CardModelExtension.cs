@@ -89,17 +89,19 @@ public static class CardModelExtension
         public event Action? StasisChanged;
     }
 
-    extension(CardModel cardModel)
+    private static readonly HashSet<string> EnhanceableVarKeys = [BlockVar.defaultName, CalculatedBlockVar.defaultName, DamageVar.defaultName, CalculatedDamageVar.defaultName];
+
+    extension(CardModel card)
     {
         public RunesmithCardModelModifier GetCardModelModifier()
         {
-            return RunesmithField.Modifier[cardModel]!;
+            return RunesmithField.Modifier[card]!;
         }
 
         public void AddEnhance(int amount, bool skipVisuals = false)
         {
-            if (!cardModel.IsMutable) return;
-            var modifier = cardModel.GetCardModelModifier();
+            if (!card.IsMutable) return;
+            var modifier = card.GetCardModelModifier();
             modifier.Enhanced += amount;
             if (skipVisuals)
                 modifier.JustEnhanced = false;
@@ -107,81 +109,69 @@ public static class CardModelExtension
 
         public bool IsImproved()
         {
-            return cardModel.IsUpgraded || cardModel.Enchantment != null || cardModel.IsEnhanced() ||
-                   cardModel.IsStasis();
+            return card.IsUpgraded || card.Enchantment != null || card.IsEnhanced() ||
+                   card.IsStasis();
         }
 
         public bool IsEnhanced()
         {
-            return cardModel.GetCardModelModifier().Enhanced > 0;
+            return card.GetCardModelModifier().Enhanced > 0;
         }
 
         public int GetEnhance()
         {
-            return cardModel.GetCardModelModifier().Enhanced;
+            return card.GetCardModelModifier().Enhanced;
         }
 
         public decimal GetEnhanceMultiplier()
         {
-            if (cardModel is ICardEnhanceMult cardEnhanceMult)
-                return 0.5m * cardModel.GetCardModelModifier().Enhanced * cardEnhanceMult.EnhanceMult;
+            if (card is ICardEnhanceMult cardEnhanceMult)
+                return 0.5m * card.GetCardModelModifier().Enhanced * cardEnhanceMult.EnhanceMult;
 
-            return 0.5m * cardModel.GetCardModelModifier().Enhanced;
+            return 0.5m * card.GetCardModelModifier().Enhanced;
         }
 
         public void ClearEnhance()
         {
-            if (!cardModel.IsMutable) return;
-            cardModel.GetCardModelModifier().Enhanced = 0;
+            if (!card.IsMutable) return;
+            card.GetCardModelModifier().Enhanced = 0;
         }
 
         public void SetStasis(bool stasis)
         {
-            if (!cardModel.IsMutable) return;
-            if (stasis && cardModel is Runesmith2Card { BlockStasis: true }) return;
-            cardModel.GetCardModelModifier().Stasis = stasis;
+            if (!card.IsMutable) return;
+            if (stasis && card is Runesmith2Card { BlockStasis: true }) return;
+            card.GetCardModelModifier().Stasis = stasis;
         }
 
         public bool IsStasis()
         {
-            return cardModel.GetCardModelModifier().Stasis;
+            return card.GetCardModelModifier().Stasis;
         }
 
         public bool HasPotency()
         {
-            return cardModel.DynamicVars.ContainsKey(PotencyVar.defaultName) &&
-                   cardModel.DynamicVars[PotencyVar.defaultName].BaseValue > 0;
+            return card.DynamicVars.ContainsKey(PotencyVar.defaultName) &&
+                   card.DynamicVars[PotencyVar.defaultName].BaseValue > 0;
         }
 
         public bool CanEnhance()
         {
-            if (cardModel.Type == CardType.Attack) return true;
+            if (card.Type == CardType.Attack) return true;
 
-            if (cardModel.GainsBlock) return true;
+            if (card.GainsBlock) return true;
             
-            if (cardModel.HasPotency())
+            if (card.HasPotency())
                 return true;
-
-            // Probably not fool-proof but should help cover cases where Block is added as enchantment or card modifier 
-            var cardVarNames = new HashSet<string>([]);
-            if(cardModel.Enchantment != null)
-            {
-                cardVarNames.UnionWith(cardModel.Enchantment.DynamicVars.Values.Where(v => v.BaseValue > 0).Select(v => v.Name));
-            }
-            foreach (var cardModifier in cardModel.GetModifiers())
-            {
-                cardVarNames.UnionWith(cardModifier.DynamicVars.Values.Where(v => v.BaseValue > 0).Select(v => v.Name));
-            }
-            // Consider checking for damage var too?
-            HashSet<string> dynamicVarFilter = [BlockVar.defaultName, CalculatedBlockVar.defaultName];
-            if (cardVarNames.Any(name => dynamicVarFilter.Contains(name))) return true;
-
-            return false;
+            
+            // Probably not fool-proof but should help cover cases where Block/Damage is added as enchantment or card modifier 
+            if (card.Enchantment != null && card.Enchantment.DynamicVars.Any(c => EnhanceableVarKeys.Contains(c.Key))) return true;
+            return card.GetModifiers().Any(cardModifier => cardModifier.DynamicVars.Any(m => EnhanceableVarKeys.Contains(m.Key)));
         }
 
         public bool CanStasis()
         {
-            return cardModel.CanEnhance() && !cardModel.IsStasis();
+            return card.CanEnhance() && !card.IsStasis();
         }
     }
 }

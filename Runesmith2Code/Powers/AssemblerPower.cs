@@ -58,7 +58,7 @@ public class AssemblerPower : Runesmith2Power
         if (internalData.PickedCard != null)
         {
             Flash();
-            await CardCmd.AutoPlay(choiceContext, internalData.PickedCard.CreateDupe(), null);
+            await CardCmd.AutoPlay(choiceContext, internalData.PickedCard.CreateDupe(Owner.Player), null);
         }
     }
 }

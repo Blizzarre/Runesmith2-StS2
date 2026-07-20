@@ -1,9 +1,12 @@
 #region
 
 using BaseLib.Extensions;
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.Cards.Token;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.DynamicVars;
@@ -19,10 +22,15 @@ public class Mundus : Runesmith2RecipeCard
 {
     public Mundus() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        WithVars(new PotencyVar(4).WithUpgrade(2), new ChargeVar(3).WithUpgrade(1));
+        WithVars(new PotencyVar(4).WithUpgrade(1), new ChargeVar(3).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Craft);
         WithRuneTip<MundusRune>();
-        WithTip(typeof(Gemma));
+        WithTip(new TooltipSource(static c =>
+        {
+            var gemma = (Gemma) ModelDb.Card<Gemma>().ToMutable();
+            gemma.SetEnhanceBy(c.DynamicVars[ChargeVar.defaultName].IntValue);
+            return HoverTipFactory.FromCard(gemma);
+        }));
     }
 
     public override Elements CanonicalElementsCost => new(0, 0, 0);

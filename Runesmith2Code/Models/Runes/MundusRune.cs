@@ -30,14 +30,19 @@ public class MundusRune : RuneModel
 
     public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Mundus>();
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-    [
-        HoverTipFactory.FromCard<Gemma>()
-    ];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips
+    {
+        get
+        {
+            var gemma = (Gemma)ModelDb.Card<Gemma>().ToMutable();
+            gemma.SetEnhanceBy(ChargeVal);
+            return [HoverTipFactory.FromCard(gemma)];
+        }
+    }
 
     public override async Task Break(PlayerChoiceContext choiceContext)
     {
         PlayPassiveSfx();
-        await RunesmithCardCmd.GiveCard<Gemma>(Owner, PileType.Hand, skipAnimation: true);
+        await RunesmithCardCmd.GiveCard<Gemma>(Owner, PileType.Hand, skipAnimation: true, action: c => c.SetEnhanceBy(ChargeVal));
     }
 }

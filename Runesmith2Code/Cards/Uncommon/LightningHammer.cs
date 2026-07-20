@@ -38,15 +38,6 @@ public class LightningHammer : Runesmith2Card
             .WithHitFx("vfx/vfx_attack_blunt")
             .SpawningHitVfxOnEachCreature()
             .Execute(choiceContext);
-
-        // Only give card if there's a valid ally to give it to
-        if (CombatState == null) return;
-        var teammates = CombatState.GetTeammatesOf(Owner.Creature)
-            .Where(c => c is { IsAlive: true, IsPlayer: true } && c.Player != Owner).ToList();
-        if (teammates.Count == 0) return;
-        var target = Owner.RunState.Rng.CombatTargets.NextItem(teammates);
-        if (target?.Player == null) return;
-        await RunesmithCardCmd.GiveToAnotherPlayer(this, target.Player, PileType.Hand);
     }
 
     public override Task BeforeCombatStart()
@@ -64,9 +55,24 @@ public class LightningHammer : Runesmith2Card
         return Task.CompletedTask;
     }
 
-    protected override (PileType, CardPilePosition) GetResultPileTypeAndPositionForCardPlay()
+    protected override CardLocation GetResultLocationForCardPlay()
     {
-        var (pileType, cardPilePosition) = base.GetResultPileTypeAndPositionForCardPlay();
-        return pileType == PileType.Discard ? (PileType.Hand, CardPilePosition.Bottom) : (pileType, cardPilePosition);
+        var location = base.GetResultLocationForCardPlay();
+        if (CombatState == null) return location;
+        
+        var teammates = CombatState.GetTeammatesOf(Owner.Creature)
+            .Where(c => c is { IsAlive: true, IsPlayer: true } && c.Player != Owner).ToList();
+        if (teammates.Count == 0) return location;
+        
+        var player = Owner.RunState.Rng.CombatTargets.NextItem(teammates)?.Player!;
+        location.player = player;
+        
+        if (location.pileType == PileType.Discard)
+        {
+            location.pileType = PileType.Hand;
+            location.position = CardPilePosition.Bottom;
+        }
+
+        return location;
     }
 }

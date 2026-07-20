@@ -28,7 +28,7 @@
   "RUNESMITH2-MORBUS_RUNE.description": "Rune: Applies [gold]Weak[/gold] and [gold]Vulnerable[/gold] to ALL enemies.",
   "RUNESMITH2-MORBUS_RUNE.smartDescription": "[gold]Passive:[/gold] At the start of turn, apply [blue]1[/blue] [gold]Weak[/gold] and [blue]1[/blue] [gold]Vulnerable[/gold] to ALL enemies.\n[gold]Break:[/gold] Apply [blue]2[/blue] [gold]Weak[/gold] and [blue]2[/blue] [gold]Vulnerable[/gold] to ALL enemies.",
   "RUNESMITH2-MORBUS_RUNE.title": "Morbus",
-  "RUNESMITH2-MUNDUS_RUNE.description": "Rune: Does nothing.\nAdd [gold]Gemma[/gold] to your [gold]Hand[/gold] when [gold]Broken[/gold].",
+  "RUNESMITH2-MUNDUS_RUNE.description": "Rune: Does nothing.\nAdd [gold]Gemma[/gold] to your [gold]Hand[/gold] when [gold]Broken[/gold]. [gold]Gemma's[/gold] [gold]Enhance[/gold] amount is equal to Mundus' [gold]Charge[/gold].",
   "RUNESMITH2-MUNDUS_RUNE.smartDescription": "[gold]Passive[/gold]: Does nothing.\n[gold]Break[/gold]: Add [gold]Gemma[/gold] to your [gold]Hand[/gold].",
   "RUNESMITH2-MUNDUS_RUNE.title": "Mundus",
   "RUNESMITH2-ORIGO_RUNE.description": "Rune: Adds a random card to your [gold]Hand[/gold]. It's free to play for the turn.",

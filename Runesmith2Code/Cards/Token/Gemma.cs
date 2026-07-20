@@ -21,13 +21,35 @@ namespace Runesmith2.Runesmith2Code.Cards.Token;
 [Pool(typeof(TokenCardPool))]
 public class Gemma : Runesmith2Card
 {
-    public Gemma() : base(0, CardType.Skill, CardRarity.Token, TargetType.Self)
+    public Gemma() : base(1, CardType.Skill, CardRarity.Token, TargetType.Self)
     {
         WithKeywords(CardKeyword.Retain, CardKeyword.Exhaust);
         WithVars(new EnhanceByVar(1).WithUpgrade(1), new CardsVar(1));
         WithTip(RunesmithHoverTip.Enhance);
     }
-    
+
+    private int EnhanceDiff
+    {
+        get;
+        set
+        {
+            AssertMutable();
+            field = value;
+        }
+    }
+
+    public void SetEnhanceBy(int amount)
+    {
+        EnhanceDiff = amount - DynamicVars[EnhanceByVar.defaultName].IntValue;
+        DynamicVars[EnhanceByVar.defaultName].BaseValue = amount;
+    }
+
+    protected override void AfterDowngraded()
+    {
+        base.AfterDowngraded();
+        DynamicVars[EnhanceByVar.defaultName].BaseValue += EnhanceDiff;
+    }
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
@@ -36,8 +58,8 @@ public class Gemma : Runesmith2Card
             new CardSelectorPrefs(RunesmithCardSelectorPrefs.EnhanceSelectionPrompt, DynamicVars.Cards.IntValue),
             card => card.CanEnhance(), this
         )).FirstOrDefault();
-        if (card != null)
-            await RunesmithCardCmd.Enhance(choiceContext, Owner, card, play,
-                DynamicVars[EnhanceByVar.defaultName].IntValue);
+        var enhanceBy = DynamicVars[EnhanceByVar.defaultName].IntValue;
+        if (card != null && enhanceBy > 0)
+            await RunesmithCardCmd.Enhance(choiceContext, Owner, card, play, enhanceBy);
     }
 }

@@ -1,7 +1,7 @@
 <Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CheckDependencyPaths">
     <Import Project=".\Sts2PathDiscovery.props"/>
     <PropertyGroup>
-        <ModVersion>0.8.5</ModVersion>
+        <ModVersion>0.9.0</ModVersion>
         <Version>$(ModVersion)</Version>
         <FileVersion>$(ModVersion).0</FileVersion>
         <InformationalVersion>$(ModVersion)</InformationalVersion>
@@ -58,12 +58,12 @@
     </ItemGroup>
 
     <ItemGroup Condition="!Exists('$(Sts2DataDir)')">
-        <PackageReference Include="Book.StS2.RefLib" Version="0.108.0-beta" PrivateAssets="all"/>
+        <PackageReference Include="Book.StS2.RefLib" Version="0.109.0-beta" PrivateAssets="all"/>
         <PackageReference Include="SmartFormat.NET" Version="3.6.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.3.5" PrivateAssets="All" />
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.3.6" PrivateAssets="All" />
         <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="*"/>
         <AdditionalFiles Include="Runesmith2/localization/**/*.json"/> <!-- Used by analyzer -->
     </ItemGroup>
