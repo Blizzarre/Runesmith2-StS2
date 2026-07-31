@@ -89,6 +89,8 @@ public static class CardModelExtension
         public event Action? StasisChanged;
     }
 
+    private const decimal EnhanceBaseMult = 0.5m;
+
     private static readonly HashSet<string> EnhanceableVarKeys = [BlockVar.defaultName, CalculatedBlockVar.defaultName, DamageVar.defaultName, CalculatedDamageVar.defaultName];
 
     extension(CardModel card)
@@ -126,9 +128,9 @@ public static class CardModelExtension
         public decimal GetEnhanceMultiplier()
         {
             if (card is ICardEnhanceMult cardEnhanceMult)
-                return 0.5m * card.GetCardModelModifier().Enhanced * cardEnhanceMult.EnhanceMult;
+                return EnhanceBaseMult * card.GetCardModelModifier().Enhanced * cardEnhanceMult.EnhanceMult;
 
-            return 0.5m * card.GetCardModelModifier().Enhanced;
+            return EnhanceBaseMult * card.GetCardModelModifier().Enhanced;
         }
 
         public void ClearEnhance()

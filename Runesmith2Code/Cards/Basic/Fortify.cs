@@ -19,7 +19,7 @@ public class Fortify : Runesmith2Card
 {
     public Fortify() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
     {
-        WithBlock(6);
+        WithBlock(4);
         WithVar(new EnhanceByVar(1).WithUpgrade(1));
         WithCards(1);
     }
@@ -32,12 +32,11 @@ public class Fortify : Runesmith2Card
     {
         await CommonActions.CardBlock(this, play);
 
-        var card = (await CardSelectCmd.FromHand(choiceContext, Owner,
+        var cards = await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(RunesmithCardSelectorPrefs.EnhanceSelectionPrompt, DynamicVars.Cards.IntValue),
             card => card.CanEnhance(), this
-        )).FirstOrDefault();
-        if (card != null)
-            await RunesmithCardCmd.Enhance(choiceContext, Owner, card, play,
-                DynamicVars[EnhanceByVar.defaultName].IntValue);
+        );
+        await RunesmithCardCmd.Enhance(choiceContext, Owner, cards, play,
+            DynamicVars[EnhanceByVar.defaultName].IntValue);
     }
 }

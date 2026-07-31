@@ -19,11 +19,13 @@ public static class RunesmithModSounds
 
     public static void PlayGrindStoneSfx()
     {
+        if (!RunesmithConfig.EnableGrindstoneSfx) return;
         GrindstoneSfx.Play(pitchVariation: 0.1f);
     }
     
     public static void PlayStasisSfx()
     {
+        if (!RunesmithConfig.EnableStasisSfx) return;
         StasisSfx.Play(pitchVariation: 0.05f);
     }
     
@@ -49,21 +51,25 @@ public static class RunesmithModSounds
 
     public static void PlayRuneChargeSfx()
     {
+        if (!RunesmithConfig.EnableRuneChargeSfx) return;
         RuneChargeSfx.Play(pitchVariation: 0.05f);
     }
     
     public static void PlayLaserTurretSfx()
     {
+        if (!RunesmithConfig.EnableLaserTurretSfx) return;
         LaserTurretSfx.Play(pitchVariation: 0.1f);
     }
     
     public static void PlayEnhanceSfx()
     {
+        if (!RunesmithConfig.EnableEnhanceSfx) return;
         EnhanceSfx.Play(pitchVariation: 0.05f);
     }
     
     public static void PlayElementsGainSfx()
     {
+        if (!RunesmithConfig.EnableElementsGainSfx) return;
         ElementsGainSfx.Play(pitchVariation: 0.05f);
     }
 }

@@ -361,8 +361,9 @@ public partial class NRune : NClickableControl
         nHoverTipSet?.SetFollowOwner();
         _labelContainer.Visible = true;
         Modulate = Colors.White;
-        if (NControllerManager.Instance != null && NControllerManager.Instance.IsUsingController)
-            _selectionReticle.OnSelect();
+        if (!NControllerManager.Instance?.IsUsingDirectionalNavigation ?? false)
+            return;
+        _selectionReticle.OnSelect();
     }
 
     protected override void OnUnfocus()

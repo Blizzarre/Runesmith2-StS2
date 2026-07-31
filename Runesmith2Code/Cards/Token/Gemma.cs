@@ -54,12 +54,11 @@ public class Gemma : Runesmith2Card
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var card = (await CardSelectCmd.FromHand(choiceContext, Owner,
+        var cards = await CardSelectCmd.FromHand(choiceContext, Owner,
             new CardSelectorPrefs(RunesmithCardSelectorPrefs.EnhanceSelectionPrompt, DynamicVars.Cards.IntValue),
             card => card.CanEnhance(), this
-        )).FirstOrDefault();
+        );
         var enhanceBy = DynamicVars[EnhanceByVar.defaultName].IntValue;
-        if (card != null && enhanceBy > 0)
-            await RunesmithCardCmd.Enhance(choiceContext, Owner, card, play, enhanceBy);
+        await RunesmithCardCmd.Enhance(choiceContext, Owner, cards, play, enhanceBy);
     }
 }

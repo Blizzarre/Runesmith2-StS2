@@ -35,15 +35,14 @@ public class ShiftingHammer : Runesmith2Card
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
 
-        var enhanceCard = (await CardSelectCmd.FromHand(
+        var cards = await CardSelectCmd.FromHand(
             choiceContext,
             Owner,
             new CardSelectorPrefs(RunesmithCardSelectorPrefs.EnhanceSelectionPrompt, DynamicVars.Cards.IntValue),
             card => card.CanEnhance(),
             this
-        )).FirstOrDefault();
-        if (enhanceCard != null)
-            await RunesmithCardCmd.Enhance(choiceContext, Owner, enhanceCard, play,
-                DynamicVars[EnhanceByVar.defaultName].IntValue);
+        );
+        await RunesmithCardCmd.Enhance(choiceContext, Owner, cards, play,
+            DynamicVars[EnhanceByVar.defaultName].IntValue);
     }
 }

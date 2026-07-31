@@ -1,4 +1,16 @@
 {
   "RUNESMITH2.mod_title": "Runesmith 2",
-  "RUNESMITH2-ENABLE_GRINDSTONE_VFX.title": "Enable Grindstone VFX"
+  "RUNESMITH2-VISUAL_AND_SOUND_EFFECTS.title": "Visual and Sound Effects",
+  "RUNESMITH2-ENABLE_GRINDSTONE_VFX.title": "Enable Grindstone Visual Effect",
+  "RUNESMITH2-ENABLE_GRINDSTONE_VFX.hover.desc": "Grindstone sound effect won't play if the visual effect is disabled.",
+  "RUNESMITH2-ENABLE_GRINDSTONE_SFX.title": "Enable Grindstone Sound Effect",
+  "RUNESMITH2-ENABLE_STASIS_VFX.title": "Enable Stasis Visual Effect",
+  "RUNESMITH2-ENABLE_STASIS_VFX.hover.desc": "Stasis sound effect won't play if the visual effect is disabled.",
+  "RUNESMITH2-ENABLE_STASIS_SFX.title": "Enable Stasis Sound Effect",
+  "RUNESMITH2-ENABLE_ENHANCE_VFX.title": "Enable Enhance Visual Effect",
+  "RUNESMITH2-ENABLE_ENHANCE_VFX.hover.desc": "Enhance sound effect won't play if the visual effect is disabled.",
+  "RUNESMITH2-ENABLE_ENHANCE_SFX.title": "Enable Enhance Sound Effect",
+  "RUNESMITH2-ENABLE_RUNE_CHARGE_SFX.title": "Enable Rune Charge Sound Effect",
+  "RUNESMITH2-ENABLE_ELEMENTS_GAIN_SFX.title": "Enable Elements Gain Sound Effect",
+  "RUNESMITH2-ENABLE_LASER_TURRET_SFX.title": "Enable Laser Turret Sound Effect"
 }

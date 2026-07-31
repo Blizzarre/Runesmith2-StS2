@@ -15,7 +15,7 @@ public class MakeshiftArmor : Runesmith2Card
 {
     public MakeshiftArmor() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
-        WithBlock(7, 3);
+        WithBlock(6, 2);
         WithTip(RunesmithHoverTip.Break);
     }
 

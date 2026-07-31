@@ -21,7 +21,7 @@ public class ChromaChisel : Runesmith2Card
     public ChromaChisel() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
         WithDamage(7, 2);
-        WithPower<AmpPower>(2, 1);
+        WithPower<AmpPower>(1, 1);
         WithVars(new ElementsVar(1));
         WithTip(RunesmithHoverTip.Elements);
         WithTags(RunesmithTags.Chisel);

@@ -9,7 +9,7 @@ using Runesmith2.Runesmith2Code.Structs;
 using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
-
+  
 namespace Runesmith2.Runesmith2Code.Cards.Rare;
 
 public class Gladius : Runesmith2Card
@@ -18,14 +18,14 @@ public class Gladius : Runesmith2Card
     {
         WithTags(RunesmithTags.Recipe);
         WithTip(RunesmithHoverTip.Recipe);
-        WithDamage(40, 10);
+        WithDamage(29, 7);
     }
 
     protected override bool ShouldGlowGoldInternal => HasElements();
 
     public override TargetType TargetType => HasElements() ? TargetType.AllEnemies : TargetType.Self;
 
-    public override Elements CanonicalElementsCost => new(4);
+    public override Elements CanonicalElementsCost => new(3);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

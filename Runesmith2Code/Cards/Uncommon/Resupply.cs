@@ -14,7 +14,7 @@ public class Resupply : Runesmith2Card
 {
     public Resupply() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        WithCards(3, 1);
+        WithCards(2, 1);
         WithTip(RunesmithHoverTip.Improved);
     }
 

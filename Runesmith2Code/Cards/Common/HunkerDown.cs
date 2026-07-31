@@ -13,7 +13,7 @@ public class HunkerDown : Runesmith2Card
 {
     public HunkerDown() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
-        WithBlock(12, 4);
+        WithBlock(12, 3);
         WithPower<AmpPower>(2, 1);
     }
 

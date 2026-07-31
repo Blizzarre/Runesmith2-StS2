@@ -15,8 +15,6 @@ namespace Runesmith2.Runesmith2Code.Nodes;
 
 public partial class NElementsIcon : TextureRect
 {
-    private Font _font = BaseResourceIndex.FontKreonBoldShared;
-
     private MegaLabel[] _labels = new MegaLabel[3];
 
     private TextureRect[] _unplayableIcons = new TextureRect[3];
@@ -142,7 +140,7 @@ public partial class NElementsIcon : TextureRect
         label.AddThemeConstantOverride("shadow_offset_y", 2);
         label.AddThemeConstantOverride("outline_size", 12);
         label.AddThemeConstantOverride("shadow_outline_size", 12);
-        label.AddThemeFontOverride("font", _font);
+        label.AddThemeFontOverride("font", BaseResourceIndex.FontKreonBoldShared);
         label.AddThemeFontSizeOverride("font_size", 22);
         label.Text = "0";
 

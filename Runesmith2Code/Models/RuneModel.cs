@@ -211,9 +211,9 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public RuneModel ToMutable()
     {
         AssertCanonical();
-        var orbModel = (RuneModel)MutableClone();
-        orbModel.CanonicalInstance = this;
-        return orbModel;
+        var runeModel = (RuneModel)MutableClone();
+        runeModel.CanonicalInstance = this;
+        return runeModel;
     }
 
     public void Trigger()

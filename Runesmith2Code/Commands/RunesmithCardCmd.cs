@@ -1,10 +1,8 @@
 ﻿#region
 
-using BaseLib.Extensions;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
@@ -13,13 +11,11 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
-using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
-using MegaCrit.Sts2.Core.Nodes.Rooms;
-using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Random;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Hooks;
 using Runesmith2.Runesmith2Code.Nodes.Vfx;
+using Runesmith2.Runesmith2Code.Utils;
 using MethodInfo = System.Reflection.MethodInfo;
 
 #endregion
@@ -60,7 +56,7 @@ public static class RunesmithCardCmd
                 }
 
                 targetCard.AddEnhance(modifiedEnhance);
-                if (!skipVisuals)
+                if (!skipVisuals && RunesmithConfig.EnableEnhanceVfx)
                 {
                     var cardNode = NCard.FindOnTable(targetCard);
                     NCardEnhanceVfx? vfx = null;
@@ -112,6 +108,8 @@ public static class RunesmithCardCmd
         if (targetCard.IsStasis()) return;
 
         targetCard.SetStasis(true);
+
+        if (!RunesmithConfig.EnableStasisVfx) return;
         
         var cardNode = NCard.FindOnTable(targetCard);
         if (cardNode == null) return;
@@ -143,44 +141,4 @@ public static class RunesmithCardCmd
 
     private static readonly MethodInfo CreateCardNodeMethod =
         AccessTools.Method(typeof(CardPileCmd), "CreateCardNodeAndUpdateVisuals", [typeof(CardModel), typeof(PileType), typeof(bool)]);
-    
-    // Adapted from CardPileCmd. Change to using base game's method whenever it works for adding card to another player hand.
-    public static async Task GiveToAnotherPlayer(
-        CardModel card,
-        Player player,
-        PileType pileType,
-        CardPilePosition position = CardPilePosition.Bottom,
-        AbstractModel? clonedBy = null)
-    {
-        if (CombatManager.Instance.IsOverOrEnding) return;
-        var cardNode = NCard.FindOnTable(card);
-        card.RemoveFromCurrentPile(true);
-        card.GiveToAnotherPlayer(player);
-        var isLocalPlayerTheReceivingPlayer = LocalContext.IsMine(card);
-        await CardPileCmd.Add([card], pileType.GetPile(player), position, clonedBy, true, true);
-        if (cardNode == null || !cardNode.IsValid())
-            return;
-        
-        var vfxContainer = card.Owner.Creature.GetVfxContainer();
-        cardNode.Reparent(vfxContainer);
-        if (isLocalPlayerTheReceivingPlayer)
-        {
-            if (card.Pile == null) return;
-            var cardPileType = card.Pile.Type;
-            var child = NCardFlyVfx.Create(cardNode, cardPileType, true, card.Owner.Character.TrailPath);
-            vfxContainer?.AddChildSafely(child);
-
-            if (cardPileType == PileType.Hand)
-            {
-                var newCardNode = CardPileCmd.CreateCardNodeAndUpdateVisuals(card, pileType, true);
-                var handNode = NCombatRoom.Instance?.Ui.Hand;
-                handNode?.Add(newCardNode);
-            }
-        }
-        else
-        {
-            var child = NCardFlyVfx.Create(cardNode, player.Creature, card.Owner.Character.TrailPath);
-            vfxContainer?.AddChildSafely(child);
-        }
-    }
 }

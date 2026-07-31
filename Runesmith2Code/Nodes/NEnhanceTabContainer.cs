@@ -97,8 +97,8 @@ public partial class NEnhanceTabContainer : Control
             if (modifier.Enhanced > 0)
             {
                 if (_enhanceTab is not { Visible: true }) _enhanceTab?.Visible = true;
-                _starsParticles?.Emitting = true;
-                _starsParticles?.Visible = true;
+                _starsParticles?.Emitting = RunesmithConfig.EnableEnhanceVfx;
+                _starsParticles?.Visible = RunesmithConfig.EnableEnhanceVfx;
                 var locString = RunesmithHoverTipFactory.StaticBanner(RunesmithHoverTip.Enhanced,
                     new DynamicVar("Amount", modifier.Enhanced));
                 _enhanceLabel?.SetTextAutoSize(locString.GetFormattedText());

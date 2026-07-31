@@ -19,6 +19,7 @@ public class AugmentedBody : Runesmith2Card
     {
         WithTip(RunesmithHoverTip.Improved);
         WithTip(CardKeyword.Retain);
+        WithCostUpgradeBy(-1);
     }
 
     protected override async Task OnPlay(
@@ -27,10 +28,5 @@ public class AugmentedBody : Runesmith2Card
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         await CommonActions.ApplySelf<AugmentedBodyPower>(choiceContext, this, 1);
-        if (IsUpgraded)
-        {
-            var cards = PileType.Hand.GetPile(Owner).Cards.Where(c => c.CanStasis());
-            foreach (var card in cards) RunesmithCardCmd.Stasis(card);
-        }
     }
 }

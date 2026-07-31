@@ -17,7 +17,7 @@ public class DryIce : Runesmith2Card
 {
     public DryIce() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
     {
-        WithBlock(5, 1);
+        WithBlock(4);
         WithVar(new AquaVar(1));
         WithPower<IceColdPower>(2, 2);
         WithTip(RunesmithHoverTip.Elements);

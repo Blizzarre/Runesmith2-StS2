@@ -32,16 +32,15 @@ public class PoweredAnvil : Runesmith2Card
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         if (IsUpgraded)
         {
-            var card = (await CardSelectCmd.FromHand(
+            var cards = await CardSelectCmd.FromHand(
                 choiceContext,
                 Owner,
                 new CardSelectorPrefs(RunesmithCardSelectorPrefs.EnhanceSelectionPrompt, DynamicVars.Cards.IntValue),
                 card => card.CanEnhance(),
                 this
-            )).FirstOrDefault();
-            if (card != null)
-                await RunesmithCardCmd.Enhance(choiceContext, Owner, card, play,
-                    DynamicVars[EnhanceByVar.defaultName].IntValue);
+            );
+            await RunesmithCardCmd.Enhance(choiceContext, Owner, cards, play,
+                DynamicVars[EnhanceByVar.defaultName].IntValue);
         }
 
         await CommonActions.ApplySelf<PoweredAnvilPower>(choiceContext, this, DynamicVars["Amount"].IntValue);

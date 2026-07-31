@@ -16,11 +16,12 @@ namespace Runesmith2.Runesmith2Code.Cards.Rare;
 
 public class AdamantiumHammer : Runesmith2Card, IAfterCardEnhanced
 {
-    public AdamantiumHammer() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+    public AdamantiumHammer() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
-        WithDamage(5, 2);
+        WithDamage(6);
         WithTip(RunesmithHoverTip.Enhance);
         WithTags(RunesmithTags.Hammer);
+        WithCostUpgradeBy(-1);
     }
 
     protected override async Task OnPlay(

@@ -20,7 +20,7 @@ public class PerfectChisel : Runesmith2Card
     public PerfectChisel() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
         WithDamage(5, 2);
-        WithVars(new PotencyVar(3).WithUpgrade(1));
+        WithVars(new PotencyVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Enhance);
         WithTip(typeof(AmpPower));
         WithTags(RunesmithTags.Chisel);

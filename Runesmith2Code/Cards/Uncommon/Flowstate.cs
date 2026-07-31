@@ -19,10 +19,10 @@ public class Flowstate : Runesmith2Card
 {
     public Flowstate() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        WithPower<AmpPower>(4, 2);
+        WithPower<AmpPower>(3);
         WithVar(new AquaVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Elements);
-        WithCards(1);
+        WithCards(1, 1);
     }
 
     protected override async Task OnPlay(

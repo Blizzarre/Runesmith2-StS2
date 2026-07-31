@@ -6,7 +6,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using Runesmith2.Runesmith2Code.Enchantments;
-using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Powers;
 
 #endregion
@@ -17,7 +16,7 @@ public class ArchitectsForge : Runesmith2Card
 {
     public ArchitectsForge() : base(1, CardType.Power, CardRarity.Ancient, TargetType.Self)
     {
-        WithVar("Amount", 2, 1);
+        WithVar("Amount", 1, 1);
         WithTips(c => HoverTipFactory.FromEnchantment<Forged>(c.DynamicVars["Amount"].IntValue));
     }
 

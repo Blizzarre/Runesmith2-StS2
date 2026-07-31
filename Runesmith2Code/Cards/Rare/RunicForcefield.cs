@@ -17,7 +17,7 @@ public class RunicForcefield : Runesmith2Card, IAfterRuneCrafted
 {
     public RunicForcefield() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
-        WithBlock(9, 4);
+        WithBlock(8, 3);
         WithTip(RunesmithHoverTip.Craft);
     }
 

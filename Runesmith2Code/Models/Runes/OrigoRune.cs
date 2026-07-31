@@ -69,7 +69,7 @@ public class OrigoRune : RuneModel
         {
             if (Upgraded)
                 CardCmd.Upgrade(card);
-            card.SetToFreeThisTurn();
+            // card.SetToFreeThisTurn();
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
         }
     }

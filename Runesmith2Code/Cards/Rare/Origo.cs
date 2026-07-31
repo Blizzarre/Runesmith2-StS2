@@ -24,7 +24,7 @@ public class Origo : Runesmith2RecipeCard
         WithTip(new TooltipSource(c => RunesmithHoverTipFactory.FromRune<OrigoRune>(c.IsUpgraded)));
     }
 
-    public override Elements CanonicalElementsCost => new(2, 2, 2);
+    public override Elements CanonicalElementsCost => new(1);
 
     protected override async Task RecipeOnPlayWrapper(PlayerChoiceContext choiceContext, CardPlay play)
     {

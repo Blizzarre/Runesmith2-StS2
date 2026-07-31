@@ -19,7 +19,7 @@ public class FissionHammer : Runesmith2Card
 {
     public FissionHammer() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
-        WithDamage(11, 2);
+        WithDamage(10, 2);
         WithCards(1);
         WithCalculatedVar("CalculatedEnhanceBy", 1,
             (c, _) => c.CombatState != null

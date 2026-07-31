@@ -16,7 +16,7 @@ public class CalmBeforeStorm : Runesmith2Card
 {
     public CalmBeforeStorm() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
-        WithCards(2, 1);
+        WithCards(1, 1);
         WithTip(RunesmithHoverTip.Enhance);
     }
 

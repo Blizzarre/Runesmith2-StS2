@@ -16,7 +16,7 @@ public class Grindstone : Runesmith2Card
 {
     public Grindstone() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
-        WithBlock(6);
+        WithBlock(5);
         WithVar("Amount", 1, 1);
         WithTip(RunesmithHoverTip.Enhance);
     }

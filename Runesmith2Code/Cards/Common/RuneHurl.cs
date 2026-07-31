@@ -16,7 +16,7 @@ public class RuneHurl : Runesmith2Card
 {
     public RuneHurl() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
-        WithDamage(10, 4);
+        WithDamage(8, 3);
         WithVar(new CardsVar(1));
         WithTip(RunesmithHoverTip.Break);
     }

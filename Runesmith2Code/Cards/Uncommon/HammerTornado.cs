@@ -17,12 +17,12 @@ public class HammerTornado : Runesmith2Card
 
     public HammerTornado() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
-        WithDamage(10, 3);
+        WithDamage(9, 3);
         WithVar(new CardsVar(1));
         WithCalculatedVar(CalculatedHitsKey, 1, (card, _) =>
         {
             var runeQueue = card.Owner.PlayerCombatState?.GetRuneQueue();
-            return runeQueue?.Runes.Count ?? 0;
+            return runeQueue?.Runes.DistinctBy(r => r.Id).Count() ?? 0;
         });
         WithTags(RunesmithTags.Hammer);
     }
