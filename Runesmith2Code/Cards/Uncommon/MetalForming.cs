@@ -20,7 +20,7 @@ public class MetalForming : Runesmith2Card
 {
     public MetalForming() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        WithCalculatedBlock(0, 2, (card, _) =>
+        WithCalculatedBlock(0, 3, (card, _) =>
             {
                 if (card.CombatState == null || card.Owner.PlayerCombatState == null) return 0;
                 return card.Owner.PlayerCombatState.GetElements().Terra +

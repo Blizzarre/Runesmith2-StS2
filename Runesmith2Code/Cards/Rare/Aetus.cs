@@ -24,7 +24,7 @@ public class Aetus : Runesmith2RecipeCard
         WithEnergyTip();
     }
 
-    public override Elements CanonicalElementsCost => new(0, 0, 3);
+    public override Elements CanonicalElementsCost => new(0, 0, 2);
 
     protected override async Task RecipeOnPlayWrapper(PlayerChoiceContext choiceContext, CardPlay play)
     {

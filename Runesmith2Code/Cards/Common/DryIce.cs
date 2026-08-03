@@ -1,5 +1,6 @@
 #region
 
+using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,7 +19,7 @@ public class DryIce : Runesmith2Card
     public DryIce() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
     {
         WithBlock(4);
-        WithVar(new AquaVar(1));
+        WithVar(new AquaVar(1).WithUpgrade(1));
         WithPower<IceColdPower>(2, 2);
         WithTip(RunesmithHoverTip.Elements);
     }

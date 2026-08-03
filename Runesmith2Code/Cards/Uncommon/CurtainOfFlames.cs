@@ -2,7 +2,6 @@
 
 using BaseLib.Extensions;
 using BaseLib.Utils;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
@@ -21,16 +20,17 @@ public class CurtainOfFlames : Runesmith2Card
 {
     public CurtainOfFlames() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        WithPower<BracePower>(6, 2);
-        WithVar(new IgnisVar(3).WithUpgrade(1));
+        WithBlock(6, 2);
+        WithPower<BracePower>(3, 1);
+        WithVar(new IgnisVar(2).WithUpgrade(1));
     }
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(NGroundFireVfx.Create(Owner.Creature));
+        await CommonActions.CardBlock(this, play);
         await CommonActions.ApplySelf<BracePower>(choiceContext, this);
         await RunesmithPlayerCmd.GainElements(new Elements(this), Owner, play);
     }

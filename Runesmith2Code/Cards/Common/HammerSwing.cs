@@ -16,7 +16,7 @@ public class HammerSwing : Runesmith2Card
 {
     public HammerSwing() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
-        WithDamage(5, 1);
+        WithDamage(6, 1);
         WithVar(new CardsVar(1).WithUpgrade(1));
         WithTags(RunesmithTags.Hammer);
     }

@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.HoverTips;
+using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
 
@@ -16,7 +17,8 @@ public class Electromagnet : Runesmith2Card
 {
     public Electromagnet() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
-        WithBlock(2, 3);
+        WithBlock(3, 3);
+        WithTip(RunesmithHoverTip.Recipe);
         WithTip(RunesmithHoverTip.Improved);
     }
 
@@ -27,7 +29,7 @@ public class Electromagnet : Runesmith2Card
         await CommonActions.CardBlock(this, play);
         var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
         var cardModel = (await CardSelectCmd.FromCombatPile(choiceContext,
-            PileType.Discard.GetPile(Owner), Owner, prefs, c => c.IsImproved())).FirstOrDefault();
+            PileType.Discard.GetPile(Owner), Owner, prefs, c => c.IsImproved() || c.Tags.Contains(RunesmithTags.Recipe))).FirstOrDefault();
         if (cardModel != null) await CardPileCmd.Add(cardModel, PileType.Hand);
     }
 }

@@ -19,8 +19,8 @@ public class Prisma : Runesmith2Card
     {
         WithTags(RunesmithTags.Recipe);
         WithTip(RunesmithHoverTip.Recipe);
-        WithDamage(8, 3);
         WithBlock(6, 2);
+        WithDamage(8, 3);
         WithCards(2, 1);
     }
     
@@ -44,13 +44,13 @@ public class Prisma : Runesmith2Card
         if (CombatState == null) return;
 
         ArgumentNullException.ThrowIfNull(play.Target);
+        await CommonActions.CardBlock(this, play);
+
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-
-        await CommonActions.CardBlock(this, play);
 
         await CommonActions.Draw(this, choiceContext);
     }

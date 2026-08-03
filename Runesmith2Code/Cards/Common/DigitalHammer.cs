@@ -16,13 +16,13 @@ using Runesmith2.Runesmith2Code.Utils;
 
 namespace Runesmith2.Runesmith2Code.Cards.Common;
 
-public class HotHammer : Runesmith2Card
+public class DigitalHammer : Runesmith2Card
 {
-    public HotHammer() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+    public DigitalHammer() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
-        WithDamage(8, 2);
+        WithDamage(5, 1);
         WithVar(new CardsVar(1));
-        WithVar(new EnhanceByVar(1));
+        WithVar(new EnhanceByVar(1).WithUpgrade(1));
         WithTags(RunesmithTags.Hammer);
     }
 
@@ -35,20 +35,13 @@ public class HotHammer : Runesmith2Card
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
 
-        if (IsUpgraded)
-        {
-            var cards = await CardSelectCmd.FromHand(choiceContext, Owner,
-                new CardSelectorPrefs(RunesmithCardSelectorPrefs.EnhanceSelectionPrompt, DynamicVars.Cards.IntValue),
-                card => card.CanEnhance(), this
-            );
-            await RunesmithCardCmd.Enhance(choiceContext, Owner, cards, play,
-                DynamicVars[EnhanceByVar.defaultName].IntValue);
-        }
-        else
-        {
-            await RunesmithCardCmd.EnhanceRandomCards(choiceContext, Owner, PileType.Hand.GetPile(Owner).Cards,
-                DynamicVars.Cards.IntValue, DynamicVars[EnhanceByVar.defaultName].IntValue,
-                Owner.RunState.Rng.CombatCardSelection);
-        }
+        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars.Cards.IntValue);
+        var cards = (await CardSelectCmd.FromCombatPile(choiceContext, PileType.Discard.GetPile(Owner), Owner, prefs))
+            .ToList();
+        
+        await RunesmithCardCmd.Enhance(choiceContext, Owner, cards.Where(c => c.CanEnhance()), play,
+            DynamicVars[EnhanceByVar.defaultName].IntValue);
+        
+        await CardPileCmd.Add(cards, PileType.Draw, CardPilePosition.Top);
     }
 }

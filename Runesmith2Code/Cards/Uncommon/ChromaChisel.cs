@@ -20,9 +20,8 @@ public class ChromaChisel : Runesmith2Card
 {
     public ChromaChisel() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
-        WithDamage(7, 2);
-        WithPower<AmpPower>(1, 1);
-        WithVars(new ElementsVar(1));
+        WithDamage(6);
+        WithVars(new ElementsVar(1).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Elements);
         WithTags(RunesmithTags.Chisel);
     }
@@ -36,6 +35,14 @@ public class ChromaChisel : Runesmith2Card
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         await RunesmithPlayerCmd.GainElements(new Elements(this), Owner, play);
-        await CommonActions.ApplySelf<AmpPower>(choiceContext, this);
+        
+        var recipes = PileType.Draw.GetPile(Owner).Cards.Where(c => c.Tags.Contains(RunesmithTags.Recipe)).ToList();
+        if (recipes.Count == 0) return;
+
+        var card = Owner.RunState.Rng.CombatCardSelection.NextItem(recipes);
+        if (card == null)
+            return;
+        
+        await CardPileCmd.Add(card, PileType.Hand);
     }
 }

@@ -41,7 +41,6 @@ public class Recycler : Runesmith2Relic
         if (runeQueue == null) return;
 
         var index = 0;
-        var elements = new Elements(0);
         RuneModel? currRune = null;
         while (index < runeQueue.Runes.Count)
         {
@@ -51,7 +50,6 @@ public class Recycler : Runesmith2Relic
                 Flash();
 
                 currRune = nextRune;
-                elements += nextRune.RecipeCard.CanonicalElementsCost;
 
                 await RuneCmd.Break(choiceContext, Owner, currRune);
                 await Cmd.CustomScaledWait(0.1f, 0.2f);
@@ -62,7 +60,5 @@ public class Recycler : Runesmith2Relic
                 index++;
             }
         }
-
-        if (elements.Total > 0) await RunesmithPlayerCmd.GainElements(elements, Owner);
     }
 }

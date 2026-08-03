@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6j6ex5v1g68f"
-path="res://.godot/imported/hit_and_run.png-18910784a298601a52556b381b47c543.ctex"
+uid="uid://ek1ev021wcqa"
+path="res://.godot/imported/digital_hammer.png-d554e6ee8336ce6da15e2b716026a113.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Runesmith2/images/card_portraits/hit_and_run.png"
-dest_files=["res://.godot/imported/hit_and_run.png-18910784a298601a52556b381b47c543.ctex"]
+source_file="res://Runesmith2/images/card_portraits/digital_hammer.png"
+dest_files=["res://.godot/imported/digital_hammer.png-d554e6ee8336ce6da15e2b716026a113.ctex"]
 
 [params]
 

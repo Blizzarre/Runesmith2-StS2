@@ -19,8 +19,8 @@ public class SteamingChisel : Runesmith2Card
 {
     public SteamingChisel() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
-        WithDamage(3, 1);
         WithBlock(2, 1);
+        WithDamage(3, 1);
         WithPower<WeakPower>(1, 1);
         WithVars(new IgnisVar(1), new AquaVar(1));
         WithTip(RunesmithHoverTip.Elements);
@@ -32,10 +32,11 @@ public class SteamingChisel : Runesmith2Card
         CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
+        await CommonActions.CardBlock(this, play);
+        
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        await CommonActions.CardBlock(this, play);
 
         await CommonActions.Apply<WeakPower>(choiceContext, play.Target, this);
 

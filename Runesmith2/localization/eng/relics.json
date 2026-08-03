@@ -24,7 +24,7 @@
   "RUNESMITH2-PLASMA_GLOBE.description": "Runes are [gold]Crafted[/gold] with [blue]{PotencyAmount}[/blue] additional [gold]Potency[/gold] and [blue]{ChargeAmount}[/blue] additional [gold]Charge{ChargeAmount:plural:|s}[/gold].",
   "RUNESMITH2-PLASMA_GLOBE.flavor": "",
   "RUNESMITH2-PLASMA_GLOBE.title": "Plasma Globe",
-  "RUNESMITH2-RECYCLER.description": "At the start of your turn, [gold]Break[/gold] ALL your Runes with [blue]0[/blue] [gold]Charges[/gold] and gain {Elements:rs2Icon(0)} equal to their [gold]Recipe[/gold] cards total {Elements:rs2Icon(0)} cost.",
+  "RUNESMITH2-RECYCLER.description": "At the start of your turn, [gold]Break[/gold] ALL your Runes with [blue]0[/blue] [gold]Charges[/gold].",
   "RUNESMITH2-RECYCLER.flavor": "",
   "RUNESMITH2-RECYCLER.title": "Recycler",
   "SEA_GLASS.RUNESMITH2-RUNESMITH2.title": "Tempered Glass"

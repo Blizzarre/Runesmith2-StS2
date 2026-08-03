@@ -14,10 +14,9 @@ namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 
 public class EnergySink : Runesmith2Card
 {
-    public EnergySink() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public EnergySink() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
         WithVar("ChargeLoss", 1);
-        WithVar("PotencyLoss", 2, -2);
         WithTip(RunesmithHoverTip.Charge);
         WithTips(static (card) =>
         {
@@ -25,6 +24,7 @@ public class EnergySink : Runesmith2Card
             return [];
         });
         WithEnergyTip();
+        WithCostUpgradeBy(-1);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
@@ -36,7 +36,6 @@ public class EnergySink : Runesmith2Card
         {
             var energyToGain = runeQueue.Runes.Count(r => r.ChargeVal > 0);
             RuneCmd.ChargeAll(choiceContext, Owner, -DynamicVars["ChargeLoss"].IntValue);
-            if (!IsUpgraded) RuneCmd.RemovePotency(runeQueue.Runes, Owner, DynamicVars["PotencyLoss"].IntValue);
             await Cmd.CustomScaledWait(0.1f, 0.2f);
             await PlayerCmd.GainEnergy(energyToGain, Owner);
         }
