@@ -40,6 +40,6 @@ public class ChargedHammer : Runesmith2Card
 
         RuneCmd.ChargeAll(choiceContext, Owner, DynamicVars[ChargeGainVar.defaultName].IntValue);
 
-        await RuneCmd.PassiveAll(choiceContext, Owner);
+        await RuneCmd.PassiveAll(choiceContext, Owner, 1);
     }
 }

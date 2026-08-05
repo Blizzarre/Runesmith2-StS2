@@ -24,7 +24,7 @@ public class ParticleAcceleratorPower : Runesmith2Power, IModifyCharge, IAfterMo
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new(TriggerCountKey, 1)
+        new(TriggerCountKey, 0)
     ];
 
     public decimal ModifyCharge(Player player, decimal charge, ValueProp props, CardModel? cardSource)
@@ -42,7 +42,7 @@ public class ParticleAcceleratorPower : Runesmith2Power, IModifyCharge, IAfterMo
 
     public int ModifyRunePassiveTriggerCounts(int triggerCount, Player player)
     {
-        if (player == Owner.Player && (player.PlayerCombatState?.GetRuneQueue()?.HasAny() ?? false) && triggerCount > 0)
+        if (player == Owner.Player && (player.PlayerCombatState?.GetRuneQueue()?.HasAny() ?? false) && triggerCount >= 0)
             return triggerCount + DynamicVars[TriggerCountKey].IntValue;
 
         return triggerCount;
@@ -53,11 +53,11 @@ public class ParticleAcceleratorPower : Runesmith2Power, IModifyCharge, IAfterMo
         Flash();
         return Task.CompletedTask;
     }
-
-    public void IncrementTriggerCount()
+    
+    public void IncrementTriggerCount(int amount)
     {
         AssertMutable();
-        ++DynamicVars[TriggerCountKey].BaseValue;
+        DynamicVars[TriggerCountKey].BaseValue += amount;
     }
 
     public string GetSecondAmount() => DynamicVars[TriggerCountKey].IntValue.ToString();

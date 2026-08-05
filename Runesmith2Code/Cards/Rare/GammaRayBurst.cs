@@ -33,11 +33,7 @@ public class GammaRayBurst : Runesmith2Card
         var runeQueue = Owner.PlayerCombatState?.GetRuneQueue();
         if (runeQueue == null || !runeQueue.HasAny()) return;
         
-        for (var i = 0; i < xValue; i++)
-        {
-            if (runeQueue.Runes.All(r => !r.CanPassive)) break;
-            await RuneCmd.PassiveAll(choiceContext, Owner);
-        }
+        await RuneCmd.PassiveAll(choiceContext, Owner, xValue);
         
         var index = 0;
         RuneModel? currRune = null;

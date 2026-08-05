@@ -26,6 +26,8 @@ public class WhiteBalance : Runesmith2Card
         WithEnergyTip();
     }
 
+    protected override bool ShouldGlowGoldInternal => HasAllElements();
+
     private bool HasAllElements()
     {
         var elements = Owner.PlayerCombatState?.GetElements() ?? new Elements(0);

@@ -29,15 +29,20 @@ public class Refine : Runesmith2Card
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var cards = await CardSelectCmd.FromHand(
+        var cards = (await CardSelectCmd.FromHand(
             choiceContext,
             Owner,
             new CardSelectorPrefs(RunesmithCardSelectorPrefs.EnhanceSelectionPrompt, DynamicVars.Cards.IntValue),
             card => card.CanEnhance(),
             this
-        );
+        )).ToList();
         
         await RunesmithCardCmd.Enhance(choiceContext, Owner, cards, play,
             ResolveEnergyXValue() * DynamicVars["Amount"].IntValue);
+
+        foreach (var card in cards)
+        {
+            CardCmd.ApplySingleTurnRetain(card);
+        }
     }
 }

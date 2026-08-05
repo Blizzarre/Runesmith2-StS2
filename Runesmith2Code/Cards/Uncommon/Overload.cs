@@ -50,12 +50,8 @@ public class Overload : Runesmith2Card
         if (rune != null && rune.ChargeVal >= DynamicVars[ThresholdVarKey].IntValue)
         {
             var count = rune.ChargeVal;
-            for (var i = 0; i < count; i++)
-            {
-                if (!rune.CanPassive) break;
-                await Cmd.CustomScaledWait(0.1f, 0.2f);
-                await RuneCmd.Passive(choiceContext, rune);
-            }
+            await Cmd.CustomScaledWait(0.1f, 0.2f);
+            await RuneCmd.Passive(choiceContext, Owner, rune, count, false);
 
             await Cmd.CustomScaledWait(0.15f, 0.25f);
             await RuneCmd.Break(choiceContext, Owner, rune);

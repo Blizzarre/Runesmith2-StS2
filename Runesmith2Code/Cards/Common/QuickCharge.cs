@@ -34,6 +34,6 @@ public class QuickCharge : Runesmith2Card
             RuneCmd.ChargeRunes(choiceContext, runeQueue.Runes.Where(r => r.ChargeVal == 0), amount);
         }
         var rune = RuneCmd.ChargeOldest(choiceContext, Owner, DynamicVars[ChargeGainVar.defaultName].IntValue);
-        await RuneCmd.Passive(choiceContext, rune);
+        await RuneCmd.Passive(choiceContext, Owner, rune, 1);
     }
 }

@@ -35,7 +35,7 @@
   "RUNESMITH2-ORIGO_RUNE.smartDescription": "[gold]Passive:[/gold] At the start of turn, add a random {IfUpgraded:[gold]Upgraded[/gold] |}card to your [gold]Hand[/gold].\n[gold]Break:[/gold] Add [blue]2[/blue] random {IfUpgraded:[gold]Upgraded[/gold] |}cards to your [gold]Hand[/gold].",
   "RUNESMITH2-ORIGO_RUNE.title": "Origo",
   "RUNESMITH2-ORIGO_RUNE.titleUpgraded": "Origo+",
-  "RUNESMITH2-ORIGO_RUNE.descriptionUpgraded": "Rune: Adds a random [gold]Upgraded[/gold] card to your [gold]Hand[/gold]. It's free to play for the turn.",
+  "RUNESMITH2-ORIGO_RUNE.descriptionUpgraded": "Rune: Adds a random [gold]Upgraded[/gold] card to your [gold]Hand[/gold].",
   "RUNESMITH2-SAXUM_RUNE.description": "Rune: Gains [gold]Block[/gold].",
   "RUNESMITH2-SAXUM_RUNE.smartDescription": "[gold]Passive[/gold]: At the end of turn, gain [blue]{Passive}[/blue] [gold]Block[/gold].\n[gold]Break[/gold]: Gain [blue]{Break}[/blue] [gold]Block[/gold].",
   "RUNESMITH2-SAXUM_RUNE.title": "Saxum",

@@ -24,8 +24,9 @@ public class Gemma : Runesmith2Card
     public Gemma() : base(1, CardType.Skill, CardRarity.Token, TargetType.Self)
     {
         WithKeywords(CardKeyword.Retain, CardKeyword.Exhaust);
-        WithVars(new EnhanceByVar(1).WithUpgrade(1), new CardsVar(1));
+        WithVars(new EnhanceByVar(1), new CardsVar(1));
         WithTip(RunesmithHoverTip.Enhance);
+        WithCostUpgradeBy(-1);
     }
 
     private int EnhanceDiff

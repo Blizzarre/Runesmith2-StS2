@@ -220,27 +220,44 @@ public static class RuneCmd
             }
         }
     }
-
-    public static async Task Passive(PlayerChoiceContext choiceContext, RuneModel? rune)
+    
+    public static async Task Passive(PlayerChoiceContext choiceContext, Player player, RuneModel? rune, int count, bool isPowered = true)
     {
-        if (!CombatManager.Instance.IsOverOrEnding && rune is { CanPassive: true })
+        if (rune == null) return;
+        await Passive(choiceContext, player,[rune], count, isPowered);
+    }
+
+    public static async Task Passive(PlayerChoiceContext choiceContext, Player player, IEnumerable<RuneModel> runes, int count, bool isPowered = true)
+    {
+        if (!CombatManager.Instance.IsOverOrEnding)
         {
-            choiceContext.PushModel(rune);
-            await rune.Passive(choiceContext);
-            choiceContext.PopModel(rune);
+            if (isPowered)
+            {
+                count = RunesmithHook.ModifyRunePassiveTriggerCount(player.Creature.CombatState!, player, count,
+                    out var modifyingModels);
+                await RunesmithHook.AfterModifyingRunePassiveTriggerCount(modifyingModels);
+            }
+            
+            var runesList = runes.ToList();
+            for (var i = 0; i < count; i++)
+            {
+                foreach (var rune in runesList.Where(rune => rune.CanPassive))
+                {
+                    choiceContext.PushModel(rune);
+                    await rune.Passive(choiceContext);
+                    choiceContext.PopModel(rune);
+                    await Cmd.CustomScaledWait(0.1f, 0.2f);
+                }
+            }
         }
     }
 
-    public static async Task PassiveAll(PlayerChoiceContext choiceContext, Player player)
+    public static async Task PassiveAll(PlayerChoiceContext choiceContext, Player player, int count)
     {
         var runeQueue = player.PlayerCombatState?.GetRuneQueue();
         if (runeQueue == null || runeQueue.Runes.Count <= 0) return;
-        foreach (var rune in runeQueue.Runes)
-        {
-            if (!rune.CanPassive) continue;
-            await Passive(choiceContext, rune);
-            await Cmd.CustomScaledWait(0.1f, 0.2f);
-        }
+
+        await Passive(choiceContext, player, runeQueue.Runes, count);
     }
 
     public static async Task<RuneModel?> BreakOldest(PlayerChoiceContext choiceContext, Player player,

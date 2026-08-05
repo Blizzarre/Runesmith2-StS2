@@ -15,7 +15,7 @@ public class RuneQueue
 {
     public const int MaxCapacity = 7;
 
-    private readonly Player _owner;
+    private Player Owner { get; }
 
     private readonly List<RuneModel> _runes = [];
 
@@ -25,7 +25,7 @@ public class RuneQueue
 
     public RuneQueue(Player owner)
     {
-        _owner = owner;
+        Owner = owner;
     }
 
     public void Clear()
@@ -68,48 +68,54 @@ public class RuneQueue
 
     public async Task BeforeTurnEnd(PlayerChoiceContext choiceContext)
     {
-        if (_owner.Creature.CombatState == null) return;
+        if (Owner.Creature.CombatState == null) return;
 
-        var count = RunesmithHook.ModifyRunePassiveTriggerCount(_owner.Creature.CombatState, _owner, 1,
+        var count = RunesmithHook.ModifyRunePassiveTriggerCount(Owner.Creature.CombatState, Owner, 1,
             out var modifyingModels);
         await RunesmithHook.AfterModifyingRunePassiveTriggerCount(modifyingModels);
 
-        foreach (var rune in Runes)
-            for (var i = 0; i < count; i++)
+        for (var i = 0; i < count; i++)
+        {
+            foreach (var rune in Runes)
             {
                 if (!rune.CanPassive) continue;
                 if (await rune.BeforeTurnEndEarlyRuneTrigger(choiceContext)) await SmallWait();
             }
+        }
 
         await SmallWait();
-
-        foreach (var rune in Runes)
-            for (var i = 0; i < count; i++)
+        
+        for (var i = 0; i < count; i++)
+        {
+            foreach (var rune in Runes)
             {
                 if (!rune.CanPassive) continue;
                 if (await rune.BeforeTurnEndRuneTrigger(choiceContext)) await SmallWait();
             }
+        }
     }
 
     public async Task SetupTurnStart(PlayerChoiceContext choiceContext)
     {
-        if (_owner.Creature.CombatState == null) return;
+        if (Owner.Creature.CombatState == null) return;
 
-        var count = RunesmithHook.ModifyRunePassiveTriggerCount(_owner.Creature.CombatState, _owner, 1,
+        var count = RunesmithHook.ModifyRunePassiveTriggerCount(Owner.Creature.CombatState, Owner, 1,
             out var modifyingModels);
         await RunesmithHook.AfterModifyingRunePassiveTriggerCount(modifyingModels);
 
-        foreach (var rune in Runes)
-            for (var i = 0; i < count; i++)
+        for (var i = 0; i < count; i++)
+        {
+            foreach (var rune in Runes)
             {
                 if (!rune.CanPassive) continue;
                 if (await rune.SetupTurnStartRuneTrigger(choiceContext)) await SmallWait();
             }
+        }
     }
 
     private async Task SmallWait()
     {
-        if (LocalContext.IsMe(_owner))
+        if (LocalContext.IsMe(Owner))
             await Cmd.CustomScaledWait(0.1f, 0.25f);
         else
             await Cmd.Wait(0.05f);
