@@ -14,9 +14,10 @@ namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 
 public class ElementalDecay : Runesmith2Card
 {
-    public ElementalDecay() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public ElementalDecay() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        WithCards(1, 1);
+        WithCards(2);
+        WithCostUpgradeBy(-1);
         WithTip(CardKeyword.Exhaust);
         WithTip(RunesmithHoverTip.Elements);
     }
@@ -33,13 +34,13 @@ public class ElementalDecay : Runesmith2Card
             this
         )).ToList();
 
-        var totalCost = cards.Select(c => c.EnergyCost.GetAmountToSpend())
-            .Aggregate(0, (a, b) => a + b);
+        var totalCost = new Elements(cards.Select(c => c.EnergyCost.GetAmountToSpend())
+            .Aggregate(0, (a, b) => a + b));
 
-        if (totalCost > 0)
+        if (totalCost.Total > 0)
         {
             await Cmd.CustomScaledWait(0.1f, 0.2f);
-            await RunesmithPlayerCmd.GainElements(new Elements(totalCost), Owner, play);
+            await RunesmithPlayerCmd.GainElements(totalCost, Owner, play);
         }
 
         foreach (var card in cards) await CardCmd.Exhaust(choiceContext, card);

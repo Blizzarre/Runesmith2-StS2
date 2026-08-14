@@ -58,12 +58,12 @@
     </ItemGroup>
 
     <ItemGroup Condition="!Exists('$(Sts2DataDir)')">
-        <PackageReference Include="Book.StS2.RefLib" Version="0.110.0-beta" PrivateAssets="all"/>
+        <PackageReference Include="Book.StS2.RefLib" Version="0.111.0-beta" PrivateAssets="all"/>
         <PackageReference Include="SmartFormat.NET" Version="3.6.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.4.0" PrivateAssets="All" />
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.4.5" PrivateAssets="All" />
         <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="*"/>
         <AdditionalFiles Include="Runesmith2/localization/**/*.json"/> <!-- Used by analyzer -->
     </ItemGroup>

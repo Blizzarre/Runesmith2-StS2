@@ -3,10 +3,10 @@
   "name": "The Runesmith 2",
   "author": "Blizzarre",
   "description": "Adds a new character called \"The Runesmith\", a character centered around Enhancing cards and Crafting Runes.\n\nRussian localization by Nitablade.\nFrench localization by atyrode.\nSimplified Chinese localization by 森野熊MAX (MoriKumaMAX).",
-  "version": "v0.10.2",
-  "min_game_version": "0.110.0",
+  "version": "v0.11.0",
+  "min_game_version": "0.111.0",
   "has_pck": true,
   "has_dll": true,
-  "dependencies": [{"id": "BaseLib", "min_version": "3.4.0"}],
+  "dependencies": [{"id": "BaseLib", "min_version": "3.4.5"}],
   "affects_gameplay": true
 }

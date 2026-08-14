@@ -19,11 +19,11 @@ namespace Runesmith2.Runesmith2Code.Relics;
 
 public class CoreCrystal : Runesmith2Relic
 {
-    public override RelicRarity Rarity => RelicRarity.Ancient;
+    public override RelicRarity Rarity => RelicRarity.Starter;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new ElementsVar(3)
+        new ElementsVar(2)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

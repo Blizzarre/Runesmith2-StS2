@@ -1,9 +1,11 @@
 #region
 
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using Runesmith2.Runesmith2Code.CardSelection;
 using Runesmith2.Runesmith2Code.Commands;
@@ -21,6 +23,7 @@ public class Refine : Runesmith2Card
         WithKeyword(CardKeyword.Retain, UpgradeType.Add);
         WithVars(new DynamicVar("Amount", 2), new CardsVar(1));
         WithTip(RunesmithHoverTip.Enhance);
+        WithTip(new TooltipSource(_ => HoverTipFactory.FromKeyword(CardKeyword.Retain)));
     }
 
     protected override bool HasEnergyCostX => true;
