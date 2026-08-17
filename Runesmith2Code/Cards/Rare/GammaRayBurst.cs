@@ -29,12 +29,12 @@ public class GammaRayBurst : Runesmith2Card
     {
         var xValue = ResolveEnergyXValue() + DynamicVars["Amount"].IntValue;
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        
+
         var runeQueue = Owner.PlayerCombatState?.GetRuneQueue();
         if (runeQueue == null || !runeQueue.HasAny()) return;
-        
+
         await RuneCmd.PassiveAll(choiceContext, Owner, xValue);
-        
+
         var index = 0;
         RuneModel? currRune = null;
         while (index < runeQueue.Runes.Count)

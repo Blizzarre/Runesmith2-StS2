@@ -18,7 +18,7 @@ namespace Runesmith2.Runesmith2Code.Cards.Token;
 public class Scrap : Runesmith2Card
 {
     private const string BreakCountKey = "BreakCount";
-    
+
     public Scrap() : base(0, CardType.Skill, CardRarity.Token, TargetType.Self)
     {
         WithKeyword(CardKeyword.Retain);
@@ -40,7 +40,7 @@ public class Scrap : Runesmith2Card
     {
         if (!ShouldReturnNextTurn && !IsUpgraded)
             ShouldReturnNextTurn = true;
-        
+
         if (HasRune())
         {
             var count = DynamicVars[BreakCountKey].IntValue;
@@ -49,8 +49,10 @@ public class Scrap : Runesmith2Card
                 await RuneCmd.BreakOldest(choiceContext, Owner, false);
                 await Cmd.CustomScaledWait(0.15f, 0.25f);
             }
+
             await RuneCmd.BreakOldest(choiceContext, Owner);
         }
+
         await Cmd.Wait(0.20f);
     }
 
@@ -62,17 +64,15 @@ public class Scrap : Runesmith2Card
         return locationForCardPlay;
     }
 
-    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext,
+        ICombatState combatState)
     {
         if (player == Owner &&
             CombatManager.Instance.History.CardPlaysFinished.Any(e =>
                 e.HappenedLastPlayerTurn(Owner) && e.CardPlay.Card == this && ShouldReturnNextTurn))
         {
             ShouldReturnNextTurn = false;
-            if (Pile is not { Type: PileType.Hand })
-            {
-                await CardPileCmd.Add(this, PileType.Hand);
-            }
+            if (Pile is not { Type: PileType.Hand }) await CardPileCmd.Add(this, PileType.Hand);
         }
     }
 }

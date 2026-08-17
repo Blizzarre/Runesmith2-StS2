@@ -13,7 +13,6 @@ using Runesmith2.Runesmith2Code.Utils;
 
 namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 
-
 public class LightningHammer : Runesmith2Card
 {
     public LightningHammer() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
@@ -22,7 +21,7 @@ public class LightningHammer : Runesmith2Card
         WithTip(RunesmithHoverTip.Stasis);
         WithTags(RunesmithTags.Hammer);
     }
-    
+
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     protected override async Task OnPlay(
@@ -48,10 +47,7 @@ public class LightningHammer : Runesmith2Card
 
     public override Task AfterCardEnteredCombat(CardModel card)
     {
-        if (card == this)
-        {
-            this.SetStasis(true);
-        }
+        if (card == this) this.SetStasis(true);
         return Task.CompletedTask;
     }
 
@@ -59,14 +55,14 @@ public class LightningHammer : Runesmith2Card
     {
         var location = base.GetResultLocationForCardPlay();
         if (CombatState == null) return location;
-        
+
         var teammates = CombatState.GetTeammatesOf(Owner.Creature)
             .Where(c => c is { IsAlive: true, IsPlayer: true } && c.Player != Owner).ToList();
         if (teammates.Count == 0) return location;
-        
+
         var player = Owner.RunState.Rng.CombatTargets.NextItem(teammates)?.Player!;
         location.player = player;
-        
+
         if (location.pileType == PileType.Discard)
         {
             location.pileType = PileType.Hand;

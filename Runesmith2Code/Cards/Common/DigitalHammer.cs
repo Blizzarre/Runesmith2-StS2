@@ -38,10 +38,10 @@ public class DigitalHammer : Runesmith2Card
         var prefs = new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars.Cards.IntValue);
         var cards = (await CardSelectCmd.FromCombatPile(choiceContext, PileType.Discard.GetPile(Owner), Owner, prefs))
             .ToList();
-        
+
         await RunesmithCardCmd.Enhance(choiceContext, Owner, cards.Where(c => c.CanEnhance()), play,
             DynamicVars[EnhanceByVar.defaultName].IntValue);
-        
+
         await CardPileCmd.Add(cards, PileType.Draw, CardPilePosition.Top);
     }
 }

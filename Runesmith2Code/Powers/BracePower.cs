@@ -30,12 +30,13 @@ public class BracePower : Runesmith2Power
         return new Data();
     }
 
-    private static readonly HashSet<string> BlockVarKeys = [BlockVar.defaultName, CalculatedBlockVar.defaultName]; 
+    private static readonly HashSet<string> BlockVarKeys = [BlockVar.defaultName, CalculatedBlockVar.defaultName];
 
     private static bool IsCardGainBlock(CardModel card)
     {
         if (card.GainsBlock) return true;
-        if (card.Enchantment != null && card.Enchantment.DynamicVars.Any(c => BlockVarKeys.Contains(c.Key))) return true;
+        if (card.Enchantment != null && card.Enchantment.DynamicVars.Any(c => BlockVarKeys.Contains(c.Key)))
+            return true;
         return card.GetModifiers().Any(cardModifier => cardModifier.DynamicVars.Any(m => BlockVarKeys.Contains(m.Key)));
     }
 

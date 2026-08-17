@@ -26,16 +26,16 @@ public class HeatExchange : Runesmith2Card
         CardPlay play)
     {
         if (CombatState == null) return;
-        
+
         var hittableEnemies = CombatState.HittableEnemies;
-        
+
         foreach (var enemy in hittableEnemies)
             NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(NGroundFireVfx.Create(enemy));
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
-        
+
         await CommonActions.ApplySelf<IceColdPower>(choiceContext, this);
     }
 }

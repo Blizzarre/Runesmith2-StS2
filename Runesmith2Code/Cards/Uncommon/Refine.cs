@@ -39,13 +39,10 @@ public class Refine : Runesmith2Card
             card => card.CanEnhance(),
             this
         )).ToList();
-        
+
         await RunesmithCardCmd.Enhance(choiceContext, Owner, cards, play,
             ResolveEnergyXValue() * DynamicVars["Amount"].IntValue);
 
-        foreach (var card in cards)
-        {
-            CardCmd.ApplySingleTurnRetain(card);
-        }
+        foreach (var card in cards) CardCmd.ApplySingleTurnRetain(card);
     }
 }

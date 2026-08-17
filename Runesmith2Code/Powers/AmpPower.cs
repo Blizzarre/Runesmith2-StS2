@@ -18,7 +18,7 @@ public class AmpPower : Runesmith2Power, IModifyPotencyAdditive, IAfterModifying
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
-    
+
     public decimal ModifyPotencyAdditive(Player player, decimal amount, ValueProp props, CardModel? cardSource,
         CardPlay? cardPlay)
     {
@@ -34,7 +34,7 @@ public class AmpPower : Runesmith2Power, IModifyPotencyAdditive, IAfterModifying
         if (!props.IsPoweredCardOrMonsterMoveBlock()) return 0m;
         return Amount;
     }
-    
+
     public async Task AfterModifyingPotency()
     {
         await PowerCmd.ModifyAmount(new ThrowingPlayerChoiceContext(), this, -Amount, null, null);

@@ -36,8 +36,9 @@ public class AdamantiumHammer : Runesmith2Card, IAfterCardEnhanced
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
     }
-    
-    public Task AfterCardEnhanced(PlayerChoiceContext choiceContext, CardModel card, Player applier, CardPlay? cardPlay, int enhanceAmount)
+
+    public Task AfterCardEnhanced(PlayerChoiceContext choiceContext, CardModel card, Player applier, CardPlay? cardPlay,
+        int enhanceAmount)
     {
         if (applier != Owner || enhanceAmount <= 0 || card == this) return Task.CompletedTask;
 

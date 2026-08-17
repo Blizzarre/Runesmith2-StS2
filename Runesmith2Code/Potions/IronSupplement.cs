@@ -28,7 +28,7 @@ public class IronSupplement : Runesmith2Potion
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new EnhanceByVar(5, false)
+        new EnhanceByVar(3, false)
     ];
 
     public override IEnumerable<IHoverTip> ExtraHoverTips =>

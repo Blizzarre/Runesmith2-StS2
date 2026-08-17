@@ -99,7 +99,7 @@ public partial class NRuneManager : Control
     private void AddSlotAnim()
     {
         var queue = Player.PlayerCombatState?.GetRuneQueue();
-        
+
         var emptyRune = _runes.FirstOrDefault(n => n.Model == null);
         if (emptyRune != null) return; // There's empty slot already
 

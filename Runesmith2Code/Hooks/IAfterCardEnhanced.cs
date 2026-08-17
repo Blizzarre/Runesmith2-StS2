@@ -11,5 +11,6 @@ namespace Runesmith2.Runesmith2Code.Hooks;
 
 public interface IAfterCardEnhanced
 {
-    public Task AfterCardEnhanced(PlayerChoiceContext choiceContext, CardModel card, Player applier, CardPlay? cardPlay, int enhanceAmount);
+    public Task AfterCardEnhanced(PlayerChoiceContext choiceContext, CardModel card, Player applier, CardPlay? cardPlay,
+        int enhanceAmount);
 }

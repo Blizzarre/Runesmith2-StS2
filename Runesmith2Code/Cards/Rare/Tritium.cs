@@ -23,7 +23,7 @@ public class Tritium : Runesmith2Card
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    { 
+    {
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
         await CommonActions.Draw(this, choiceContext);
     }

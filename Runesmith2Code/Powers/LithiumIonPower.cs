@@ -37,7 +37,7 @@ public class LithiumIonPower : Runesmith2Power
     {
         if (!participants.Contains(Owner)) return;
         if (Owner.Player == null) return;
-        
+
         var elements = Owner.Player.PlayerCombatState?.GetElements() ?? new Elements();
         var aquaLoss = DynamicVars[AquaVar.defaultName].IntValue;
         if (elements.Aqua >= aquaLoss)

@@ -14,7 +14,6 @@ using Runesmith2.Runesmith2Code.Structs;
 
 namespace Runesmith2.Runesmith2Code.Powers;
 
-
 public class CalmBeforeStormPower : Runesmith2Power
 {
     public override PowerType Type => PowerType.Buff;
@@ -22,8 +21,8 @@ public class CalmBeforeStormPower : Runesmith2Power
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
-    
-    public override Decimal ModifyHandDraw(Player player, Decimal count)
+
+    public override decimal ModifyHandDraw(Player player, decimal count)
     {
         return player != Owner.Player || AmountOnTurnStart == 0 ? count : count + Amount;
     }

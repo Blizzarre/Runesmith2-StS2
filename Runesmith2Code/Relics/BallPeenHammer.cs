@@ -29,24 +29,24 @@ public class BallPeenHammer : Runesmith2Relic
 
     private int SkillsPlayedThisTurn
     {
+        get;
         set
         {
             AssertMutable();
             field = value;
             UpdateDisplay();
         }
-        get;
     }
 
     private bool IsActivating
     {
+        get;
         set
         {
             AssertMutable();
             field = value;
             UpdateDisplay();
         }
-        get;
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

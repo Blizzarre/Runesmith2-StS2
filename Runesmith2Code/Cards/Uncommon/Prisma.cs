@@ -23,7 +23,7 @@ public class Prisma : Runesmith2Card
         WithDamage(8, 3);
         WithCards(2, 1);
     }
-    
+
     protected override bool ShouldGlowGoldInternal => HasElements();
 
     public override Elements CanonicalElementsCost => new(1);
@@ -38,7 +38,7 @@ public class Prisma : Runesmith2Card
 
         await RecipeOnPlayWrapper(choiceContext, cardPlay);
     }
-    
+
     private async Task RecipeOnPlayWrapper(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (CombatState == null) return;

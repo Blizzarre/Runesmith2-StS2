@@ -17,7 +17,8 @@ public class CraftingManual : Runesmith2Relic
 {
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext,
+        ICombatState combatState)
     {
         if (player != Owner || Owner.PlayerCombatState is { TurnNumber: > 1 }) return;
 
@@ -27,7 +28,7 @@ public class CraftingManual : Runesmith2Relic
         var card = player.RunState.Rng.CombatCardSelection.NextItem(recipes);
         if (card == null)
             return;
-        
+
         Flash();
         card.SetToFreeThisTurn();
         await CardPileCmd.Add(card, PileType.Hand);

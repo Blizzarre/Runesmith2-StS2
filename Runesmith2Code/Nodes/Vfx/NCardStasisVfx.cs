@@ -13,12 +13,12 @@ namespace Runesmith2.Runesmith2Code.Nodes.Vfx;
 public partial class NCardStasisVfx : Control
 {
     private static readonly string ScenePath = "vfx_card_stasis".ScenePath("vfx/cards");
-    
+
     private NCard _cardNode = null!;
     private Node2D _particles = null!;
-    
+
     private float _particlesDuration = 0.50f;
-    
+
     public override void _Ready()
     {
         _particles = GetNode<Node2D>("%Particles");
@@ -35,21 +35,20 @@ public partial class NCardStasisVfx : Control
         cardNode.CardVfxContainer.AddChildSafely(child);
         return child;
     }
-    
+
     private void RestartParticles()
     {
         _particles.GetChildren();
         foreach (var node in _particles.GetChildren())
-        {
-            if (node is GpuParticles2D particles) particles.Restart();
-        }
+            if (node is GpuParticles2D particles)
+                particles.Restart();
     }
 
     public async Task PlayAnimation()
     {
         RestartParticles();
         RunesmithModSounds.PlayStasisSfx();
-        if (!(await WaitAndInterruptIfNecessary(_particlesDuration, _cardNode)))
+        if (!await WaitAndInterruptIfNecessary(_particlesDuration, _cardNode))
         {
             this.QueueFreeSafely();
             return;
@@ -57,18 +56,16 @@ public partial class NCardStasisVfx : Control
 
         this.QueueFreeSafely();
     }
-    
+
     private async Task<bool> WaitAndInterruptIfNecessary(float seconds, NCard cardNode)
     {
         var currTime = 0f;
         while (currTime <= seconds)
         {
-            if (!cardNode.IsInsideTree())
-            {
-                return false;
-            }
+            if (!cardNode.IsInsideTree()) return false;
             currTime += await this.AwaitProcessFrame();
         }
+
         return true;
     }
 }

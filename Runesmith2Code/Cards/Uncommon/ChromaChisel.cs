@@ -35,14 +35,14 @@ public class ChromaChisel : Runesmith2Card
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         await RunesmithPlayerCmd.GainElements(new Elements(this), Owner, play);
-        
+
         var recipes = PileType.Draw.GetPile(Owner).Cards.Where(c => c.Tags.Contains(RunesmithTags.Recipe)).ToList();
         if (recipes.Count == 0) return;
 
         var card = Owner.RunState.Rng.CombatCardSelection.NextItem(recipes);
         if (card == null)
             return;
-        
+
         await CardPileCmd.Add(card, PileType.Hand);
     }
 }

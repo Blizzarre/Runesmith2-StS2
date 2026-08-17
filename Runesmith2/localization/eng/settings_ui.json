@@ -1,5 +1,7 @@
 {
   "RUNESMITH2.mod_title": "Runesmith 2",
+  "RUNESMITH2-UPLOAD_METRICS.title": "Upload Gameplay Data",
+  "RUNESMITH2-UPLOAD_METRICS.hover.desc": "Gameplay data is sent while playing The Runesmith to help with mod balancing.\nPersonally identifying information is not collected.",
   "RUNESMITH2-VISUAL_AND_SOUND_EFFECTS.title": "Visual and Sound Effects",
   "RUNESMITH2-ENABLE_GRINDSTONE_VFX.title": "Enable Grindstone Visual Effect",
   "RUNESMITH2-ENABLE_GRINDSTONE_VFX.hover.desc": "Grindstone sound effect won't play if the visual effect is disabled.",

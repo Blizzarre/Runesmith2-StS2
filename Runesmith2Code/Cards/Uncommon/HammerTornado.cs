@@ -26,7 +26,7 @@ public class HammerTornado : Runesmith2Card
         });
         WithTags(RunesmithTags.Hammer);
     }
-    
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)

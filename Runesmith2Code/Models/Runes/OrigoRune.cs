@@ -64,7 +64,7 @@ public class OrigoRune : RuneModel
         var cardModels = CardFactory.GetForCombat(Owner,
             Owner.Character.CardPool.GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint),
             amount, Owner.RunState.Rng.CombatCardGeneration);
-        
+
         foreach (var card in cardModels)
         {
             if (Upgraded)

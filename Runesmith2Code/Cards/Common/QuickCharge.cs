@@ -6,7 +6,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.DynamicVars;
-using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.HoverTips;
 
 #endregion
@@ -17,7 +16,6 @@ public class QuickCharge : Runesmith2Card
 {
     public QuickCharge() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
-        WithVar("AllChargeGain", 1);
         WithVar(new ChargeGainVar(2).WithUpgrade(1));
         WithTip(RunesmithHoverTip.Charge);
     }
@@ -27,12 +25,6 @@ public class QuickCharge : Runesmith2Card
         CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        var runeQueue = Owner.PlayerCombatState?.GetRuneQueue();
-        if (runeQueue != null)
-        {
-            var amount = DynamicVars["AllChargeGain"].IntValue;
-            RuneCmd.ChargeRunes(choiceContext, runeQueue.Runes.Where(r => r.ChargeVal == 0), amount);
-        }
         var rune = RuneCmd.ChargeOldest(choiceContext, Owner, DynamicVars[ChargeGainVar.defaultName].IntValue);
         await RuneCmd.Passive(choiceContext, Owner, rune, 1);
     }

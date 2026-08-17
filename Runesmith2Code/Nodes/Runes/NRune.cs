@@ -319,7 +319,7 @@ public partial class NRune : NClickableControl
 
         _sprite?.OnTrigger();
     }
-    
+
     private void Charged(bool isPositive)
     {
         if (isPositive) CreateTween().TweenCallback(Callable.From(PlayCharged)).SetDelay(0.15);

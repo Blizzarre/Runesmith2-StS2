@@ -1,5 +1,6 @@
 #region
 
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
@@ -8,6 +9,7 @@ using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Cards.Uncommon;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.Extensions;
+using Runesmith2.Runesmith2Code.Nodes.Runes;
 
 #endregion
 
@@ -29,6 +31,8 @@ public class AlbusRune : RuneModel
 
     public override bool CanPassive => HasAnyValidRune() && base.CanPassive;
 
+    public override bool UsePotency => true;
+
     public override async Task<bool> BeforeTurnEndEarlyRuneTrigger(PlayerChoiceContext choiceContext)
     {
         await Passive(choiceContext);
@@ -39,24 +43,26 @@ public class AlbusRune : RuneModel
     {
         Trigger();
         PlayPassiveSfx();
-        await ChargeAndAddPotency(choiceContext, 1);
+        await ChargeAndAddPotency(choiceContext, 1, 0);
         UseCharge();
     }
 
     public override async Task Break(PlayerChoiceContext choiceContext)
     {
-        await ChargeAndAddPotency(choiceContext, 2, true);
+        await ChargeAndAddPotency(choiceContext, 2, 0);
     }
 
-    private async Task ChargeAndAddPotency(PlayerChoiceContext choiceContext, decimal amount, bool chargeAll = false)
+    private async Task ChargeAndAddPotency(PlayerChoiceContext choiceContext, int chargeAmount, decimal potencyAmount)
     {
         var runeQueue = Owner.PlayerCombatState?.GetRuneQueue();
         if (runeQueue == null) return;
-        
-        RuneCmd.ChargeRunes(choiceContext,
-            chargeAll ? runeQueue.Runes.Where(r => r != this) : runeQueue.Runes.Where(r => r is not AlbusRune),
-            (int)amount);
-        await RuneCmd.AddPotency(choiceContext, runeQueue.Runes, Owner, null, amount, ValueProp.Unpowered);
+
+        if (chargeAmount > 0)
+            RuneCmd.ChargeRunes(choiceContext, runeQueue.Runes.Where(r => r is not AlbusRune), chargeAmount);
+
+        if (potencyAmount > 0)
+            await RuneCmd.AddPotency(choiceContext, runeQueue.Runes.Where(r => r is not AlbusRune), Owner, null,
+                potencyAmount, ValueProp.Unpowered);
         await Cmd.CustomScaledWait(0.2f, 0.3f);
     }
 

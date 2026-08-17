@@ -17,7 +17,7 @@ public class ParticleAcceleratorPower : Runesmith2Power, IModifyCharge, IAfterMo
     IModifyRunePassiveTriggerCount, IAfterModifyingRunePassiveTriggerCount, IHasSecondAmount
 {
     private const string TriggerCountKey = "TriggerCount";
-    
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -42,7 +42,8 @@ public class ParticleAcceleratorPower : Runesmith2Power, IModifyCharge, IAfterMo
 
     public int ModifyRunePassiveTriggerCounts(int triggerCount, Player player)
     {
-        if (player == Owner.Player && (player.PlayerCombatState?.GetRuneQueue()?.HasAny() ?? false) && triggerCount >= 0)
+        if (player == Owner.Player && (player.PlayerCombatState?.GetRuneQueue()?.HasAny() ?? false) &&
+            triggerCount >= 0)
             return triggerCount + DynamicVars[TriggerCountKey].IntValue;
 
         return triggerCount;
@@ -53,12 +54,15 @@ public class ParticleAcceleratorPower : Runesmith2Power, IModifyCharge, IAfterMo
         Flash();
         return Task.CompletedTask;
     }
-    
+
     public void IncrementTriggerCount(int amount)
     {
         AssertMutable();
         DynamicVars[TriggerCountKey].BaseValue += amount;
     }
 
-    public string GetSecondAmount() => DynamicVars[TriggerCountKey].IntValue.ToString();
+    public string GetSecondAmount()
+    {
+        return DynamicVars[TriggerCountKey].IntValue.ToString();
+    }
 }

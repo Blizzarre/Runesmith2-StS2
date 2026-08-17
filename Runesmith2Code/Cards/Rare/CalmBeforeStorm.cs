@@ -26,7 +26,7 @@ public class CalmBeforeStorm : Runesmith2Card
         CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        
+
         await CommonActions.ApplySelf<CalmBeforeStormPower>(choiceContext, this, DynamicVars.Cards.IntValue);
     }
 }

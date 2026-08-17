@@ -30,13 +30,13 @@ public class SecretRecipe : Runesmith2Card
             .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint)
             .Where(c => c.Tags.Contains(RunesmithTags.Recipe))
             .ToList();
-        
+
         var cards = CardFactory.GetDistinctForCombat(Owner,
                 recipeCards, DynamicVars.Cards.IntValue,
                 Owner.RunState.Rng.CombatCardGeneration
             )
             .ToList();
-        
+
         CardModel? card;
         if (DynamicVars.Cards.IntValue > 3)
         {

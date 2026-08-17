@@ -93,7 +93,7 @@ public class Runesmith2 : PlaceholderCharacterModel
     public override string CustomRestSiteAnimPath => "runesmith_rest_site".ScenePath("rest_site");
 
     public override string CustomCharacterSelectBg => RunesmithResource.NCharSelectBgRunesmithPath;
-    
+
     public override string CharacterTransitionSfx => "res://Runesmith2/audio/runesmith_character_transition.ogg";
     public override string CharacterSelectSfx => "res://Runesmith2/audio/runesmith_character_select.ogg";
 }

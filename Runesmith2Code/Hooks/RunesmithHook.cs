@@ -78,7 +78,8 @@ public static class RunesmithHook
     public static Task AfterModifyingEnhanceAmount(int modifiedEnhance,
         CardModel? cardSource, CardPlay? cardPlay, IEnumerable<AbstractModel> modifiers)
     {
-        return Dispatch<IAfterModifyingEnhanceAmount>(modifiers, model => model.AfterModifyingEnhanceAmount(modifiedEnhance, cardSource, cardPlay));
+        return Dispatch<IAfterModifyingEnhanceAmount>(modifiers,
+            model => model.AfterModifyingEnhanceAmount(modifiedEnhance, cardSource, cardPlay));
     }
 
     public static Task AfterCardEnhanced(ICombatState combatState, PlayerChoiceContext choiceContext, Player player,

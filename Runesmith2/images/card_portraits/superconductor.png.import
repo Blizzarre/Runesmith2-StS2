@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvck7l3qdx5y3"
-path="res://.godot/imported/energy_sink.png-5e3e248b2ebce4d432a113668ff20e79.ctex"
+uid="uid://j2rw71kmogsm"
+path="res://.godot/imported/superconductor.png-a9ed6c9b0a57af17b02be7b4482702c4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Runesmith2/images/card_portraits/energy_sink.png"
-dest_files=["res://.godot/imported/energy_sink.png-5e3e248b2ebce4d432a113668ff20e79.ctex"]
+source_file="res://Runesmith2/images/card_portraits/superconductor.png"
+dest_files=["res://.godot/imported/superconductor.png-a9ed6c9b0a57af17b02be7b4482702c4.ctex"]
 
 [params]
 

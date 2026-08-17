@@ -16,7 +16,7 @@
   "RUNESMITH2-BRACE_POWER.title": "Brace",
   "RUNESMITH2-CALM_BEFORE_STORM_POWER.description": "At the start of your next turn, draw [blue]2[/blue] cards and [gold]Enhance[/gold] ALL cards in your [gold]Hand[/gold].",
   "RUNESMITH2-CALM_BEFORE_STORM_POWER.smartDescription": "At the start of your next turn, draw [blue]{Amount}[/blue] card{Amount:plural:|s} and [gold]Enhance[/gold] ALL cards in your [gold]Hand[/gold].",
-  "RUNESMITH2-CALM_BEFORE_STORM_POWER.title": "Calm Before Storm",
+  "RUNESMITH2-CALM_BEFORE_STORM_POWER.title": "Calm Before the Storm",
   "RUNESMITH2-CATALYTIC_CONVERTER_POWER.description": "Increase ALL [gold]Elements[/gold] gains by [blue]1[/blue]. ",
   "RUNESMITH2-CATALYTIC_CONVERTER_POWER.smartDescription": "Increase ALL {elements:rs2Icon(all)} gains by [blue]{Amount}[/blue]. ",
   "RUNESMITH2-CATALYTIC_CONVERTER_POWER.title": "Catalytic Converter",

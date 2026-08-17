@@ -18,8 +18,10 @@ public class MummifiedHandPatches
             .Match(new InstructionMatcher()
                 .dup()
                 .any()
-                .call_any().PredicateMatch(op => op is MethodInfo { Name: "Where" } methodInfo && methodInfo.DeclaringType == typeof(Enumerable))
-                .call_any().PredicateMatch(op => op is MethodInfo { Name: "ToList" } methodInfo && methodInfo.DeclaringType == typeof(Enumerable))
+                .call_any().PredicateMatch(op =>
+                    op is MethodInfo { Name: "Where" } methodInfo && methodInfo.DeclaringType == typeof(Enumerable))
+                .call_any().PredicateMatch(op =>
+                    op is MethodInfo { Name: "ToList" } methodInfo && methodInfo.DeclaringType == typeof(Enumerable))
                 .stloc_2()
             ).Insert([
                 CodeInstruction.LoadLocal(1), //Load cards

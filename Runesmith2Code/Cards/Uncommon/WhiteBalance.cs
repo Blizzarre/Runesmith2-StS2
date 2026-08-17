@@ -32,7 +32,7 @@ public class WhiteBalance : Runesmith2Card
     {
         var elements = Owner.PlayerCombatState?.GetElements() ?? new Elements(0);
         return elements is { Ignis: > 0, Terra: > 0, Aqua: > 0 };
-    } 
+    }
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -46,12 +46,8 @@ public class WhiteBalance : Runesmith2Card
             .Execute(choiceContext);
 
         if (HasAllElements())
-        {
             await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
-        }
         else
-        {
             await RunesmithPlayerCmd.GainElements(new Elements(this), Owner, play);
-        }
     }
 }

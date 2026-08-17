@@ -52,12 +52,12 @@ public partial class NRuneVisuals : Node2D
 
     private float CurrTimeScale
     {
+        get;
         set
         {
             field = value;
             SetAllTimeScale(field);
         }
-        get;
     }
 
     public override void _Ready()
@@ -233,7 +233,7 @@ public partial class NRuneVisuals : Node2D
 
     protected class TrackData(MegaTrackEntry track, float timeScale)
     {
-        internal MegaTrackEntry Track { set; get; } = track;
+        internal MegaTrackEntry Track { get; set; } = track;
         internal float TimeScale => timeScale;
     }
 }

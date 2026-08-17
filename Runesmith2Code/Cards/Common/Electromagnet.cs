@@ -29,7 +29,8 @@ public class Electromagnet : Runesmith2Card
         await CommonActions.CardBlock(this, play);
         var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
         var cardModel = (await CardSelectCmd.FromCombatPile(choiceContext,
-            PileType.Discard.GetPile(Owner), Owner, prefs, c => c.IsImproved() || c.Tags.Contains(RunesmithTags.Recipe))).FirstOrDefault();
+            PileType.Discard.GetPile(Owner), Owner, prefs,
+            c => c.IsImproved() || c.Tags.Contains(RunesmithTags.Recipe))).FirstOrDefault();
         if (cardModel != null) await CardPileCmd.Add(cardModel, PileType.Hand);
     }
 }

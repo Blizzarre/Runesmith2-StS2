@@ -19,7 +19,7 @@ public class Duplicate : Runesmith2Card
         WithTip(RunesmithHoverTip.Craft);
         WithKeyword(CardKeyword.Exhaust, UpgradeType.Remove);
     }
-    
+
     protected override void AddExtraArgsToDescription(LocString description)
     {
         base.AddExtraArgsToDescription(description);

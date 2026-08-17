@@ -43,7 +43,7 @@ public class LendAHand : Runesmith2Card
             return ResourceLoader.Exists(path) ? path : "card.png".CardImagePath();
         }
     }
-    
+
     public override string PortraitPath
     {
         get
@@ -69,9 +69,8 @@ public class LendAHand : Runesmith2Card
             await RunesmithCardCmd.Enhance(choiceContext, Owner, cards, play,
                 DynamicVars[EnhanceByVar.defaultName].IntValue);
             if (IsUpgraded)
-            {
-                foreach (var card in cards) RunesmithCardCmd.Stasis(card);
-            }
+                foreach (var card in cards)
+                    RunesmithCardCmd.Stasis(card);
         }
     }
 }

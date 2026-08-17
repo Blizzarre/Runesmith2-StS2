@@ -91,7 +91,8 @@ public static class CardModelExtension
 
     private const decimal EnhanceBaseMult = 0.5m;
 
-    private static readonly HashSet<string> EnhanceableVarKeys = [BlockVar.defaultName, CalculatedBlockVar.defaultName, DamageVar.defaultName, CalculatedDamageVar.defaultName];
+    private static readonly HashSet<string> EnhanceableVarKeys =
+        [BlockVar.defaultName, CalculatedBlockVar.defaultName, DamageVar.defaultName, CalculatedDamageVar.defaultName];
 
     extension(CardModel card)
     {
@@ -162,13 +163,15 @@ public static class CardModelExtension
             if (card.Type == CardType.Attack) return true;
 
             if (card.GainsBlock) return true;
-            
+
             if (card.HasPotency())
                 return true;
-            
+
             // Probably not fool-proof but should help cover cases where Block/Damage is added as enchantment or card modifier 
-            if (card.Enchantment != null && card.Enchantment.DynamicVars.Any(c => EnhanceableVarKeys.Contains(c.Key))) return true;
-            return card.GetModifiers().Any(cardModifier => cardModifier.DynamicVars.Any(m => EnhanceableVarKeys.Contains(m.Key)));
+            if (card.Enchantment != null &&
+                card.Enchantment.DynamicVars.Any(c => EnhanceableVarKeys.Contains(c.Key))) return true;
+            return card.GetModifiers().Any(cardModifier =>
+                cardModifier.DynamicVars.Any(m => EnhanceableVarKeys.Contains(m.Key)));
         }
 
         public bool CanStasis()

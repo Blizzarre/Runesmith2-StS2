@@ -20,8 +20,8 @@ internal static class NCardPlayTryShowEvokingOrbsPatch
     [HarmonyPostfix]
     private static void Postfix(NCardPlay __instance)
     {
-        var owner = (NCreature?) CardOwnerNodeProp.GetValue(__instance);
-        var card = (CardModel?) CardProp.GetValue(__instance);
+        var owner = (NCreature?)CardOwnerNodeProp.GetValue(__instance);
+        var card = (CardModel?)CardProp.GetValue(__instance);
         if (card == null || owner == null) return;
         if (card is not Runesmith2Card runesmithCard) return;
         var runeManager = RunesmithNode.NRuneManager[owner];
@@ -33,11 +33,11 @@ internal static class NCardPlayTryShowEvokingOrbsPatch
 internal static class NCardPlayHideEvokingOrbsPatch
 {
     private static readonly PropertyInfo CardOwnerNodeProp = AccessTools.Property(typeof(NCardPlay), "CardOwnerNode");
-    
+
     [HarmonyPostfix]
     private static void Postfix(NCardPlay __instance)
     {
-        var owner = (NCreature?) CardOwnerNodeProp.GetValue(__instance);
+        var owner = (NCreature?)CardOwnerNodeProp.GetValue(__instance);
         if (owner == null) return;
         var runeManager = RunesmithNode.NRuneManager[owner];
         runeManager?.UpdateVisuals(RuneBreakType.None);

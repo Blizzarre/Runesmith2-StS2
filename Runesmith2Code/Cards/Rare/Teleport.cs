@@ -26,7 +26,7 @@ public class Teleport : Runesmith2Card
         });
         WithVar(new ChargeGainVar(0, false).WithUpgrade(2));
     }
-    
+
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     public override RuneBreakType RuneBreakType => RuneBreakType.Newest;
@@ -41,7 +41,6 @@ public class Teleport : Runesmith2Card
         ArgumentNullException.ThrowIfNull(targetPlayer);
         if (HasRune())
         {
-            
             var runes = Owner.PlayerCombatState?.GetRuneQueue()?.Runes;
             var runeOrig = runes?[^1];
             if (runeOrig == null) return;

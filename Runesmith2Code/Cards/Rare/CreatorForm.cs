@@ -15,7 +15,7 @@ public class CreatorForm : Runesmith2Card
 {
     public CreatorForm() : base(3, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
-        WithVar("Amount", 3, 1);
+        WithVar("Amount", 2, 1);
         WithTip(RunesmithHoverTip.Enhance);
     }
 

@@ -27,7 +27,7 @@ public class Mundus : Runesmith2RecipeCard
         WithRuneTip<MundusRune>();
         WithTip(new TooltipSource(static c =>
         {
-            var gemma = (Gemma) ModelDb.Card<Gemma>().ToMutable();
+            var gemma = (Gemma)ModelDb.Card<Gemma>().ToMutable();
             gemma.SetEnhanceBy(c.DynamicVars[ChargeVar.defaultName].IntValue);
             return HoverTipFactory.FromCard(gemma);
         }));

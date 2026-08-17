@@ -52,9 +52,12 @@ public abstract class RuneModel : AbstractModel, ICustomModel
 
     public virtual int RemainingCharge => ChargeVal;
 
-    public LocString Title => Upgraded ? new LocString(LocTable, Id.Entry + ".titleUpgraded") : new LocString(LocTable, Id.Entry + ".title");
+    public LocString Title =>
+        Upgraded ? new LocString(LocTable, Id.Entry + ".titleUpgraded") : new LocString(LocTable, Id.Entry + ".title");
 
-    public LocString Description => Upgraded ? new LocString(LocTable, Id.Entry + ".descriptionUpgraded") : new LocString(LocTable, Id.Entry + ".description");
+    public LocString Description => Upgraded
+        ? new LocString(LocTable, Id.Entry + ".descriptionUpgraded")
+        : new LocString(LocTable, Id.Entry + ".description");
 
     public bool HasSmartDescription => LocString.Exists(LocTable, SmartDescriptionLocKey);
 
@@ -159,7 +162,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     }
 
     private Player? _owner;
-    
+
     public Player Owner
     {
         get

@@ -20,46 +20,46 @@ namespace Runesmith2.Runesmith2Code.Relics;
 public class CrystallizedRainbow : Runesmith2Relic
 {
     public override RelicRarity Rarity => RelicRarity.Rare;
-    
+
     public override bool ShowCounter => true;
 
     public override int DisplayAmount =>
-        IsActivating ? DynamicVars.Energy.IntValue : EnergySpent % DynamicVars.Energy.IntValue;    
-    
+        IsActivating ? DynamicVars.Energy.IntValue : EnergySpent % DynamicVars.Energy.IntValue;
+
     [SavedProperty]
     private int EnergySpent
     {
+        get;
         set
         {
             AssertMutable();
             field = value;
             UpdateDisplay();
         }
-        get;
     }
 
     private bool IsActivating
     {
+        get;
         set
         {
             AssertMutable();
             field = value;
             UpdateDisplay();
         }
-        get;
     }
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new ElementsVar(1),
-        new EnergyVar(4)
+        new EnergyVar(5)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
     [
         RunesmithHoverTipFactory.CreateElementsHoverTip()
     ];
-    
+
     private void UpdateDisplay()
     {
         if (IsActivating)
@@ -74,7 +74,7 @@ public class CrystallizedRainbow : Runesmith2Relic
 
         InvokeDisplayAmountChanged();
     }
-    
+
     public override async Task AfterEnergySpent(CardModel card, int amount)
     {
         if (card.Owner != Owner || !CombatManager.Instance.IsInProgress)
@@ -87,11 +87,9 @@ public class CrystallizedRainbow : Runesmith2Relic
         if (triggers <= 0) return;
         _ = TaskHelper.RunSafely(DoActivateVisuals());
         for (var i = 0; i < triggers; i++)
-        {
             await RunesmithPlayerCmd.GainElements(new Elements(DynamicVars[ElementsVar.defaultName].IntValue), Owner);
-        }
     }
-    
+
     private async Task DoActivateVisuals()
     {
         IsActivating = true;

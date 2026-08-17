@@ -16,29 +16,16 @@ namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 
 public class Overload : Runesmith2Card
 {
-    private const string ThresholdVarKey = "Threshold";
-
     public Overload() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
         WithVar(new ChargeGainVar(2).WithUpgrade(1));
-        WithVar(new DynamicVar(ThresholdVarKey, 5));
         WithTip(RunesmithHoverTip.Charge);
         WithTip(RunesmithHoverTip.Break);
     }
 
-    public override RuneBreakType RuneBreakType => IfWillBreak() ? RuneBreakType.Oldest : RuneBreakType.None;
+    public override RuneBreakType RuneBreakType => RuneBreakType.Oldest;
 
-    protected override bool ShouldGlowGoldInternal => IfWillBreak();
-
-    private bool IfWillBreak()
-    {
-        if (!IsInCombat) return false;
-        var runeQueue = Owner.PlayerCombatState?.GetRuneQueue();
-        if (runeQueue == null || !runeQueue.HasAny()) return false;
-        var rune = runeQueue.Runes[0];
-        return rune.ChargeVal + DynamicVars[ChargeGainVar.defaultName].BaseValue >=
-               DynamicVars[ThresholdVarKey].BaseValue;
-    }
+    protected override bool ShouldGlowGoldInternal => HasRune();
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -47,7 +34,7 @@ public class Overload : Runesmith2Card
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         var rune = RuneCmd.ChargeOldest(choiceContext, Owner, DynamicVars[ChargeGainVar.defaultName].IntValue);
 
-        if (rune != null && rune.ChargeVal >= DynamicVars[ThresholdVarKey].IntValue)
+        if (rune is { ChargeVal: > 0 })
         {
             var count = rune.ChargeVal;
             await Cmd.CustomScaledWait(0.1f, 0.2f);

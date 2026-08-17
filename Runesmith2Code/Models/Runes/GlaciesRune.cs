@@ -52,7 +52,7 @@ public class GlaciesRune : RuneModel
     {
         var targets = GetHittableCreatures();
         if (targets.Count == 0) return;
-        
+
         await PowerCmd.Apply<IceColdPower>(choiceContext, targets, amount, Owner.Creature, null);
     }
 }

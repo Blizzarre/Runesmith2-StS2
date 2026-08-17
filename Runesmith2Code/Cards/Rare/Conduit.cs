@@ -17,7 +17,7 @@ public class Conduit : Runesmith2Card
         WithTip(RunesmithHoverTip.Enhance);
         WithCostUpgradeBy(-1);
     }
-    
+
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     protected override async Task OnPlay(
@@ -25,7 +25,7 @@ public class Conduit : Runesmith2Card
         CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
-        
+
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
         await PowerCmd.Apply<ConduitPower>(choiceContext, play.Target, 1, Owner.Creature, this);

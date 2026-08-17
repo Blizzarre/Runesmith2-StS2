@@ -13,13 +13,12 @@ namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 
 public class OneForEveryone : Runesmith2Card
 {
-
     public OneForEveryone() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
         WithTip(RunesmithHoverTip.Break);
         WithCostUpgradeBy(-1);
     }
-    
+
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     protected override bool ShouldGlowGoldInternal => HasRune();
@@ -31,15 +30,15 @@ public class OneForEveryone : Runesmith2Card
         CardPlay play)
     {
         if (!HasRune()) return;
-        
-        var brokenRune = (await RuneCmd.BreakOldest(choiceContext, Owner));
+
+        var brokenRune = await RuneCmd.BreakOldest(choiceContext, Owner);
         if (CombatState != null && brokenRune != null)
         {
             var teammates = CombatState.GetTeammatesOf(Owner.Creature)
                 .Where(c => c is { IsAlive: true, IsPlayer: true } && c.Player != Owner).ToList();
-            
+
             List<RuneModel> clonedRunes = [];
-            
+
             foreach (var ally in teammates)
             {
                 if (ally.Player == null) continue;
@@ -50,12 +49,8 @@ public class OneForEveryone : Runesmith2Card
             }
 
             foreach (var rune in clonedRunes)
-            {
                 if (rune.Owner.PlayerCombatState?.GetRuneQueue()?.Runes.Contains(rune) ?? false)
-                {
                     await RuneCmd.Break(choiceContext, rune.Owner, rune);
-                }
-            }
         }
     }
 }

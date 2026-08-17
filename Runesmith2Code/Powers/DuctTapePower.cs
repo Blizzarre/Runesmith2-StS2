@@ -22,14 +22,17 @@ public class DuctTapePower : Runesmith2Power, IAfterCardEnhanced, IHasSecondAmou
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
-    
-    protected override object InitInternalData() => new Data();
-    
+
+    protected override object InitInternalData()
+    {
+        return new Data();
+    }
+
     private class Data
     {
         public int CardsStasisThisTurn;
     }
-    
+
     public override Task BeforeSideTurnStart(
         PlayerChoiceContext choiceContext,
         CombatSide side,
@@ -43,7 +46,8 @@ public class DuctTapePower : Runesmith2Power, IAfterCardEnhanced, IHasSecondAmou
         return Task.CompletedTask;
     }
 
-    public Task AfterCardEnhanced(PlayerChoiceContext choiceContext, CardModel card, Player applier, CardPlay? cardPlay, int enhanceAmount)
+    public Task AfterCardEnhanced(PlayerChoiceContext choiceContext, CardModel card, Player applier, CardPlay? cardPlay,
+        int enhanceAmount)
     {
         if (applier != Owner.Player || card.IsStasis() || enhanceAmount <= 0) return Task.CompletedTask;
         // Skip stasis if it's a card that's enhancing itself and won't go into your combat piles

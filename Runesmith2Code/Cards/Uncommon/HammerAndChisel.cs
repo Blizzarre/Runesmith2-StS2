@@ -32,14 +32,15 @@ public class HammerAndChisel : Runesmith2Card
             .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint).ToList();
 
         var hammer = CardFactory.GetDistinctForCombat(Owner,
-                cardPool.Where(c => c.Tags.Contains(RunesmithTags.Hammer) && !BannedHammer.Contains(c.Id)), 1, Owner.RunState.Rng.CombatCardGeneration)
+                cardPool.Where(c => c.Tags.Contains(RunesmithTags.Hammer) && !BannedHammer.Contains(c.Id)), 1,
+                Owner.RunState.Rng.CombatCardGeneration)
             .FirstOrDefault();
         var chisel = CardFactory.GetDistinctForCombat(Owner,
                 cardPool.Where(c => c.Tags.Contains(RunesmithTags.Chisel)), 1, Owner.RunState.Rng.CombatCardGeneration)
             .FirstOrDefault();
 
         var decreasedCost = -DynamicVars.Energy.IntValue;
-        
+
         if (hammer != null)
         {
             if (IsUpgraded) CardCmd.Upgrade(hammer);

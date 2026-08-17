@@ -21,7 +21,7 @@ public class RuneQueue
 
     public IReadOnlyList<RuneModel> Runes => _runes;
 
-    public int Capacity { set; get; } = MaxCapacity;
+    public int Capacity { get; set; } = MaxCapacity;
 
     public RuneQueue(Player owner)
     {
@@ -75,24 +75,20 @@ public class RuneQueue
         await RunesmithHook.AfterModifyingRunePassiveTriggerCount(modifyingModels);
 
         for (var i = 0; i < count; i++)
-        {
             foreach (var rune in Runes)
             {
                 if (!rune.CanPassive) continue;
                 if (await rune.BeforeTurnEndEarlyRuneTrigger(choiceContext)) await SmallWait();
             }
-        }
 
         await SmallWait();
-        
+
         for (var i = 0; i < count; i++)
-        {
             foreach (var rune in Runes)
             {
                 if (!rune.CanPassive) continue;
                 if (await rune.BeforeTurnEndRuneTrigger(choiceContext)) await SmallWait();
             }
-        }
     }
 
     public async Task SetupTurnStart(PlayerChoiceContext choiceContext)
@@ -104,13 +100,11 @@ public class RuneQueue
         await RunesmithHook.AfterModifyingRunePassiveTriggerCount(modifyingModels);
 
         for (var i = 0; i < count; i++)
-        {
             foreach (var rune in Runes)
             {
                 if (!rune.CanPassive) continue;
                 if (await rune.SetupTurnStartRuneTrigger(choiceContext)) await SmallWait();
             }
-        }
     }
 
     private async Task SmallWait()

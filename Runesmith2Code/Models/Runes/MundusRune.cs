@@ -43,6 +43,7 @@ public class MundusRune : RuneModel
     public override async Task Break(PlayerChoiceContext choiceContext)
     {
         PlayPassiveSfx();
-        await RunesmithCardCmd.GiveCard<Gemma>(Owner, PileType.Hand, skipAnimation: true, action: c => c.SetEnhanceBy(ChargeVal));
+        await RunesmithCardCmd.GiveCard<Gemma>(Owner, PileType.Hand, skipAnimation: true,
+            action: c => c.SetEnhanceBy(ChargeVal));
     }
 }

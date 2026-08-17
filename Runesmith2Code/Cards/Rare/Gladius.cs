@@ -9,7 +9,7 @@ using Runesmith2.Runesmith2Code.Structs;
 using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
-  
+
 namespace Runesmith2.Runesmith2Code.Cards.Rare;
 
 public class Gladius : Runesmith2Card
@@ -18,7 +18,8 @@ public class Gladius : Runesmith2Card
     {
         WithTags(RunesmithTags.Recipe);
         WithTip(RunesmithHoverTip.Recipe);
-        WithDamage(29, 7);
+        WithEnergy(1);
+        WithDamage(28, 6);
     }
 
     protected override bool ShouldGlowGoldInternal => HasElements();
@@ -46,5 +47,7 @@ public class Gladius : Runesmith2Card
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_giant_horizontal_slash")
             .Execute(choiceContext);
+
+        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
     }
 }

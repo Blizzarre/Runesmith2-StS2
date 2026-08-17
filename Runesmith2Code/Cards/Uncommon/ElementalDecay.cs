@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using Runesmith2.Runesmith2Code.Commands;
+using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.HoverTips;
 using Runesmith2.Runesmith2Code.Structs;
 
@@ -18,6 +19,7 @@ public class ElementalDecay : Runesmith2Card
     {
         WithCards(2);
         WithCostUpgradeBy(-1);
+        WithVar(new ElementsVar(1));
         WithTip(CardKeyword.Exhaust);
         WithTip(RunesmithHoverTip.Elements);
     }
@@ -34,15 +36,11 @@ public class ElementalDecay : Runesmith2Card
             this
         )).ToList();
 
-        var totalCost = new Elements(cards.Select(c => c.EnergyCost.GetAmountToSpend())
-            .Aggregate(0, (a, b) => a + b));
-
-        if (totalCost.Total > 0)
-        {
-            await Cmd.CustomScaledWait(0.1f, 0.2f);
-            await RunesmithPlayerCmd.GainElements(totalCost, Owner, play);
-        }
-
         foreach (var card in cards) await CardCmd.Exhaust(choiceContext, card);
+        for (var i = 0; i < cards.Count; i++)
+        {
+            await RunesmithPlayerCmd.GainElements(new Elements(this), Owner, play);
+            await Cmd.CustomScaledWait(0.1f, 0.15f);
+        }
     }
 }

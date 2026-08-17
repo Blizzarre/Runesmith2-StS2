@@ -132,9 +132,8 @@ public static class RuneCmd
             await RunesmithHook.AfterModifyingPotency(potencyModifiers);
 
             foreach (var rune in runes)
-            {
-                if (rune.UsePotency) rune.PassiveVal = (int)Math.Max(0, rune.PassiveVal + modifiedPotency);
-            }
+                if (rune.UsePotency)
+                    rune.PassiveVal = (int)Math.Max(0, rune.PassiveVal + modifiedPotency);
         }
     }
 
@@ -183,15 +182,9 @@ public static class RuneCmd
         if (!CombatManager.Instance.IsOverOrEnding)
         {
             var runesList = runes.ToList();
-            if (chargeAmount > 0 && runesList.Count != 0)
-            {
-                RunesmithModSounds.PlayRuneChargeSfx();
-            }
-            
-            foreach (var rune in runesList)
-            {
-                rune.ModifyCharge(chargeAmount);
-            }
+            if (chargeAmount > 0 && runesList.Count != 0) RunesmithModSounds.PlayRuneChargeSfx();
+
+            foreach (var rune in runesList) rune.ModifyCharge(chargeAmount);
         }
     }
 
@@ -209,25 +202,21 @@ public static class RuneCmd
         if (!CombatManager.Instance.IsOverOrEnding)
         {
             var runesList = runes.ToList();
-            if (chargeAmount > 0 && runesList.Count != 0)
-            {
-                RunesmithModSounds.PlayRuneChargeSfx();
-            }
+            if (chargeAmount > 0 && runesList.Count != 0) RunesmithModSounds.PlayRuneChargeSfx();
 
-            foreach (var rune in runesList)
-            {
-                rune.SetCharge(chargeAmount);
-            }
+            foreach (var rune in runesList) rune.SetCharge(chargeAmount);
         }
     }
-    
-    public static async Task Passive(PlayerChoiceContext choiceContext, Player player, RuneModel? rune, int count, bool isPowered = true)
+
+    public static async Task Passive(PlayerChoiceContext choiceContext, Player player, RuneModel? rune, int count,
+        bool isPowered = true)
     {
         if (rune == null) return;
-        await Passive(choiceContext, player,[rune], count, isPowered);
+        await Passive(choiceContext, player, [rune], count, isPowered);
     }
 
-    public static async Task Passive(PlayerChoiceContext choiceContext, Player player, IEnumerable<RuneModel> runes, int count, bool isPowered = true)
+    public static async Task Passive(PlayerChoiceContext choiceContext, Player player, IEnumerable<RuneModel> runes,
+        int count, bool isPowered = true)
     {
         if (!CombatManager.Instance.IsOverOrEnding)
         {
@@ -237,10 +226,9 @@ public static class RuneCmd
                     out var modifyingModels);
                 await RunesmithHook.AfterModifyingRunePassiveTriggerCount(modifyingModels);
             }
-            
+
             var runesList = runes.ToList();
             for (var i = 0; i < count; i++)
-            {
                 foreach (var rune in runesList.Where(rune => rune.CanPassive))
                 {
                     choiceContext.PushModel(rune);
@@ -248,7 +236,6 @@ public static class RuneCmd
                     choiceContext.PopModel(rune);
                     await Cmd.CustomScaledWait(0.1f, 0.2f);
                 }
-            }
         }
     }
 

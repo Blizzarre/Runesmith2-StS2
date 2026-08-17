@@ -3,11 +3,13 @@
 using System.Reflection;
 using BaseLib.Audio;
 using BaseLib.Config;
+using BaseLib.Utils;
 using Godot;
 using Godot.Bridge;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
+using Runesmith2.Runesmith2Code.Data;
 using Runesmith2.Runesmith2Code.Utils;
 using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 
@@ -32,10 +34,20 @@ public partial class Runesmith2Mod : Node
         ScriptManagerBridge.LookupScriptsInAssembly(Assembly.GetExecutingAssembly());
 
         RunesmithSubscriber.Subscribe();
-        
+
+        ModManager.OnMetricsUpload += Runesmith2Metrics.OnMetricsUpload;
+
         ModConfigRegistry.Register(ModId, new RunesmithConfig());
-        
+
         ModSound.SetSoundDefaultVolumeOffset("res://Runesmith2/audio/runesmith_character_transition.ogg", 32f);
         ModSound.SetSoundDefaultVolumeOffset("res://Runesmith2/audio/runesmith_character_select.ogg", 32f);
+    }
+
+
+    public static string GetVersion()
+    {
+        var mod = ModManager.GetLoadedMods().FirstOrDefault(m => m.manifest?.id == "Runesmith2");
+
+        return mod?.manifest?.version ?? "unknown";
     }
 }

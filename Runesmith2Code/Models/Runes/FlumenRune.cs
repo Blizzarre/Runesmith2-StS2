@@ -25,7 +25,7 @@ public class FlumenRune : RuneModel
 
     public override Runesmith2RecipeCard RecipeCard => ModelDb.Get<Flumen>();
 
-    private int CardToDraw { set; get; }
+    private int CardToDraw { get; set; }
 
     public override decimal ModifyHandDraw(Player player, decimal count)
     {

@@ -29,7 +29,7 @@ public partial class NEnhanceTabContainer : Control
     private TextureRect? _enhanceTab;
 
     private TextureRect? _stasisOverlay;
-    
+
     private GpuParticles2D? _starsParticles;
 
     private MegaLabel? _enhanceLabel;
@@ -55,7 +55,7 @@ public partial class NEnhanceTabContainer : Control
 
         _stasisOverlay = GetNode<TextureRect>("%StasisOverlay");
         _stasisOverlay.Visible = false;
-        
+
         _starsParticles = GetNode<GpuParticles2D>("%StarsParticles");
 
         if (_enhanceLabel != null) return;

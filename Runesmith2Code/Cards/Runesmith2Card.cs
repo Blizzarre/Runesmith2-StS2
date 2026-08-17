@@ -93,6 +93,8 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
 
     public virtual bool BlockStasis => false;
 
+    #region ElementsResource
+
     private bool _elementsCostSet;
 
     public virtual Elements CanonicalElementsCost => new(-1, -1, -1);
@@ -209,7 +211,7 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
         }
     }
 
-    public bool WasElementsCostJustUpgraded { set; get; }
+    public bool WasElementsCostJustUpgraded { get; set; }
 
     public void UpgradeElementsCostBy(Elements addend)
     {
@@ -234,6 +236,8 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
     // OnPlayWrapper - patch done
 
     // DowngradeInternal - patch set base cost (not really needed)
+
+    #endregion
 
     protected bool HasRune()
     {

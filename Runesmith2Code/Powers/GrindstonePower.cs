@@ -53,10 +53,10 @@ public class GrindstonePower : Runesmith2Power
             internalData.OwnerCard = null;
             return;
         }
-        
+
         // Skip enhance effect for card played that won't go into your combat piles, only for the last replay.
         if (!cardPlay.ResultPile.IsCombatPile() && cardPlay.IsLastInSeries) return;
-        
+
         NCardGrindstoneVfx? vfx = null;
         if (card.IsUpgradable)
         {
@@ -69,7 +69,6 @@ public class GrindstonePower : Runesmith2Power
             vfx = CreateVfx(card, cardPlay);
             await RunesmithCardCmd.Enhance(choiceContext, Owner.Player, card, cardPlay, 1, true);
             Flash();
-
         }
 
         if (vfx != null)

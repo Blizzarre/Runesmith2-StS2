@@ -39,7 +39,8 @@ internal class NCardReadyPatch
     private static void Postfix(NCard __instance)
     {
         var cardContainer = __instance.GetChild(0);
-        cardContainer.MoveChildSafely(RunesmithNode.NEnhanceTab[__instance], cardContainer.GetNode("%TitleBanner").GetIndex());
+        cardContainer.MoveChildSafely(RunesmithNode.NEnhanceTab[__instance],
+            cardContainer.GetNode("%TitleBanner").GetIndex());
     }
 }
 

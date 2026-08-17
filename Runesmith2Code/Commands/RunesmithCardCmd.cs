@@ -63,7 +63,9 @@ public static class RunesmithCardCmd
                     if (cardNode != null) vfx = NCardEnhanceVfx.Create(cardNode);
                     if (vfx != null) _ = TaskHelper.RunSafely(vfx.PlayAnimation());
                 }
-                await RunesmithHook.AfterCardEnhanced(combatState, choiceContext, player, targetCard, cardPlay, modifiedEnhance);
+
+                await RunesmithHook.AfterCardEnhanced(combatState, choiceContext, player, targetCard, cardPlay,
+                    modifiedEnhance);
             }
         }
     }
@@ -72,7 +74,6 @@ public static class RunesmithCardCmd
     public static void AddEnhance(IEnumerable<CardModel> targetCards, int enhanceAmount, bool skipVisuals = false)
     {
         if (!CombatManager.Instance.IsOverOrEnding)
-        {
             foreach (var targetCard in targetCards)
             {
                 if (!targetCard.CanEnhance())
@@ -82,15 +83,14 @@ public static class RunesmithCardCmd
                 }
 
                 targetCard.AddEnhance(enhanceAmount);
-                
+
                 if (skipVisuals) continue;
-                
+
                 var cardNode = NCard.FindOnTable(targetCard);
                 NCardEnhanceVfx? vfx = null;
                 if (cardNode != null) vfx = NCardEnhanceVfx.Create(cardNode);
                 if (vfx != null) _ = TaskHelper.RunSafely(vfx.PlayAnimation());
             }
-        }
     }
 
     public static async Task EnhanceRandomCards(PlayerChoiceContext choiceContext, Player player,
@@ -110,7 +110,7 @@ public static class RunesmithCardCmd
         targetCard.SetStasis(true);
 
         if (!RunesmithConfig.EnableStasisVfx) return;
-        
+
         var cardNode = NCard.FindOnTable(targetCard);
         if (cardNode == null) return;
 
@@ -140,5 +140,6 @@ public static class RunesmithCardCmd
     }
 
     private static readonly MethodInfo CreateCardNodeMethod =
-        AccessTools.Method(typeof(CardPileCmd), "CreateCardNodeAndUpdateVisuals", [typeof(CardModel), typeof(PileType), typeof(bool)]);
+        AccessTools.Method(typeof(CardPileCmd), "CreateCardNodeAndUpdateVisuals",
+            [typeof(CardModel), typeof(PileType), typeof(bool)]);
 }

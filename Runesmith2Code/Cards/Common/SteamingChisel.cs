@@ -33,7 +33,7 @@ public class SteamingChisel : Runesmith2Card
     {
         ArgumentNullException.ThrowIfNull(play.Target);
         await CommonActions.CardBlock(this, play);
-        
+
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
