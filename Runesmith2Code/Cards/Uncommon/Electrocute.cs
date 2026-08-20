@@ -16,7 +16,7 @@ public class Electrocute : Runesmith2Card
 {
     public Electrocute() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
-        WithDamage(8, 3);
+        WithDamage(9, 3);
         WithCards(1);
         WithTip(RunesmithHoverTip.Stasis);
     }

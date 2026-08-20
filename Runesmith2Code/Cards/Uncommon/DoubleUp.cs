@@ -18,7 +18,7 @@ public class DoubleUp : Runesmith2Card
 {
     public DoubleUp() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        WithBlock(10);
+        WithBlock(11, 1);
         WithCards(1, 1);
         WithVar(new EnhanceByVar(1));
     }

@@ -43,18 +43,26 @@ public static class CardModelExtension
             private set => _justStasis = value;
         }
 
-        private int _enhanced;
-
         public int Enhanced
         {
-            get => _enhanced;
+            get;
             set
             {
                 CardModel.AssertMutable();
-                _enhanced = Math.Clamp(value, 0, 999999);
+                field = Math.Clamp(value, 0, 999999);
                 if (value <= 0) return;
                 JustEnhanced = true;
                 EnhanceChanged?.Invoke();
+            }
+        }
+
+        public int EnhanceAfterClear
+        {
+            get;
+            set
+            {
+                CardModel.AssertMutable();
+                field = Math.Clamp(value, 0, 999999);
             }
         }
 
@@ -177,6 +185,17 @@ public static class CardModelExtension
         public bool CanStasis()
         {
             return card.CanEnhance() && !card.IsStasis();
+        }
+
+        // For setting Enhance level for cards that has self-Enhance.
+        public void SetEnhanceAfterClear(int amount)
+        {
+            card.GetCardModelModifier().EnhanceAfterClear = amount;
+        }
+
+        public int GetEnhanceAfterClear()
+        {
+            return card.GetCardModelModifier().EnhanceAfterClear;
         }
     }
 }

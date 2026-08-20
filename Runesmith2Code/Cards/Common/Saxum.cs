@@ -19,7 +19,7 @@ public class Saxum : Runesmith2RecipeCard
 {
     public Saxum() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
-        WithVars(new PotencyVar(3).WithUpgrade(2), new ChargeVar(3));
+        WithVars(new PotencyVar(3).WithUpgrade(2), new ChargeVar(4));
         WithTip(RunesmithHoverTip.Craft);
         WithTip(StaticHoverTip.Block);
         WithRuneTip<SaxumRune>();

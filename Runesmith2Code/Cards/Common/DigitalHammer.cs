@@ -6,7 +6,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using Runesmith2.Runesmith2Code.CardSelection;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.DynamicVars;
 using Runesmith2.Runesmith2Code.Extensions;
@@ -20,9 +19,9 @@ public class DigitalHammer : Runesmith2Card
 {
     public DigitalHammer() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
-        WithDamage(5, 1);
+        WithDamage(6, 3);
         WithVar(new CardsVar(1));
-        WithVar(new EnhanceByVar(1).WithUpgrade(1));
+        WithVar(new EnhanceByVar(1));
         WithTags(RunesmithTags.Hammer);
     }
 

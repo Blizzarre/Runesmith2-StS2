@@ -41,13 +41,16 @@ public class ShiningHammer : Runesmith2Card
 
         if (Owner.PlayerCombatState != null)
         {
+            var currEnhance = this.GetEnhance();
             var cards = Owner.PlayerCombatState.AllPiles
                 .Where(p => p.IsCombatPile && p.Type != PileType.Exhaust)
                 .SelectMany(p => p.Cards)
-                .Where(c => c != this && (c.Tags.Contains(RunesmithTags.Hammer) || ExtraHammerCards.Contains(c.Id)) &&
-                            c.CanEnhance());
+                .Where(c => (c.Tags.Contains(RunesmithTags.Hammer) || ExtraHammerCards.Contains(c.Id)) &&
+                            c.CanEnhance()).ToList();
             await RunesmithCardCmd.Enhance(choiceContext, Owner, cards, play,
                 DynamicVars[EnhanceByVar.defaultName].IntValue);
+            // Preserve self Enhance
+            cards.FirstOrDefault(c => c == this)?.SetEnhanceAfterClear(this.GetEnhance() - currEnhance);
         }
     }
 }

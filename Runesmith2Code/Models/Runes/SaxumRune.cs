@@ -14,7 +14,7 @@ namespace Runesmith2.Runesmith2Code.Models.Runes;
 // Gain Block
 public class SaxumRune : RuneModel
 {
-    public override decimal PassiveVal { get; set; } = 3;
+    public override decimal PassiveVal { get; set; } = 4;
     public override int ChargeVal { get; set; } = 3;
 
     public override bool UsePotency => true;

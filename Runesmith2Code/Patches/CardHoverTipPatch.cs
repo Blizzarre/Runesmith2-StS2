@@ -21,8 +21,11 @@ internal class CardHoverTipPatch
     {
         var list = values.ToList();
         if (__instance.IsEnhanced())
+        {
             list.Add(RunesmithHoverTipFactory.Static(RunesmithHoverTip.Enhanced,
-                new DynamicVar("Amount", __instance.GetEnhanceMultiplier() * 100)));
+                new DynamicVar("Mult", __instance.GetEnhanceMultiplier() * 100),
+                new DynamicVar("Amount", __instance.GetEnhance())));
+        }
 
         if (__instance.IsStasis()) list.Add(RunesmithHoverTipFactory.Static(RunesmithHoverTip.Stasis));
 

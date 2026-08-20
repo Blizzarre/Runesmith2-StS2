@@ -1,5 +1,6 @@
 #region
 
+using BaseLib.Commands;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -28,9 +29,9 @@ public class Assembler : Runesmith2Card
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
         var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
-        var cardModel = (await CardSelectCmd.FromCombatPile(choiceContext,
-                PileType.Discard.GetPile(Owner), Owner, prefs, c => c.Tags.Contains(RunesmithTags.Recipe)))
-            .FirstOrDefault();
+
+        var cardModel = (await MultiPileCardSelect.Select(choiceContext, Owner, prefs,
+            c => c.Tags.Contains(RunesmithTags.Recipe), PileType.Hand, PileType.Discard)).FirstOrDefault();
 
         if (cardModel != null)
         {

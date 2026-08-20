@@ -48,9 +48,25 @@ public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(HookType.Co
     {
         if (cardPlay is { Card: Runesmith2Card runesmithCard, IsLastInSeries: true })
             runesmithCard.IsPlayedWithoutElements = false;
+        
+        var card = cardPlay.Card;
 
-        if (cardPlay.Card.IsStasis()) return Task.CompletedTask;
-        if (cardPlay.IsLastInSeries && cardPlay.Card.IsEnhanced()) cardPlay.Card.ClearEnhance();
+        if (card.IsStasis())
+        {
+            card.SetEnhanceAfterClear(0);
+            return Task.CompletedTask;
+        }
+        if (card.IsEnhanced())
+        {
+            card.ClearEnhance();
+        }
+
+        var enhanceAfterClear = card.GetEnhanceAfterClear();
+        if (enhanceAfterClear > 0)
+        {
+            card.SetEnhanceAfterClear(0);
+            card.AddEnhance(enhanceAfterClear);
+        }
 
         return Task.CompletedTask;
     }

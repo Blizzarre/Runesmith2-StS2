@@ -72,6 +72,9 @@ public class BracePower : Runesmith2Power
         var internalData = GetInternalData<Data>();
         var card = cardPlay.Card;
         if (card == internalData.CardToModify)
+        {
+            internalData.CardToModify = null;
             await PowerCmd.ModifyAmount(choiceContext, this, -internalData.AmountWhenCardPlayed, null, null);
+        }
     }
 }
