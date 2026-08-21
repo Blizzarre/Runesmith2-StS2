@@ -92,6 +92,8 @@ public abstract class Runesmith2Card(int cost, CardType type, CardRarity rarity,
     public virtual RuneBreakType RuneBreakType => RuneBreakType.None;
 
     public virtual bool BlockStasis => false;
+    
+    public virtual bool PreserveStasis => false;
 
     #region ElementsResource
 

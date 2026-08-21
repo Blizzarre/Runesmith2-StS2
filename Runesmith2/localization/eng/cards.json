@@ -109,7 +109,7 @@
   "RUNESMITH2-LASER_TURRET.title": "Laser Turret",
   "RUNESMITH2-LEND_A_HAND.description": "[gold]Enhance[/gold] ALL cards in another player's [gold]Hand[/gold]{EnhanceBy:rs2Plural:| by {EnhanceBy:diff()}}{IfUpgraded:show: and [gold]Stasis[/gold] them}.",
   "RUNESMITH2-LEND_A_HAND.title": "Lend a Hand",
-  "RUNESMITH2-LIGHTNING_HAMMER.description": "This card has [gold]Stasis[/gold].\nDeal {Damage:diff()} damage.\nPut this card into a random ally's [gold]Hand[/gold].",
+  "RUNESMITH2-LIGHTNING_HAMMER.description": "This card always has [gold]Stasis[/gold].\nDeal {Damage:diff()} damage.\nPut this card into a random ally's [gold]Hand[/gold].",
   "RUNESMITH2-LIGHTNING_HAMMER.title": "Lightning Hammer",
   "RUNESMITH2-LITHIUM_ION.description": "Gain {Aqua:rs2Icon()}.\nAt the start of your turn, spend 1{Aqua:rs2Icon(0)} to gain {Amount:diff()} [gold]Amp[/gold].",
   "RUNESMITH2-LITHIUM_ION.title": "Lithium Ion",

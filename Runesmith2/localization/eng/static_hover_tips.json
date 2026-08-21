@@ -26,6 +26,6 @@
   "RUNESMITH2-POTENCY.title": "Potency",
   "RUNESMITH2-RECIPE.description": "Recipe cards can be played without the required {elements:rs2Icon(all)} to gain {elements:rs2Icon(all)} equals to the {elements:rs2Icon(all)} cost instead.",
   "RUNESMITH2-RECIPE.title": "Recipe",
-  "RUNESMITH2-STASIS.description": "Prevent a card from losing [gold]Enhance[/gold] when played.",
+  "RUNESMITH2-STASIS.description": "Prevent a card from losing [gold]Enhance[/gold] when played once. Cannot be stacked.",
   "RUNESMITH2-STASIS.title": "Stasis"
 }

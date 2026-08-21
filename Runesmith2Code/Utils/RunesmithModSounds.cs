@@ -31,6 +31,7 @@ public static class RunesmithModSounds
 
     public static void PlayStasisUseSfx()
     {
+        if (!RunesmithConfig.EnableStasisSfx) return;
         StasisUseSfx.Play(pitchVariation: 0.05f);
     }
 

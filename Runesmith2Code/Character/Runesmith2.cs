@@ -1,6 +1,7 @@
 ﻿#region
 
 using BaseLib.Abstracts;
+using BaseLib.Patches.UI;
 using BaseLib.Utils.NodeFactories;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
@@ -96,4 +97,10 @@ public class Runesmith2 : PlaceholderCharacterModel
 
     public override string CharacterTransitionSfx => "res://Runesmith2/audio/runesmith_character_transition.ogg";
     public override string CharacterSelectSfx => "res://Runesmith2/audio/runesmith_character_select.ogg";
+
+    public override RelicIconData? CustomYummyCookie => new(
+        "yummy_cookie_runesmith.png".BigRelicImagePath(),
+        "yummy_cookie_runesmith.png".RelicImagePath(),
+        "yummy_cookie_runesmith_outline.png".RelicImagePath()
+        );
 }

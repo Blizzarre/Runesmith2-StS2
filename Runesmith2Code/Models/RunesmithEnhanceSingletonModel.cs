@@ -10,9 +10,11 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using Runesmith2.Runesmith2Code.Cards;
+using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Field;
 using Runesmith2.Runesmith2Code.Hooks;
+using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
 
@@ -50,13 +52,19 @@ public class RunesmithEnhanceSingletonModel() : CustomSingletonModel(HookType.Co
             runesmithCard.IsPlayedWithoutElements = false;
         
         var card = cardPlay.Card;
+        var isEnhanced = card.IsEnhanced();
 
-        if (card.IsStasis())
+        if (card.IsStasis() && isEnhanced)
         {
             card.SetEnhanceAfterClear(0);
+            if (card is not Runesmith2Card { PreserveStasis: true })
+            {
+                card.SetStasis(false);
+                RunesmithModSounds.PlayStasisUseSfx();
+            }
             return Task.CompletedTask;
         }
-        if (card.IsEnhanced())
+        if (isEnhanced)
         {
             card.ClearEnhance();
         }
