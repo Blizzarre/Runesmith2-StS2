@@ -9,7 +9,7 @@
   "RUNESMITH2-CHARGE-TURN-START.title": "Charge",
   "RUNESMITH2-CHARGE.description": "Runes deplete [blue]1[/blue] Charge to trigger their passive abilities.",
   "RUNESMITH2-CHARGE.title": "Charge",
-  "RUNESMITH2-CRAFT.description": "Crafting a Rune puts it into your empty slot.\nYou can have no more than [blue]7[/blue] Runes.",
+  "RUNESMITH2-CRAFT.description": "Crafting a Rune puts it into your empty slot. You can have no more than [blue]7[/blue] Runes.",
   "RUNESMITH2-CRAFT.title": "Craft",
   "RUNESMITH2-ELEMENTS.description": "Elements ([gold]Ignis[/gold] {elements:rs2Icon(ignis)}, [gold]Terra[/gold] {elements:rs2Icon(terra)}, and [gold]Aqua[/gold] {elements:rs2Icon(aqua)}) are used to play [gold]Recipe[/gold] cards or improve certain card effects.",
   "RUNESMITH2-ELEMENTS.title": "Elements",

@@ -19,7 +19,7 @@ public class FrozenChisel : Runesmith2Card
 {
     public FrozenChisel() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
-        WithDamage(10, 3);
+        WithDamage(9, 2);
         WithPower<IceColdPower>(5, 2);
         WithVars(new TerraVar(1), new AquaVar(1));
         WithTip(RunesmithHoverTip.Elements);

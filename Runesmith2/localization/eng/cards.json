@@ -157,7 +157,7 @@
   "RUNESMITH2-RUNIC_FORCEFIELD.title": "Runic Forcefield",
   "RUNESMITH2-SAXUM.description": "[gold]Recipe[/gold].\n[gold]Craft[/gold] a [gold]Saxum[/gold] Rune with {Potency:diff()} [gold]Potency[/gold] and {Charge:diff()} [gold]Charge{Charge:rs2Plural:|s}[/gold].{IfFull:\n[red](Rune Slots are full)[/red]|}",
   "RUNESMITH2-SAXUM.title": "Saxum",
-  "RUNESMITH2-SCRAP.description": "Can only be played if you have a Rune.\n[gold]Break[/gold] your oldest Rune{BreakCount:plural:| {BreakCount:diff()} times}.\n{IfUpgraded:show:Return this card to your [gold]Hand[/gold]|At the start of your next turn, return this card to your [gold]Hand[/gold]}.",
+  "RUNESMITH2-SCRAP.description": "Playable if you have a Rune.\n[gold]Break[/gold] your oldest Rune{BreakCount:plural:| {BreakCount:diff()} times}.\n{IfUpgraded:show:Return this card to your [gold]Hand[/gold]|Next turn, return this card to your [gold]Hand[/gold]}.",
   "RUNESMITH2-SCRAP.title": "Scrap",
   "RUNESMITH2-SCRAPPER.description": "Whenever your Rune is [gold]Broken[/gold], ALL your Runes gain {Amount:diff()} [gold]Charge{Amount:plural:|s}[/gold].\nAdd [gold]Scrap[/gold] to your [gold]Hand[/gold].",
   "RUNESMITH2-SCRAPPER.title": "Scrapper",

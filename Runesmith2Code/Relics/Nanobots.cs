@@ -1,14 +1,14 @@
 #region
 
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Runs;
-using Runesmith2.Runesmith2Code.Enchantments;
+using MegaCrit.Sts2.Core.ValueProps;
+using Runesmith2.Runesmith2Code.Extensions;
+using Runesmith2.Runesmith2Code.HoverTips;
 
 #endregion
 
@@ -16,35 +16,40 @@ namespace Runesmith2.Runesmith2Code.Relics;
 
 public class Nanobots : Runesmith2Relic
 {
-    private const string ForgedAmountKey = "ForgedAmount";
 
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new(ForgedAmountKey, 1)
+        new("ExtraBlock", 1),
+        new("ExtraDamage", 1)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        HoverTipFactory.FromEnchantment<Forged>(DynamicVars[ForgedAmountKey].IntValue);
-
-    public override bool TryModifyCardRewardOptionsLate(
-        Player player,
-        List<CardCreationResult> cardRewards,
-        CardCreationOptions options)
+    [
+        RunesmithHoverTipFactory.Static(RunesmithHoverTip.Enhance),
+        HoverTipFactory.Static(StaticHoverTip.Block)
+    ];
+    
+    public override decimal ModifyBlockAdditive(Creature target, decimal block, ValueProp props, CardModel? cardSource,
+        CardPlay? cardPlay)
     {
-        if (player != Owner)
-            return false;
-        var canonicalForged = ModelDb.Enchantment<Forged>();
-        var list = cardRewards.Where(r => canonicalForged.CanEnchant(r.Card)).ToList();
-        if (list.Count == 0)
-            return false;
-        var cardCreationResult = Owner.RunState.Rng.Niche.NextItem(list);
-        if (cardCreationResult == null)
-            return false;
-        var card = Owner.RunState.CloneCard(cardCreationResult.Card);
-        CardCmd.Enchant<Forged>(card, DynamicVars[ForgedAmountKey].BaseValue);
-        cardCreationResult.ModifyCard(card, this);
-        return true;
+        if (cardSource == null || cardSource.Owner != Owner || Owner.Creature != target || !props.IsCardOrMonsterMove() || !cardSource.IsEnhanced())
+        {
+            return 0m;
+        }
+        
+        return DynamicVars["ExtraBlock"].IntValue;
+    }
+
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource,
+        CardPlay? cardPlay)
+    {
+        if (cardSource == null || cardSource.Owner != Owner || Owner.Creature != dealer || !props.IsPoweredAttack() || !cardSource.IsEnhanced())
+        {
+            return 0m;
+        }
+
+        return DynamicVars["ExtraDamage"].IntValue;
     }
 }
