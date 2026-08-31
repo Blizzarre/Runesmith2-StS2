@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Nodes.Multiplayer;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
 using Runesmith2.Runesmith2Code.Utils;
 
-namespace Runesmith2.Runesmith2Code.Models;
+namespace Runesmith2.Runesmith2Code.Data;
 
 [HarmonyPatch(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.SelectCharacter))]
 internal static class NCharacterSelectScreenSelectCharacterPatch

@@ -19,7 +19,7 @@ public static class Runesmith2Metrics
         {
             ModName = "Runesmith 2",
             EndpointUrl = "https://cyokwozapjzlccsanzwa.supabase.co/rest/v1/runs",
-            ApiKey = "sb_publishable_UhlUEMsoKvXuBL1QTII5gA_b0FqBSCc",
+            ApiKey = BuildSecrets.MetricsApiKey,
             ModVersionProvider = Runesmith2Mod.GetVersion,
             IsOwnCharacter = e => e is Character.Runesmith2,
             AllowedAssemblies = new HashSet<Assembly>

@@ -57,6 +57,14 @@ jobs:
         run: |
           "$GODOT_PATH" --headless --import || true
           "$GODOT_PATH" --headless --import
+      - name: Inject metrics key
+        env:
+          METRICS_API_KEY: ${{ secrets.METRICS_API_KEY }}
+        run: |
+          cat > Runesmith2Code/Data/BuildSecrets.cs <<EOF
+          namespace Runesmith2.Runesmith2Code.Data;
+          internal static class BuildSecrets { public const string? MetricsApiKey = "$METRICS_API_KEY"; }
+          EOF
       - name: Publish
         run: |
           mkdir -p "${{ github.workspace }}/output/mods"
