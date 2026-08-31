@@ -4,7 +4,11 @@ namespace Runesmith2.Runesmith2Code.Utils;
 
 public class RunesmithConfig : SimpleModConfig
 {
-    [ConfigHoverTip] public static bool UploadMetrics { get; set; } = true;
+    [ConfigHoverTip] public static bool UploadMetrics { get; set; } = false;
+
+    [ConfigHideInUI]
+    [ConfigIgnoreRestoreDefaults]
+    public static bool UploadMetricsFtueSeen { get; set; } = false;
 
     [ConfigSection("VisualAndSoundEffects")]
     [ConfigHoverTip]

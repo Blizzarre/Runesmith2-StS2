@@ -20,7 +20,6 @@ public class Origo : Runesmith2RecipeCard
     {
         WithVars(new ChargeVar(3));
         WithTip(RunesmithHoverTip.Craft);
-        WithRuneTip<OrigoRune>();
         WithTip(new TooltipSource(c => RunesmithHoverTipFactory.FromRune<OrigoRune>(c.IsUpgraded)));
     }
 

@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Godot;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Runs.Metrics;
 using MegaCrit.Sts2.Core.Saves;
@@ -214,6 +215,10 @@ public sealed class RunMetricsUploader<TPayload>
     private bool HasForeignContent(SerializableRun run)
     {
         if (run.Acts.Any(c => !IsAllowed<ActModel>(c.Id))) return true;
+        if (run.MapPointHistory
+            .SelectMany(logs => logs)
+            .SelectMany(e => e.Rooms)
+            .Any(e => !IsAllowed<AbstractModel>(e.ModelId))) return true;
         foreach (var p in run.Players)
         {
             if (!IsAllowed<CharacterModel>(p.CharacterId)) return true;

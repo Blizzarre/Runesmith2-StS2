@@ -356,7 +356,7 @@ public partial class NRune : NClickableControl
     protected override void OnFocus()
     {
         if (Model == null && !_isLocal) return;
-        var hoverTips = Model?.HoverTips ?? new List<IHoverTip> { RuneModel.EmptySlotHoverTipHoverTip };
+        var hoverTips = Model?.HoverTips ?? new List<IHoverTip> { RuneModel.EmptySlotHoverTip };
         var nHoverTipSet = NHoverTipSet.CreateAndShow(_bounds, hoverTips, HoverTip.GetHoverTipAlignment(_bounds));
         nHoverTipSet?.SetFollowOwner();
         _labelContainer.Visible = true;

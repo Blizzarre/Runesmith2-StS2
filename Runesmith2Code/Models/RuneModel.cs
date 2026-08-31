@@ -6,7 +6,6 @@ using BaseLib.Extensions;
 using Godot;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -94,8 +93,8 @@ public abstract class RuneModel : AbstractModel, ICustomModel
 
     protected virtual ModSound? CraftSfx => RunesmithModSounds.RuneCraftSfx;
 
-    public static HoverTip EmptySlotHoverTipHoverTip => new(new LocString("runes", "RUNESMITH2-EMPTY_SLOT.title"),
-        new LocString("runes", "RUNESMITH2-EMPTY_SLOT.description"));
+    public static HoverTip EmptySlotHoverTip => new(new LocString(LocTable, "RUNESMITH2-EMPTY_SLOT.title"),
+        new LocString(LocTable, "RUNESMITH2-EMPTY_SLOT.description"));
 
     public HoverTip DumbHoverTip => RunesmithHoverTipFactory.CreateRuneHoverTip(this, Description);
 

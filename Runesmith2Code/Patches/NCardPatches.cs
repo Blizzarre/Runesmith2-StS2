@@ -27,8 +27,9 @@ internal class NCardEnterTreePatch
     private static void Prefix(NCard __instance)
     {
         var cardContainer = __instance.GetChild(0);
-        if (cardContainer == RunesmithNode.NEnhanceTab[__instance].GetParent()) return;
-        __instance.GetChild(0)?.AddChildSafely(RunesmithNode.NEnhanceTab[__instance]);
+        var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
+        if (cardContainer == enhanceTab.GetParent()) return;
+        cardContainer?.AddChildSafely(enhanceTab);
     }
 }
 
@@ -39,8 +40,15 @@ internal class NCardReadyPatch
     private static void Postfix(NCard __instance)
     {
         var cardContainer = __instance.GetChild(0);
-        cardContainer.MoveChildSafely(RunesmithNode.NEnhanceTab[__instance],
-            cardContainer.GetNode("%TitleBanner").GetIndex());
+        var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
+        if (cardContainer != enhanceTab.GetParent())
+        {
+            if (!enhanceTab.IsInsideTree())
+                cardContainer.AddChildSafely(enhanceTab);
+            else
+                enhanceTab.Reparent(cardContainer, false); // should never be called...
+        }
+        cardContainer.MoveChildSafely(enhanceTab, cardContainer.GetNode("%TitleBanner").GetIndex());
     }
 }
 

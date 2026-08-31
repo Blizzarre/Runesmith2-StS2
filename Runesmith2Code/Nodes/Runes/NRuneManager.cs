@@ -88,7 +88,7 @@ public partial class NRuneManager : Control
     private void OnCombatSetup(CombatState _)
     {
         if (!Player.Creature.IsAlive || Player.PlayerCombatState == null) return;
-        if (Player.PlayerCombatState.AllCards.Any(c => c is Runesmith2RecipeCard)) AddSlotAnim();
+        if (Player.Character is Character.Runesmith2) AddSlotAnim();
     }
 
     private void OnCombatStateChanged(CombatState _)
