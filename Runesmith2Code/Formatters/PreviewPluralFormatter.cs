@@ -1,6 +1,7 @@
 #region
 
 using System.Globalization;
+using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using SmartFormat.Core.Extensions;
 using SmartFormat.Core.Formatting;
@@ -10,7 +11,7 @@ using SmartFormat.Utilities;
 
 namespace Runesmith2.Runesmith2Code.Formatters;
 
-public class PreviewPluralFormatter : IFormatter
+public class PreviewPluralFormatter : IAutoRegisterFormatSpecifier
 {
     // Prefixed formatter name to prevent conflict with other mods
     public string Name { get; set; } = "rs2Plural";

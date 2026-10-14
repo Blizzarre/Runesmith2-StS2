@@ -27,9 +27,9 @@ public static class RunesmithNode
     {
         var elementsIcon = PreloadManager.Cache.GetScene(RunesmithResource.NElementsIconPath)
             .Instantiate<NElementsIcon>().WithData(card);
-        var cardContainer = card.GetChild(0)!;
-        cardContainer.AddChild(elementsIcon);
-        cardContainer.MoveChild(elementsIcon, cardContainer.GetNode("%StarIcon").GetIndex());
+        var cardContainer = card.GetChild(0);
+        cardContainer.AddChildSafely(elementsIcon);
+        cardContainer.MoveChildSafely(elementsIcon, cardContainer.GetNode("%StarIcon").GetIndex());
         return elementsIcon;
     });
 
@@ -38,6 +38,9 @@ public static class RunesmithNode
         var enhanceTab = PreloadManager.Cache.GetScene(RunesmithResource.NEnhanceTabPath)
             .Instantiate<NEnhanceTabContainer>()
             .WithData(card);
+        var cardContainer = card.GetChild(0);
+        cardContainer.AddChildSafely(enhanceTab);
+        cardContainer.MoveChildSafely(enhanceTab, cardContainer.GetNode("%TitleBanner").GetIndex());
         return enhanceTab;
     });
 

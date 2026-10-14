@@ -3,54 +3,17 @@
 using BaseLib.Utils.Patching;
 using Godot;
 using HarmonyLib;
-using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Extensions;
 using Runesmith2.Runesmith2Code.Field;
-using Runesmith2.Runesmith2Code.Nodes;
-using Runesmith2.Runesmith2Code.Utils;
 
 #endregion
 
 namespace Runesmith2.Runesmith2Code.Patches;
-
-// Patch to add enhance and stasis visuals to card display
-// Need to instantiate NEnhanceTab before it get accessed during Ready call because of SubscribeToModel
-[HarmonyPatch(typeof(NCard), nameof(NCard._EnterTree))]
-internal class NCardEnterTreePatch
-{
-    [HarmonyPrefix]
-    private static void Prefix(NCard __instance)
-    {
-        var cardContainer = __instance.GetChild(0);
-        var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
-        if (cardContainer == enhanceTab.GetParent()) return;
-        cardContainer?.AddChildSafely(enhanceTab);
-    }
-}
-
-[HarmonyPatch(typeof(NCard), nameof(NCard._Ready))]
-internal class NCardReadyPatch
-{
-    [HarmonyPostfix]
-    private static void Postfix(NCard __instance)
-    {
-        var cardContainer = __instance.GetChild(0);
-        var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
-        if (cardContainer != enhanceTab.GetParent())
-        {
-            if (!enhanceTab.IsInsideTree())
-                cardContainer.AddChildSafely(enhanceTab);
-            else
-                enhanceTab.Reparent(cardContainer, false); // should never be called...
-        }
-        cardContainer.MoveChildSafely(enhanceTab, cardContainer.GetNode("%TitleBanner").GetIndex());
-    }
-}
 
 [HarmonyPatch(typeof(NCard), nameof(NCard.SubscribeToModel))]
 internal class NCardSubscribePatch
@@ -62,7 +25,7 @@ internal class NCardSubscribePatch
     {
         var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
         if (model == null) return;
-        if (!enhanceTab.IsInsideTree()) return;
+        if (!__instance.IsInsideTree() || !enhanceTab.IsValid()) return;
         var modifier = model.GetCardModelModifier();
         modifier.EnhanceChanged += enhanceTab.OnEnhanceChanged;
         modifier.StasisChanged += enhanceTab.OnStasisChanged;
@@ -79,6 +42,7 @@ internal class NCardUnsubscribePatch
     {
         var enhanceTab = RunesmithNode.NEnhanceTab[__instance];
         if (model == null) return;
+        if (!enhanceTab.IsValid()) return;
         var modifier = model.GetCardModelModifier();
         modifier.ClearFlags();
         modifier.EnhanceChanged -= enhanceTab.OnEnhanceChanged;

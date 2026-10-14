@@ -1,6 +1,5 @@
 #region
 
-using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
@@ -9,7 +8,6 @@ using Runesmith2.Runesmith2Code.Cards;
 using Runesmith2.Runesmith2Code.Cards.Uncommon;
 using Runesmith2.Runesmith2Code.Commands;
 using Runesmith2.Runesmith2Code.Extensions;
-using Runesmith2.Runesmith2Code.Nodes.Runes;
 
 #endregion
 
@@ -31,7 +29,7 @@ public class AlbusRune : RuneModel
 
     public override bool CanPassive => HasAnyValidRune() && base.CanPassive;
 
-    public override bool UsePotency => true;
+    public override bool UsePotency => false;
 
     public override async Task<bool> BeforeTurnEndEarlyRuneTrigger(PlayerChoiceContext choiceContext)
     {

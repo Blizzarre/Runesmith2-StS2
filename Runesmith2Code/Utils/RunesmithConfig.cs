@@ -10,7 +10,7 @@ public class RunesmithConfig : SimpleModConfig
     [ConfigIgnoreRestoreDefaults]
     public static bool UploadMetricsFtueSeen { get; set; } = false;
 
-    [ConfigSection("VisualAndSoundEffects")]
+    [ConfigSection("VisualAndSoundEffects", CollapsedByDefault = true)]
     [ConfigHoverTip]
     public static bool EnableGrindstoneVfx { get; set; } = true;
 

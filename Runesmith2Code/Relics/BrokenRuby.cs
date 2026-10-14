@@ -42,7 +42,7 @@ public class BrokenRuby : Runesmith2Relic
 
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player)
     {
-        if (player == Owner && player.Creature.CombatState is { RoundNumber: <= 1 })
+        if (player == Owner && player.PlayerCombatState is { TurnNumber: <= 1 })
             await RunesmithCardCmd.EnhanceRandomCards(choiceContext, Owner, PileType.Hand.GetPile(Owner).Cards,
                 DynamicVars.Cards.IntValue, 1, Owner.RunState.Rng.CombatCardSelection);
     }

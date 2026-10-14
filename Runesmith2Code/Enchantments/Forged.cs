@@ -29,7 +29,7 @@ public class Forged : Runesmith2Enchantment
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (player == Card.Owner && player.Creature.CombatState is { RoundNumber: <= 1 })
+        if (player == Card.Owner && player.PlayerCombatState is { TurnNumber: <= 1 })
         {
             await RunesmithCardCmd.Enhance(choiceContext, player, Card, null, Amount, true);
             Status = EnchantmentStatus.Disabled;

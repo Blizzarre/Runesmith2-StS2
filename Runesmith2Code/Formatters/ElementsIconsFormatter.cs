@@ -1,5 +1,6 @@
 #region
 
+using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using Runesmith2.Runesmith2Code.DynamicVars;
@@ -10,7 +11,7 @@ using static System.Int32;
 
 namespace Runesmith2.Runesmith2Code.Formatters;
 
-public class ElementsIconsFormatter : IFormatter
+public class ElementsIconsFormatter : IAutoRegisterFormatSpecifier
 {
     // Prefixed formatter name to prevent conflict with other mods
     public string Name { get; set; } = "rs2Icon";

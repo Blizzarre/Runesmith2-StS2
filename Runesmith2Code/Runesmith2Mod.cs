@@ -38,6 +38,7 @@ public partial class Runesmith2Mod : Node
         ModManager.OnMetricsUpload += Runesmith2Metrics.OnMetricsUpload;
 
         ModConfigRegistry.Register(ModId, new RunesmithConfig());
+        CustomLocTableManager.Register("runes");
 
         ModSound.SetSoundDefaultVolumeOffset("res://Runesmith2/audio/runesmith_character_transition.ogg", 32f);
         ModSound.SetSoundDefaultVolumeOffset("res://Runesmith2/audio/runesmith_character_select.ogg", 32f);

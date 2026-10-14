@@ -75,4 +75,10 @@ public class Scrap : Runesmith2Card
             if (Pile is not { Type: PileType.Hand }) await CardPileCmd.Add(this, PileType.Hand);
         }
     }
+    
+    protected override void AfterCloned()
+    {
+        base.AfterCloned();
+        ShouldReturnNextTurn = false;
+    }
 }

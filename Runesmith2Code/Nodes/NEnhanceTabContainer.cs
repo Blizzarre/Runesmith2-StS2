@@ -92,6 +92,7 @@ public partial class NEnhanceTabContainer : Control
         if (!IsNodeReady()) return;
         if (NCard?._model != null)
         {
+            Visible = true;
             var modifier = NCard._model.GetCardModelModifier();
 
             if (modifier.Enhanced > 0)

@@ -13,9 +13,9 @@ namespace Runesmith2.Runesmith2Code.Cards.Uncommon;
 
 public class LaserTurret : Runesmith2Card
 {
-    public LaserTurret() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+    public LaserTurret() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
-        WithVar("Amount", 2, 1);
+        WithVar("Amount", 3, 1);
         WithTip(RunesmithHoverTip.Elements);
     }
 
