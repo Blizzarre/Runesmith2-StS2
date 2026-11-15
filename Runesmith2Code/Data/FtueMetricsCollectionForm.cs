@@ -3,7 +3,6 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Multiplayer;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
@@ -15,9 +14,9 @@ namespace Runesmith2.Runesmith2Code.Data;
 internal static class NCharacterSelectScreenSelectCharacterPatch
 {
     [HarmonyPostfix]
-    internal static void Postfix(CharacterModel characterModel)
+    internal static void Postfix(NCharacterSelectButton charSelectButton)
     {
-        if (characterModel is Character.Runesmith2 && !RunesmithConfig.UploadMetricsFtueSeen)
+        if (charSelectButton.Character is Character.Runesmith2 && !RunesmithConfig.UploadMetricsFtueSeen)
             FtueMetricsCollectionForm.CreateAndShowDataCollectionForm();
     }
 }

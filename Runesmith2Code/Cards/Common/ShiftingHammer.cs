@@ -22,6 +22,7 @@ public class ShiftingHammer : Runesmith2Card
         WithDamage(7, 3);
         WithVar(new EnhanceByVar(2));
         WithVar(new CardsVar(1));
+        WithVar(new HitCountVar(2));
         WithTags(RunesmithTags.Hammer);
     }
 
@@ -30,7 +31,7 @@ public class ShiftingHammer : Runesmith2Card
         CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
-        var attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(2).FromCard(this, play)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(DynamicVars.HitCount.IntValue).FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);

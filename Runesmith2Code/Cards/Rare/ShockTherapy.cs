@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using Runesmith2.Runesmith2Code.CardSelection;
 using Runesmith2.Runesmith2Code.Commands;
@@ -23,7 +24,9 @@ public class ShockTherapy : Runesmith2Card
     {
         WithDamage(5);
         WithCards(2, 1);
-        WithCalculatedVar(CalculatedHitsKey, 0, GetPrecalculatedHits);
+        WithVar(new CalculatedHitCountVar(CalculatedHitsKey).WithMultiplier(GetPrecalculatedHits));
+        WithVars(new CalculationBaseVar(0M), new CalculationExtraVar(1M));
+        // WithCalculatedVar(CalculatedHitsKey, 0, GetPrecalculatedHits);
         WithTip(RunesmithHoverTip.Stasis);
     }
 

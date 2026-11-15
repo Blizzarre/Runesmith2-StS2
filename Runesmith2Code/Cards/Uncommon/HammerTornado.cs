@@ -19,11 +19,17 @@ public class HammerTornado : Runesmith2Card
     {
         WithDamage(9, 3);
         WithVar(new CardsVar(1));
-        WithCalculatedVar(CalculatedHitsKey, 1, (card, _) =>
+        WithVar(new CalculatedHitCountVar(CalculatedHitsKey).WithMultiplier((card, _) =>
         {
             var runeQueue = card.Owner.PlayerCombatState?.GetRuneQueue();
             return runeQueue?.Runes.DistinctBy(r => r.Id).Count() ?? 0;
-        });
+        }));
+        WithVars(new CalculationBaseVar(0M), new CalculationExtraVar(1M));
+        // WithCalculatedVar(CalculatedHitsKey, 1, (card, _) =>
+        // {
+        //     var runeQueue = card.Owner.PlayerCombatState?.GetRuneQueue();
+        //     return runeQueue?.Runes.DistinctBy(r => r.Id).Count() ?? 0;
+        // });
         WithTags(RunesmithTags.Hammer);
     }
 

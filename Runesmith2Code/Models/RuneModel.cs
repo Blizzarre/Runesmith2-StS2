@@ -96,7 +96,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
     public static HoverTip EmptySlotHoverTip => new(new LocString(LocTable, "RUNESMITH2-EMPTY_SLOT.title"),
         new LocString(LocTable, "RUNESMITH2-EMPTY_SLOT.description"));
 
-    public HoverTip DumbHoverTip => RunesmithHoverTipFactory.CreateRuneHoverTip(this, Description);
+    public HoverTip DumbHoverTip => new(Title, Description, Icon);
 
     // Return the Recipe card that crafts this Rune.
     public abstract Runesmith2RecipeCard RecipeCard { get; }
@@ -118,7 +118,7 @@ public abstract class RuneModel : AbstractModel, ICustomModel
                 smartDescription.Add("CalculatedBreak", CalculatedBreakVal);
                 smartDescription.Add("Charge", ChargeVal);
                 smartDescription.Add("IfUpgraded", Upgraded);
-                list.Add(RunesmithHoverTipFactory.CreateRuneHoverTip(this, smartDescription));
+                list.Add(new HoverTip(Title, smartDescription, Icon));
                 var chargeLocKey = ChargeDepletion switch
                 {
                     ChargeDepletionType.None => "RUNESMITH2-CHARGE-NONE",

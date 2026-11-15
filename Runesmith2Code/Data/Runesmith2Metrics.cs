@@ -98,6 +98,7 @@ public static class Runesmith2Metrics
             Ascension = run.Ascension,
             TotalPlaytime = progress.TotalPlaytime,
             TotalWinRate = progress.Wins / (float)progress.NumberOfRuns,
+            GameMode = run.GameMode.ToString(),
             NumReloads = run.NumReloads,
             BuildId = ReleaseInfoManager.Instance.ReleaseInfo?.Version ?? "NON-RELEASE-VERSION",
             BuildType = PlatformUtil.GetPlatformBranch().ToName(),

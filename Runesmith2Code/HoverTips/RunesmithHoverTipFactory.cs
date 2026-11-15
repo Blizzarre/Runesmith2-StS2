@@ -72,21 +72,4 @@ public static class RunesmithHoverTipFactory
         model.Upgrade();
         return model.DumbHoverTip;
     }
-
-    public static HoverTip CreateRuneHoverTip(RuneModel rune, LocString description)
-    {
-        var hoverTip = new HoverTip
-        {
-            IsSmart = false,
-            IsDebuff = false,
-            IsInstanced = false,
-            CanonicalModel = null,
-            ShouldOverrideTextOverflow = false,
-            Id = rune.Id.ToString(),
-            Title = rune.Title.GetFormattedText(),
-            Description = description.GetFormattedText(),
-            Icon = rune.Icon
-        };
-        return hoverTip;
-    }
 }

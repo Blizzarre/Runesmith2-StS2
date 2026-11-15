@@ -153,7 +153,7 @@ public sealed class RunMetricsUploader<TPayload>
         var log = _config.Logger;
         var mod = _config.ModName;
 
-        if (!MetricUtilities.ShouldUploadMetrics()) return false;
+        if (!MetricUtilities.ShouldUploadMetrics(true)) return false;
         if (!RunesmithConfig.UploadMetrics)
         {
             log?.Info($"[{mod}] Skipping metrics upload, user has upload data unset.");
